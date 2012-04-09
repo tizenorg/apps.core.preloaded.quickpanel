@@ -1,0 +1,11 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notifiche (%d)"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Modalità archiv. di massa"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Disattiva"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Attiva"

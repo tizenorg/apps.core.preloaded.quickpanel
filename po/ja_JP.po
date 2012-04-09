@@ -1,0 +1,11 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "通知​（%d）"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "マスストレージモード"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "無効"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "有効"

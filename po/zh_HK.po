@@ -1,0 +1,11 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "通知(%d)"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "大容量儲存裝置模式"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "關閉"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "啟用"

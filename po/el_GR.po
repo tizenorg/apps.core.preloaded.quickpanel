@@ -1,0 +1,11 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Ειδοποιήσεις (%d)"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Λειτ. μαζικής αποθήκευσης"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Απενεργ."
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Ενεργό"
