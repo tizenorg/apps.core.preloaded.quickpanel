@@ -9,6 +9,7 @@ Release:    1
 Group:      util
 License:    Samsung Proprietary License
 Source0:    %{name}-%{version}.tar.gz
+Source1001: packaging/org.tizen.quickpanel.manifest 
 
 BuildRequires: pkgconfig(appcore-efl)
 BuildRequires: pkgconfig(appcore-common)
@@ -45,6 +46,7 @@ Quick Panel
 
 
 %build
+cp %{SOURCE1001} .
 LDFLAGS+="-Wl,--rpath=%{PREFIX}/lib -Wl,--as-needed";export LDFLAGS
 cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX}
 make %{?jobs:-j%jobs}
@@ -92,6 +94,7 @@ rm -f /etc/rc.d/rc5.d/S51quickpanel
 rm -f /etc/rc.d/rc3.d/S51quickpanel
 
 %files
+%manifest org.tizen.quickpanel.manifest
 %defattr(-,root,root,-)
 /etc/init.d/quickpanel
 /opt/apps/org.tizen.quickpanel/bin/*
