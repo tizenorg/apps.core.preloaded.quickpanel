@@ -1,0 +1,12 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Bildirimler (%d)"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Yığın depolama modu"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Devre dışı"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Etkin"
+

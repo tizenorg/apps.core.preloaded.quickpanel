@@ -1,0 +1,10 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "알림(%d개)"
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "이동식 메모리 모드"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "해제"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "실행"

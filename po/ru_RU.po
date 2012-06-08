@@ -1,0 +1,11 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Уведомления (%d)"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Режим съемного устройства"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Выключить"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Включено"
