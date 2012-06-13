@@ -1,0 +1,2 @@
+* Wed June 13 2012 Yan Yin <yan.yin@intel.com> - 0.1.1
+- spec file cosmetic: replace chown/chmod with %attr

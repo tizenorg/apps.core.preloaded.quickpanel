@@ -59,20 +59,6 @@ rm -rf %{buildroot}
 rm -rf %{buildroot}
 
 %post
-INHOUSE_ID="5000"
-
-change_dir_permission()
-{
-    chown $INHOUSE_ID:$INHOUSE_ID $@ 2>/dev/null
-    if [ $? -ne 0 ]; then
-        echo "Failed to change the owner of $@"
-    fi  
-    chmod 775 $@ 2>/dev/null
-    if [ $? -ne 0 ]; then
-        echo "Failed to change the perms of $@"
-    fi  
-}
-
 change_file_executable()
 {
     chmod +x $@ 2>/dev/null
@@ -81,7 +67,6 @@ change_file_executable()
     fi  
 }
 
-change_dir_permission %{DATADIR}
 change_file_executable /etc/init.d/quickpanel
 mkdir -p /etc/rc.d/rc5.d/
 mkdir -p /etc/rc.d/rc3.d/
@@ -96,6 +81,7 @@ rm -f /etc/rc.d/rc3.d/S51quickpanel
 %files
 %manifest org.tizen.quickpanel.manifest
 %defattr(-,root,root,-)
+%attr(775,app,app) /opt/apps/org.tizen.quickpanel/data
 /etc/init.d/quickpanel
 /opt/apps/org.tizen.quickpanel/bin/*
 /opt/apps/org.tizen.quickpanel/res/*
