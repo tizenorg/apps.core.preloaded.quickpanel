@@ -1,50 +1,8 @@
-quickpanel (0.1.1-111) unstable; urgency=low
+quickpanel (0.1.1-112) unstable; urgency=low
 
-  * bug fix(latest ticker is shown after reboot)
+  * update boilerplate
   * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-111
+  * Tag: quickpanel_0.1.1-112
 
- -- Jeonghoon Park <jh1979.park@samsung.com>  Sat, 07 Apr 2012 20:09:53 +0900
-
-quickpanel (0.1.1-110) unstable; urgency=low
-
-  * encoding strings to markup style for ticker
-  * change ticker timeout to 5sec
-  * fix booting script installation
-  * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-110
-
- -- Jeonghoon Park <jh1979.park@samsung.com>  Wed, 04 Apr 2012 14:41:54 +0900
-
-quickpanel (0.1.1-109) unstable; urgency=low
-
-  * Update changes
-  * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-109
-
- -- Jeonghoon Park <jh1979.park@samsung.com>  Tue, 20 Mar 2012 15:03:50 +0900
-
-quickpanel (0.1.1-108) unstable; urgency=low
-
-  * Update changes
-  * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-108
-
- -- Jeonghoon Park <jh1979.park@samsung.com>  Thu, 16 Feb 2012 15:58:03 +0900
-
-quickpanel (0.1.1-107) unstable; urgency=low
-
-  * Update pkgname to org.tizen
-  * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-107
-
- -- Mi-Ju Lee <miju52.lee@samsung.com>  Fri, 23 Dec 2011 15:36:13 +0900
-
-quickpanel (0.1.1-106) unstable; urgency=low
-
-  * Initial release
-  * Git: pkgs/q/quickpanel
-  * Tag: quickpanel_0.1.1-106
-
- -- Mi-Ju Lee <miju52.lee@samsung.com>  Wed, 07 Dec 2011 11:43:39 +0900
+ -- Jeonghoon Park <jh1979.park@samsung.com>  Wed, 02 May 2012 17:45:20 +0900
 
