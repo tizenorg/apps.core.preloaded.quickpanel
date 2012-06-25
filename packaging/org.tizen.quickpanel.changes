@@ -1,2 +1,16 @@
-* Wed June 13 2012 Yan Yin <yan.yin@intel.com> - 0.1.1
+* Mon Jun 25 2012 William Douglas <william.douglas@intel.com> 69f3a0d
+- add systemd unit file
+
+* Wed Jun 13 2012 Kim Kibum <kb0929.kim@samsung.com> 944b142
+- apply FSL license
+[ Yan Yin ]
 - spec file cosmetic: replace chown/chmod with %attr
+
+* Tue May 29 2012 Ryan Ware <ryan.r.ware@intel.com> 2d5f3e8
+- Add default Smack manifest for org.tizen.quickpanel.spec
+
+* Sun Apr 08 2012 Kim Kibum <kb0929.kim@samsung.com> 40afabd
+- Tizen release 1.0
+[ eunmee.moon ]
+- Initial empty repository
+

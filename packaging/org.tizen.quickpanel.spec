@@ -9,7 +9,8 @@ Release:    1
 Group:      util
 License:    Samsung Proprietary License
 Source0:    %{name}-%{version}.tar.gz
-Source1001: packaging/org.tizen.quickpanel.manifest 
+Source101:  quickpanel.service
+Source1001: org.tizen.quickpanel.manifest 
 
 BuildRequires: pkgconfig(appcore-efl)
 BuildRequires: pkgconfig(appcore-common)
@@ -55,34 +56,28 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
+mkdir -p %{buildroot}/%{_sysconfdir}/rc.d/rc5.d/
+mkdir -p %{buildroot}/%{_sysconfdir}/rc.d/rc3.d/
+ln -s ../../init.d/quickpanel %{buildroot}/%{_sysconfdir}/rc.d/rc5.d/S51quickpanel
+ln -s ../../init.d/quickpanel %{buildroot}/%{_sysconfdir}/rc.d/rc3.d/S51quickpanel
+
+mkdir -p %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
+install -m 0644 %SOURCE101 %{buildroot}%{_libdir}/systemd/user/
+ln -s ../quickpanel.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/quickpanel.service
+
 %clean
 rm -rf %{buildroot}
 
-%post
-change_file_executable()
-{
-    chmod +x $@ 2>/dev/null
-    if [ $? -ne 0 ]; then
-        echo "Failed to change the perms of $@"
-    fi  
-}
-
-change_file_executable /etc/init.d/quickpanel
-mkdir -p /etc/rc.d/rc5.d/
-mkdir -p /etc/rc.d/rc3.d/
-ln -s /etc/init.d/quickpanel /etc/rc.d/rc5.d/S51quickpanel
-ln -s /etc/init.d/quickpanel /etc/rc.d/rc3.d/S51quickpanel
-
-%postun
-/sbin/ldconfig
-rm -f /etc/rc.d/rc5.d/S51quickpanel
-rm -f /etc/rc.d/rc3.d/S51quickpanel
 
 %files
 %manifest org.tizen.quickpanel.manifest
-%defattr(-,root,root,-)
 %attr(775,app,app) /opt/apps/org.tizen.quickpanel/data
-/etc/init.d/quickpanel
+%attr(755,-,-) %{_sysconfdir}/init.d/quickpanel
+%{_sysconfdir}/rc.d/rc3.d/S51quickpanel
+%{_sysconfdir}/rc.d/rc5.d/S51quickpanel
+%{_sysconfdir}/init.d/quickpanel
+%{_libdir}/systemd/user/quickpanel.service
+%{_libdir}/systemd/user/core-efl.target.wants/quickpanel.service
 /opt/apps/org.tizen.quickpanel/bin/*
 /opt/apps/org.tizen.quickpanel/res/*
 /opt/share/applications/org.tizen.quickpanel.desktop
