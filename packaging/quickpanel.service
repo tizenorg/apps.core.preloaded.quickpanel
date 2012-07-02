@@ -10,5 +10,5 @@ Requires=starter.service
 ExecStart=/opt/apps/org.tizen.quickpanel/bin/quickpanel
 
 [Install]
-WantedBy=tizen-mobile.target
+WantedBy=tizen-mobile-session.target
 

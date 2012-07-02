@@ -1,3 +1,6 @@
+* Mon Jul 02 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> be8483d
+- Fix target name for tizen-mobile-session in quickpanel.service
+
 * Mon Jun 25 2012 William Douglas <william.douglas@intel.com> 69f3a0d
 - add systemd unit file
 
