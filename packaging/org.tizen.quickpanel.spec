@@ -7,7 +7,7 @@ Summary:    Quick Panel
 Version:    0.1.1
 Release:    1
 Group:      util
-License:    Samsung Proprietary License
+License:    Flora Software License
 Source0:    %{name}-%{version}.tar.gz
 Source101:  quickpanel.service
 Source1001: org.tizen.quickpanel.manifest 
