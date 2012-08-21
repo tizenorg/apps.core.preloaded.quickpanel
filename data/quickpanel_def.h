@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef __QUICKPANEL_NOTI_DEF_H__
-#define __QUICKPANEL_NOTI_DEF_H__
+#ifndef __QUICKPANEL_EDC_DEF_H__
+#define __QUICKPANEL_EDC_DEF_H__
 
-#define QP_NOTI_BG_COLOR	0 0 0 255
-#define QP_NOTI_SEPERATOR_COLOR	102 102 102 255
+#define QP_INDICATOR_H	50
+#define QP_HANDLE_H	69
 
-#define QP_NOTI_SPN_BG_COLOR	25 25 25 255
-#define QP_NOTI_SPN_SEPERATOR_COLOR			53 53 53 255
-#endif	/*__QUICKPANEL_NOTI_DEF_H__*/
+#endif	/*__QUICKPANEL_EDC_DEF_H__*/

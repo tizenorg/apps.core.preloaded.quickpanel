@@ -1,5 +1,20 @@
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Rotation"
+
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "Notifications (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibration"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Sound & vibration"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Auto rotation"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Rotation lock"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Mass storage mode"
@@ -9,3 +24,4 @@ msgstr "Disable"
 
 msgid "IDS_QP_BUTTON_ENABLE"
 msgstr "Enable"
+

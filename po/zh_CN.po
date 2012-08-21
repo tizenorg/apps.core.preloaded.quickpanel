@@ -1,5 +1,20 @@
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "转动"
+
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "通知 (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "振动"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "声音和振动"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "自动旋转"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "旋转锁定"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "大容量存储模式"
@@ -9,3 +24,4 @@ msgstr "禁用"
 
 msgid "IDS_QP_BUTTON_ENABLE"
 msgstr "启动"
+

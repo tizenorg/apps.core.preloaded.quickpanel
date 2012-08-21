@@ -29,31 +29,85 @@
 #define LOG_TAG "quickpanel"
 #include <dlog.h>
 
-#define ERR(str,args...) 		LOGE("%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define DBG(str,args...) 		LOGD("%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define INFO(str,args...) 		LOGI(#str"\n", ##args)
+#define DBG(fmt , args...) \
+	do { \
+		LOGD("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define INFO(fmt , args...) \
+	do { \
+		LOGI("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define WARN(fmt , args...) \
+	do { \
+		LOGI("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define ERR(fmt , args...) \
+	do { \
+		LOGI("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
 #elif FILE_DEBUG /*_DLOG_USED*/
-#define ERR(str,args...) 		debug_printf("%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define DBG(str,args...) 		debug_printf("%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define INFO(str,args...) 		debug_printf(#str"\n", ##args)
+#define DBG(fmt , args...) \
+	do { \
+		debug_printf("[D]%s : %d] "fmt"\n", \
+			__func__, __LINE__, ##args); \
+	} while (0)
+
+#define INFO(fmt , args...) \
+	do { \
+		debug_printf("[I][%s : %d] "fmt"\n",\
+			__func__, __LINE__, ##args); \
+	} while (0)
+
+#define WARN(fmt , args...) \
+	do { \
+		debug_printf("[W][%s : %d] "fmt"\n", \
+			__func__, __LINE__, ##args); \
+	} while (0)
+
+#define ERR(fmt , args...) \
+	do { \
+		debug_printf("[E][%s : %d] "fmt"\n", \
+			__func__, __LINE__, ##args); \
+	} while (0)
+
 #else /*_DLOG_USED*/
-#define ERR(str,args...) 		fprintf( stderr, "%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define DBG(str,args...) 		fprintf( stderr, "%s[%d]\t " #str "\n", __func__, __LINE__, ##args)
-#define INFO(str,args...) 		fprintf( stderr, #str"\n", ##args)
+#define DBG(fmt , args...) \
+	do { \
+		fprintf("[D][%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define INFO(fmt , args...) \
+	do { \
+		fprintf("[I][%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define WARN(fmt , args...) \
+	do { \
+		fprintf("[W][%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
+
+#define ERR(fmt , args...) \
+	do { \
+		fprintf("[E][%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+	} while (0)
 #endif /*_DLOG_USED*/
 
-#define retif(cond, ret, str, args...) do{\
-	if(cond) {\
-		DBG(str, ##args);\
+#define retif(cond, ret, str, args...) do { \
+	if (cond) { \
+		WARN(str, ##args);\
 		return ret;\
-	}\
-}while(0);
+	} \
+} while (0);
 
-#define gotoif(cond, target, str, args...) do{\
-	if(cond) {\
-		DBG(str, ##args);\
-		goto target;\
-	}\
-}while(0);
+#define gotoif(cond, target, str, args...) do { \
+	if (cond) { \
+		WARN(str, ##args); \
+		goto target; \
+	} \
+} while (0);
 
 #endif				/* __QP_COMMON_H_ */

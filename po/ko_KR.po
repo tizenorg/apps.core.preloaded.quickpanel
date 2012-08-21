@@ -1,5 +1,21 @@
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "회전"
+
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "알림(%d개)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "진동"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "소리 및 진동"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "자동 회전"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "회전 잠금"
+
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "이동식 메모리 모드"
 
@@ -8,3 +24,4 @@ msgstr "해제"
 
 msgid "IDS_QP_BUTTON_ENABLE"
 msgstr "실행"
+

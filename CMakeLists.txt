@@ -5,9 +5,9 @@ FILE(GLOB_RECURSE DAEMON_SRCS daemon/*.c)
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/test TEST_SRCS)
 SET(SRCS ${DAEMON_SRCS} ${TEST_SRCS})
 
-SET(VENDOR "tizen")
+SET(VENDOR "org.tizen")
 SET(PACKAGE ${PROJECT_NAME})
-SET(PKGNAME "org.${VENDOR}.${PACKAGE}")
+SET(PKGNAME "${VENDOR}.${PACKAGE}")
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 SET(BINDIR "${PREFIX}/bin")
 SET(RESDIR "${PREFIX}/res")
@@ -15,7 +15,8 @@ SET(LOCALEDIR "${RESDIR}/locale")
 SET(ICONDIR "${RESDIR}/icons")
 SET(EDJDIR "${RESDIR}/edje")
 SET(DATADIR "${PREFIX}/data")
-SET(DESKTOPDIR "/opt/share/applications")
+SET(DESKTOPDIR "/usr/share/applications")
+SET(MANIFESTXMLDIR "/usr/share/packages")
 
 IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
 	SET(CMAKE_BUILD_TYPE "Release")
@@ -24,39 +25,45 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
 INCLUDE_DIRECTORIES(
 		${CMAKE_CURRENT_SOURCE_DIR}/daemon
+		${CMAKE_CURRENT_SOURCE_DIR}/data
 		${CMAKE_CURRENT_SOURCE_DIR}/test
 		)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs REQUIRED 
-	appcore-efl 
-	appcore-common 
+	capi-appfw-application
+	capi-appfw-app-manager
+	capi-system-runtime-info
+	appcore-common
 	heynoti
-	notification 
-	vconf 
-	aul 
-	appsvc 
-	svi 
-	libprivilege-control 
-	ecore-x 
-	edbus 
-	evas 
-	ecore 
-	edje 
-	mm-sound 
-	icu-i18n 
-	iniparser 
+	notification
+	vconf
+	aul
+	appsvc
+	svi
+	libprivilege-control
+	ecore-x
+	edbus
+	evas
+	ecore
+	edje
+	ecore-input
+	mm-sound
+	icu-i18n
 	enotify
 	elementary
 	dlog
 	syspopup-caller
+	minicontrol-viewer
+	minicontrol-monitor
+	utilX
 )
 
 FOREACH(flag ${pkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -Wall -g -O2 -fpie")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 SET(CMAKE_C_FLAGS_RELEASE "-O2")
 
@@ -68,6 +75,7 @@ IF("${ARCH}" STREQUAL "arm")
 ENDIF("${ARCH}" STREQUAL "arm")
 
 ADD_DEFINITIONS("-fpie")
+ADD_DEFINITIONS("-DQP_MINICTRL_ENABLE")
 
 ADD_DEFINITIONS("-DVENDOR=\"${VENDOR}\"")
 ADD_DEFINITIONS("-DPACKAGE=\"${PACKAGE}\"")

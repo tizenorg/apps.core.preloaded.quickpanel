@@ -19,48 +19,53 @@
 
 #include <Elementary.h>
 
+#if !defined(VENDOR)
+#  define VENDOR "org.tizen"
+#endif
 #if !defined(PACKAGE)
 #  define PACKAGE			"quickpanel"
 #endif
 
 #if !defined(LOCALEDIR)
-#  define LOCALEDIR			"/opt/apps/org.tizen.quickpanel/res/locale"
+#  define LOCALEDIR			"/usr/apps/"VENDOR"."PACKAGE"/res/locale"
 #endif
 
 #if !defined(EDJDIR)
-#  define EDJDIR			"/opt/apps/org.tizen.quickpanel/res/edje"
+#  define EDJDIR			"/usr/apps/"VENDOR"."PACKAGE"/res/edje"
 #endif
 
 /* EDJ theme */
-#define DEFAULT_NOTI_EDJ		EDJDIR"/"PACKAGE"_noti.edj"
-#define DEFAULT_CUSTOM_EDJ		EDJDIR"/"PACKAGE"_theme.edj"
-
-#define GROUP_NOTI		"quickpanel/noti"
+#define DEFAULT_EDJ		EDJDIR"/"PACKAGE".edj"
+#define DEFAULT_THEME_EDJ	EDJDIR"/"PACKAGE"_theme.edj"
 
 #define _EDJ(o) elm_layout_edje_get(o)
 #define _S(str)	dgettext("sys_string", str)
+#define _(str) gettext(str)
+#define _NOT_LOCALIZED(str) (str)
 
-#define QP_PRIO_NOTI		100
-
-#define QP_DEFAULT_WINDOW_H	1280	// Default is HD(720 X 1280)
+#define STR_ATOM_WINDOW_INPUT_REGION    "_E_COMP_WINDOW_INPUT_REGION"
+#define STR_ATOM_WINDOW_CONTENTS_REGION "_E_COMP_WINDOW_CONTENTS_REGION"
 
 struct appdata {
-	struct {
-		Evas_Object *win;
-		Evas_Object *ly;
-		Evas *evas;
-		double h;
-	} noti;
+	Evas_Object *win;
+	Evas_Object *ly;
+	Evas *evas;
 
+	Evas_Object *list;
 	int angle;
 	double scale;
+	char *theme;
 
-	int is_emul; // 0 : target, 1 : emul
+	int win_width;
+	int win_height;
+	int gl_limit_height;
+	int gl_distance_from_top;
+	int gl_distance_to_bottom;
+
+	int is_emul; /* 0 : target, 1 : emul */
+	int show_setting;
+
 	Ecore_Event_Handler *hdl_client_message;
-	Ecore_Event_Handler *hdl_win_property;
-
-	Evas_Object *notilist;
-	Evas_Object *idletxtbox;
 
 	E_DBus_Connection *dbus_connection;
 	E_DBus_Signal_Handler *dbus_handler_size;
@@ -79,10 +84,14 @@ typedef struct _QP_Module {
 	int (*hib_leave) (void *);
 	void (*lang_changed) (void *);
 	void (*refresh) (void *);
+	unsigned int (*get_height) (void *);
 
 	/* do not modify this area */
 	/* internal data */
 	Eina_Bool state;
 } QP_Module;
+
+void quickpanel_init_size_genlist(void *data);
+void quickpanel_ui_update_height(void *data);
 
 #endif				/* __QUICKPANEL_UI_H__ */

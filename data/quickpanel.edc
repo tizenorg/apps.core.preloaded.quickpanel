@@ -1,0 +1,226 @@
+/*
+ * Copyright 2012  Samsung Electronics Co., Ltd
+ *
+ * Licensed under the Flora License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.tizenopensource.org/license
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+#include "quickpanel_def.h"
+
+#define QP_MAIN_MIN_W 720
+#define QP_MAIN_MIN_H 620
+
+#define QP_SPN_H 48
+#define QP_SETTING_H 180
+#define QP_SEPERATOR_H 1
+#define QP_TOGGLE_H_MIN 110
+
+#define QP_BG_COLOR 	20 20 20 255
+
+#define QP_SEPERATOR_COLOR	102 102 102 255
+
+#define QP_NOTI_SEPERATOR_COLOR	102 102 102 255
+
+#define QP_NOTI_TOGGLE_MAIN_FONT_NAME		"SLP:style=Medium"
+#define QP_NOTI_TOGGLE_MAIN_FONT_SIZE		28
+#define QP_NOTI_TOGGLE_MAIN_FONT_COLOR		249 249 249 255
+
+#define QP_NOTI_TOGGLE_BUTTON_FONT_NAME		"SLP:style=Medium"
+#define QP_NOTI_TOGGLE_BUTTON_FONT_SIZE		26
+#define QP_NOTI_TOGGLE_BUTTON_FONT_COLOR	249 249 249 255
+
+#define QP_NOTI_SPN_SEPERATOR_COLOR	102 102 102 255
+
+#define	QP_SETTING_BUTTON_BG_COLOR	45 45 45 255
+#define	QP_SETTING_BUTTON_BG_INLINE_COLOR	64 64 64 255
+#define QP_SETTING_ALPHA_50P_COLOR	255 255 255 127
+
+images {
+	image: "Q02_quickpanel_handler_bg.png" COMP;
+	image: "Q02_IMG_Handler_opened.png" COMP;
+	image: "Q02_IMG_Handler_Closed.png" COMP;
+}
+
+collections {
+	group { name: "quickpanel/gl_base";
+		parts {
+			part {
+				name: "background";
+				type: RECT;
+				scale: 1;
+				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					color: 0 0 0 0;
+				}
+			}
+			part{
+				name: "qp.base.indicator";
+				type:RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 0 1;
+					min: 0 QP_INDICATOR_H;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "background";
+					}
+					rel2 {
+						relative: 1.0 0.0;
+						to: "background";
+					}
+					align: 0.0 0.0;
+					color: 0 0 0 0;
+				}
+			}
+			part {
+				name: "qp.gl_base.gl.swallow";
+				type: SWALLOW;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 1;
+					min: 0 0;
+					rel1 {
+						to, "qp.base.indicator";
+						relative: 0.0 1.0;
+					}
+					rel2 {
+						to, "qp.base.indicator";
+						relative: 1.0 1.0;
+					}
+					align: 0.0 0.0;
+				}
+			}
+			part{
+				name: "qp.base.spn.seperator";
+				type:RECT;
+				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 0 1;
+					min: 0 QP_SEPERATOR_H;
+					rel1 {
+						to, "qp.gl_base.gl.swallow";
+						relative: 0.0 1.0;
+					}
+					rel2 {
+						to, "qp.gl_base.gl.swallow";
+						relative: 1.0 1.0;
+					}
+					align: 0.0 0.0;
+					color: QP_BG_COLOR;
+				}
+			}
+			part{
+				name: "qp.base.spn.swallow";
+				type: SWALLOW;
+				scale: 1;
+				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 1;
+					min: 0 QP_SPN_H;
+					rel1 {
+						to, "qp.base.spn.seperator";
+						relative: 0.0 1.0;
+					}
+					rel2 {
+						to, "qp.base.spn.seperator";
+						relative: 1.0 1.0;
+					}
+					align: 0.0 0.0;
+				}
+			}
+			part{
+				name: "qp.base.handler";
+				type:IMAGE;
+				scale:1;
+				description {
+					state: "default" 0.0;
+					fixed: 0 1;
+					min: 0 QP_HANDLE_H;
+					rel1 {
+						to, "qp.base.spn.swallow";
+						relative: 0.0 1.0;
+					}
+					rel2 {
+						to, "qp.base.spn.swallow";
+						relative: 1.0 1.0;
+					}
+					image {
+						normal:"Q02_quickpanel_handler_bg.png";
+						border: 0 0 0 0;
+						border_scale: 1;
+					}
+					align: 0.0 0.0;
+				}
+			}
+			part{
+				name: "qp.base.handler.icon.padding.top";
+				type:RECT;
+				scale:1;
+				description {
+					state: "default" 0.0;
+					fixed: 0 1;
+					min: 0 20;
+					rel1 {
+						to, "qp.base.handler";
+						relative: 0.0 .0;
+					}
+					rel2 {
+						to, "qp.base.handler";
+						relative: 1.0 0.0;
+					}
+					align: 0.0 0.0;
+					color: 0 0 0 0;
+				}
+			}
+			part{
+				name: "qp.base.handler.icon";
+				type:IMAGE;
+				scale:1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 1;
+					min: 32 17;
+					rel1 {
+						to_x, "qp.base.handler";
+						to_y, "qp.base.handler.icon.padding.top";
+						relative: 0.5 1.0;
+					}
+					rel2 {
+						to_x, "qp.base.handler";
+						to_y, "qp.base.handler.icon.padding.top";
+						relative: 0.5 1.0;
+					}
+					image {
+						normal:"Q02_IMG_Handler_Closed.png";
+					}
+					align: 0.5 0.0;
+				}
+			}
+		}
+		programs {
+			program {
+				name: "background.touch";
+				action: SIGNAL_EMIT "close.quickpanel" "";
+				signal: "mouse,down,1";
+				source: "background";
+			}
+		}
+	}
+#include "quickpanel_noti.edc"
+#include "quickpanel_spn.edc"
+}

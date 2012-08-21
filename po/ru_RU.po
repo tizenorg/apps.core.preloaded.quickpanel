@@ -1,5 +1,20 @@
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Поворот"
+
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "Уведомления (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Вибрация"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Звук и вибрация"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Авто поворот"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Блокир. поворот"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Режим съемного устройства"
@@ -9,3 +24,4 @@ msgstr "Выключить"
 
 msgid "IDS_QP_BUTTON_ENABLE"
 msgstr "Включено"
+
