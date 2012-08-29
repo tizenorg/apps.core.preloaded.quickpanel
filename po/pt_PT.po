@@ -1,3 +1,6 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Apenas chamadas de emergência"
+
 msgid "IDS_QP_BUTTON_ROTATION"
 msgstr "Rotação"
 

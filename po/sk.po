@@ -1,30 +1,30 @@
 msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "僅限緊急通話"
+msgstr "Len tiesňové volania"
 
 msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "旋轉"
+msgstr "Otočenie"
 
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "通知 (%d)"
+msgstr "Oznámenia (%d)"
 
 msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "震動"
+msgstr "Vibrácia"
 
 msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "聲音與震動"
+msgstr "Zvuk a vibrácia"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "自動旋轉"
+msgstr "Autom. otáčanie"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "旋轉鎖定"
+msgstr "Zamknutie otáčania"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "大容量儲存裝置模式"
+msgstr "Režim veľkokapac. pamäte"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "停用"
+msgstr "Zakázať"
 
 msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "啟用"
+msgstr "Povoliť"
 

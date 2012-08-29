@@ -1,3 +1,6 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Nur Notrufe"
+
 msgid "IDS_QP_BUTTON_ROTATION"
 msgstr "Drehung"
 
@@ -11,10 +14,10 @@ msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
 msgstr "Ton & Vibration"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Automat. Ausrichten"
+msgstr "Automat.\nAusrichten"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Automat. Ausrichten"
+msgstr "Automat.\nAusrichten"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Massenspeichermodus"

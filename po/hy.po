@@ -1,30 +1,30 @@
 msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "僅限緊急通話"
+msgstr "Միայն հրատապ կանչեր"
 
 msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "旋轉"
+msgstr "Պտտում"
 
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "通知 (%d)"
+msgstr "Ծանուցումներ (%d)"
 
 msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "震動"
+msgstr "Թրթռում"
 
 msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "聲音與震動"
+msgstr "Ձայն և թրթռում"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "自動旋轉"
+msgstr "Ինքնապտտում"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "旋轉鎖定"
+msgstr "Պտտման կողպում"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "大容量儲存裝置模式"
+msgstr "Զանգվածային պահոցի ռեժիմ"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "停用"
+msgstr "Կասեցնել"
 
 msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "啟用"
+msgstr "Ակտիվացնլ"
 

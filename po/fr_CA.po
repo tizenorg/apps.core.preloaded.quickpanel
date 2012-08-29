@@ -1,30 +1,30 @@
 msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "僅限緊急通話"
+msgstr "Appels d'urgence uniquement"
 
 msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "旋轉"
+msgstr "Rotation"
 
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "通知 (%d)"
+msgstr "Notifications (%d)"
 
 msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "震動"
+msgstr "Vibreur"
 
 msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "聲音與震動"
+msgstr "Son et vibreur"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "自動旋轉"
+msgstr "Rotation auto"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "旋轉鎖定"
+msgstr "Verr. rotation"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "大容量儲存裝置模式"
+msgstr "Mode stockage de masse"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "停用"
+msgstr "Désactiver"
 
 msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "啟用"
+msgstr "Activer"
 

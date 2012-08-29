@@ -1,3 +1,6 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Appels d'urgence uniquement"
+
 msgid "IDS_QP_BUTTON_ROTATION"
 msgstr "Rotation"
 
@@ -14,7 +17,7 @@ msgid "IDS_QP_TAB4_AUTO_ROTATION"
 msgstr "Rotation auto"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Désactiver rotation"
+msgstr "Désactiver\nrotation"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Mode stockage de masse"

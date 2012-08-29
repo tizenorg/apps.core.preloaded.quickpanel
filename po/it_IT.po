@@ -1,5 +1,8 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Solo chiamate di emergenza"
+
 msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotaz."
+msgstr "Ruota"
 
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "Notifiche (%d)"
@@ -11,7 +14,7 @@ msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
 msgstr "Suono e vibraz."
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Ruota automat."
+msgstr "Rotazione\nauto"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
 msgstr "Blocco rotazione"

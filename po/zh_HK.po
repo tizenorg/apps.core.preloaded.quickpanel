@@ -1,3 +1,6 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "只限緊急通話"
+
 msgid "IDS_QP_BUTTON_ROTATION"
 msgstr "旋轉"
 

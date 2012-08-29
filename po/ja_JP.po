@@ -1,3 +1,6 @@
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "緊急通報のみ発信可能です。"
+
 msgid "IDS_QP_BUTTON_ROTATION"
 msgstr "回転"
 
@@ -11,7 +14,7 @@ msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
 msgstr "サウンドとバイブ"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "画面 回転"
+msgstr "画面回転"
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
 msgstr "回転​ロック"

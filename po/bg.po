@@ -1,8 +1,8 @@
 msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Только экстренные вызовы"
+msgstr "Само спешни повиквания"
 
 msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Поворот"
+msgstr "Въртене"
 
 msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
 msgstr "Уведомления (%d)"
@@ -11,20 +11,20 @@ msgid "IDS_QP_BUTTON_VIBRATION"
 msgstr "Вибрация"
 
 msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Звук и вибрация"
+msgstr "Звънене и вибрация"
 
 msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Авто поворот"
+msgstr "Автом. завърт."
 
 msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Блокир. поворот"
+msgstr "Заключв. завъртане"
 
 msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Режим съемного устройства"
+msgstr "Режим запам. устройство"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Выключить"
+msgstr "Забрани"
 
 msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Включено"
+msgstr "Разрешаване"
 
