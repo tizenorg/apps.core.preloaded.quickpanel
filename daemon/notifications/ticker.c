@@ -39,6 +39,7 @@
 static Evas_Object *g_window;
 static Evas_Object *g_ticker;
 static Ecore_Timer *g_timer;
+static int g_noti_height;
 static notification_list_h g_latest_noti_list;
 static int g_svi;
 
@@ -46,6 +47,7 @@ static int quickpanel_ticker_init(void *data);
 static int quickpanel_ticker_fini(void *data);
 static int quickpanel_ticker_enter_hib(void *data);
 static int quickpanel_ticker_leave_hib(void *data);
+static void quickpanel_ticker_reflesh(void *data);
 
 QP_Module ticker = {
 	.name = "ticker",
@@ -53,7 +55,8 @@ QP_Module ticker = {
 	.fini = quickpanel_ticker_fini,
 	.hib_enter = quickpanel_ticker_enter_hib,
 	.hib_leave = quickpanel_ticker_leave_hib,
-	.lang_changed = NULL
+	.lang_changed = NULL,
+	.refresh = quickpanel_ticker_reflesh
 };
 
 static int latest_inserted_time;
@@ -385,6 +388,7 @@ static Evas_Object *_quickpanel_ticker_create_tickernoti(void *data)
 		noti_height = (int)(elm_config_scale_get()
 					* atoi(data_win_height));
 	evas_object_size_hint_min_set(detail, 1, noti_height);
+	g_noti_height = noti_height;
 
 	noti_win_content_set(tickernoti, detail);
 
@@ -438,6 +442,85 @@ static int _quickpanel_ticker_get_angle(void *data)
 			free(prop_data);
 
 		return -1;
+	}
+}
+
+static void _quickpanel_ticker_update_window_hints(Evas_Object *obj) {
+	Ecore_X_Window xwin;
+	Ecore_X_Atom _notification_level_atom;
+	int level;
+	// elm_win_xwindow_get() must call after elm_win_alpha_set()
+	xwin = elm_win_xwindow_get(obj);
+
+	ecore_x_icccm_hints_set(xwin, 0, ECORE_X_WINDOW_STATE_HINT_NONE, 0, 0, 0, 0,
+			0);
+	ecore_x_netwm_window_type_set(xwin, ECORE_X_WINDOW_TYPE_NOTIFICATION);
+	ecore_x_netwm_opacity_set(xwin, 0);
+	// Create atom for notification level
+	_notification_level_atom = ecore_x_atom_get("_E_ILLUME_NOTIFICATION_LEVEL");
+
+	// HIGH:150, NORMAL:100, LOW:50
+	level = 100;
+
+	// Set notification level of the window
+	ecore_x_window_prop_property_set(xwin, _notification_level_atom,
+			ECORE_X_ATOM_CARDINAL, 32, &level, 1);
+}
+
+static void _quickpanel_ticker_update_geometry_on_rotation(void *data, int *x, int *y, int *w) {
+	int angle = 0;
+
+	if (!data)
+		return;
+	struct appdata *ad = data;
+
+	angle = _quickpanel_ticker_get_angle(data);
+	Evas_Coord root_w, root_h;
+
+	/*
+	 * manually calculate win_tickernoti_indi window position & size
+	 *  - win_indi is not full size window
+	 */
+	ecore_x_window_size_get(ecore_x_window_root_first_get(), &root_w, &root_h);
+	// rotate win
+	switch(angle)
+	{
+		case 90:
+			*w = root_h;
+			*x = root_w - g_noti_height;
+			break;
+		case 270:
+			*w = root_h;
+			*x = root_w - g_noti_height;
+			break;
+		case 180:
+			*w = root_w;
+			*y = root_h - g_noti_height;
+			break;
+		case 0:
+		default:
+			*w = root_w;
+			*y = root_h - g_noti_height;
+			break;
+	}
+	elm_win_rotation_with_resize_set(g_ticker, angle);
+}
+
+static void _quickpanel_ticker_win_rotated(void *data) {
+	if (!data)
+		return;
+	struct appdata *ad = data;
+	int x = 0, y = 0, w = 0, angle = 0;
+
+	if (!ad)
+		return;
+
+	_quickpanel_ticker_update_geometry_on_rotation(ad, &x, &y, &w);
+
+	if (g_ticker != NULL) {
+		evas_object_move(g_ticker, x, y);
+		evas_object_resize(g_ticker, w, g_noti_height);
+		_quickpanel_ticker_update_window_hints(g_ticker);
 	}
 }
 
@@ -570,7 +653,6 @@ static void _quickpanel_ticker_noti_changed_cb(void *data, notification_type_e t
 		g_timer = ecore_timer_add(QP_TICKER_DURATION,
 				_quickpanel_ticker_timeout_cb, NULL);
 
-
 		angle = _quickpanel_ticker_get_angle(data);
 		if (angle > 0)
 			elm_win_rotation_with_resize_set(g_ticker, angle);
@@ -633,4 +715,13 @@ static int quickpanel_ticker_enter_hib(void *data)
 static int quickpanel_ticker_leave_hib(void *data)
 {
 	return QP_OK;
+}
+
+static void quickpanel_ticker_reflesh(void *data)
+{
+	retif(data == NULL, , "Invalid parameter!");
+
+	if (g_ticker != NULL) {
+		_quickpanel_ticker_win_rotated(data);
+	}
 }
