@@ -448,7 +448,6 @@ static int _quickpanel_ticker_get_angle(void *data)
 static void _quickpanel_ticker_update_window_hints(Evas_Object *obj) {
 	Ecore_X_Window xwin;
 	Ecore_X_Atom _notification_level_atom;
-	int level;
 	// elm_win_xwindow_get() must call after elm_win_alpha_set()
 	xwin = elm_win_xwindow_get(obj);
 
@@ -457,14 +456,6 @@ static void _quickpanel_ticker_update_window_hints(Evas_Object *obj) {
 	ecore_x_netwm_window_type_set(xwin, ECORE_X_WINDOW_TYPE_NOTIFICATION);
 	ecore_x_netwm_opacity_set(xwin, 0);
 	// Create atom for notification level
-	_notification_level_atom = ecore_x_atom_get("_E_ILLUME_NOTIFICATION_LEVEL");
-
-	// HIGH:150, NORMAL:100, LOW:50
-	level = 100;
-
-	// Set notification level of the window
-	ecore_x_window_prop_property_set(xwin, _notification_level_atom,
-			ECORE_X_ATOM_CARDINAL, 32, &level, 1);
 }
 
 static void _quickpanel_ticker_update_geometry_on_rotation(void *data, int *x, int *y, int *w) {

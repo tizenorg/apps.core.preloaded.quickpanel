@@ -120,7 +120,7 @@ static void _update_window_hints(Evas_Object *obj)
 		"_E_ILLUME_NOTIFICATION_LEVEL");
 
 	/* HIGH:150, NORMAL:100, LOW:50 */
-	level = 100;
+	level = 150;
 
 	/* Set notification level of the window */
 	ecore_x_window_prop_property_set(xwin, _notification_level_atom,
