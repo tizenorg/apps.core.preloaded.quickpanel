@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notifications"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Appels d'urgence uniquement"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Rotation"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notifications (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibreur"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Son et vibreur"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Rotation auto"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Verr. rotation"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Mode stockage de masse"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Désactiver"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Activer"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Non pris en charge"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "Vous ne pourrez plus utiliser les applications de données telles que le navigateur, la messagerie et YouTube via le réseau mobile. Les appels et les SMS seront toujours opérationnels. Continuer?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Insérez une carte SIM pour accéder aux services réseau"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Ne plus demander"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Insérez une carte SIM et redémarrez l'appareil pour utiliser le modem"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "La connexion via des données par paquet peut entrainer des frais supplémentaires. Continuer ?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Auto"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Économie d'énergie"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Fonction modem"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Données mobiles"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Mode Voiture"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Impossible de se connecter aux réseaux mobiles lorsque le mode Hors-ligne est activé. Connectez-vous au réseau Wifi à la place ou désactivez le mode Hors-ligne et réessayez"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Le modem Wifi consomme plus d'énergie et augmente l'utilisation des données. Continuer ?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Désactivez le modem pour utiliser le Wifi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Pour activer le mode Économie d'énergie, activez au moins une fonction appropriée"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Désactivez le Wifi pour utiliser le modem"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Activation simultanée de wifi et du point d'accès mobile impossible. Désactiver le point d'accès mobile ?"
+

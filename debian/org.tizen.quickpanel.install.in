@@ -1,0 +1,6 @@
+@PREFIX@/bin/*
+@PREFIX@/res/locale/*
+@PREFIX@/res/edje/*
+@PREFIX@/data
+/opt/share/applications/*
+/etc/init.d/*

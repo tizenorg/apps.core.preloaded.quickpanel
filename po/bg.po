@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Уведомления"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Само спешни повиквания"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Въртене"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Уведомления (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Вибрация"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Звънене и вибрация"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Автом. завърт."
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Заключв. завъртане"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Режим запам. устройство"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Забрани"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Разрешаване"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Не се поддържа"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Поставете SIM картата, за да получите достъп до услуги на мрежата"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Не питай повече"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Поставете SIM карта и рестартирайте устройството, за да използвате привързване"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "При свързване за пакетни данни може да се начислят допълнителни такси. Продължаване?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Авто"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Пестене на енергия"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Привързване"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Мобилни данни"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Режим Шофиране"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Не може да се свърже към мобилни мрежи, когато е активиран режим Полет. Вместо това се свържете към Wi-Fi мрежа или деактивирайте режим Полет и опитайте отново"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi привързване изразходва повече енергия от батерията и увеличава потреблението на данни. Продължаване?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Деактивирайте привързване, за да използвате Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "За да активирате режим Пестене на енергия, активирайте поне една релевантна функция"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Изключете Wi-Fi, за да използвате привързване"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi-Fi и Mobile AP не могат да бъдат активирани едновременно.. Деактивиране на Mobile AP?"
+

@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Bildirishnoma"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Faqat favqulodda qo‘ng‘iroqlar"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Aylant."
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Eslatmalar (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibrats"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Ovoz & vibratsiya"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Avto. aylantirish"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Aylantirish bloki"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Katta hajmli xot. rejimi"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "O‘chirish"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Yoqish"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Qo‘llab-quvvatlanmaydigan"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Tarmoq xizmatlariga kirish uchun SIM-karta kiriting"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Boshqa so‘ralmasin"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Bog‘lanishdan foydalanish uchun, SIM-kartani kiriting va qurilmani qayta ishga tushiring"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Paketli ma’lumot orqali ulanish uchun qo‘shimcha to‘lov olinishi mumkin. Davom ettirilsinmi?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Avtomatik"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Quvvat tejash"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Bog‘lash"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Mobile data"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Mashina rejimi"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Uchish rejimi yoqilganda, mobil tarmoqlarga ulanib bo‘lmaydi. Uning o‘rniga Wi-Fi tarmoqqa ulaning yoki Uchish rejimini yoqing va qayta urinib ko‘ring"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi bog‘lanish ko‘proq batareya quvvatini sarflaydi va ma’lumot ishlatilishini oshiradi. Davom ettirilsinmi?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Wi-Fidan foydalanish uchun bog‘lanishni o‘chiring"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Quvvat tejash rejimini yoqish uchun kamida bitta mos funksiyani yoqing"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Bog‘lanishdan foydalanish uchun Wi-Fini o‘chiring"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Bir vaqtning o‘zida Wi-Fi va Mobile APni faollashtirib bo‘lmaydi. Mobile AP o‘chirilsinmi?"
+

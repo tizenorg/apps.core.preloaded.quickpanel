@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "შეტყობინებები"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "მხოლოდ გადაუდებელი ზარები"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "ბრუნვა"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "შეტყობინებები (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "ვიბრაცია"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "ხმა და ვიბრაცია"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "ავტო. მობრუნება"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "ბრუნვის დაბლოკვა"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "მასიური მეხსიერების რეჟ."
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "გამორთვა"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "გააქტიურება"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "გაუთვალისწინებელი"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "ქსელის მომსახურების მისაღებად ჩასვით SIM ბარათი"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "აღარ მკითხო"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "ჩადეთ SIM და გადატვირთეთ აპარატი, რომ გამოიყენოთ მობილური ინტერნეტი კომპიუტერში"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "მონაცემთა პაკეტით კავშირისთვის შეიძლება დამატებითი გადასახადი იყოს. განაგრძობთ?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "ავტომატური"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "ენერგიის დაზოგვა"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "მიბმა"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "მობილური მონაცემები"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "მანქანის მართვის რეჟიმი"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "მობილურ ქსელებს ვერ დაუკავშირდებით, სანამ ჩართულია ფრენის რეჟიმი. სანაცვლოდ, დაუკავშირდით Wi-Fi ქსელს, ან გამორთეთ ფრენის რეჟიმი და ისევ ცადეთ"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi მობილური ინტერნეტი ხარჯავს უფო მეტ ენერგიას და ზრდის მონაცემთა გამოყენებას. განაგრძობთ?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "გამორთეთ მობილური ინტერნეტი კომპიუტერში, რომ ჩართოთ Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "ენერგიის დაზოგვის რეჟიმის გასააქტიურებლად, ჩართეთ მინიმუმ ერთი შესაბამისი ფუნქცია"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "გამორთეთ Wi-Fi, რომ გამოიყენოთ მობილური ინტერნეტი კომპიუტერში"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi-Fi და Mobile AP ვერ გააქტიურდება ერთიდაიმავე დროს. გამოირთოს Mobile AP?"
+

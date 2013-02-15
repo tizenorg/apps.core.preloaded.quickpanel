@@ -1,0 +1,8 @@
+quickpanel (0.1.1-112) unstable; urgency=low
+
+  * update boilerplate
+  * Git: pkgs/q/quickpanel
+  * Tag: quickpanel_0.1.1-112
+
+ -- Jeonghoon Park <jh1979.park@samsung.com>  Wed, 02 May 2012 17:45:20 +0900
+

@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "通知"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "緊急通報のみ発信可能です。"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "回転"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "通知（%d）"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "バイブ"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "サウンドとバイブ"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "画面回転"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "回転ロック"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "マスストレージモード"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "無効"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "有効"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "未対応です"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "ネットワークサービスにアクセスするにはSIMカードを挿入してください。"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "今後表示しない"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "テザリングを使用するには、SIMカードを挿入し、端末を再起動してください。"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "モバイルデータ接続では、高額の料金が発生する場合があります。続行しますか？"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "自動"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "省電力"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "テザリング"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "モバイルデータ"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "スピーチモード"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "機内モードが有効な間は、モバイルネットワークに接続できません。代わりにWi-Fiネットワークに接続するか、機内モードを無効にして、再度実行してください。"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fiテザリングはバッテリーをより多く消費し、データ使用量が増加します。続行しますか？"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Wi-Fiを使用するには、テザリングを無効にしてください。"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "省電力モードを有効にするには、少なくとも1つの関連機能を選択してください。"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "テザリングを使用するには、Wi-FiをOFFにしてください。"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi-FiとWi-Fiテザリング両方は同時起動できません。Wi-Fiテザリングを無効にしますか？"
+

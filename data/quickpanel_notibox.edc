@@ -1,0 +1,2566 @@
+#define BOX_COLOR_BG 28 29 30 255
+#define BOX_WIDTH_P 340
+#define BOX_HEIGHT_P 400
+#define BOX_WIDTH_L 409
+#define BOX_HEIGHT_L 400
+
+#define BOX_MARGIN_TEXT_H 14
+#define BOX_TEXT_CONTENTS_HEIGHT 40
+#define BOX_TEXT_INFO_HEIGHT 36
+#define BOX_TEXT_SUB_WIDTH 120
+#define BOX_TEXT_SUB_PADDING_WIDTH 10
+
+//#define DEBUG
+//#define DEBUG_TEXT
+
+images {
+	image: "quick_icon_bg_01.png" COMP;
+	image: "quick_btn_close_press.png" COMP;
+	image: "quick_btn_close_dim.png" COMP;
+	image: "quick_btn_close_nor.png" COMP;
+	image: "quick_image_dimmed_port.png" COMP;
+	image: "quick_image_dimmed_land.png" COMP;
+	image: "quick_icon_bg_small.png" COMP;
+}
+
+#define BOX_CONTENTS_FONT "Tizen:style=Regular"
+#define BOX_CONTENTS_FONT_SIZE 28
+#define BOX_CONTENTS_FONT_COLOR 248 246 239 255
+
+#define BOX_FONT_SHADOW_COLOR 0 0 0 191
+#define BOX_FONT_OUTLINE_COLOR 0 0 0 191
+#define BOX_INFO_FONT "Tizen:style=Regular"
+#define BOX_INFO_FONT_SIZE 28
+#define BOX_INFO_FONT_COLOR 248 246 239 255
+
+#define BOX_INFO_SUB_FONT "Tizen:style=Regular"
+#define BOX_INFO_SUB_FONT_SIZE 28
+#define BOX_INFO_SUB_FONT_COLOR 248 246 239 255
+
+#define BOX_INFO_COUNT_FONT "Tizen:style=Regular"
+#define BOX_INFO_COUNT_FONT_SIZE 58
+#define BOX_INFO_COUNT_FONT_COLOR 248 246 239 255
+
+#define TEXT_CLASS_TIZEN "tizen"
+
+styles {
+	style {
+		name: "notibox_title";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=36 color=#F8F6EF wrap=mixed style=soft_shadow shadow_color=#000000BF";
+		tag: "br" "\n";
+	}
+}
+
+group {
+	name: "quickpanel/notibox/single_multi";
+
+	script {
+		public g_is_cloase_button_disabled;
+		public g_is_show_dim_bg;
+
+		public init_variables() {
+			set_int(g_is_cloase_button_disabled, 0);
+			set_int(g_is_show_dim_bg, 0);
+		}
+	}
+
+	parts {
+		part {
+			name: "background";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_WIDTH_P BOX_HEIGHT_P;
+				color: BOX_COLOR_BG;
+				align: 0.0 0.0;
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: BOX_WIDTH_L BOX_HEIGHT_L;
+			}
+		}
+
+		//section layout for margin
+
+		part {
+			name: "margin.left";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_MARGIN_TEXT_H 0;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 0.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.right";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_MARGIN_TEXT_H 0;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.right.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 6 0;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 0 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.top.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 44;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 255 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.top.text";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 20;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.bottom";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 22;
+				rel1 {
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for elements
+		//section layout for icon
+		part {
+			name: "rect.icon.bg";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 124 124;
+				rel1 {
+					to_x:"margin.right.icon";
+					to_y:"margin.top.icon";
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					to_x:"margin.right.icon";
+					to_y:"margin.top.icon";
+					relative: 0.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 124 124;
+				rel1 {
+					to:"rect.icon.bg";
+					relative: 0.5 0.5;
+				}
+				rel2 {
+					to:"rect.icon.bg";
+					relative: 0.5 0.5;
+				}
+				align: 0.5 0.5;
+#ifdef DEBUG
+				color: 205 205 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon.sub.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 12;
+				rel1 {
+					to:"rect.icon.bg";
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					to:"rect.icon.bg";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 235 215 235 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon.sub";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 56 56;
+				rel1 {
+					to:"rect.icon.sub.padding";
+					relative: 1.0 1.0;
+				}
+				rel2 {
+					to:"rect.icon.sub.padding";
+					relative: 1.0 1.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 255 0 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for close button
+		part {
+			name: "rect.button.close";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 38 38;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 255 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for texts
+		part {
+			name: "rect.text.title";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 124;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"margin.top.text";
+					relative: 1.0 1.0;
+				}
+				rel2 {
+					to_x:"rect.icon.bg";
+					to_y:"margin.top.text";
+					relative: 0.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 100 100 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		part {
+			name: "rect.text.info.2";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"margin.bottom";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 100 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.sub.2";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
+				rel1 {
+					to_x:"margin.right";
+					to_y:"margin.bottom";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"margin.bottom";
+					relative: 0.0 0.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 76 76 76 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.sub.2.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_TEXT_SUB_PADDING_WIDTH 0;
+				rel1 {
+					to:"rect.text.info.sub.2";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to:"rect.text.info.sub.2";
+					relative: 0.0 1.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 90 90 90 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.2.short";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.info.2";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.text.info.sub.2.padding";
+					to_y:"rect.text.info.2";
+					relative: 0.0 1.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 102 103 104 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.1";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.info.2";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.2";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 150 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.sub.1";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
+				rel1 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.2";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.2";
+					relative: 0.0 0.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 76 76 76 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.sub.1.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_TEXT_SUB_PADDING_WIDTH 0;
+				rel1 {
+					to:"rect.text.info.sub.1";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to:"rect.text.info.sub.1";
+					relative: 0.0 1.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 90 90 90 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.info.1.short";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.info.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.text.info.sub.1.padding";
+					to_y:"rect.text.info.1";
+					relative: 0.0 1.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 102 103 104 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.margin.contents";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 20;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.info.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.1";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.contents";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.margin.contents";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 150 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.count";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 40 58;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 190 190 190 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "count1" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "count2" 0.0;
+				inherit: "default" 0.0;
+				min: 72 58;
+			}
+			description {
+				state: "count3" 0.0;
+				inherit: "default" 0.0;
+				min: 103 58;
+			}
+			description {
+				state: "count4" 0.0;
+				inherit: "default" 0.0;
+				min: 137 58;
+			}
+			description {
+				state: "count5" 0.0;
+				inherit: "default" 0.0;
+				min: 167 58;
+			}
+		}
+		part {
+			name: "rect.text.count.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 58;
+				rel1 {
+					to:"rect.text.count";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.text.count";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.contents.short";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"rect.text.count.padding";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.margin.contents";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 40 255 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section objects
+		part{
+			name: "object.icon.background";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+			}
+		}
+		part{
+			name: "object.icon.bg";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.bg";}
+				rel2 {to: "rect.icon.bg";}
+				image {
+					normal:"quick_icon_bg_01.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "hide" 0.0;
+				inherit: "default" 0.0;
+				visible:0;
+			}
+		}
+		part{
+			name: "object.icon.bg.dim";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				image {
+					normal:"quick_image_dimmed_port.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:0;
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_image_dimmed_port.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:1;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_image_dimmed_land.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:1;
+			}
+		}
+		part{
+			name: "object.icon";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon";}
+				rel2 {to: "rect.icon";}
+			}
+		}
+		part{
+			name: "object.icon.sub.bg";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.sub";}
+				rel2 {to: "rect.icon.sub";}
+				image {
+					normal:"quick_icon_bg_small.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:0;
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "hide" 0.0;
+				inherit: "default" 0.0;
+				visible:0;
+			}
+		}
+		part{
+			name: "object.icon.sub";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.sub";}
+				rel2 {to: "rect.icon.sub";}
+			}
+		}
+
+		part {
+			name: "object.text.title";
+			scale: 1;
+			type: TEXTBLOCK;
+			effect: SOFT_SHADOW;
+			multiline: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.title";}
+				rel2 {to: "rect.text.title";}
+				text {
+					style: "notibox_title";
+					align: 0.0 0.0;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+			}
+		}
+
+		part {
+			name: "object.text.contents";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.contents";}
+				rel2 {to: "rect.text.contents";}
+				color: BOX_CONTENTS_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_CONTENTS_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_CONTENTS_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.text.contents.short";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.contents.short";}
+				rel2 {to: "rect.text.contents.short";}
+				color: BOX_CONTENTS_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_CONTENTS_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_CONTENTS_FONT_SIZE;
+					align: 0.0 0.5;
+				}
+			}
+		}
+
+		part {
+			name: "object.text.count";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.count";}
+				rel2 {to: "rect.text.count";}
+				color: BOX_INFO_COUNT_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_COUNT_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_COUNT_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "3";
+#endif
+				}
+			}
+		}
+
+		part {
+			name: "object.text.info.1";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.1";}
+				rel2 {to: "rect.text.info.1";}
+				color: BOX_INFO_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.text.info.1.short";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.1.short";}
+				rel2 {to: "rect.text.info.1.short";}
+				color: BOX_INFO_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_FONT_SIZE;
+					align: 0.0 0.5;
+				}
+			}
+		}
+		part {
+			name: "object.text.info.sub.1";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.sub.1";}
+				rel2 {to: "rect.text.info.sub.1";}
+				color: BOX_INFO_SUB_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_SUB_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_SUB_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+
+		part {
+			name: "object.text.info.2";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.2";}
+				rel2 {to: "rect.text.info.2";}
+				color: BOX_INFO_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.text.info.2.short";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.2.short";}
+				rel2 {to: "rect.text.info.2.short";}
+				color: BOX_INFO_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_FONT_SIZE;
+					align: 0.0 0.5;
+				}
+			}
+		}
+		part {
+			name: "object.text.info.sub.2";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.sub.2";}
+				rel2 {to: "rect.text.info.sub.2";}
+				color: BOX_INFO_SUB_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_SUB_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_SUB_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.layer.touch";
+			mouse_events: 1;
+			repeat_events: 1;
+			scale: 1;
+			type: RECT;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				color: 0 0 0 0;
+			}
+		}
+		part{
+			name: "object.button.close";
+			type:RECT;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				min:100 100;
+				rel1 {
+					to: "rect.button.close";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to: "rect.button.close";
+					relative: 1.0 0.0;
+				}
+				color: 0 0 0 0;
+				align: 1.0 0.0;
+			}
+		}
+		part{
+			name: "object.image.button.close";
+			type:IMAGE;
+			scale:1;
+			repeat_events: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.button.close";}
+				rel2 {to: "rect.button.close";}
+				image {
+					normal:"quick_btn_close_nor.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+			description {
+				state: "normal" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "pressed" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_btn_close_press.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+			description {
+				state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_btn_close_dim.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+		}
+	}
+
+	programs {
+		program {
+			name: "init.layout";
+			signal: "load";
+			source: "";
+			in: 0.0 0.0;
+			script{
+				init_variables();
+			}
+		}
+		program{
+			name: "box.show.dim";
+			signal: "box.show.dim";
+			source: "box.prog";
+			script {
+				set_int(g_is_show_dim_bg, 1);
+			}
+		}
+		program{
+			name: "box.hide.dim";
+			signal: "box.hide.dim";
+			source: "box.prog";
+			script {
+				set_int(g_is_show_dim_bg, 0);
+			}
+		}
+		program{
+			name: "box.portrait";
+			signal: "box.portrait";
+			source: "box.prog";
+			action: STATE_SET "portrait" 0.0;
+			target: "background";
+			after: "box.portrait.custom";
+		}
+		program{
+			name: "box.landscape";
+			signal: "box.landscape";
+			source: "box.prog";
+			action: STATE_SET "landscape" 0.0;
+			target: "background";
+			after: "box.landscape.custom";
+		}
+		program{
+			name: "box.portrait.custom";
+			source: "box.prog";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.icon.bg.dim", "portrait", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.landscape.custom";
+			source: "box.prog";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.icon.bg.dim", "landscape", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.touch.down";
+			signal: "mouse,clicked,1";
+			source: "object.layer.touch";
+			action: SIGNAL_EMIT "selected" "object.layer.touch";
+		}
+		program{
+			name: "box.button.close.1";
+			signal: "mouse,down,1";
+			source: "object.button.close";
+			script {
+				if (get_int(g_is_cloase_button_disabled) == 0) {
+					set_state(PART:"object.image.button.close", "pressed", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.button.close.2";
+			signal: "mouse,up,1";
+			source: "object.button.close";
+			script {
+				set_state(PART:"object.image.button.close", "normal", 0.0);
+			}
+		}
+		program{
+			name: "box.button.close.3";
+			signal: "mouse,clicked,1";
+			source: "object.button.close";
+			script {
+				if (get_int(g_is_cloase_button_disabled) == 0) {
+					set_state(PART:"object.image.button.close", "normal", 0.0);
+					emit("deleted", "object.layer.touch");
+				}
+			}
+		}
+		program{
+			name: "box.button.close.4";
+			signal: "disabled";
+			source: "object.button.close";
+			script {
+				set_state(PART:"object.image.button.close", "disabled", 0.0);
+				set_int(g_is_cloase_button_disabled, 1);
+			}
+		}
+		program{
+			name: "box.show.icon.bg";
+			signal: "box.show.icon.bg";
+			source: "box.prog";
+			action: STATE_SET "show" 0.0;
+			target: "object.icon.bg";
+		}
+		program{
+			name: "box.hide.icon.bg";
+			signal: "box.hide.icon.bg";
+			source: "box.prog";
+			action: STATE_SET "hide" 0.0;
+			target: "object.icon.bg";
+		}
+		program{
+			name: "box.show.icon.sub.bg";
+			signal: "box.show.sub.bg";
+			source: "box.prog";
+			action: STATE_SET "show" 0.0;
+			target: "object.icon.sub.bg";
+		}
+		program{
+			name: "box.hide.icon.sub.bg";
+			signal: "box.hide.sub.bg";
+			source: "box.prog";
+			action: STATE_SET "hide" 0.0;
+			target: "object.icon.sub.bg";
+		}
+		program{
+			name: "box.count.1";
+			signal: "box.count.1";
+			source: "box.prog";
+			action: STATE_SET "count1" 0.0;
+			target: "rect.text.count";
+		}
+		program{
+			name: "box.count.2";
+			signal: "box.count.2";
+			source: "box.prog";
+			action: STATE_SET "count2" 0.0;
+			target: "rect.text.count";
+		}
+		program{
+			name: "box.count.3";
+			signal: "box.count.3";
+			source: "box.prog";
+			action: STATE_SET "count3" 0.0;
+			target: "rect.text.count";
+		}
+		program{
+			name: "box.count.4";
+			signal: "box.count.4";
+			source: "box.prog";
+			action: STATE_SET "count4" 0.0;
+			target: "rect.text.count";
+		}
+		program{
+			name: "box.count.5";
+			signal: "box.count.5";
+			source: "box.prog";
+			action: STATE_SET "count5" 0.0;
+			target: "rect.text.count";
+		}
+	}
+}
+
+
+group {
+	name: "quickpanel/notibox/thumbnail";
+
+	script {
+		public g_is_cloase_button_disabled;
+		public g_is_show_dim_bg;
+
+		public init_variables() {
+			set_int(g_is_cloase_button_disabled, 0);
+			set_int(g_is_show_dim_bg, 0);
+		}
+	}
+
+	parts {
+		part {
+			name: "background";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_WIDTH_P BOX_HEIGHT_P;
+				color: BOX_COLOR_BG;
+				align: 0.0 0.0;
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: BOX_WIDTH_L BOX_HEIGHT_L;
+			}
+		}
+
+		//section layout for margin
+
+		part {
+			name: "margin.left";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_MARGIN_TEXT_H 0;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 0.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.right";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: BOX_MARGIN_TEXT_H 0;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.left.thumnail";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 15 0;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 0.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 25 0 60 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 14 0;
+			}
+		}
+		part {
+			name: "margin.right.thumnail";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 15 0;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 25 0 60 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 14 0;
+			}
+		}
+		part {
+			name: "margin.right.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 6 0;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 0 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.top.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 44;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 255 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.top.text";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 20;
+				rel1 {
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.bottom";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 26;
+				rel1 {
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for elements
+		//section layout for icon
+		part {
+			name: "rect.icon.bg";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 124 124;
+				rel1 {
+					to_x:"margin.right.icon";
+					to_y:"margin.top.icon";
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					to_x:"margin.right.icon";
+					to_y:"margin.top.icon";
+					relative: 0.0 1.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 124 124;
+				rel1 {
+					to:"rect.icon.bg";
+					relative: 0.5 0.5;
+				}
+				rel2 {
+					to:"rect.icon.bg";
+					relative: 0.5 0.5;
+				}
+				align: 0.5 0.5;
+#ifdef DEBUG
+				color: 205 205 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon.sub.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 12;
+				rel1 {
+					to:"rect.icon.bg";
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					to:"rect.icon.bg";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 235 215 235 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.icon.sub";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 56 56;
+				rel1 {
+					to:"rect.icon.sub.padding";
+					relative: 1.0 1.0;
+				}
+				rel2 {
+					to:"rect.icon.sub.padding";
+					relative: 1.0 1.0;
+				}
+				align: 1.0 1.0;
+#ifdef DEBUG
+				color: 255 0 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for close button
+		part {
+			name: "rect.button.close";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 38 38;
+				rel1 {
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+				}
+				align: 1.0 0.0;
+#ifdef DEBUG
+				color: 255 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for texts
+		part {
+			name: "rect.text.title";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 124;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"margin.top.text";
+					relative: 1.0 1.0;
+				}
+				rel2 {
+					to_x:"rect.icon.bg";
+					to_y:"margin.top.text";
+					relative: 0.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 100 100 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+
+		part {
+			name: "rect.text.margin.contents";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 20;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.thumbnail.list.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.thumbnail.list.1";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 255 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.contents";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.margin.contents";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 150 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.count";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 58 58;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.left";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 190 190 190 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.count.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 58;
+				rel1 {
+					to:"rect.text.count";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.text.count";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.contents.short";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"rect.text.count.padding";
+					to_y:"rect.text.margin.contents";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.margin.contents";
+					relative: 0.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 40 255 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+
+		//section layout for thumbnail
+		part {
+			name: "rect.thumbnail.list.1";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 70 70;
+				rel1 {
+					to_x:"margin.left.thumnail";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.left.thumnail";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.1.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 0;
+				rel1 {
+					to:"rect.thumbnail.list.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.thumbnail.list.1";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 8 0;
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.2";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 70 70;
+				rel1 {
+					to_x:"rect.thumbnail.list.1.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.thumbnail.list.1.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.2.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 0;
+				rel1 {
+					to:"rect.thumbnail.list.2";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.thumbnail.list.2";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 8 0;
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.3";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 70 70;
+				rel1 {
+					to_x:"rect.thumbnail.list.2.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.thumbnail.list.2.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.3.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 0;
+				rel1 {
+					to:"rect.thumbnail.list.3";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.thumbnail.list.3";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 8 0;
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.4";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 70 70;
+				rel1 {
+					to_x:"rect.thumbnail.list.3.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.thumbnail.list.3.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.4.padding";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 10 0;
+				rel1 {
+					to:"rect.thumbnail.list.4";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to:"rect.thumbnail.list.4";
+					relative: 1.0 1.0;
+				}
+				align: 0.0 0.0;
+#ifdef DEBUG
+				color: 0 0 0 255;
+#else
+				visible:0;
+#endif
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				min: 8 0;
+			}
+		}
+		part {
+			name: "rect.thumbnail.list.5";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 70 70;
+				rel1 {
+					to_x:"rect.thumbnail.list.4.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"rect.thumbnail.list.4.padding";
+					to_y:"margin.bottom";
+					relative: 1.0 0.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 255 0 0 255;
+#else
+				visible:0;
+#endif
+
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+		}
+
+		part{
+			name: "object.icon.background";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+			}
+		}
+		part{
+			name: "object.icon.bg";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.bg";}
+				rel2 {to: "rect.icon.bg";}
+				image {
+					normal:"quick_icon_bg_01.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "hide" 0.0;
+				inherit: "default" 0.0;
+				visible:0;
+			}
+		}
+		part{
+			name: "object.icon.bg.dim";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				image {
+					normal:"quick_image_dimmed_port.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:0;
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_image_dimmed_port.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:1;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_image_dimmed_land.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:1;
+			}
+		}
+		part{
+			name: "object.icon";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon";}
+				rel2 {to: "rect.icon";}
+			}
+		}
+		part{
+			name: "object.icon.sub.bg";
+			type:IMAGE;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.sub";}
+				rel2 {to: "rect.icon.sub";}
+				image {
+					normal:"quick_icon_bg_small.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				visible:0;
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "hide" 0.0;
+				inherit: "default" 0.0;
+				visible:0;
+			}
+		}
+		part{
+			name: "object.icon.sub";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.icon.sub";}
+				rel2 {to: "rect.icon.sub";}
+			}
+		}
+
+		//section thumbnail
+		part{
+			name: "object.thumbnail.list.1";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.thumbnail.list.1";}
+				rel2 {to: "rect.thumbnail.list.1";}
+			}
+		}
+		part{
+			name: "object.thumbnail.list.2";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.thumbnail.list.2";}
+				rel2 {to: "rect.thumbnail.list.2";}
+			}
+		}
+		part{
+			name: "object.thumbnail.list.3";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.thumbnail.list.3";}
+				rel2 {to: "rect.thumbnail.list.3";}
+			}
+		}
+		part{
+			name: "object.thumbnail.list.4";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.thumbnail.list.4";}
+				rel2 {to: "rect.thumbnail.list.4";}
+			}
+		}
+		part{
+			name: "object.thumbnail.list.5";
+			type:SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "rect.thumbnail.list.5";}
+				rel2 {to: "rect.thumbnail.list.5";}
+				visible: 0;
+			}
+			description {
+				state: "portrait" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "landscape" 0.0;
+				inherit: "default" 0.0;
+				visible: 1;
+			}
+		}
+
+		part {
+			name: "object.text.title";
+			scale: 1;
+			type: TEXTBLOCK;
+			effect: SOFT_SHADOW;
+			multiline: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.title";}
+				rel2 {to: "rect.text.title";}
+				text {
+					style: "notibox_title";
+					align: 0.0 0.0;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+			}
+		}
+
+		part {
+			name: "object.text.contents";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.contents";}
+				rel2 {to: "rect.text.contents";}
+				color: BOX_CONTENTS_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_CONTENTS_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_CONTENTS_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.text.contents.short";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.contents.short";}
+				rel2 {to: "rect.text.contents.short";}
+				color: BOX_CONTENTS_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_CONTENTS_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_CONTENTS_FONT_SIZE;
+					align: 0.0 0.5;
+				}
+			}
+		}
+
+		part {
+			name: "object.text.count";
+			scale: 1;
+			type: TEXT;
+			effect: SOFT_SHADOW;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.count";}
+				rel2 {to: "rect.text.count";}
+				color: BOX_INFO_COUNT_FONT_COLOR;
+				color2: BOX_FONT_SHADOW_COLOR;
+				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					font: BOX_INFO_COUNT_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: BOX_INFO_COUNT_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "3";
+#endif
+				}
+			}
+		}
+		part {
+			name: "object.layer.touch";
+			mouse_events: 1;
+			repeat_events: 1;
+			scale: 1;
+			type: RECT;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				color: 0 0 0 0;
+			}
+		}
+		part{
+			name: "object.button.close";
+			type:RECT;
+			scale:1;
+			description {
+				state: "default" 0.0;
+				min:64 64;
+				rel1 {
+					to: "rect.button.close";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to: "rect.button.close";
+					relative: 1.0 0.0;
+				}
+				align: 1.0 0.0;
+				color: 0 0 0 0;
+			}
+		}
+		part{
+			name: "object.image.button.close";
+			type:IMAGE;
+			scale:1;
+			repeat_events: 1;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.button.close";}
+				rel2 {to: "rect.button.close";}
+				image {
+					normal:"quick_btn_close_nor.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+			description {
+				state: "normal" 0.0;
+				inherit: "default" 0.0;
+			}
+			description {
+				state: "pressed" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_btn_close_press.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+			description {
+				state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				image {
+					normal:"quick_btn_close_dim.png";
+					border: 0 0 0 0;
+					border_scale: 1;
+				}
+				align: 0.0 1.0;
+			}
+		}
+	}
+
+	programs {
+		program {
+			name: "init.layout";
+			signal: "load";
+			source: "";
+			in: 0.0 0.0;
+			script{
+				init_variables();
+			}
+		}
+		program{
+			name: "box.show.dim";
+			signal: "box.show.dim";
+			source: "box.prog";
+			script {
+				set_int(g_is_show_dim_bg, 1);
+			}
+		}
+		program{
+			name: "box.hide.dim";
+			signal: "box.hide.dim";
+			source: "box.prog";
+			script {
+				set_int(g_is_show_dim_bg, 0);
+			}
+		}
+		program{
+			name: "box.portrait";
+			signal: "box.portrait";
+			source: "box.prog";
+			action: STATE_SET "portrait" 0.0;
+			target: "background";
+			target: "margin.left.thumnail";
+			target: "margin.right.thumnail";
+			target: "rect.thumbnail.list.1.padding";
+			target: "rect.thumbnail.list.2.padding";
+			target: "rect.thumbnail.list.3.padding";
+			target: "rect.thumbnail.list.4.padding";
+			target: "rect.thumbnail.list.5";
+			target: "object.thumbnail.list.5";
+			after: "box.portrait.custom";
+		}
+		program{
+			name: "box.landscape";
+			signal: "box.landscape";
+			source: "box.prog";
+			action: STATE_SET "landscape" 0.0;
+			target: "background";
+			target: "margin.left.thumnail";
+			target: "margin.right.thumnail";
+			target: "rect.thumbnail.list.1.padding";
+			target: "rect.thumbnail.list.2.padding";
+			target: "rect.thumbnail.list.3.padding";
+			target: "rect.thumbnail.list.4.padding";
+			target: "rect.thumbnail.list.5";
+			target: "object.thumbnail.list.5";
+			after: "box.landscape.custom";
+		}
+		program{
+			name: "box.portrait.custom";
+			source: "box.prog";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.icon.bg.dim", "portrait", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.landscape.custom";
+			source: "box.prog";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.icon.bg.dim", "landscape", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.touch.down";
+			signal: "mouse,clicked,1";
+			source: "object.layer.touch";
+			action: SIGNAL_EMIT "selected" "object.layer.touch";
+		}
+		program{
+			name: "box.button.close.1";
+			signal: "mouse,down,1";
+			source: "object.button.close";
+			script {
+				if (get_int(g_is_cloase_button_disabled) == 0) {
+					set_state(PART:"object.image.button.close", "pressed", 0.0);
+				}
+			}
+		}
+		program{
+			name: "box.button.close.2";
+			signal: "mouse,up,1";
+			source: "object.button.close";
+			script {
+				set_state(PART:"object.image.button.close", "normal", 0.0);
+			}
+		}
+		program{
+			name: "box.button.close.3";
+			signal: "mouse,clicked,1";
+			source: "object.button.close";
+			script {
+				if (get_int(g_is_cloase_button_disabled) == 0) {
+					set_state(PART:"object.image.button.close", "normal", 0.0);
+					emit("deleted", "object.layer.touch");
+				}
+			}
+		}
+		program{
+			name: "box.button.close.4";
+			signal: "disabled";
+			source: "object.button.close";
+			script {
+				set_state(PART:"object.image.button.close", "disabled", 0.0);
+				set_int(g_is_cloase_button_disabled, 1);
+			}
+		}
+		program{
+			name: "box.show.icon.bg";
+			signal: "box.show.icon.bg";
+			source: "box.prog";
+			action: STATE_SET "show" 0.0;
+			target: "object.icon.bg";
+		}
+		program{
+			name: "box.hide.icon.bg";
+			signal: "box.hide.icon.bg";
+			source: "box.prog";
+			action: STATE_SET "hide" 0.0;
+			target: "object.icon.bg";
+		}
+		program{
+			name: "box.show.icon.sub.bg";
+			signal: "box.show.sub.bg";
+			source: "box.prog";
+			action: STATE_SET "show" 0.0;
+			target: "object.icon.sub.bg";
+		}
+		program{
+			name: "box.hide.icon.sub.bg";
+			signal: "box.hide.sub.bg";
+			source: "box.prog";
+			action: STATE_SET "hide" 0.0;
+			target: "object.icon.sub.bg";
+		}
+	}
+}

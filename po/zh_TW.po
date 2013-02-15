@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "通知"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "僅限緊急通話"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "旋轉"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "通知 (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "震動"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "聲音與震動"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "自動旋轉"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "旋轉鎖定"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "大容量儲存裝置模式"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "停用"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "啟用"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "不支援"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "請插入 SIM 卡以存取網路服務"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "不再詢問"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "插入 SIM 卡並重新啟動裝置以使用網路共享"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "透過數據傳輸連線可能會產生額外費用。要繼續嗎？"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "自動"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "省電"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "網路共享"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "行動數據"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "駕駛模式"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "啟用飛航模式時無法連接行動網路。請連接 Wi-Fi 網路或停用飛航模式再重試"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi 網路共享會消耗更多電力並增加您的資料用量。繼續嗎？"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "停用網路共享以使用 Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "若要啟用省電模式，請至少啟用一項相關功能"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "關閉 Wi-Fi 以使用網路共享"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi - Fi和行動AP不能在同一時間被啟動。停用行動AP？"
+

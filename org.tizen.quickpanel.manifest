@@ -1,0 +1,23 @@
+<manifest>
+    <define>
+        <domain name="org.tizen.quickpanel"/>
+        <request>
+            <smack request="system::vconf" type="arwxt"/>
+            <smack request="system::homedir" type="arwxt"/>
+            <smack request="dbus" type="w"/>
+            <smack request="notification::db" type="rw"/>
+        </request>
+        <permit>
+            <smack permit="dbus" type="w"/>
+        </permit>
+    </define>
+    <assign>
+        <filesystem path="/usr/share/applications/org.tizen.quickpanel.desktop" label="_"/>
+        <filesystem path="/etc/init.d/quickpanel" label="_" exec_label="none"/>
+        <filesystem path="/etc/rc.d/rc3.d/S51quickpanel" label="_" exec_label="none"/>
+        <filesystem path="/etc/rc.d/rc5.d/S51quickpanel" label="_" exec_label="none"/>
+    </assign>
+    <request>
+        <domain name="org.tizen.quickpanel"/>
+    </request>
+</manifest>
