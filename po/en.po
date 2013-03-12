@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notifications"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Emergency calls only"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Rotation"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notifications (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibration"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Sound & vibration"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Auto rotation"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Rotation lock"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Mass storage mode"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Disable"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Enable"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Unsupported"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Insert SIM card to access network services"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Do not ask again"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Insert SIM card and restart device to use tethering"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Connecting via packet data may incur additional charges. Continue?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Auto"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Power saving"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Mobile data"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Driving mode"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Unable to connect to mobile networks while Flight mode is enabled. Connect to Wi-Fi network instead, or disable Flight mode and try again"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi tethering consumes more battery power and increases your data usage. Continue?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Disable tethering to use Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "To enable Power saving mode, enable at least one relevant function"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Turn off Wi-Fi to use tethering"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Both Wi-Fi and mobile AP cannot be activated at the same time. Deactivate mobile AP?"
+

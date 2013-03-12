@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Ειδοποιήσεις"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Μόνο επείγουσες κλήσεις"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Περιστρ."
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Ειδοποιήσεις (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Δόνηση"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Ήχος & δόνηση"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Αυτόμ. περιστρ."
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Κλείδ. περιστρ."
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Λειτ. μαζικής αποθήκευσης"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Απενεργ."
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Ενεργό"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Δεν υποστηρίζεται"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Εισάγετε την κάρτα SIM για παροχή πρόσβασης στις υπηρεσίες δικτύου"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Να μην ερωτηθώ ξανά"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Εισαγάγετε την κάρτα SIM και επανεκκινήστε τη συσκευή για να χρησιμοποιήσετε τη λειτουργία tethering"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Ενδέχεται να υπάρχουν επιπλέον χρεώσεις για τη σύνδεση μέσω πακέτου δεδομένων. Συνέχεια;"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Αυτόματο"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Εξοικονόμηση ενέργειας"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Δεδομ. κινητής συσκ."
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Λειτουργία οδήγησης"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Δεν είναι δυνατή η σύνδεση σε δίκτυα κινητής τηλεφωνίας όσο είναι ενεργοποιημένη η λειτουργία πτήσης. Συνδεθείτε σε δίκτυο Wi-Fi ή απενεργοποιήστε τη λειτουργία πτήσης και δοκιμάστε ξανά"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Το tethering μέσω Wi-Fi καταναλώνει περισσότερη ισχύ μπαταρίας και αυξάνει τη χρήση δεδομένων. Συνέχεια;"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Απενεργοποιήστε τη λειτουργία tethering για χρήση του Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Για την ενεργοποίηση της λειτουργίας εξοικονόμησης ενέργειας, ενεργοποιήστε τουλάχιστον μία σχετική λειτουργία"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Απενεργοποιήστε το Wi-Fi για χρήση της λειτουργίας tethering"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Τόσο το Wi-Fi όσο και το AP για κινητά δεν μπορούν να ενεργοποιηθούν ταυτόχρονα. Απενεργοποίηση AP για κινητά;"
+

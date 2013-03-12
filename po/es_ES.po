@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notificación"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Sólo llamadas de emergencia"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Rotación"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notificaciones (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibración"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Sonido y vibración"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Rotación autom"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Bloq rotación"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Modo almacenam masivo"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Desactiv"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Habilitar"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "No admitido"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "Ya no podrá utilizar aplicaciones de datos como el navegador, el correo electrónico o YouTube mediante la conexión móvil. Las llamadas y los mensajes de texto seguirán funcionando. ¿Continuar?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Inserte la tarjeta SIM para acceder a los servicios de red"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "No preguntar de nuevo"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Introduzca la tarjeta SIM y reinicie el dispositivo para utilizar anclaje a red"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "La conexión mediante paquetes de datos puede suponer gastos adicionales. ¿Continuar?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Auto"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Ahorro de energía"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Módem USB"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Datos móviles"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Modo de conducción"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "No se puede conectar a redes móviles mientras el modo Avión está activado. Conecte a una red Wi-Fi en su lugar o desactive el modo Avión y vuelva a intentarlo"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "El anclaje a red Wi-Fi consume mucha batería y aumenta el uso de datos. ¿Continuar?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Desactive el anclaje a red para usar Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Para habilitar el modo de ahorro de energía, active al menos una función relevante"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Apague el Wi-Fi para usar anclaje a red"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Las conexiones Wi-Fi y Mobile AP no se pueden activar al mismo tiempo. ¿Desactivar Mobile AP?"
+

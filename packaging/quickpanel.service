@@ -1,0 +1,12 @@
+
+[Unit]
+Description=Start the Quickpanel
+Before=core-efl.target
+After=xorg.target starter.service e17.service
+Requires=starter.service
+
+[Service]
+ExecStart=/usr/apps/org.tizen.quickpanel/bin/quickpanel
+
+[Install]
+WantedBy=tizen-mobile.target

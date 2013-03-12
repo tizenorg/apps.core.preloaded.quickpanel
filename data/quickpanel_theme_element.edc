@@ -1,0 +1,1454 @@
+#define SLIDER_INDICATOR_TEXT_COLOR_INC      255 255 255 255
+#define SLIDER_UNITS_TEXT_COLOR_INC      0 0 0 255
+#define SLIDER_UNITS_TEXT_SIZE_INC  30
+#define SLIDER_INDICATOR_TEXT_SIZE_INC  26
+#define SLIDER_BASE_HEIGHT_INC  16
+#define SLIDER_BASE_MIN_WIDTH_INC 375
+#define SLIDER_BASE_HEIGHT_INC  16
+#define SLIDER_SWALLOW_BAR_MIN_WIDTH_INC  20
+#define SLIDER_SWALLOW_BAR_HEIGHT_INC  72
+#define SLIDER_INDICATOR_MAX_WIDTH_INC 52
+#define SLIDER_INDICATOR_WIDTH_INC 52
+#define SLIDER_INDICATOR_HEIGHT_INC 72
+
+   group { name: "elm/slider/horizontal/indicator/default";
+           alias: "elm/slider/horizontal/indicator/disabled";
+           alias: "elm/slider/vertical/indicator/default";
+           alias: "elm/slider/vertical/indicator/disabled";
+           alias: "elm/slider/horizontal/indicator/tap_to_drag";
+      images {
+         image: "00_slider_handle.png" COMP;
+         image: "00_slider_handle_dim.png" COMP;
+         image: "00_slider_handle_press.png" COMP;
+      }
+      parts {
+         part { name: "button_events";
+            type: RECT;
+            mouse_events: 1;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               min: 2*SLIDER_INDICATOR_WIDTH_INC 1.5*SLIDER_INDICATOR_HEIGHT_INC;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               color: 0 0 0 0;
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "button0";
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               min: SLIDER_INDICATOR_WIDTH_INC SLIDER_INDICATOR_HEIGHT_INC;
+               max: SLIDER_INDICATOR_MAX_WIDTH_INC SLIDER_INDICATOR_HEIGHT_INC;
+               rel1 {
+                  to: "elm.indicator";
+                  offset: 0 0;
+               }
+               rel2 {
+                  to: "elm.indicator";
+                  offset: 0 0;
+               }
+               image {
+                  normal: "00_slider_handle.png";
+                  border: 1 1 1 1;
+                  border_scale: 1;
+               }
+            }
+            description { state: "pressed" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "00_slider_handle_press.png";
+               }
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "00_slider_handle_dim.png";
+               }
+            }
+         }
+         part { name: "elm.indicator";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               visible: 1;
+               color: SLIDER_INDICATOR_TEXT_COLOR_INC;
+               text {
+                  font: "Tizen:style=Medium";
+                  size: SLIDER_INDICATOR_TEXT_SIZE_INC;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "tizen";
+               }
+            }
+            description { state: "hide" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+             }
+         }
+      }
+      programs {
+         program { name: "set_val_show";
+            signal: "elm,state,val,show";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.indicator";
+         }
+         program { name: "set_val_hide";
+            signal: "elm,state,val,hide";
+            source: "elm";
+            action:  STATE_SET "hide" 0.0;
+            target: "elm.indicator";
+         }
+         program { name: "slider_disable";
+            signal: "elm,state,disabled";
+            source: "elm";
+            action:  STATE_SET "disabled" 0.0;
+            target: "button0";
+            target: "button_events";
+         }
+         program { name: "slider_enable";
+            signal: "elm,state,enabled";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "button0";
+            target: "button_events";
+         }
+         program { name: "mouse_down";
+            signal: "mouse,down,*";
+            source: "button_events";
+            action:  STATE_SET "pressed" 0.0;
+            target: "button0";
+         }
+         program { name: "mouse_up";
+            signal: "mouse,up,*";
+            source: "button_events";
+            action:  STATE_SET "default" 0.0;
+            target: "button0";
+         }
+      }
+   }
+
+   group { name: "elm/slider/horizontal/quickpanel";
+           alias: "elm/slider/horizontal/disabled";
+      images {
+         image: "00_progress_bg.png" COMP;
+         image: "00_progress_bar.png" COMP;
+      }
+      script {
+         public invert_on = 0;
+         public set_invert_on() {
+            set_state(PART:"level", "inverted", 0.0);
+            set_state(PART:"level2", "inverted", 0.0);
+            set_int(invert_on, 1);
+         }
+         public set_invert_off() {
+            set_state(PART:"level", "default", 0.0);
+            set_state(PART:"level2", "default", 0.0);
+            set_int(invert_on, 0);
+         }
+         public thumb_down() {
+            if(get_int(invert_on) == 0)
+               set_state(PART:"level", "pressed", 0.0);
+            else if(get_int(invert_on) == 1)
+               set_state(PART:"level2", "pressed", 0.0);
+            }
+         public thumb_up() {
+            if(get_int(invert_on) == 0)
+               set_state(PART:"level", "default", 0.0);
+            else if(get_int(invert_on) == 1)
+               set_state(PART:"level2", "inverted", 0.0);
+            }
+         }
+         parts {
+            part { name: "base";
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  max: 99999 SLIDER_BASE_HEIGHT_INC;
+                  rel1.to: "bg";
+                  rel2.to: "bg";
+                  image.normal: "00_progress_bg.png";
+                  image.border: 10 10 0 0;
+                  image.border_scale: 1;
+               }
+            }
+            part { name: "level";
+               mouse_events: 0;
+               scale: 1;
+               clip_to: "clipper";
+               description { state: "default" 0.0;
+                  fixed: 1 1;
+                  rel1.to: "base";
+                  rel2 {
+                     to_y: "base";
+                     to_x: "elm.dragable.slider";
+                     relative: 0.5 1.0;
+                  }
+                  image.normal: "00_progress_bar.png";
+                  image.border: 10 10 0 0;
+                  image.border_scale: 1;
+               }
+               description { state: "inverted" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 0;
+               }
+               description { state: "pressed" 0.0;
+                  inherit: "default" 0.0;
+                  image.normal: "00_progress_bar.png";
+               }
+            }
+            part { name: "level2";
+               mouse_events: 0;
+               scale: 1;
+               clip_to: "clipper";
+               description { state: "default" 0.0;
+                  fixed: 1 1;
+                  visible: 0;
+                  rel1 {
+                     to_y: "base";
+                     to_x: "elm.dragable.slider";
+                     relative: 0.5 0.0;
+                  }
+                  rel2.to: "base";
+                  image.normal: "00_progress_bar.png";
+                  image.border: 0 0 4 4;
+                  image.border_scale: 1;
+               }
+               description { state: "inverted" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+               }
+               description { state: "pressed" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+                  image.normal: "00_progress_bar.png";
+               }
+            }
+            part { name: "bg";
+               type: RECT;
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  rel1.to: "elm.swallow.bar";
+                  rel2.to: "elm.swallow.bar";
+               }
+            }
+            part { name: "elm.swallow.bar";
+               type: SWALLOW;
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_SWALLOW_BAR_MIN_WIDTH_INC SLIDER_SWALLOW_BAR_HEIGHT_INC;
+                  max: 99999 SLIDER_SWALLOW_BAR_HEIGHT_INC;
+                  align: 1.0 0.5;
+                  rel1 {
+                     to_x: "bar_left_padding";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     to_x: "bar_right_padding";
+                     relative: 0.0 1.0;
+                  }
+               }
+            }
+            part {
+               name: "bar_left_padding";
+               type: RECT;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  visible: 0;
+                  min: 16 0;
+                  fixed: 1 1;
+                  rel1 {
+                     relative: 1.0  0.5;
+                     to_x: "elm.text";
+                  }
+                  rel2 {
+                     relative: 1.0  0.5;
+                     to_x: "elm.text";
+                  }
+                  align: 0.0 0.5;
+               }
+            }
+            part {
+               name: "bar_right_padding";
+               type: RECT;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  visible: 0;
+                  min: 16 0;
+                  fixed: 1 1;
+                  rel1 {
+                     relative: 0.0  0.5;
+                     to_x: "elm.units";
+                  }
+                  rel2 {
+                     relative: 0.0  0.5;
+                     to_x: "elm.units";
+                  }
+                  align: 1.0 0.5;
+               }
+            }
+            part { name: "elm.swallow.icon";
+               type: SWALLOW;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  align: 0.0 0.5;
+                  rel1 {
+                     to_y: "elm.swallow.bar";
+                  }
+                  rel2 {
+                     relative: 0.0 1.0;
+                     to_y: "elm.swallow.bar";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+                  aspect: 1.0 1.0;
+                  aspect_preference: VERTICAL;
+               }
+            }
+            part { name: "elm.text";
+               type: TEXT;
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  fixed: 1 1;
+                  align: 0.0 0.5;
+                  rel1.to_x: "elm.swallow.icon";
+                  rel1.relative: 1.0 0.0;
+                  rel2.to_x: "elm.swallow.icon";
+                  color: SLIDER_UNITS_TEXT_COLOR_INC;
+                  text {
+                     font: "Tizen:style=Medium";
+                     size: SLIDER_UNITS_TEXT_SIZE_INC;
+                     min: 0 0;
+                     align: 0.0 0.5;
+                     text_class: "tizen";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+                  text.min: 1 1;
+               }
+            }
+            part { name: "elm.swallow.end";
+               type: SWALLOW;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  align: 1.0 0.5;
+                  rel1 {
+                     relative: 1.0 0.0;
+                     to_y: "elm.swallow.bar";
+                  }
+                  rel2 {
+                     relative: 1.0 1.0;
+                     to_y: "elm.swallow.bar";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+                  aspect: 1.0 1.0;
+                  aspect_preference: VERTICAL;
+               }
+            }
+            part { name: "units";
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  rel1 {
+                     to_x: "elm.units";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+               }
+            }
+            part { name: "elm.units";
+               type: TEXT;
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  fixed: 1 1;
+                  align: 1.0 0.5;
+                  rel1.to_x: "elm.swallow.end";
+                  rel2.relative: 0.0 1.0;
+                  rel2.to_x: "elm.swallow.end";
+                  color: SLIDER_UNITS_TEXT_COLOR_INC;
+                  text {
+                     font: "Tizen:style=Bold";
+                     size: SLIDER_UNITS_TEXT_SIZE_INC;
+                     min: 0 0;
+                     align: 0.0 0.5;
+                     text_class: "tizen";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  fixed: 1 1;
+                  visible: 1;
+                  text.min: 1 1;
+               }
+            }
+            part { name: "elm.dragable.slider";
+               type: GROUP;
+               source: "elm/slider/horizontal/indicator/default";
+               mouse_events: 1;
+               scale: 1;
+               dragable {
+                  x: 1 1 0;
+                  y: 0 0 0;
+                  confine: "bg";
+               }
+               description { state: "default" 0.0;
+                  min: SLIDER_INDICATOR_WIDTH_INC SLIDER_INDICATOR_HEIGHT_INC;
+                  fixed: 1 1;
+                  align: 0.5 0.5;
+                  color: 0 0 0 0;
+               }
+            }
+            part { name: "disabler";
+               type: RECT;
+               mouse_events: 1;
+               repeat_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  color: 0 0 0 0;
+               }
+               description { state: "disabled" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+               }
+            }
+            part { name: "clipper";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color: 255 255 255 255;
+               }
+               description { state: "disabled" 0.0;
+                  color: 255 255 255 102;
+               }
+            }
+         }
+         programs {
+            program { name: "text_show";
+            signal: "elm,state,text,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.text";
+         }
+         program { name: "text_hide";
+            signal: "elm,state,text,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.text";
+         }
+         program { name: "icon_show";
+            signal: "elm,state,icon,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.swallow.icon";
+         }
+         program { name: "icon_hide";
+            signal: "elm,state,icon,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.swallow.icon";
+         }
+         program { name: "end_show";
+            signal: "elm,state,end,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.swallow.end";
+         }
+         program { name: "end_hide";
+            signal: "elm,state,end,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.swallow.end";
+         }
+         program { name: "units_show";
+            signal: "elm,state,units,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.units";
+            target: "units";
+         }
+         program { name: "units_hide";
+            signal: "elm,state,units,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.units";
+            target: "units";
+         }
+         program { name: "invert_on";
+            signal: "elm,state,inverted,on";
+            source: "elm";
+            script {
+               set_invert_on();
+            }
+         }
+         program { name: "invert_off";
+            signal: "elm,state,inverted,off";
+            source: "elm";
+            script {
+               set_invert_off();
+            }
+         }
+         program { name: "val_show";
+            signal: "mouse,down,*";
+            source: "elm.dragable.slider";
+            script {
+               thumb_down();
+            }
+         }
+         program { name: "val_hide";
+            signal: "mouse,up,*";
+            source: "elm.dragable.slider";
+            script {
+               thumb_up();
+            }
+         }
+         program { name: "slider_disable";
+            signal: "elm,state,disabled";
+            source: "elm";
+            action:  STATE_SET "disabled" 0.0;
+            target: "disabler";
+            target: "clipper";
+         }
+         program { name: "slider_enable";
+            signal: "elm,state,enabled";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "disabler";
+            target: "clipper";
+         }
+      }
+   }
+
+#define CHECK_STATE_DEFAULT 0
+#define CHECK_STATE_VISIBLE 1
+#define CHECK_STATE_DISABLED_VISIBLE 2
+#define CHECK_STATE_DISABLED 3
+
+#define CHECK_DEFAULT_TEXT_NORMAL_COLOR_INC        50 50 50 255
+#define CHECK_DEFAULT_TEXT_PRESSED_COLOR_INC      248 246 239 255
+#define CHECK_DEFAULT_TEXT_DISABLED_COLOR_INC          50 50 50 76
+#define CHECK_DISCLIP_NORMAL_COLOR_INC             255 255 255 255
+#define CHECK_DISCLIP_DISABLED_COLOR_INC           255 255 255 76
+
+#define CHECK_HIDE 0
+#define CHECK_SHOW 1
+
+#define CHECK_STYLE_DEFAULT_BG_NORMAL_MIN_MAX_INC 48 48
+
+////////////////////////////////////////////////////////////////////////////////
+#define CHECK_STYLE_DEFAULT(style_name, min_width, min_height) \
+   group { name: "elm/check/base/"style_name; \
+      images { \
+         image: "00_check_bg.png" COMP; \
+         image: "00_check_bg_press.png" COMP; \
+         image: "00_check_bg_dim.png" COMP; \
+         image: "00_check_checking.png" COMP; \
+         image: "00_check_checking_dim.png" COMP; \
+      } \
+      script { \
+         public check_state = CHECK_STATE_DEFAULT; \
+         public check_visible = CHECK_HIDE; \
+      } \
+      parts { \
+         part { name: "back_bg"; \
+            type: RECT; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               rel2.relative: 0.0 1.0; \
+               align: 0 0.5; \
+               min: min_width min_height; \
+               fixed: 1 0; \
+               color: 0 0 0 0; \
+            } \
+         } \
+         part { name: "bg"; \
+            mouse_events: 0; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               min: CHECK_STYLE_DEFAULT_BG_NORMAL_MIN_MAX_INC; \
+               max: CHECK_STYLE_DEFAULT_BG_NORMAL_MIN_MAX_INC; \
+               fixed: 1 1; \
+               rel1.to: "back_bg"; \
+               rel2.to: "back_bg"; \
+               image.normal: "00_check_bg.png"; \
+               fill.smooth : 0; \
+            } \
+            description { state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+            } \
+            description { state: "pressed" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "00_check_bg_press.png"; \
+            } \
+            description { state: "disabled" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "00_check_bg_dim.png"; \
+            } \
+         } \
+         part { name: "check"; \
+            clip_to: "sequence_clip"; \
+            mouse_events: 0; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               rel1.to: "bg"; \
+               rel2.to: "bg"; \
+               visible: 0; \
+               image.normal: "00_check_checking.png"; \
+               color: 255 255 255 0; \
+            } \
+            description { state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               color: 255 255 255 255; \
+            } \
+            description { state: "disabled_visible" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               image.normal: "00_check_checking_dim.png"; \
+            } \
+         } \
+         part { name: "sequence_clip"; \
+            type: RECT; \
+            mouse_events: 0; \
+            description { state: "default" 0.0; \
+               rel2.relative: 0.0 1.0; \
+               color: 255 255 255 255; \
+            } \
+            description { state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+            } \
+         } \
+         part { name: "elm.swallow.content"; \
+            type: SWALLOW; \
+            clip_to: "disclip"; \
+            description { state: "default" 0.0; \
+               fixed: 1 0; \
+               visible: 0; \
+               align: 0.0 0.5; \
+               rel1 { \
+                  to_x: "bg"; \
+                  relative: 1.0 0.0; \
+                  offset: 1 1; \
+               } \
+               rel2 { \
+                  to_x: "bg"; \
+                  relative: 1.0 1.0; \
+                  offset: 2 -2; \
+               } \
+            } \
+            description { state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+               fixed: 1 1; \
+               visible: 1; \
+               aspect: 1.0 1.0; \
+               aspect_preference: VERTICAL; \
+            } \
+            description { state: "disabled" 0.0; \
+               inherit: "default" 0.0; \
+            } \
+            description { state: "disabled_visible" 0.0; \
+               inherit: "default" 0.0; \
+               fixed: 1 1; \
+               visible: 1; \
+               aspect: 1.0 1.0; \
+            } \
+         } \
+         part { name: "elm.text"; \
+            type: TEXTBLOCK; \
+            mouse_events: 0; \
+            clip_to: "disclip"; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               fixed: 0 1; \
+               rel1 { \
+                  relative: 1.0 0.5; \
+                  offset: 1 1; \
+                  to_x: "elm.swallow.content"; \
+               } \
+               rel2 { \
+                  relative: 1.0 0.5; \
+                  offset: -2 -2; \
+               } \
+               align: 0.0 0.5; \
+               text { \
+                  style: "check_label_textblock_style"; \
+                  min: 0 0; \
+               } \
+               color: CHECK_DEFAULT_TEXT_NORMAL_COLOR_INC; \
+            } \
+            description { state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               text.min: 1 1; \
+            } \
+            description { state: "disabled" 0.0; \
+               inherit: "default" 0.0; \
+            } \
+            description { state: "disabled_visible" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               text.min: 1 1; \
+               color: CHECK_DEFAULT_TEXT_DISABLED_COLOR_INC; \
+            } \
+         } \
+         part { name: "events1"; \
+            type: RECT; \
+            ignore_flags: ON_HOLD; \
+            description { state: "default" 0.0; \
+               color: 0 0 0 0; \
+            } \
+         } \
+         part { name: "events2"; \
+            type: RECT; \
+            repeat_events: 1; \
+            description { state: "default" 0.0; \
+               color: 0 0 0 0; \
+            } \
+         } \
+         part { name: "disclip"; \
+            type: RECT; \
+            mouse_events: 0; \
+            description { state: "default" 0.0; \
+               color: CHECK_DISCLIP_NORMAL_COLOR_INC; \
+            } \
+            description { state: "disabled" 0.0; \
+               inherit: "default" 0.0; \
+               color: CHECK_DISCLIP_DISABLED_COLOR_INC; \
+            } \
+         } \
+         part { name: "disabler"; \
+            type: RECT; \
+            description { state: "default" 0.0; \
+               color: 0 0 0 0; \
+               visible: 0; \
+            } \
+            description { state: "disabled" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+            } \
+         } \
+      } \
+      programs { \
+         program { name: "show"; \
+            signal: "show"; \
+            script { \
+               set_int(check_visible, CHECK_SHOW); \
+            } \
+         } \
+         program { name: "hide"; \
+            signal: "hide"; \
+            script { \
+               set_int(check_visible, CHECK_HIDE); \
+            } \
+         } \
+         program { name: "click"; \
+            signal: "mouse,clicked,1"; \
+            source: "events1"; \
+            action: SIGNAL_EMIT "elm,action,check,toggle" ""; \
+         } \
+         program { name: "bg_normal"; \
+            signal: "mouse,up,1"; \
+            source: "events2"; \
+            action: STATE_SET "default" 0.0; \
+            target: "bg"; \
+         } \
+         program { name: "pressed"; \
+            signal: "mouse,down,1"; \
+            source: "events2"; \
+            action: STATE_SET "pressed" 0.0; \
+            target: "bg"; \
+         } \
+         program { name: "mouse,out"; \
+            signal: "mouse,out"; \
+            source: "events2"; \
+            script { \
+               if (get_int(check_state) == CHECK_STATE_VISIBLE) \
+                 { \
+                    set_state(PART:"check", "visible", 0.0); \
+                    set_state(PART:"sequence_clip", "visible", 0.0); \
+                 } \
+               else \
+                 { \
+                    set_state(PART:"check", "default", 0.0); \
+                    set_state(PART:"sequence_clip", "default", 0.0); \
+                 } \
+            } \
+         } \
+         program { name: "check_on"; \
+            signal: "elm,state,check,on"; \
+            source: "elm"; \
+            script { \
+               set_int(check_state, CHECK_STATE_VISIBLE); \
+               if (get_int(check_visible) == CHECK_SHOW) \
+                 { \
+                    run_program(PROGRAM:"check_show_effect"); \
+                    run_program(PROGRAM:"check_draw_effect"); \
+                 } \
+               else \
+                 { \
+                    set_state(PART:"check", "visible", 0.0); \
+                    set_state(PART:"sequence_clip", "visible", 0.0); \
+                 } \
+            } \
+         } \
+         program { name: "check_off"; \
+            signal: "elm,state,check,off"; \
+            source: "elm"; \
+            action: STATE_SET "default" 0.0; \
+            target: "check"; \
+            script { \
+               if (get_int(check_state) == CHECK_STATE_VISIBLE) \
+                 { \
+                    set_int(check_state, CHECK_STATE_DEFAULT); \
+                    set_state(PART:"check", "default", 0.0); \
+                    set_state(PART:"sequence_clip", "default", 0.0); \
+                 } \
+            } \
+         } \
+         program { name: "check_show_effect"; \
+            action: STATE_SET "visible" 0.0; \
+            transition: LINEAR 0.233; \
+            target: "check"; \
+         } \
+         program { name: "check_draw_effect"; \
+            action: STATE_SET "visible" 0.0; \
+            transition: LINEAR 0.267; \
+            target: "sequence_clip"; \
+         } \
+         program { name: "text_show"; \
+            signal: "elm,state,text,visible"; \
+            source: "elm"; \
+            action: STATE_SET "visible" 0.0; \
+            target: "elm.text"; \
+         } \
+         program { name: "text_hide"; \
+            signal: "elm,state,text,hidden"; \
+            source: "elm"; \
+            action: STATE_SET "default" 0.0; \
+            target: "elm.text"; \
+         } \
+         program { name: "icon_show"; \
+            signal: "elm,state,icon,visible"; \
+            source: "elm"; \
+            action: STATE_SET "visible" 0.0; \
+            target: "elm.swallow.content"; \
+         } \
+         program { name: "icon_hide"; \
+            signal: "elm,state,icon,hidden"; \
+            source: "elm"; \
+            action: STATE_SET "default" 0.0; \
+            target: "elm.swallow.content"; \
+         } \
+         program { name: "disable"; \
+            signal: "elm,state,disabled"; \
+            source: "elm"; \
+            action: STATE_SET "disabled" 0.0; \
+            target: "disabler"; \
+            target: "disclip"; \
+            target: "bg"; \
+            after: "disable_text"; \
+         } \
+         program { name: "disable_text"; \
+            script { \
+               new st[31]; \
+               new Float:vl; \
+               get_state(PART:"elm.text", st, 30, vl); \
+               if (!strcmp(st, "visible")) \
+                 set_state(PART:"elm.text", "disabled_visible", 0.0); \
+               else \
+                 set_state(PART:"elm.text", "disabled", 0.0); \
+               get_state(PART:"elm.swallow.content", st, 30, vl); \
+               if (!strcmp(st, "visible")) \
+                 set_state(PART:"elm.swallow.content", "disabled_visible", 0.0); \
+               else \
+                 set_state(PART:"elm.swallow.content", "disabled", 0.0); \
+               get_state(PART:"check", st, 30, vl); \
+               if (!strcmp(st, "visible")) \
+                 { \
+                    set_state(PART:"check", "disabled_visible", 0.0); \
+                    set_int(check_state, CHECK_STATE_DISABLED_VISIBLE); \
+                 } \
+            } \
+         } \
+         program { name: "enable"; \
+            signal: "elm,state,enabled"; \
+            source: "elm"; \
+            action: STATE_SET "default" 0.0; \
+            target: "disabler"; \
+            target: "disclip"; \
+            target: "bg"; \
+            after: "enable_text"; \
+         } \
+         program { name: "enable_text"; \
+            script { \
+               new st[31]; \
+               new Float:vl; \
+               get_state(PART:"elm.text", st, 30, vl); \
+               if (!strcmp(st, "disabled_visible")) \
+                 set_state(PART:"elm.text", "visible", 0.0); \
+               else \
+                 set_state(PART:"elm.text", "default", 0.0); \
+               get_state(PART:"elm.swallow.content", st, 30, vl); \
+               if (!strcmp(st, "visible")) \
+                 set_state(PART:"elm.swallow.content", "visible", 0.0); \
+               else \
+                 set_state(PART:"elm.swallow.content", "default", 0.0); \
+               get_state(PART:"check", st, 30, vl); \
+               if (!strcmp(st, "disabled_visible")) \
+                 { \
+                    set_state(PART:"check", "visible", 0.0); \
+                    set_state(PART:"sequence_clip", "visible", 0.0); \
+                    set_int(check_state, CHECK_STATE_VISIBLE); \
+                 } \
+               else \
+                 set_int(check_state, CHECK_STATE_DEFAULT); \
+            } \
+         } \
+      } \
+   }\
+
+CHECK_STYLE_DEFAULT("quickpanel", 48, 48)
+
+#define PROGRESSBAR_STATUS_TEXT_FONT_SIZE_INC 20
+#define PROGRESSBAR_LIST_PROGRESS_STYLE_TEXT_COLOR_INC          128 128 128 255
+#define PROGRESSBAR_LIST_PROGRESS_STYLE_STATUS_TEXT_COLOR_INC          128 128 128 255
+#define PROGRESSBAR_LIST_PROGRESS_HEIGHT_INC 20
+
+   group { name: "elm/progressbar/horizontal/quickpanel/list_progress";
+      images {
+         image: "quick_progress.9.png" COMP;
+         image: "quick_progress_bg.9.png" COMP;
+      }
+      parts {
+         part { name: "elm.padding.left";
+            type: RECT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               min: 0 0;
+               fixed: 1 0;
+               rel1 {
+                  relative: 0.0  0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 0.0  1.0;
+                  offset: 0 0;
+               }
+               visible: 0;
+               align: 0.0 0.0;
+            }
+         }
+         part { name: "elm.padding.right";
+            type: RECT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               min: 0 0;
+               fixed: 1 0;
+               rel1 {
+                  relative: 1.0  0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset:   0   0;
+               }
+               visible: 0;
+               align: 1.0 0.0;
+            }
+         }
+         part { name: "elm.background.progressbar";
+            type: RECT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to_x: "elm.padding.left";
+                  relative: 1.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  to_x: "elm.padding.right";
+                  relative: 0.0 1.0;
+                  offset: 0 0;
+               }
+            }
+         }
+         part { name: "elm.swallow.bar";
+            mouse_events: 0;
+            scale: 1;
+            type: SWALLOW;
+            description {
+               min: 1 PROGRESSBAR_LIST_PROGRESS_HEIGHT_INC;
+               max: 99999 PROGRESSBAR_LIST_PROGRESS_HEIGHT_INC;
+               state: "default" 0.0;
+               rel1 {
+                  to: "elm.background.progressbar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "elm.background.progressbar";
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+         part { name: "elm.swallow.content";
+            type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               visible: 0;
+               align: 0.0 0.5;
+               rel1 {
+                  offset: 0 0;
+                  to_y: "elm.background.progressbar";
+               }
+               rel2 {
+                  offset: 0 -1;
+                  relative: 0.0 1.0;
+                  to_y: "elm.background.progressbar";
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               rel2.offset: 4 -1;
+            }
+         }
+         part { name: "elm.text";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               visible: 0;
+               fixed: 1 1;
+               align: 0.0 0.5;
+               rel1.to_x: "elm.swallow.content";
+               rel1.relative: 1.0 0.0;
+               rel2.to_x: "elm.swallow.content";
+               rel2.relative: 1.0 1.0;
+               color: PROGRESSBAR_LIST_PROGRESS_STYLE_TEXT_COLOR_INC;
+               text {
+                  font: "Tizen:style=Medium";
+                  size: PROGRESSBAR_STATUS_TEXT_FONT_SIZE_INC;
+                  min: 0 0;
+                  align: 0.0 0.5;
+                  text_class: "tizen";
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               text.min: 1 1;
+            }
+         }
+         part { name: "background";
+            mouse_events: 0;
+            scale: 1;
+            clip_to: "elm.background.progressbar";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "elm.swallow.bar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "elm.swallow.bar";
+                  relative: 1.0 1.0;
+               }
+               image {
+                  normal: "quick_progress_bg.9.png";
+                  border: 10 10 0 0;
+               }
+            }
+         }
+         part { name: "elm.text.status";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               rel1 {
+                  to: "background";
+                  relative: 0.5 0.5;
+               }
+               rel2 {
+                  to: "background";
+                  relative: 0.5 0.5;
+               }
+               text {
+                  font: "Tizen:style=Medium";
+                  size: PROGRESSBAR_STATUS_TEXT_FONT_SIZE_INC;
+                  min: 0 0;
+                  align: 0.5 0.0;
+                  text_class: "tizen";
+               }
+               color: PROGRESSBAR_LIST_PROGRESS_STYLE_TEXT_COLOR_INC;
+            }
+            description { state: "show" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               text.min: 1 1;
+            }
+         }
+         part { name: "elm.progress.progressbar";
+            mouse_events: 0;
+            scale: 1;
+            clip_to: "elm.background.progressbar";
+            description {
+               state: "default" 0.0;
+               min: 0 0;
+               fixed: 1 1;
+               rel1 {
+                  to: "elm.swallow.bar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_y: "elm.swallow.bar";
+                  to_x: "elm.cur.progressbar";
+                  offset: -1 -1;
+               }
+               image {
+                  normal: "quick_progress.9.png";
+                  border: 10 10 0 0;
+               }
+            }
+            description {
+               state: "invert" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  to_y: "elm.swallow.bar";
+                  to_x: "elm.cur.progressbar";
+               }
+               rel2 {
+                  to: "elm.swallow.bar";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "state_begin" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  to: "elm.swallow.bar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "elm.swallow.bar";
+                  relative: 0.1 1.0;
+               }
+            }
+            description {
+               state: "state_end" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  to: "elm.swallow.bar";
+                  relative: 0.9 0.0;
+               }
+               rel2 {
+                  to: "elm.swallow.bar";
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+         part { name: "text-bar";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            clip_to: "progress-rect";
+            //effect: SOFT_SHADOW;
+            scale: 0;
+            description { state: "default" 0.0;
+               align: 0.0 0.0;
+               fixed: 1 1;
+               visible: 0;
+               rel1.to: "elm.text.status";
+               rel1.offset: -1 -1;
+               rel2.to: "elm.text.status";
+               text {
+                  text_source: "elm.text.status";
+                  font: "Tizen:style=Medium";
+                  size: PROGRESSBAR_STATUS_TEXT_FONT_SIZE_INC;
+                  min: 0 0;
+                  align: 0.0 0.0;
+                  text_class: "tizen";
+               }
+               color: PROGRESSBAR_LIST_PROGRESS_STYLE_STATUS_TEXT_COLOR_INC;
+            }
+            description { state: "show" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               text.min: 1 1;
+            }
+         }
+         part { name: "elm.cur.progressbar";
+            mouse_events: 0;
+            scale: 1;
+            dragable {
+               confine: "background";
+               x: 1 1 1;
+               y: 0 0 0;
+            }
+            description { state: "default" 0.0;
+               min: 0 28;
+               fixed: 1 1;
+               visible: 0;
+               rel1 {
+                  to: "background";
+                  relative: 0 0;
+               }
+               rel2.to: "background";
+           }
+         }
+         part { name: "progress-rect";
+            type: RECT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.to: "elm.progress.progressbar";
+               rel2.to: "elm.progress.progressbar";
+            }
+         }
+      }
+      programs {
+         program { name: "label_show";
+            signal: "elm,state,text,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.text";
+         }
+         program { name: "label_hide";
+            signal: "elm,state,text,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.text";
+         }
+         program { name: "icon_show";
+            signal: "elm,state,icon,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.swallow.content";
+         }
+         program { name: "icon_hide";
+            signal: "elm,state,icon,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.swallow.content";
+         }
+         program { name: "units_show";
+            signal: "elm,state,units,visible";
+            source: "elm";
+            action:  STATE_SET "show" 0.0;
+            target: "text-bar";
+            target: "elm.text.status";
+         }
+         program { name: "units_hide";
+            signal: "elm,state,units,hidden";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "text-bar";
+            target: "elm.text.status";
+         }
+         program { name: "slide_to_end";
+            action:  STATE_SET "state_end" 0.0;
+            transition: LINEAR 0.5;
+            target: "elm.progress.progressbar";
+            after: "slide_to_begin";
+         }
+         program { name: "slide_to_begin";
+            signal: "elm,state,slide,begin";
+            action: STATE_SET "state_begin" 0.0;
+            target: "elm.progress.progressbar";
+            transition: LINEAR 0.5;
+            after: "slide_to_end";
+         }
+         program { name: "start_pulse";
+            signal: "elm,state,pulse,start";
+            source: "elm";
+           // after: "slide_to_end";
+         }
+         program { name: "stop_pulse";
+            signal: "elm,state,pulse,stop";
+            source: "elm";
+            action: ACTION_STOP;
+            target: "slide_to_begin";
+            target: "slide_to_end";
+            target: "start_pulse";
+            //after: "state_pulse";
+         }
+         program { name: "state_pulse";
+            signal: "elm,state,pulse";
+            source: "elm";
+            action: STATE_SET "state_begin" 0.0;
+            target: "elm.progress.progressbar";
+            after: "units_hide";
+         }
+         program { name: "state_fraction";
+            signal: "elm,state,fraction";
+            source: "elm";
+            action: ACTION_STOP;
+            target: "slide_to_begin";
+            target: "slide_to_end";
+            target: "start_pulse";
+            action: STATE_SET "default" 0.0;
+            target: "elm.progress.progressbar";
+         }
+         program { name: "set_invert_on";
+            signal: "elm,state,inverted,on";
+            source: "elm";
+            action:  STATE_SET "invert" 0.0;
+            target: "elm.progress.progressbar";
+         }
+         program { name: "set_invert_off";
+            signal: "elm,state,inverted,off";
+            source: "elm";
+            action:  STATE_SET "default" 0.0;
+            target: "elm.progress.progressbar";
+         }
+      }
+   }
+
+#define PROGRESSBAR_LIST_PENDING_HEIGHT_INC 20
+
+   group { name: "elm/progressbar/horizontal/quickpanel/pending_list";
+      images {
+         image: "quick_progress_unknown_port_01.png" COMP;
+         image: "quick_progress_unknown_port_02.png" COMP;
+      }
+      parts {
+         part { name: "elm.background.progressbar";
+            type: RECT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+         part { name: "elm.swallow.bar";
+            mouse_events: 0;
+            scale: 1;
+            type: SWALLOW;
+            description {
+               min: 1 PROGRESSBAR_LIST_PENDING_HEIGHT_INC;
+               max: 99999 PROGRESSBAR_LIST_PENDING_HEIGHT_INC;
+               state: "default" 0.0;
+               rel1 {
+                  to: "elm.background.progressbar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "elm.background.progressbar";
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+         part { name: "elm.progress.progressbar";
+            mouse_events: 0;
+            scale: 1;
+            clip_to: "elm.background.progressbar";
+            description {
+               state: "default" 0.0;
+               min: 0 0;
+               fixed: 1 1;
+               rel1 {
+                  to: "elm.swallow.bar";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "elm.swallow.bar";
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               image {
+                  normal: "quick_progress_unknown_port_01.png";
+                  border: 7 7 0 0;
+               }
+            }
+            description {
+               state: "state_begin" 0.0;
+               inherit: "default" 0.0;
+            }
+            description {
+               state: "state_end" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "quick_progress_unknown_port_02.png";
+                  border: 7 7 0 0;
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "slide_to_end";
+            action:  STATE_SET "state_end" 0.0;
+            in: 0.3 0.0;
+            target: "elm.progress.progressbar";
+            after: "slide_to_begin";
+         }
+         program { name: "slide_to_begin";
+            signal: "elm,state,slide,begin";
+            action: STATE_SET "state_begin" 0.0;
+            target: "elm.progress.progressbar";
+            in: 0.3 0.0;
+            after: "slide_to_end";
+         }
+         program { name: "start_pulse";
+            signal: "elm,state,pulse,start";
+            source: "elm";
+            after: "slide_to_end";
+         }
+         program { name: "stop_pulse";
+            signal: "elm,state,pulse,stop";
+            source: "elm";
+            action: ACTION_STOP;
+            target: "slide_to_begin";
+            target: "slide_to_end";
+            target: "start_pulse";
+            after: "init_pulse";
+         }
+         program { name: "init_pulse";
+            action: STATE_SET "default" 0.0;
+            target: "elm.progress.progressbar";
+         }
+      }
+   }

@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Ilmoitukset"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Vain hätäpuhelut"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Kierto"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Ilmoitukset (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Värinä"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Ääni ja värinä"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Autom. kierto"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Kierron lukitus"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Massamuistitila"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Ei käyt."
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Päälle"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Ei tuettu"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Pääset verkkopalveluihin asettamalla SIM-kortin paikalleen"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Älä kysy uudelleen"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Aseta SIM-kortti ja käynnistä laite uudelleen yhteyden jakamista varten"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Pakettidatan kautta yhdistämisestä voidaan periä lisämaksuja. Jatketaanko?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Automaattinen"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Virransäästö"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Yhteyden jako"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Mobiilidata"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Ajotila"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Matkapuhelinverkkoihin ei voi ottaa yhteyttä, kun lentotila on käytössä. Muodosta sen sijaan yhteys Wi-Fi-verkon kautta tai poista lentotila käytöstä ja yritä uudelleen"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi-yhteyden jakaminen kuluttaa enemmän virtaa ja lisää datan käyttöä. Jatketaanko?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Poista yhdistäminen käytöstä Wi-Fin käyttöä varten"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Jos haluat ottaa virransäästötilan käyttöön, ota ainakin yksi olennainen toiminto käyttöön"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Poista Wi-Fi käytöstä yhdistämisen käyttöä varten"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi-Fiä ja mobiilitukiasemaa ei voi ottaa käyttöön samaan aikaan. Haluatko poistaa mobiilitukiaseman käytöstä?"
+

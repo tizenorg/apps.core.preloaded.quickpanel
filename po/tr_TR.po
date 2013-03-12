@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Bildirimler"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Yalnızca acil aramalar"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Döndürme"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Bildirimler (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Titreşim"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Ses ve titreşim"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Otomatk döndürme"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Döndürme kilidi"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Yığın depolama modu"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Devre dışı"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Etkin"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Desteklenmiyor"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Şebeke servislerine erişmek için SIM kartını takın"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Tekrar sorma"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Bağlantıyı kullanmak için SIM kartı takın ve cihazı tekrar başlatın"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Paket verisi kanalıyla bağlanmak ek ücretlere neden olabilir devam edilsin mi?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Otomatik"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Güç tasarrufu"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Bağlantı"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Mobil veri"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Sürüş modu"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Uçuş modu etkinken, mobil ağlara bağlanamıyor. Bunun yerine Wi-Fi ağına bağlanın veya mobil veriyi devre dışı bırakın ve tekrar deneyin"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Wi-Fi bağlantısı daha fazla pil gücü tüketir ve veri kullanımınızı arttırır. Devam edilsin mi?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Wi-Fi'yi kullanmak için bağlanmayı devre dışı bırakın"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Güç tasarrufu modunu etkinleştirmek için en az bir uygun fonksiyonu etkinleştirin"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Bağlanmayı kullanmak için Wi-Fi'yi kapatın"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Hem Wi-Fi hem de Mobil AP aynı anda etkinleştirilemez. Mobil AP devre dışı bırakılsın mı?"
+

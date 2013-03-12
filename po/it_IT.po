@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notifiche"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Solo chiamate di emergenza"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Ruota"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notifiche (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibraz."
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Suono e vibraz."
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Rotazione\nauto"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Blocco rotazione"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Modalità archiv. di massa"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Disattiva"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Attiva"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Non supportato"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "Non sarà più possibile utilizzare applicazioni di dati quali Browser, E-mail e YouTube con rete mobile. Le chiamate e gli SMS continueranno a funzionare. Continuare?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Inserite una scheda SIM per accedere ai servizi di rete"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Non chiedere di nuovo"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Inserire la scheda SIM e riavviare il dispositivo per utilizzare il tethering"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "La connessione a pacchetti dati può determinare costi aggiuntivi. Continuare?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Automatica"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Risparmio energetico"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Connessione dati"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Modalità alla guida"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Impossibile connettersi alle reti mobili se la modalità Offline è attivata. Connettersi alla rete Wi-Fi o disattivare la modalità Offline e riprovare"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Il tethering Wi-Fi aumenta il consumo della batteria e l'uso dei dati. Continuare?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Per utilizzare il Wi-Fi, disattivate il tethering"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Per attivare la modalità Risparmio energetico, attivate almeno una funzione pertinente"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Per utilizzare il tethering, disattivate il Wi-Fi"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Impossibile attivare contemporaneamente sia Wi-Fi che Router Wi-Fi. Disattivare Router Wi-Fi?"
+

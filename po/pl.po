@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Powiadomienia"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Tylko połączenia alarmowe"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Obrót"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Powiadomienia (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Wibracja"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Dźwięk i wibracja"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Automat. obrót"
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Blokada obrotu"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Tryb pamięci masowej"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Wyłącz"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Włącz"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Nieobsługiwane"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Włóż kartę SIM, aby uzyskać dostęp do usług sieciowych"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Nie pokazuj ponownie"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Włóż kartę SIM i uruchom urządzenie ponownie, aby korzystać z udostępniania"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Połączenie przez sieć może spowodować naliczenie dodatkowych opłat. Kontynuować?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Automatyczny"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Oszczędzanie energii"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Udost. poł. internetowego"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Sieć komórkowa"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Tryb Samochód"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Kiedy tryb Offline jest włączony, nie można korzystać z sieci komórkowych. Połącz się z siecią Wi-Fi lub wyłącz tryb Offline i spróbuj ponownie"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "Router Wi-Fi zwiększa zużycie baterii i danych. Kontynuować?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Wyłącz router, aby korzystać z sieci Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Aby włączyć tryb Oszczędzanie energii, włącz przynajmniej jedną związaną z nim funkcję"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Wyłącz sieć Wi-Fi, aby korzystać z routera"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Sieć Wi-Fi i Router Wi-Fi nie mogą być uruchomione jednocześnie. Wyłączyć Router Wi-Fi?"
+

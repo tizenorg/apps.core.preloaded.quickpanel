@@ -1,0 +1,87 @@
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notificações"
+
+msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
+msgstr "AllShare Cast"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Apenas chamadas de emergência"
+
+msgid "IDS_QP_BUTTON_ROTATION"
+msgstr "Rotação"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
+msgstr "Notificações (%d)"
+
+msgid "IDS_QP_BUTTON_VIBRATION"
+msgstr "Vibração"
+
+msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
+msgstr "Som e vibração"
+
+msgid "IDS_QP_TAB4_AUTO_ROTATION"
+msgstr "Rotação autom."
+
+msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
+msgstr "Bloqueio rotação"
+
+msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
+msgstr "Modo armazenamento massa"
+
+msgid "IDS_QP_BUTTON_DISABLE"
+msgstr "Desactivar"
+
+msgid "IDS_QP_BUTTON_ENABLE"
+msgstr "Activar"
+
+msgid "IDS_COM_POP_UNSUPPORTED"
+msgstr "Não suportado"
+
+msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
+msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
+
+msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Insira o cartão SIM para aceder aos serviços de rede"
+
+msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
+msgstr "Não voltar a perguntar"
+
+msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
+msgstr "Inserir cartão SIM e reiniciar o dispositivo para utilizar a ancoragem"
+
+msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "O acesso à rede através de pacotes de dados pode implicar a cobrança de taxas adicionais. Continuar?"
+
+msgid "IDS_QP_BODY_AUTO"
+msgstr "Automático"
+
+msgid "IDS_QP_TAB_POWER_SAVING"
+msgstr "Economia de energia"
+
+msgid "IDS_QP_TAB_TETHERING"
+msgstr "Partilha de Internet"
+
+msgid "IDS_QP_TAB_MOBILE_DATA"
+msgstr "Dados móveis"
+
+msgid "IDS_QP_TAB_DRIVING_MODE"
+msgstr "Modo de condução"
+
+msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
+msgstr "Impossível ligar às redes móveis enquanto o modo de Voo está activado. Ligue à rede Wi-Fi em substituição ou desactive o modo de Voo e tente novamente"
+
+msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
+msgstr "A ancoragem Wi-Fi consome mais bateria e aumenta a utilização de dados. Continuar?"
+
+msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
+msgstr "Desactive a ancoragem para utilizar o Wi-Fi"
+
+msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Para activar o Modo de economia de energia, active pelo menos uma função relevante"
+
+msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
+msgstr "Desligar o Wi-Fi para utilizar a ancoragem"
+
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Impossível activar Wi-Fi e PA Móvel em simultâneo. Desactivar PA Móvel?"
+
