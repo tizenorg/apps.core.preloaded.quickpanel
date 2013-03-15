@@ -33,13 +33,15 @@
 static int quickpanel_minictrl_init(void *data);
 static int quickpanel_minictrl_fini(void *data);
 static unsigned int quickpanel_minictrl_get_height(void *data);
+static int quickpanel_minictrl_suspend(void *data);
+static int quickpanel_minictrl_resume(void *data);
 
 QP_Module minictrl = {
 	.name = "minictrl",
 	.init = quickpanel_minictrl_init,
 	.fini = quickpanel_minictrl_fini,
-	.suspend = NULL,
-	.resume = NULL,
+	.suspend = quickpanel_minictrl_suspend,
+	.resume = quickpanel_minictrl_resume,
 	.hib_enter = NULL,
 	.hib_leave = NULL,
 	.lang_changed = NULL,
@@ -59,6 +61,30 @@ struct _viewer_item {
 
 GHashTable *g_prov_table;
 
+static void _viewer_freeze(Evas_Object *viewer)
+{
+	int freezed_count = 0;
+	retif(viewer == NULL, , "Invalid parameter!");
+
+	freezed_count = elm_object_scroll_freeze_get(viewer);
+
+	if (freezed_count <= 0) {
+		elm_object_scroll_freeze_push(viewer);
+	}
+}
+
+static void _viewer_unfreeze(Evas_Object *viewer)
+{
+	int i = 0, freezed_count = 0;
+	retif(viewer == NULL, , "Invalid parameter!");
+
+	freezed_count = elm_object_scroll_freeze_get(viewer);
+
+	for (i = 0 ; i < freezed_count; i++) {
+		elm_object_scroll_freeze_pop(viewer);
+	}
+}
+
 static void _viewer_set_size(Evas_Object *viewer, void *data, int width, int height)
 {
 	retif(viewer == NULL, , "Invalid parameter!");
@@ -68,8 +94,6 @@ static void _viewer_set_size(Evas_Object *viewer, void *data, int width, int hei
 	struct appdata *ad = data;
 	int max_width = 0;
 	int resized_width = 0;
-
-	DBG("mini w:%d h:%d", width, height);
 
 	if (ad->angle == 90 || ad->angle == 270) {
 		max_width = (ad->scale * MINICONTROL_WIDTH_L_MAX) - 1;
@@ -218,6 +242,16 @@ qp_item_type_e _minictrl_priority_to_type(minicontrol_priority_e priority)
 	return type;
 }
 
+static void _minictrl_release_cb(void *data, Evas *e,
+		Evas_Object *obj, void *event_info) {
+	struct appdata *ad;
+	retif(!data, , "data is NULL");
+	ad = data;
+
+	DBG("");
+	_viewer_unfreeze(ad->list);
+}
+
 static void _minictrl_add(const char *name, unsigned int width,
 				unsigned int height,
 				minicontrol_priority_e priority,
@@ -267,6 +301,9 @@ static void _minictrl_add(const char *name, unsigned int width,
 		evas_object_del(viewer);
 		return;
 	}
+
+	evas_object_event_callback_add(viewer, EVAS_CALLBACK_MOUSE_UP,
+			_minictrl_release_cb, ad);
 
 	vit = malloc(sizeof(struct _viewer_item));
 	if (!vit) {
@@ -358,18 +395,24 @@ static void _minictrl_update(const char *name, unsigned int width,
 
 static void _minictrl_request(const char *name, int action, void *data)
 {
-	Ecore_X_Window xwin;
 	struct appdata *ad = NULL;
 	retif(!name, , "name is NULL");
 	retif(!data, , "data is NULL");
 	ad = data;
 
 	if (action == MINICONTROL_REQ_HIDE_VIEWER) {
-		xwin = elm_win_xwindow_get(ad->win);
-		if (xwin != 0) {
-			DBG("close by minictrl:%s", name);
-			debug_printf("close by minictrl:%s", name);
-			ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+		quickpanel_close_quickpanel(true);
+	}
+	if (action == MINICONTROL_REQ_FREEZE_SCROLL_VIEWER) {
+		if (ad->list != NULL) {
+			ERR("freezed by %s", name);
+			_viewer_freeze(ad->list);
+		}
+	}
+	if (action == MINICONTROL_REQ_UNFREEZE_SCROLL_VIEWER) {
+		if (ad->list != NULL) {
+			ERR("unfreezed by %s", name);
+			_viewer_unfreeze(ad->list);
 		}
 	}
 }
@@ -454,4 +497,29 @@ static unsigned int quickpanel_minictrl_get_height(void *data)
 	}
 
 	return height_minictrl;
+}
+
+static int quickpanel_minictrl_suspend(void *data)
+{
+	struct appdata *ad = data;
+	retif(ad == NULL, QP_FAIL, "Invalid parameter!");
+
+	if (ad->list != NULL) {
+		_viewer_unfreeze(ad->list);
+	}
+
+	return QP_OK;
+}
+
+static int quickpanel_minictrl_resume(void *data)
+{
+	int i = 0, freezed_count;
+	struct appdata *ad = data;
+	retif(ad == NULL, QP_FAIL, "Invalid parameter!");
+
+	if (ad->list != NULL) {
+		_viewer_unfreeze(ad->list);
+	}
+
+	return QP_OK;
 }

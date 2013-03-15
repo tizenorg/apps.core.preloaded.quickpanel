@@ -26,6 +26,7 @@
 
 #include "quickpanel-ui.h"
 #include "common.h"
+#include "noti.h"
 #include "noti_win.h"
 
 #define QP_TICKER_DURATION	5
@@ -33,6 +34,11 @@
 
 #define TICKER_MSG_LEN				1024
 #define DEFAULT_ICON ICONDIR		"/quickpanel_icon_default.png"
+
+#define FORMAT_1LINE "<font_size=29><color=#BABABA>%s</color></font>"
+#define FORMAT_2LINE "<font_size=26><color=#BABABA>%s</color></font><br><font_size=29><color=#F4F4F4>%s</color></font>"
+#define FORMAT_2LINE_SINGLE "<font_size=26><color=#BABABA>%s</color></font><br><font_size=29><color=#F4F4F4>%s %s</color></font>"
+#define FORMAT_2LINE_MULTI "<font_size=26><color=#BABABA>%s</color></font><br><font_size=29><color=#F4F4F4>%s %s</color></font>"
 
 static Evas_Object *g_window;
 static Evas_Object *g_ticker;
@@ -62,6 +68,94 @@ static int latest_inserted_time;
  * (Static) Util functions
  *
  *****************************************************************************/
+static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
+			const char *emission, const char *source) {
+	int ret = -1;
+	char *pkgname = NULL;
+	char *caller_pkgname = NULL;
+	bundle *args = NULL;
+	bundle *group_args = NULL;
+	bundle *single_service_handle = NULL;
+	bundle *multi_service_handle = NULL;
+	int flags = 0, group_id = 0, priv_id = 0, count = 0, flag_launch = 0,
+			flag_delete = 0;
+	notification_type_e type = NOTIFICATION_TYPE_NONE;
+	notification_h noti = NULL;
+	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
+
+	noti = data;
+	retif(noti == NULL, , "Invalid parameter!");
+
+	quickpanel_play_feedback();
+
+	if (vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &is_lock_launched) == 0) {
+		if (is_lock_launched == VCONFKEY_IDLE_LOCK) {
+			return ;
+		}
+	}
+
+	notification_get_pkgname(noti, &caller_pkgname);
+	notification_get_application(noti, &pkgname);
+	if (pkgname == NULL)
+		pkgname = caller_pkgname;
+
+	notification_get_id(noti, &group_id, &priv_id);
+	notification_get_property(noti, &flags);
+	notification_get_type(noti, &type);
+
+	if (flags & NOTIFICATION_PROP_DISABLE_APP_LAUNCH)
+		flag_launch = 0;
+	else
+		flag_launch = 1;
+
+	if (flags & NOTIFICATION_PROP_DISABLE_AUTO_DELETE)
+		flag_delete = 0;
+	else
+		flag_delete = 1;
+
+	notification_get_execute_option(noti,
+				NOTIFICATION_EXECUTE_TYPE_SINGLE_LAUNCH,
+				NULL, &single_service_handle);
+	notification_get_execute_option(noti,
+				NOTIFICATION_EXECUTE_TYPE_MULTI_LAUNCH,
+				NULL, &multi_service_handle);
+
+	if (flag_launch == 1) {
+		/* Hide quickpanel */
+		quickpanel_close_quickpanel(true);
+
+		if (group_id != NOTIFICATION_GROUP_ID_NONE)
+			notification_get_count(type,
+					caller_pkgname, group_id,
+					priv_id, &count);
+		else
+			count = 1;
+
+		if (count > 1 && multi_service_handle != NULL) {
+			ret = quickpanel_launch_app(NULL, multi_service_handle);
+			quickpanel_launch_app_inform_result(pkgname, ret);
+		} else if (single_service_handle != NULL) {
+			ret = quickpanel_launch_app(NULL, single_service_handle);
+			quickpanel_launch_app_inform_result(pkgname, ret);
+		} else {
+			notification_get_args(noti, &args, &group_args);
+
+			if (count > 1 && group_args != NULL) {
+				ret = quickpanel_launch_app(pkgname, group_args);
+				quickpanel_launch_app_inform_result(pkgname, ret);
+			} else {
+				ret = quickpanel_launch_app(pkgname, args);
+				quickpanel_launch_app_inform_result(pkgname, ret);
+			}
+		}
+	}
+
+	if (flag_delete == 1 && type == NOTIFICATION_TYPE_NOTI) {
+		notification_delete_by_priv_id(caller_pkgname,
+				NOTIFICATION_TYPE_NOTI,
+				priv_id);
+	}
+}
 
 static int _quickpanel_ticker_check_ticker_off(notification_h noti)
 {
@@ -205,79 +299,6 @@ static void _quickpanel_ticker_detail_show_cb(void *data, Evas *e,
 	DBG("");
 }
 
-static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
-					void *event_info)
-{
-	notification_h noti = (notification_h) data;
-	char *caller_pkgname = NULL;
-	char *pkgname = NULL;
-	bundle *args = NULL;
-	bundle *single_service_handle = NULL;
-	int priv_id = 0;
-	int flags = 0;
-	int ret = 0;
-	int val = 0;
-	int flag_launch = 0;
-	int flag_delete = 0;
-	int type = NOTIFICATION_TYPE_NONE;
-
-	DBG("");
-
-	retif(noti == NULL, , "Invalid parameter!");
-
-	/* Check idle lock state */
-	ret = vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &val);
-
-	/* If Lock state, there is not any action when clicked. */
-	if (ret != 0 || val == VCONFKEY_IDLE_LOCK)
-		return;
-
-	notification_get_pkgname(noti, &caller_pkgname);
-	notification_get_application(noti, &pkgname);
-	if (pkgname == NULL)
-		pkgname = caller_pkgname;
-
-	notification_get_id(noti, NULL, &priv_id);
-	notification_get_property(noti, &flags);
-	notification_get_type(noti, &type);
-
-	if (flags & NOTIFICATION_PROP_DISABLE_APP_LAUNCH)
-		flag_launch = 0;
-	else
-		flag_launch = 1;
-
-	if (flags & NOTIFICATION_PROP_DISABLE_AUTO_DELETE)
-		flag_delete = 0;
-	else
-		flag_delete = 1;
-
-	notification_get_execute_option(noti,
-				NOTIFICATION_EXECUTE_TYPE_SINGLE_LAUNCH,
-				NULL, &single_service_handle);
-
-	if (flag_launch == 1) {
-		if (single_service_handle != NULL)
-			appsvc_run_service(single_service_handle, 0, NULL,
-					   NULL);
-		else {
-			notification_get_args(noti, &args, NULL);
-			quickpanel_launch_app(pkgname, args);
-		}
-
-		/* Hide quickpanel */
-		Ecore_X_Window zone;
-		zone = ecore_x_e_illume_zone_get(elm_win_xwindow_get(g_window));
-		ecore_x_e_illume_quickpanel_state_send(zone,
-				ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-	}
-
-	if (flag_delete == 1 && type == NOTIFICATION_TYPE_NOTI) {
-		notification_delete_by_priv_id(caller_pkgname,
-						NOTIFICATION_TYPE_NOTI,
-						priv_id);
-	}
-}
-
 static void _quickpanel_ticker_button_clicked_cb(void *data, Evas_Object *obj,
 					void *event_info)
 {
@@ -335,17 +356,35 @@ static Evas_Object *_quickpanel_ticker_create_icon(Evas_Object *parent,
 	return icon;
 }
 
-static char *_quickpanel_ticker_get_label(notification_h noti)
+static inline char *_get_text(notification_h noti, notification_text_type_e text_type) {
+	time_t time = 0;
+	char *text = NULL;
+	char buf[TICKER_MSG_LEN] = { 0, };
+
+	if (notification_get_time_from_text(noti, text_type, &time) == NOTIFICATION_ERROR_NONE) {
+		if ((int)time > 0) {
+			quickpanel_noti_get_time(time, buf, sizeof(buf));
+			text = buf;
+		}
+	} else {
+		notification_get_text(noti, text_type, &text);
+	}
+
+	if (text != NULL)
+		return elm_entry_utf8_to_markup(text);
+
+	return NULL;
+}
+
+static char *_quickpanel_ticker_get_label_layout_default(notification_h noti)
 {
 	char buf[TICKER_MSG_LEN] = { 0, };
 	int len = 0;
 	char *domain = NULL;
 	char *dir = NULL;
-	char *result_title = NULL;
-	char *result_content = NULL;
 	char *title_utf8 = NULL;
 	char *content_utf8 = NULL;
-	notification_error_e noti_err = NOTIFICATION_ERROR_NONE;
+	char *event_count_utf8 = NULL;
 
 	retif(noti == NULL, NULL, "Invalid parameter!");
 
@@ -353,32 +392,32 @@ static char *_quickpanel_ticker_get_label(notification_h noti)
 	if (domain != NULL && dir != NULL)
 		bindtextdomain(domain, dir);
 
-	noti_err = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			&result_title);
-	if (noti_err == NOTIFICATION_ERROR_NONE && result_title)
-		title_utf8 = elm_entry_utf8_to_markup(result_title);
+	title_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE);
 
 	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
-		noti_err = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT_FOR_DISPLAY_OPTION_IS_OFF,
-				&result_content);
+		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT_FOR_DISPLAY_OPTION_IS_OFF);
 	}
 	else {
-		noti_err = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				&result_content);
+		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
 	}
 
-	if (noti_err == NOTIFICATION_ERROR_NONE && result_content)
-		content_utf8 = elm_entry_utf8_to_markup(result_content);
+	event_count_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT);
 
-	if (title_utf8 && content_utf8) {
-		len = snprintf(buf, sizeof(buf),
-			"<font_size=26><color=#BABABA>%s</color></font>"
-			"<br><font_size=29><color=#F4F4F4>%s</color></font>",
-			title_utf8, content_utf8);
-	} else if (title_utf8) {
-		len = snprintf(buf, sizeof(buf),
-			"<font_size=29><color=#BABABA>%s</color></font>",
-			title_utf8);
+	if (event_count_utf8 == NULL) {
+		if (title_utf8 && content_utf8) {
+			len = snprintf(buf, sizeof(buf),FORMAT_2LINE, title_utf8, content_utf8);
+		} else if (title_utf8) {
+			len = snprintf(buf, sizeof(buf),FORMAT_1LINE, title_utf8);
+		}
+	} else {
+		if (title_utf8 && content_utf8) {
+			if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1)
+				len = snprintf(buf, sizeof(buf),FORMAT_2LINE, title_utf8, content_utf8);
+			else
+				len = snprintf(buf, sizeof(buf),FORMAT_2LINE_MULTI, title_utf8, event_count_utf8, content_utf8);
+		} else if (title_utf8) {
+			len = snprintf(buf, sizeof(buf),FORMAT_1LINE, title_utf8);
+		}
 	}
 
 	if (title_utf8)
@@ -387,10 +426,100 @@ static char *_quickpanel_ticker_get_label(notification_h noti)
 	if (content_utf8)
 		free(content_utf8);
 
+	if (event_count_utf8)
+		free(event_count_utf8);
+
 	if (len > 0)
 		return strdup(buf);
 
 	return NULL;
+}
+
+static char *_quickpanel_ticker_get_label_layout_single(notification_h noti)
+{
+	char buf[TICKER_MSG_LEN] = { 0, };
+	int len = 0;
+	char *domain = NULL;
+	char *dir = NULL;
+	char *title_utf8 = NULL;
+	char *content_utf8 = NULL;
+	char *info_1_utf8 = NULL;
+	char *info_sub_1_utf8 = NULL;
+
+	retif(noti == NULL, NULL, "Invalid parameter!");
+
+	notification_get_text_domain(noti, &domain, &dir);
+	if (domain != NULL && dir != NULL)
+		bindtextdomain(domain, dir);
+
+	title_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE);
+
+	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
+		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT_FOR_DISPLAY_OPTION_IS_OFF);
+	}
+	else {
+		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
+	}
+
+	info_1_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_INFO_1);
+	info_sub_1_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1);
+
+	if (info_1_utf8 == NULL) {
+		if (title_utf8 && content_utf8) {
+			len = snprintf(buf, sizeof(buf),FORMAT_2LINE, title_utf8, content_utf8);
+		} else if (title_utf8) {
+			len = snprintf(buf, sizeof(buf),FORMAT_1LINE, title_utf8);
+		}
+	} else {
+		if (info_sub_1_utf8) {
+			if (content_utf8)
+				len = snprintf(buf, sizeof(buf), FORMAT_2LINE_SINGLE, content_utf8, info_1_utf8, info_sub_1_utf8);
+			else if (title_utf8)
+				len = snprintf(buf, sizeof(buf), FORMAT_2LINE_SINGLE, title_utf8, info_1_utf8, info_sub_1_utf8);
+		} else {
+			if (content_utf8)
+				len = snprintf(buf, sizeof(buf), FORMAT_2LINE, content_utf8, info_1_utf8);
+			else if (title_utf8)
+				len = snprintf(buf, sizeof(buf), FORMAT_2LINE, title_utf8, info_1_utf8);
+		}
+	}
+
+	if (title_utf8)
+		free(title_utf8);
+
+	if (content_utf8)
+		free(content_utf8);
+
+	if (info_1_utf8)
+		free(info_1_utf8);
+
+	if (info_sub_1_utf8)
+		free(info_sub_1_utf8);
+
+	if (len > 0)
+		return strdup(buf);
+
+	return NULL;
+}
+
+static char *_quickpanel_ticker_get_label(notification_h noti)
+{
+	char *result = NULL;
+	notification_ly_type_e layout;
+
+	retif(noti == NULL, NULL, "Invalid parameter!");
+
+	notification_get_layout(noti, &layout);
+
+	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
+		result = _quickpanel_ticker_get_label_layout_default(noti);
+	} else if (layout == NOTIFICATION_LY_NOTI_EVENT_SINGLE) {
+		result = _quickpanel_ticker_get_label_layout_single(noti);
+	} else {
+		result = _quickpanel_ticker_get_label_layout_default(noti);
+	}
+
+	return result;
 }
 
 static void _noti_hide_cb(void *data, Evas_Object *obj,
@@ -431,6 +560,8 @@ static Evas_Object *_quickpanel_ticker_create_tickernoti(void *data)
 	elm_layout_theme_set(detail, "tickernoti", "base", "default");
 	elm_object_signal_callback_add(detail, "request,hide", "",
 				_noti_hide_cb, noti);
+	elm_object_signal_callback_add(detail, "clicked", "",
+			_quickpanel_ticker_clicked_cb, noti);
 
 	data_win_height = (char *)elm_layout_data_get(detail, "height");
 	if (data_win_height != NULL && elm_config_scale_get() > 0.0)
@@ -674,9 +805,6 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 					g_ticker);
 		evas_object_event_callback_add(g_ticker, EVAS_CALLBACK_HIDE,
 					_quickpanel_ticker_detail_hide_cb,
-					noti);
-		evas_object_smart_callback_add(g_ticker, "clicked",
-					_quickpanel_ticker_clicked_cb,
 					noti);
 	}
 }

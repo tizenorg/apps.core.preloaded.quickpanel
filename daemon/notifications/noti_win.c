@@ -226,7 +226,6 @@ Evas_Object *noti_win_add(Evas_Object *parent)
 	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND,
 		EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(win, bg);
-	evas_object_show(bg);
 
 	_set_win_type_notification_level(win);
 

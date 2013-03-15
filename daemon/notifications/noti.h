@@ -16,5 +16,7 @@
 
 #ifndef __NOTI_H__
 #define __NOTI_H__
+
+#include "quickpanel-ui.h"
 char *quickpanel_noti_get_time(time_t t, char *buf, int buf_len);
 #endif

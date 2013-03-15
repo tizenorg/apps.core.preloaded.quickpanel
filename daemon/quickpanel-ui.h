@@ -18,6 +18,8 @@
 #define __QUICKPANEL_UI_H__
 
 #include <Elementary.h>
+#include <Ecore_X.h>
+#include <X11/Xatom.h>
 #include <player.h>
 
 #if !defined(VENDOR)
@@ -112,6 +114,7 @@ typedef struct _QP_Module {
 
 void quickpanel_player_play(sound_type_e sound_type, const char *sound_file);
 int quickpanel_launch_app(char *app_id, void *data);
+void quickpanel_launch_app_inform_result(const char *pkgname, int retcode);
 int quickpanel_ui_check_emul(void);
 void quickpanel_init_size_genlist(void *data);
 void quickpanel_ui_update_height(void *data);
@@ -119,5 +122,7 @@ void *quickpanel_get_app_data(void);
 Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load);
 void quickpanel_ui_set_indicator_cover(void *data);
+void quickpanel_close_quickpanel(bool is_check_lock);
+void quickpanel_play_feedback(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

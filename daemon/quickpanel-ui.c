@@ -20,9 +20,7 @@
 #include <system_info.h>
 #include <sys/utsname.h>
 #include <X11/Xlib.h>
-#include <X11/Xatom.h>
 #include <utilX.h>
-#include <Ecore_X.h>
 #include <Ecore_Input.h>
 #include <heynoti.h>
 #include <vconf.h>
@@ -30,11 +28,11 @@
 #include <privilege-control.h>
 #include <bundle.h>
 #include <feedback.h>
+#include <notification.h>
 
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "modules.h"
-#include "notifications/noti_display_app.h"
 #include "quickpanel_def.h"
 
 #define HIBERNATION_ENTER_NOTI	"HIBERNATION_ENTER"
@@ -53,6 +51,7 @@ struct appdata *g_app_data = NULL;
 #define QP_EMUL_STR		"Emulator"
 
 static int common_cache_flush(void *evas);
+static void _quickpanel_player_free(player_h *sound_player);
 
 /*****************************************************************************
   *
@@ -89,10 +88,6 @@ static Eina_Bool quickpanel_ui_refresh_cb(void *data)
 
 	INFO(" >>>>>>>>>>>>>>> Refresh QP modules!! <<<<<<<<<<<<<<<< ");
 	refresh_modules(data);
-
-	if (ad->list) {
-		elm_genlist_realized_items_update(ad->list);
-	}
 
 	quickpanel_init_size_genlist(ad);
 	quickpanel_ui_update_height(ad);
@@ -134,56 +129,10 @@ static int common_cache_flush(void *evas)
 	return QP_OK;
 }
 
-static int _resize_noti_win(void *data, int new_angle)
-{
-	struct appdata *ad = (struct appdata *)data;
-	int w = 0, h = 0;
-	int tot_h = 0;
-	int diff = 0;
-
-	diff = (ad->angle > new_angle) ?
-	    (ad->angle - new_angle) : (new_angle - ad->angle);
-
-#if 0
-	int tot_h = QP_HANDLE_H * ad->scale;
-
-	/* get indicator height */
-	ecore_x_e_illume_indicator_geometry_get(ecore_x_window_root_first_get(),
-						NULL, NULL, NULL, &h);
-	if (h <= 0)
-		h = (int)(QP_INDICATOR_H * ad->scale);
-
-	tot_h += h;
-	INFO("tot_h[%d], scale[%lf],indi[%d]", tot_h, ad->scale, h);
-#else
-	tot_h = 0;
-	INFO("tot_h[%d], scale[%lf]", tot_h, ad->scale);
-#endif
-
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-	if (diff % 180 != 0) {
-		int width = 0;
-		int height = 0;
-		if (ad->angle % 180 == 0) {
-			width = w - tot_h;
-			height = h;
-		} else {
-			width = h - tot_h;
-			height = w;
-		}
-		INFO("win[%dx%d], Resize[%dx%d] diff[%d], angle[%d]",
-			w, h, width, height, diff, ad->angle);
-		evas_object_resize(ad->win, (int)width-1, (int)height-1); //workaround
-		evas_object_resize(ad->win, (int)width, (int)height);
-	}
-	return 0;
-}
-
 static Eina_Bool quickpanel_hardkey_cb(void *data, int type, void *event)
 {
 	struct appdata *ad = NULL;
 	Ecore_Event_Key *key_event = NULL;
-	Ecore_X_Window xwin;
 
 	retif(data == NULL || event == NULL,
 		EINA_FALSE, "Invalid parameter!");
@@ -191,11 +140,61 @@ static Eina_Bool quickpanel_hardkey_cb(void *data, int type, void *event)
 	key_event = event;
 
 	if (!strcmp(key_event->keyname, KEY_SELECT)) {
-		xwin = elm_win_xwindow_get(ad->win);
-		if (xwin != 0)
-			ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+		quickpanel_close_quickpanel(false);
 	}
 	return EINA_FALSE;
+}
+
+static int _quickpanel_ui_rotation_get_angle(void *data)
+{
+	struct appdata *ad = (struct appdata *)data;
+	Ecore_X_Window xwin, root;
+	int ret = 0, angle = 0, count = 0;
+	unsigned char *prop_data = NULL;
+
+	retif(data == NULL, -1, "Invalid parameter!");
+
+	xwin = elm_win_xwindow_get(ad->win);
+	root = ecore_x_window_root_get(xwin);
+
+	ret = ecore_x_window_prop_property_get(root,
+				ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE,
+				ECORE_X_ATOM_CARDINAL, 32,
+				&prop_data, &count);
+
+	if (ret && prop_data) {
+		memcpy(&angle, prop_data, sizeof(int));
+
+		if (prop_data)
+			free(prop_data);
+
+		return angle;
+	} else {
+		ERR("Fail to get angle");
+		if (prop_data)
+			free(prop_data);
+
+		return -1;
+	}
+}
+
+static void _quickpanel_ui_rotation(void *data, int new_angle)
+{
+	struct appdata *ad = data;
+	retif(data == NULL, , "Invalid parameter!");
+
+	INFO("ROTATION: new:%d old:%d", new_angle, ad->angle);
+
+	if (new_angle == 0 || new_angle == 90 || new_angle == 180 || new_angle == 270) {
+		if (new_angle != ad->angle) {
+			elm_win_rotation_with_resize_set(ad->win,
+							 new_angle);
+			ad->angle = new_angle;
+
+			quickpanel_ui_set_indicator_cover(ad);
+			ecore_idler_add(quickpanel_ui_refresh_cb, ad);
+		}
+	}
 }
 
 static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
@@ -210,25 +209,18 @@ static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
 
 	if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE) {
 		new_angle = ev->data.l[0];
-
-		if (new_angle == 0 || new_angle == 90 || new_angle == 180 || new_angle == 270) {
-			if (new_angle != ad->angle) {
-				INFO("ROTATION: new:%d old:%d", new_angle, ad->angle);
-				_resize_noti_win(ad, new_angle);
-
-				elm_win_rotation_with_resize_set(ad->win,
-								 new_angle);
-				ad->angle = new_angle;
-
-				quickpanel_ui_set_indicator_cover(ad);
-			}
-		}
-		ecore_idler_add(quickpanel_ui_refresh_cb, ad);
+		_quickpanel_ui_rotation(ad, new_angle);
 	} else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) {
 		if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ON) {
 			qp_opened_modules(data);
+			if (g_sound_player != NULL) {
+				_quickpanel_player_free(&g_sound_player);
+			}
 		} else {
 			qp_closed_modules(data);
+			if (g_sound_player != NULL) {
+				_quickpanel_player_free(&g_sound_player);
+			}
 		}
 	}
 	return ECORE_CALLBACK_RENEW;
@@ -287,28 +279,12 @@ Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 	return eo;
 }
 
-static void _quickpanel_ui_close_quickpanel(void *data, Evas_Object *o,
-		const char *emission, const char *source) {
-
-	Ecore_X_Window xwin = 0;
-	struct appdata *ad = NULL;
-
-	retif(data == NULL, , "data is NULL");
-	ad = data;
-
-	DBG("close quick panel");
-
-	xwin = elm_win_xwindow_get(ad->win);
-
-	if (xwin != 0)
-		ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-}
-
 static int _quickpanel_ui_create_win(void *data)
 {
 	struct appdata *ad = data;
 	int w = 0;
 	int h = 0;
+	int initial_angle = 0;
 
 	retif(data == NULL, QP_FAIL, "Invialid parameter!");
 
@@ -353,19 +329,16 @@ static int _quickpanel_ui_create_win(void *data)
 		ad->evas = NULL;
 		return -1;
 	}
-	elm_genlist_homogeneous_set(ad->list, EINA_FALSE);
+	elm_genlist_homogeneous_set(ad->list, EINA_TRUE);
 	elm_scroller_policy_set(ad->list, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
 	elm_object_part_content_set(ad->ly, "qp.gl_base.gl.swallow", ad->list);
+	evas_object_show(ad->list);
 
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	evas_object_resize(ad->win, w, h);
 
 	ad->win_width = w;
 	ad->win_height = h;
-
-	edje_object_signal_callback_add(_EDJ(ad->ly),
-			"close.quickpanel", "*", _quickpanel_ui_close_quickpanel,
-			ad);
 
 	quickpanel_init_size_genlist(ad);
 
@@ -374,6 +347,8 @@ static int _quickpanel_ui_create_win(void *data)
 	/* key grab */
 	utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_SELECT, SHARED_GRAB);
 
+	initial_angle = _quickpanel_ui_rotation_get_angle(ad);
+	_quickpanel_ui_rotation(ad, initial_angle);
 	return 0;
 }
 
@@ -556,7 +531,7 @@ int quickpanel_launch_app(char *app_id, void *data)
 	int ret = SERVICE_ERROR_NONE;
 	service_h service = NULL;
 
-	retif(app_id == NULL, SERVICE_ERROR_INVALID_PARAMETER, "Invialid parameter!");
+	retif(app_id == NULL && data == NULL, SERVICE_ERROR_INVALID_PARAMETER, "Invialid parameter!");
 
 	ret = service_create(&service);
 	if (ret != SERVICE_ERROR_NONE) {
@@ -565,11 +540,15 @@ int quickpanel_launch_app(char *app_id, void *data)
 	}
 	retif(service == NULL, SERVICE_ERROR_INVALID_PARAMETER, "fail to create service handle!");
 
-	service_set_operation(service, SERVICE_OPERATION_DEFAULT);
-	service_set_app_id(service, app_id);
+	if (app_id != NULL) {
+		service_set_operation(service, SERVICE_OPERATION_DEFAULT);
+		service_set_app_id(service, app_id);
 
-	if (data != NULL) {
-		bundle_iterate((bundle *)data, _quickpanel_move_data_to_service, service);
+		if (data != NULL) {
+			bundle_iterate((bundle *)data, _quickpanel_move_data_to_service, service);
+		}
+	} else {
+		service_import_from_bundle(service, data);
 	}
 
 	ret = service_send_launch_request(service, NULL, NULL);
@@ -582,28 +561,64 @@ int quickpanel_launch_app(char *app_id, void *data)
 	return ret;
 }
 
+void quickpanel_launch_app_inform_result(const char *pkgname, int retcode)
+{
+	retif(retcode == SERVICE_ERROR_NONE, , "Invialid parameter!");
+	retif(pkgname == NULL && retcode != SERVICE_ERROR_APP_NOT_FOUND, , "Invialid parameter!");
+
+	const char *msg = NULL;
+
+	if (retcode == SERVICE_ERROR_APP_NOT_FOUND) {
+		notification_status_message_post(_S("IDS_COM_BODY_NO_APPLICATIONS_CAN_PERFORM_THIS_ACTION"));
+	} else {
+		Eina_Strbuf *strbuf = eina_strbuf_new();
+
+		if (strbuf != NULL) {
+			eina_strbuf_append_printf(strbuf, _S("IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"), pkgname);
+			eina_strbuf_append_printf(strbuf, "(%d)", retcode);
+			msg = eina_strbuf_string_get(strbuf);
+
+			if (msg != NULL) {
+				notification_status_message_post(msg);
+			}
+			eina_strbuf_free(strbuf);
+		}
+	}
+}
+
+static Eina_Bool _quickpanel_player_free_idler_cb(void *data)
+{
+	player_h *sound_player = data;
+	player_state_e state = PLAYER_STATE_NONE;
+
+	retif(data == NULL, QP_FAIL, "Invalid parameter!");
+
+	retif(sound_player == NULL, EINA_FALSE, "invalid parameter");
+	retif(*sound_player == NULL, EINA_FALSE, "invalid parameter");
+
+	if (player_get_state(*sound_player, &state) == PLAYER_ERROR_NONE) {
+
+		DBG("state of player %d", state);
+
+		if (state == PLAYER_STATE_PLAYING) {
+			player_stop(*sound_player);
+			player_unprepare(*sound_player);
+		}
+		if (state == PLAYER_STATE_READY) {
+			player_unprepare(*sound_player);
+		}
+	}
+	player_destroy(*sound_player);
+	*sound_player = NULL;
+
+	return EINA_FALSE;
+}
+
 static void _quickpanel_player_free(player_h *sound_player)
 {
 	retif(sound_player == NULL, , "invalid parameter");
 
-	player_state_e state = PLAYER_STATE_NONE;
-
-	if (*sound_player != NULL) {
-		if (player_get_state(*sound_player, &state) == PLAYER_ERROR_NONE) {
-
-			DBG("state of player %d", state);
-
-			if (state == PLAYER_STATE_PLAYING) {
-				player_stop(*sound_player);
-				player_unprepare(*sound_player);
-			}
-			if (state == PLAYER_STATE_READY) {
-				player_unprepare(*sound_player);
-			}
-		}
-		player_destroy(*sound_player);
-		*sound_player = NULL;
-	}
+	ecore_idler_add(_quickpanel_player_free_idler_cb, sound_player);
 }
 
 static void
@@ -741,6 +756,31 @@ void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
 			_quickpanel_player_timeout_cb, sound_player);
 }
 
+void quickpanel_play_feedback(void)
+{
+	int vib_status = 0;
+	int snd_status = 0;
+	int snd_disabled_status = 0;
+
+#ifdef VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS
+	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS, &snd_disabled_status);
+
+	if (!snd_disabled_status) {
+		vconf_get_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &snd_status);
+		if (snd_status)
+			feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
+	}
+#else
+	vconf_get_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &snd_status);
+	if (snd_status)
+		feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
+#endif
+
+	vconf_get_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, &vib_status);
+	if (vib_status)
+		feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_TOUCH_TAP);
+}
+
 static int _quickpanel_ui_delete_win(void *data)
 {
 	struct appdata *ad = data;
@@ -756,6 +796,41 @@ static int _quickpanel_ui_delete_win(void *data)
 	}
 
 	return QP_OK;
+}
+
+static void _quickpanel_ui_vconf_event_lcdoff_cb(keynode_t *node,
+						void *data)
+{
+	int ret = 0;
+	int pm_state = VCONFKEY_PM_STATE_NORMAL;
+
+	ret = vconf_get_int(VCONFKEY_PM_STATE, &pm_state);
+
+	if (ret == 0 && pm_state == VCONFKEY_PM_STATE_LCDOFF) {
+		quickpanel_close_quickpanel(false);
+	}
+}
+
+static void _quickpanel_ui_vconf_event_init(struct appdata *ad)
+{
+	int ret = 0;
+
+	ret = vconf_notify_key_changed(VCONFKEY_PM_STATE,
+			_quickpanel_ui_vconf_event_lcdoff_cb, ad);
+	if (ret != 0) {
+		ERR("VCONFKEY_PM_STATE: %d", ret);
+	}
+}
+
+static void _quickpanel_ui_vconf_event_fini(struct appdata *ad)
+{
+	int ret = 0;
+
+	ret = vconf_ignore_key_changed(VCONFKEY_PM_STATE,
+			_quickpanel_ui_vconf_event_lcdoff_cb);
+	if (ret != 0) {
+		ERR("VCONFKEY_PM_STATE: %d", ret);
+	}
 }
 
 static void _quickpanel_ui_init_heynoti(struct appdata *ad)
@@ -1008,9 +1083,9 @@ static void quickpanel_app_terminate(void *data)
 	feedback_deinitialize();
 
 	/* unregister system event callback */
-	_quickpanel_ui_fini_heynoti();
+	_quickpanel_ui_vconf_event_fini(ad);
 
-	notification_daemon_shutdown();
+	_quickpanel_ui_fini_heynoti();
 
 	_quickpanel_ui_fini_ecore_event(ad);
 
@@ -1074,12 +1149,11 @@ static void quickpanel_app_service(service_h service, void *data)
 	ret = _quickpanel_ui_create_win(ad);
 	retif(ret != QP_OK, , "Failed to create window!");
 
-	/* init internationalization */
-	notification_daemon_win_set(ad->win);
-
 	_quickpanel_ui_init_ecore_event(ad);
 
 	_quickpanel_ui_init_heynoti(ad);
+
+	_quickpanel_ui_vconf_event_init(ad);
 
 	feedback_initialize();
 
@@ -1106,6 +1180,31 @@ static void quickpanel_app_language_changed_cb(void *data)
 static void quickpanel_app_region_format_changed_cb(void *data)
 {
 	INFO(" >>>>>>>>>>>>>>> region_format CHANGED!! <<<<<<<<<<<<<<<< ");
+}
+
+void quickpanel_close_quickpanel(bool is_check_lock) {
+	Ecore_X_Window xwin;
+	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
+	struct appdata *ad = g_app_data;
+
+	DBG("");
+
+	retif(ad == NULL, , "Invalid parameter!");
+	retif(ad->win == NULL, , "Invalid parameter!");
+
+	xwin = elm_win_xwindow_get(ad->win);
+
+	if (is_check_lock == true) {
+		if (vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &is_lock_launched) == 0) {
+			if (is_lock_launched == VCONFKEY_IDLE_LOCK) {
+				vconf_set_int(VCONFKEY_IDLE_LOCK_STATE, VCONFKEY_IDLE_UNLOCK);
+				ERR("do unlock");
+			}
+		}
+	}
+
+	if (xwin != 0)
+		ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
 }
 
 int main(int argc, char *argv[])
@@ -1146,8 +1245,6 @@ int main(int argc, char *argv[])
 	app_callback.region_format_changed = quickpanel_app_region_format_changed_cb;
 
 	memset(&ad, 0x0, sizeof(struct appdata));
-
-	notification_daemon_init();
 
 	g_app_data = &ad;
 

@@ -126,11 +126,12 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 		}
 
 		elm_object_part_content_set(noti_box, part, content);
+		elm_object_signal_emit(noti_box, "object.show", part);
 	}
 }
 
 static int _set_text(Evas_Object *noti_box, notification_h noti,
-		notification_text_type_e text_type, const char *part) {
+		notification_text_type_e text_type, const char *part, int is_need_effect) {
 	char buf[128] = { 0, };
 
 	char *text = NULL;
@@ -146,7 +147,13 @@ static int _set_text(Evas_Object *noti_box, notification_h noti,
 	}
 
 	if (text != NULL) {
-		elm_object_part_text_set(noti_box, part, text);
+		if (strlen(text) > 0) {
+			elm_object_part_text_set(noti_box, part, text);
+			if (is_need_effect == 1)
+				elm_object_signal_emit(noti_box, "object.show.effect", part);
+			else
+				elm_object_signal_emit(noti_box, "object.show", part);
+		}
 
 		return strlen(text);
 	}
@@ -181,6 +188,10 @@ static int _check_image_null(notification_h noti,
 		return 1;
 	}
 
+	if (strncasecmp(image, "(null)", strlen(image)) == 0) {
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -190,29 +201,63 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 
 	char *dir = NULL;
 	char *domain = NULL;
+	int is_need_effect = 0;
+	int is_contents_only = 0;
+	int is_sub_info_1_only = 0;
+
+	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
+		is_need_effect = 1;
+	}
+
+	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+		is_contents_only = 1;
+	}
+
+	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) != 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+		is_sub_info_1_only = 1;
+	}
+
+	DBG("is_contents_only:%d is_sub_info_1_only:%d", is_contents_only, is_sub_info_1_only);
 
 	notification_get_text_domain(noti, &domain, &dir);
 	if (domain != NULL && dir != NULL)
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title");
-	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-			"object.text.contents");
+			"object.text.title", is_need_effect);
 
-	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
-		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
+	if (is_contents_only == 1) {
+		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
+				"object.text.contents.multiline", is_need_effect);
+	} else {
+		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
+				"object.text.contents", is_need_effect);
+
+		if (is_sub_info_1_only == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-					"object.text.info.1");
+										"object.text.info.1.multiline", is_need_effect);
 		} else {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-					"object.text.info.1.short");
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
-					"object.text.info.sub.1");
+			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
+				if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
+					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
+							"object.text.info.1", is_need_effect);
+				} else {
+					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
+							"object.text.info.1.short", is_need_effect);
+					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
+							"object.text.info.sub.1", is_need_effect);
+				}
+			}
+			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
+					"object.text.info.2", is_need_effect);
 		}
 	}
-	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-			"object.text.info.2");
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
@@ -249,47 +294,66 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 	char *dir = NULL;
 	char *domain = NULL;
 	char buf[128] = {0,};
+	int is_need_effect = 0;
+	int is_sub_info_1_only = 0;
+
+	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
+		is_need_effect = 1;
+	}
+
+	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) != 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+		is_sub_info_1_only = 1;
+	}
+
+	DBG("is_sub_info_1_only:%d", is_sub_info_1_only);
 
 	notification_get_text_domain(noti, &domain, &dir);
 	if (domain != NULL && dir != NULL)
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title");
+			"object.text.title", is_need_effect);
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 0) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents.short");
+				"object.text.contents.short", is_need_effect);
 		length = _set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT,
-				"object.text.count");
+				"object.text.count", is_need_effect);
 		length = (length >= 5) ? 5 : length;
 		snprintf(buf, sizeof(buf), "box.count.%d", length);
 		elm_object_signal_emit(noti_box, buf, "box.prog");
-		DBG("buf:%s", buf);
 	} else {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents");
+				"object.text.contents", is_need_effect);
 	}
 
-	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
-		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-					"object.text.info.1");
-		} else {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-					"object.text.info.1.short");
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
-					"object.text.info.sub.1");
+	if (is_sub_info_1_only == 1) {
+		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
+									"object.text.info.1.multiline", is_need_effect);
+	} else {
+		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
+			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
+						"object.text.info.1", is_need_effect);
+			} else {
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
+						"object.text.info.1.short", is_need_effect);
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
+						"object.text.info.sub.1", is_need_effect);
+			}
 		}
-	}
-	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 0) {
-		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-					"object.text.info.2");
-		} else {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-					"object.text.info.2.short");
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2,
-					"object.text.info.sub.2");
+		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 0) {
+			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
+						"object.text.info.2", is_need_effect);
+			} else {
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
+						"object.text.info.2.short", is_need_effect);
+				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2,
+						"object.text.info.sub.2", is_need_effect);
+			}
 		}
 	}
 
@@ -325,15 +389,21 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 
 	char *dir = NULL;
 	char *domain = NULL;
+	int is_need_effect = 0;
+
+	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0)
+		is_need_effect = 1;
+	else
+		is_need_effect = 0;
 
 	notification_get_text_domain(noti, &domain, &dir);
 	if (domain != NULL && dir != NULL)
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title");
+			"object.text.title", is_need_effect);
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-			"object.text.contents");
+			"object.text.contents", is_need_effect);
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,

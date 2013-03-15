@@ -59,7 +59,7 @@ typedef struct _brightness_ctrl_obj {
 	void *data;
 } brightness_ctrl_obj;
 
-brightness_ctrl_obj *g_ctrl_obj;
+static brightness_ctrl_obj *g_ctrl_obj;
 
 static void _brightness_vconf_cb(keynode_t *key, void* data) {
 	brightness_ctrl_obj *ctrl_obj = NULL;
@@ -210,6 +210,8 @@ static void _brightness_ctrl_checker_toggle_cb(void *data,
 								Evas_Object * obj,
 								void *event_info)
 {
+	quickpanel_play_feedback();
+
 	retif(obj == NULL, , "obj parameter is NULL");
 
 	int status = elm_check_state_get(obj);

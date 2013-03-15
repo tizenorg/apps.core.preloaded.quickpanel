@@ -19,163 +19,23 @@
 collections {
 	#include "quickpanel_theme_element.edc"
 
-	styles {
-		style {
-			name: "checkbox_text";
-			base: "font=Tizen:style=Regular text_class=tizen font_size=26 color=#FFFFFFFF ellipsis=0.0 wrap=mixed";
-		}
-		style {
-			name: "button_text";
-			base: "font=Tizen:style=Regular text_class=tizen align=center font_size=28 color=#FFFFFFFF ellipsis=0.0 wrap=mixed";
-		}
-	}
-
-	group { name: "elm/genlist/item/qp_item/default/default";
-
-		data.item: "stacking" "above";
-		data.item: "selectraise" "on";
-		data.item: "texts" "elm.text";
-		data.item: "contents" "elm.icon";
-		data.item: "treesize" "20";
-
-		parts {
-			part { name: "base";
-				type: RECT;
-				repeat_events: 1;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					min: 0 0;
-					color: QP_THEME_NOTI_BG_COLOR;
-				}
-			}
-
-			part { name: "bg_image";
-				clip_to: "disclip";
-				mouse_events: 0;
-				description {
-					state: "default" 0.0;
-					color: QP_THEME_NOTI_BG_COLOR;
-				}
-				description {
-					state: "selected" 0.0;
-					inherit: "default" 0.0;
-					color: QP_THEME_NOTI_BG_COLOR;
-				}
-			}
-			part { name: "elm.padding.left";
-				type: RECT;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					min: 0 0;
-					fixed: 1 0;
-					visible: 0;
-					rel2.relative: 0.0 1.0;
-					align: 0.0 0.0;
-				}
-			}
-
-			part { name: "elm.padding.right";
-				type: RECT;
-				scale: 1;
-				description { state: "default" 0.0;
-					min: 0 0;
-					fixed: 1 0;
-					visible: 0;
-					rel1.relative: 1.0  0.0;
-					align: 1.0 0.0;
-				}
-			}
-			part { name: "elm.padding.top";
-				type: RECT;
-				scale: 1;
-				description {
-				state: "default" 0.0;
-					min: 0 0;
-					fixed: 0 1;
-					visible: 0;
-					rel2.relative: 1.0 0.0;
-					align: 0.0 0.0;
-				}
-			}
-			part { name: "elm.padding.bottom";
-				type: RECT;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					min: 0 0;
-					fixed: 0 1;
-					visible: 0;
-					rel1.relative: 0.0 1.0;
-					align: 0.0 1.0;
-				}
-			}
-
-			part { name: "elm.icon";
-				clip_to: "disclip";
-				type: SWALLOW;
-				mouse_events: 1;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					align: 0.5 0.5;
-					rel1 {
-						relative: 1 1;
-						to_x: "elm.padding.left";
-						to_y: "elm.padding.top";
-					}
-					rel2 {
-						relative: 0 0;
-						to_x: "elm.padding.right";
-						to_y: "elm.padding.bottom";
-					}
-				}
-			}
-			part {
-				name: "disclip";
-				type: RECT;
-				description { state: "default" 0.0;
-					rel1.to: "base";
-					rel2.to: "base";
-				}
-				description { state: "disabled" 0.0;
-					inherit: "default" 0.0;
-					color: 255 255 255 64;
-				}
-			}
-
-      		}
-		programs {
-			program { name: "go_active";
-				signal: "elm,state,selected";
-				source: "elm";
-				action: STATE_SET "selected" 0.0;
-				target: "bg_image";
-			}
-			program { name: "go_passive";
-				signal: "elm,state,unselected";
-				source: "elm";
-				action: STATE_SET "default" 0.0;
-				target: "bg_image";
-				transition: LINEAR 0.1;
-			}
-			program { name: "go_disabled";
-				signal: "elm,state,disabled";
-				source: "elm";
-				action: STATE_SET "disabled" 0.0;
-				target: "disclip";
-			}
-			program { name: "go_enabled";
-				signal: "elm,state,enabled";
-				source: "elm";
-				action: STATE_SET "default" 0.0;
-				target: "disclip";
-			}
-		}
-	}
-
 	group { name: "elm/genlist/item/minicontrol/default/default";
+
+		styles {
+			style {
+				name: "checkbox_text";
+				base: "font=Tizen:style=Regular text_class=tizen font_size=26 color=#FFFFFFFF ellipsis=0.0 wrap=mixed";
+			}
+			style {
+				name: "button_text";
+				base: "font=Tizen:style=Regular text_class=tizen align=center font_size=28 color=#FFFFFFFF ellipsis=0.0 wrap=mixed";
+			}
+			style {
+				name: "ongoing_content_text";
+				base: "font=Tizen:style=Medium text_class=tizen align=left valign=top font_size=30 linegap=-6 ellipsis=1.0 color=#828384FF wrap=mixed";
+			}
+		}
+
 		alias: "elm/genlist/item_odd/minicontrol/default/default";
 
 		data.item: "stacking" "above";
@@ -196,7 +56,6 @@ collections {
 					visible: QP_THEME_BG_VISIBILITY;
 				}
 			}
-
 			part { name: "bg_image";
 				clip_to: "disclip";
 				mouse_events: 0;
@@ -210,39 +69,62 @@ collections {
 					color: QP_THEME_NOTI_BG_COLOR;
 				}
 			}
-			part { name: "elm.padding.left";
+			part { name: "elm.padding.top";
+				type: RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 0 20 + QP_THEME_LIST_ITEM_ONGOING_SEPERATOR_HEIGHT;
+					fixed: 0 1;
+					visible: 0;
+					rel1.relative: 0.0 0.0;
+					rel2.relative: 1.0 0.0;
+					align: 0.0 0.0;
+				}
+			}
+			part { name: "elm.padding.bottom";
+				type: RECT;
+				scale: 1;
+				description { state: "default" 0.0;
+					min: 0 25;
+					fixed: 0 1;
+					visible: 0;
+					rel1.relative: 0.0 1.0;
+					align: 0.0 1.0;
+				}
+			}
+			part { name: "elm.padding.left.bg";
 				type: RECT;
 				scale: 1;
 				description {
 					state: "default" 0.0;
 					min: 14 0;
 					fixed: 1 0;
-					rel1.relative: 0.0 1.0;
+					rel1.relative: 0.0 0.0;
 					rel2.relative: 0.0 1.0;
 					align: 0.0 0.0;
 					color: QP_THEME_BG_COLOR;
 					visible: QP_THEME_BG_VISIBILITY;
 				}
 			}
-			part { name: "elm.padding.right";
+			part { name: "elm.padding.right.bg";
 				type: RECT;
 				scale: 1;
 				description {
 					state: "default" 0.0;
 					min: 14 0;
 					fixed: 1 0;
-					rel1.relative: 1.0 1.0;
+					rel1.relative: 1.0 0.0;
 					rel2.relative: 1.0 1.0;
 					align: 1.0 0.0;
 					color: QP_THEME_BG_COLOR;
 					visible: QP_THEME_BG_VISIBILITY;
 				}
 			}
-			part { name: "elm.padding.top";
+			part { name: "elm.padding.top.bg";
 				type: RECT;
 				scale: 1;
-				description {
-				state: "default" 0.0;
+				description { state: "default" 0.0;
 					min: 0 QP_THEME_LIST_ITEM_MINICONTR_SEPERATOR_HEIGHT;
 					fixed: 0 1;
 					rel1.relative: 0.0 0.0;
@@ -252,21 +134,52 @@ collections {
 					visible: QP_THEME_BG_VISIBILITY;
 				}
 			}
-			part { name: "elm.padding.bottom";
+			part { name: "elm.content.bg";
 				type: RECT;
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 0 0;
-					fixed: 0 1;
-					rel1.relative: 0.0 1.0;
-					rel2.relative: 0.0 1.0;
-					align: 0.0 1.0;
-					color: QP_THEME_BG_COLOR;
-					visible: QP_THEME_BG_VISIBILITY;
+					rel1 {
+						to_x:"elm.padding.left.bg";
+						to_y:"elm.padding.top.bg";
+						relative: 1.0 1.0;
+					}
+					rel2 {
+						to_x:"elm.padding.right.bg";
+						to_y:"base";
+						relative: 0.0 1.0;
+					}
+					align: 0.0 0.0;
+					visible: 1;
+					color: QP_THEME_NOTI_BG_COLOR;
 				}
 			}
-
+			part { name: "elm.padding.left";
+				type: RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 28 0;
+					fixed: 1 0;
+					rel1.relative: 0.0 0.0;
+					rel2.relative: 0.0 1.0;
+					align: 0.0 0.0;
+					visible: 0;
+				}
+			}
+			part { name: "elm.padding.right";
+				type: RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 18 0;
+					fixed: 1 0;
+					rel1.relative: 1.0 0.0;
+					rel2.relative: 1.0 1.0;
+					align: 1.0 0.0;
+					visible: 0;
+				}
+			}
 			part { name: "elm.icon";
 				clip_to: "disclip";
 				type: SWALLOW;
@@ -276,14 +189,10 @@ collections {
 					state: "default" 0.0;
 					align: 0.0 0.0;
 					rel1 {
-						relative: 1.0 1.0;
-						to_x: "elm.padding.left";
-						to_y: "elm.padding.top";
+						to: "elm.content.bg";
 					}
 					rel2 {
-						relative: 0.0 0.0;
-						to_x: "elm.padding.right";
-						to_y: "elm.padding.bottom";
+						to: "elm.content.bg";
 					}
 				}
 			}
@@ -882,7 +791,7 @@ collections {
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 400 0;
+					min: 500 0;
 					fixed: 1 0;
 					rel1 {
 						to_x: "elm.padding.left";
@@ -913,6 +822,7 @@ collections {
 						text_class: "tizen";
 						size: QP_THEME_LIST_TITLE_FONT_SIZE;
 						align: 0.0 0.5;
+						ellipsis: 0.0;
 					}
 				}
 			}
@@ -959,9 +869,9 @@ collections {
 
 		data.item: "stacking" "above";
 		data.item: "selectraise" "on";
-		data.item: "texts" "elm.text.title elm.text.content elm.text.badge elm.text.time";
+		data.item: "texts" "elm.text.title elm.text.content elm.text.content.multiline elm.text.time";
 		data.item: "contents" "elm.swallow.icon elm.swallow.thumbnail elm.swallow.progress";
-		data.item: "states" "elm.text.content elm.text.time";
+		data.item: "states" "elm.text.content elm.text.content.multiline elm.text.time";
 
 		images {
 			image: "quick_icon_bg_02.png" COMP;
@@ -969,6 +879,7 @@ collections {
 
 		script {
 			public ctnt_shown;
+			public ctnt_multiline_shown;
 			public time_shown;
 		}
 
@@ -1014,6 +925,17 @@ collections {
 				scale: 1;
 				description { state: "default" 0.0;
 					min: 0 25;
+					fixed: 0 1;
+					visible: 0;
+					rel1.relative: 0.0 1.0;
+					align: 0.0 1.0;
+				}
+			}
+			part { name: "elm.padding.bottom.text";
+				type: RECT;
+				scale: 1;
+				description { state: "default" 0.0;
+					min: 0 0;
 					fixed: 0 1;
 					visible: 0;
 					rel1.relative: 0.0 1.0;
@@ -1131,7 +1053,6 @@ collections {
 					visible: 0;
 				}
 			}
-
 			part { name: "elm.rect.thumbnail";
 				clip_to: "disclip";
 				type: RECT;
@@ -1334,19 +1255,76 @@ collections {
 						font: "Tizen:style=Medium";
 						text_class: "tizen";
 						size: 30;
-						min: 1 0;
-						align: 0.0 0.0;
+						fit: 0 1;
+						ellipsis: 0.0;
+						size_range: 26 30;
+						align: 0.0 0.5;
 					}
+					visible: 0;
 				}
 				description { state: "show" 0.0;
 					inherit: "default" 0.0;
+					visible: 1;
 				}
 				description { state: "selected" 0.0;
 					inherit: "default" 0.0;
 					color: 130 131 132 255;
+					visible: 1;
 				}
 			}
-
+			part { name: "elm.rect.content.multiline";
+				clip_to: "disclip";
+				type: RECT;
+				mouse_events: 0;
+				scale: 1;
+				description { state: "default" 0.0;
+					align: 0.0 0.0;
+					min: 0 0;
+					fixed: 1 1;
+					rel1 {
+						relative: 1.0 1.0;
+						to_x: "elm.padding.left";
+						to_y: "elm.text.title";
+					}
+					rel2 {
+						relative: 0.0 0.0;
+						to_x: "elm.padding.after.icon.right";
+						to_y: "elm.padding.bottom.text";
+					}
+					visible: 0;
+				}
+			}
+			part { name: "elm.text.content.multiline";
+				clip_to: "disclip";
+				type: TEXTBLOCK;
+				mouse_events: 0;
+				scale: 1;
+				description { state: "default" 0.0;
+					align: 0.0 0.0;
+					fixed: 1 1;
+					rel1 {
+						to: "elm.rect.content.multiline";
+					}
+					rel2 {
+						to: "elm.rect.content.multiline";
+					}
+					text {
+							style: "ongoing_content_text";
+							align: 0.0 0.0;
+							fit: 0 0;
+					}
+					visible:0;
+				}
+				description { state: "show" 0.0;
+					inherit: "default" 0.0;
+					visible:1;
+				}
+				description { state: "selected" 0.0;
+					inherit: "default" 0.0;
+					color: 130 131 132 255;
+					visible: 1;
+				}
+			}
 			part { name: "elm.swallow.progress";
 				clip_to: "disclip";
 				type: SWALLOW;
@@ -1391,6 +1369,14 @@ collections {
 					set_int(ctnt_shown, 1);
 				}
 			}
+			program { name: "show_content_multiline";
+				signal: "elm,state,elm.text.content.multiline,active";
+				source: "elm";
+				script {
+					set_state(PART:"elm.text.content.multiline", "show", 0.0);
+					set_int(ctnt_multiline_shown, 1);
+				}
+			}
 			program { name: "go_active";
 				signal: "elm,state,selected";
 				source: "elm";
@@ -1399,7 +1385,9 @@ collections {
 					set_state(PART:"elm.text.title", "selected", 0.0);
 					set_state(PART:"elm.text.time", "selected", 0.0);
 					if (get_int(ctnt_shown) == 1)
-					set_state(PART:"elm.text.content", "selected", 0.0);
+						set_state(PART:"elm.text.content", "selected", 0.0);
+					if (get_int(ctnt_multiline_shown) == 1)
+						set_state(PART:"elm.text.content.multiline", "selected", 0.0);
 				}
 			}
 			program { name: "go_passive";
@@ -1410,7 +1398,9 @@ collections {
 					set_state(PART:"elm.text.title", "default", 0.0);
 					set_state(PART:"elm.text.time", "show", 0.0);
 					if (get_int(ctnt_shown) == 1)
-					set_state(PART:"elm.text.content", "show", 0.0);
+						set_state(PART:"elm.text.content", "show", 0.0);
+					if (get_int(ctnt_multiline_shown) == 1)
+						set_state(PART:"elm.text.content.multiline", "show", 0.0);
 				}
 			}
 			program { name: "go_disabled";
@@ -1657,8 +1647,9 @@ collections {
 					}
 				text {
 						style: "button_text";
+						size: 28;
 						align: 0.5 0.5;
-						fit: 0 1;
+						fit: 1 1;
 						size_range: 22 28;
 				}
 			}

@@ -4,8 +4,8 @@
 
 Name:       org.tizen.quickpanel
 Summary:    Quick Panel
-Version:    0.3.8
-Release:    1
+Version:    0.3.22
+Release:    2
 Group:      util
 License:    Flora Software License
 Source0:    %{name}-%{version}.tar.gz
@@ -80,7 +80,7 @@ vconftool set -t bool memory/private/%{name}/disable_ask 1 -i -u 5000
 vconftool set -t bool memory/private/%{name}/hotspot/enable_ask 1 -i -u 5000
 
 %files
-%manifest org.tizen.quickpanel.manifest
+%manifest %{name}.manifest
 %defattr(-,root,root,-)
 %attr(755,-,-) %{_sysconfdir}/init.d/quickpanel
 %attr(775,app,app) %{DATADIR}

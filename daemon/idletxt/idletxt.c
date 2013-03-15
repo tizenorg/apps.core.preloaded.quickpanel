@@ -18,7 +18,10 @@
 #include <vconf.h>
 #include "common.h"
 #include "quickpanel-ui.h"
+#include "quickpanel_def.h"
 
+#define QP_ENABLE_SLIDING_TEXT 0
+#define QP_ENABLE_SAT 0
 #define QP_IDLETXT_PART		"qp.noti.swallow.spn"
 
 #define QP_SPN_BASE_PART	"qp.base.spn.swallow"
@@ -98,6 +101,21 @@ static Evas_Object *_quickpanel_idletxt_create_label(Evas_Object * parent,
 
 	obj = elm_label_add(parent);
 	if (obj != NULL) {
+		struct appdata *ad = quickpanel_get_app_data();
+
+		if (ad != NULL)
+			elm_label_wrap_width_set(obj, QP_SPN_TEXT_W * ad->scale);
+		else
+			elm_label_wrap_width_set(obj, QP_SPN_TEXT_W);
+
+#if QP_ENABLE_SLIDING_TEXT
+		elm_label_slide_mode_set(obj, ELM_LABEL_SLIDE_MODE_AUTO);
+		elm_label_slide_duration_set(obj, 3);
+		elm_object_style_set(obj, "slide_bounce");
+#else
+		elm_label_ellipsis_set(obj, EINA_TRUE);
+#endif
+
 		elm_object_text_set(obj, buf);
 
 		evas_object_size_hint_weight_set(obj, EVAS_HINT_EXPAND,
@@ -184,9 +202,6 @@ static Evas_Object *_quickpanel_idletxt_add_label(Evas_Object * box,
 		obj = _quickpanel_idletxt_create_label(box, txt);
 
 		if (obj != NULL) {
-			if (len > QP_IDLETXT_SLIDE_LEN)
-				elm_label_slide_set(obj, EINA_TRUE);
-
 			return obj;
 		}
 	}
@@ -224,9 +239,6 @@ static Evas_Object *_quickpanel_idletxt_exception_add_label(Evas_Object * box)
 		obj = _quickpanel_idletxt_create_label(box, text);
 
 		if (obj != NULL) {
-			if (strlen(text) > QP_IDLETXT_SLIDE_LEN)
-				elm_label_slide_set(obj, EINA_TRUE);
-
 			return obj;
 		}
 	}
@@ -298,25 +310,26 @@ static Evas_Object *_quickpanel_idletxt_get_sat_text(Evas_Object * box)
 	return label;
 }
 
+static Eina_Bool _quickpanel_idletxt_button_clicked_timer_cb(void *data)
+{
+	quickpanel_launch_app(QP_SETTING_PKG_SETTING, NULL);
+	quickpanel_close_quickpanel(true);
+
+	return ECORE_CALLBACK_CANCEL;
+}
+
+
 static void _quickpanel_idletxt_button_clicked(void *data, Evas_Object * obj, void *event_info)
 {
 	struct appdata *ad = data;
+
+	quickpanel_play_feedback();
+
 	retif(obj == NULL, , "Invalid parameter!");
 	retif(ad == NULL, , "Invalid parameter!");
 	retif(ad->win == NULL, , "ad->win is NULL");
 
-	Ecore_X_Window zone;
-
-	if (ad->is_emul == 1)
-		quickpanel_launch_app(QP_SETTING_PKG_SETTING_EMUL, NULL);
-	else
-		quickpanel_launch_app(QP_SETTING_PKG_SETTING, NULL);
-
-	zone = ecore_x_e_illume_zone_get(elm_win_xwindow_get(ad->win));
-	ecore_x_e_illume_quickpanel_state_send(zone,
-			ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-
-	elm_object_signal_emit(obj, "elm,action,button,reset", "elm");
+	ecore_idler_add(_quickpanel_idletxt_button_clicked_timer_cb, NULL);
 }
 
 static void quickpanel_idletxt_update(void *data)
@@ -353,9 +366,11 @@ static void quickpanel_idletxt_update(void *data)
 		elm_box_pack_end(idletxtbox, label);
 
 	/* get sat idle text */
+#if QP_ENABLE_SAT
 	label = _quickpanel_idletxt_get_sat_text(idletxtbox);
 	if (label != NULL)
 		elm_box_pack_end(idletxtbox, label);
+#endif
 
 	if (button_settings == NULL) {
 		button_settings = elm_button_add(spn);
@@ -519,13 +534,56 @@ static int quickpanel_idletxt_fini(void *data)
 	return QP_OK;
 }
 
+#if QP_ENABLE_SLIDING_TEXT
+static Evas_Object *_quickpanel_spn_label_get(void *data)
+{
+	Evas_Object *spn = NULL;
+	Evas_Object *label = NULL;
+	Evas_Object *idletxtbox = NULL;
+	struct appdata *ad = NULL;
+	retif(!data, NULL, "Invalid parameter!");
+	ad = data;
+
+	retif(!ad->ly, NULL, "layout is NULL!");
+
+	spn = elm_object_part_content_get(ad->ly, QP_SPN_BASE_PART);
+	retif(!spn, NULL, "spn layout is NULL!");
+
+	idletxtbox = elm_object_part_content_get(spn, QP_SPN_BOX_PART);
+	retif(!idletxtbox, NULL, "idletxtbox is NULL!");
+
+	Eina_List *list = elm_box_children_get(idletxtbox);
+	retif(!list, NULL, "list is NULL!");
+
+	label = eina_list_nth(list, 0);
+
+	return label;
+}
+#endif
+
 static int quickpanel_idletxt_suspend(void *data)
 {
+#if QP_ENABLE_SLIDING_TEXT
+	Evas_Object *label = _quickpanel_spn_label_get(data);
+
+	if (label != NULL) {
+		elm_label_slide_mode_set(label, ELM_LABEL_SLIDE_MODE_NONE);
+	}
+#endif
+
 	return QP_OK;
 }
 
 static int quickpanel_idletxt_resume(void *data)
 {
+#if QP_ENABLE_SLIDING_TEXT
+	Evas_Object *label = _quickpanel_spn_label_get(data);
+
+	if (label != NULL) {
+		elm_label_slide_mode_set(label, ELM_LABEL_SLIDE_MODE_AUTO);
+	}
+#endif
+
 	return QP_OK;
 }
 
