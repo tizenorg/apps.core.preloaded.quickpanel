@@ -37,9 +37,6 @@ msgstr "Enable"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Unsupported"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Insert SIM card to access network services"
 
@@ -68,7 +65,7 @@ msgid "IDS_QP_TAB_DRIVING_MODE"
 msgstr "Driving mode"
 
 msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Unable to connect to mobile networks while Airplane mode is enabled. Connect to Wi-Fi network instead, or disable Airplane mode and try again"
+msgstr "Unable to connect to mobile networks while Airplane mode is enabled. Connect to Wi-Fi network instead, or disable Airplane mode and try again."
 
 msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
 msgstr "Wi-Fi tethering consumes more battery power and increases your data usage. Continue?"
@@ -84,4 +81,13 @@ msgstr "Turn off Wi-Fi to use tethering."
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Both Wi-Fi and Mobile AP cannot be activated at the same time. Deactivate Mobile AP?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Replace quick setting button"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Add quick setting button"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "You will no longer be able to use applications such as Internet and Email via mobile networks. Continue?"
 

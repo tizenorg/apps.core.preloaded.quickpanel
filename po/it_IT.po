@@ -37,9 +37,6 @@ msgstr "Attiva"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Non supportato"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "Non sarà più possibile utilizzare applicazioni di dati quali Browser, E-mail e YouTube con rete mobile. Le chiamate e gli SMS continueranno a funzionare. Continuare?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Inserite una scheda SIM per accedere ai servizi di rete"
 
@@ -53,7 +50,7 @@ msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTIN
 msgstr "La connessione a pacchetti dati può determinare costi aggiuntivi. Continuare?"
 
 msgid "IDS_QP_BODY_AUTO"
-msgstr "Automatica"
+msgstr "Auto"
 
 msgid "IDS_QP_TAB_POWER_SAVING"
 msgstr "Risparmio energetico"
@@ -84,4 +81,13 @@ msgstr "Per utilizzare il tethering, disattivate il Wi-Fi"
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Impossibile attivare contemporaneamente sia Wi-Fi che Router Wi-Fi. Disattivare Router Wi-Fi?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Sostituisce il pulsante di impostazione rapida"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Aggiungete il pulsante di impostazione rapida"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "Non potrete più utilizzare applicazioni quali Internet ed E-mail con connessione dati. Continuare?"
 

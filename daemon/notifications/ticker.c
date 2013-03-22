@@ -124,20 +124,33 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 		/* Hide quickpanel */
 		quickpanel_close_quickpanel(true);
 
-		if (group_id != NOTIFICATION_GROUP_ID_NONE)
-			notification_get_count(type,
-					caller_pkgname, group_id,
-					priv_id, &count);
-		else
-			count = 1;
+		char *text_count = NULL;
+		notification_get_text(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT, &text_count);
 
-		if (count > 1 && multi_service_handle != NULL) {
-			ret = quickpanel_launch_app(NULL, multi_service_handle);
-			quickpanel_launch_app_inform_result(pkgname, ret);
-		} else if (single_service_handle != NULL) {
+		if (text_count != NULL) {
+			count = atoi(text_count);
+		} else {
+			count = 1;
+		}
+
+		if (single_service_handle != NULL && multi_service_handle == NULL) {
 			ret = quickpanel_launch_app(NULL, single_service_handle);
 			quickpanel_launch_app_inform_result(pkgname, ret);
-		} else {
+		}
+		if (single_service_handle == NULL && multi_service_handle != NULL) {
+			ret = quickpanel_launch_app(NULL, multi_service_handle);
+			quickpanel_launch_app_inform_result(pkgname, ret);
+		}
+		if (single_service_handle != NULL && multi_service_handle != NULL) {
+			if (count <= 1) {
+				ret = quickpanel_launch_app(NULL, single_service_handle);
+				quickpanel_launch_app_inform_result(pkgname, ret);
+			} else {
+				ret = quickpanel_launch_app(NULL, multi_service_handle);
+				quickpanel_launch_app_inform_result(pkgname, ret);
+			}
+		}
+		if (single_service_handle == NULL && multi_service_handle == NULL) {
 			notification_get_args(noti, &args, &group_args);
 
 			if (count > 1 && group_args != NULL) {

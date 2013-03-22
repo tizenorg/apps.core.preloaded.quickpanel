@@ -37,9 +37,6 @@ msgstr "Aktiver"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Støttes ikke"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Sett inn SIM-kort for å få tilgang til nettverkstjenester"
 
@@ -56,7 +53,7 @@ msgid "IDS_QP_BODY_AUTO"
 msgstr "Auto"
 
 msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Strømsparing"
+msgstr "Strøm-\nsparing"
 
 msgid "IDS_QP_TAB_TETHERING"
 msgstr "Internettdeling"
@@ -84,4 +81,13 @@ msgstr "Slå av Wi-Fi for å bruke Internettdeling"
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Både Wi-Fi og mobilt tilgangspunkt kan ikke aktiveres samtidig. Deaktivere mobilt tilgangspunkt?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Bytt ut hurtiginnstillingsknapp"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Legg til en hurtiginnstillingsknapp"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "Du vil ikke lenger kunne bruke programmer som Internett og E-post via mobilnettverk. Fortsette?"
 

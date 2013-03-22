@@ -27,6 +27,7 @@
 #ifdef QP_MINICTRL_ENABLE
 extern QP_Module minictrl;
 #endif /* QP_MINICTRL_ENABLE */
+
 #ifdef QP_BRIGHTNESS_ENABLE
 /* brightness */
 extern QP_Module brightness_ctrl;

@@ -19,7 +19,7 @@
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "list_util.h"
-#include "quickpanel_theme_def.h"
+#include "quickpanel_def.h"
 #include "noti_gridbox.h"
 #include "noti_box.h"
 
@@ -93,8 +93,8 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 
 	n_children = eina_list_count(priv->children);
 	DBG("layout function:%d", n_children);
-	DBG("ref count:%p(%d)",o, evas_object_ref_get(o));
 	if (!n_children) {
+		evas_object_size_hint_min_set(o, -1, 0);
 		return;
 	}
 
@@ -170,7 +170,6 @@ Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 		elm_box_layout_set(gridbox, _gridbox_layout, info_layout_portrait,
 				NULL);
 
-	evas_object_ref(gridbox);
 	evas_object_show(gridbox);
 
 	evas_object_data_set(gridbox, E_DATA_LAYOUT_PORTRAIT, info_layout_portrait);
@@ -178,6 +177,10 @@ Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 			info_layout_landscape);
 	evas_object_data_set(gridbox, E_DATA_CB_DELETE_ITEM, NULL);
 	evas_object_data_set(gridbox, E_DATA_APP_DATA, ad);
+
+	qp_item_data *qid
+		= quickpanel_list_util_item_new(QP_ITEM_TYPE_NOTI, NULL);
+	quickpanel_list_util_item_set_tag(gridbox, qid);
 
 	return gridbox;
 }
@@ -196,7 +199,7 @@ void gridbox_remove(Evas_Object *gridbox) {
 	evas_object_data_del(gridbox, E_DATA_LAYOUT_LANDSCAPE);
 	evas_object_data_del(gridbox, E_DATA_CB_DELETE_ITEM);
 	evas_object_data_del(gridbox, E_DATA_APP_DATA);
-	evas_object_unref(gridbox);
+	quickpanel_list_util_item_del_tag(gridbox);
 	evas_object_del(gridbox);
 
 	if (info_layout_portrait != NULL)
@@ -266,11 +269,11 @@ static void _gridbox_remove_item_anim_cb(void *data, Elm_Transit *transit) {
 
 	DBG("remove:%p", info_animation->item);
 
+	void *node = noti_box_node_get(info_animation->item);
 	elm_box_unpack(info_animation->gridbox, info_animation->item);
-
-	_gridbox_call_item_deleted_cb(info_animation->gridbox,
-			noti_box_node_get(info_animation->item), info_animation->item);
 	noti_box_remove(info_animation->item);
+	_gridbox_call_item_deleted_cb(info_animation->gridbox,
+			node, NULL);
 
 	if (info_animation->update_cb != NULL) {
 		retif(info_animation->container == NULL, , "invalid parameter");
@@ -315,10 +318,11 @@ void gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_anima
 				info_animation);
 		elm_transit_go(transit);
 	} else {
-		_gridbox_call_item_deleted_cb(gridbox,
-				noti_box_node_get(item), item);
+		void *node = noti_box_node_get(item);
 		elm_box_unpack(gridbox, item);
 		noti_box_remove(item);
+		_gridbox_call_item_deleted_cb(gridbox,
+				node, NULL);
 	}
 }
 

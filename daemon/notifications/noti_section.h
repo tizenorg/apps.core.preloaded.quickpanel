@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-#ifndef __NOTI_H__
-#define __NOTI_H__
+#ifndef __QUICKPANEL_NOTI_SECTION_H__
+#define __QUICKPANEL_NOTI_SECTION_H__
 
-#include "quickpanel-ui.h"
+Evas_Object *noti_section_create(Evas_Object *parent);
+void noti_section_update(Evas_Object *noti_section, int noti_count);
+void noti_section_remove(Evas_Object *noti_section) ;
 
-#define NOTI_PRESS_BG 0
-#define NOTI_PRESS_BUTTON_1 1
-char *quickpanel_noti_get_time(time_t t, char *buf, int buf_len);
 #endif

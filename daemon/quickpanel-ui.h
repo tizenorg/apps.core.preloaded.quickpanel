@@ -66,6 +66,7 @@ struct appdata {
 	Evas_Object *ly;
 	Evas *evas;
 
+	Evas_Object *scroller;
 	Evas_Object *list;
 	int angle;
 	double scale;
@@ -78,7 +79,7 @@ struct appdata {
 	int gl_distance_to_bottom;
 
 	int is_emul; /* 0 : target, 1 : emul */
-	int show_setting;
+	int is_suspended;
 
 	Ecore_Event_Handler *hdl_client_message;
 	Ecore_Event_Handler *hdl_hardkey;
@@ -115,10 +116,11 @@ typedef struct _QP_Module {
 void quickpanel_player_play(sound_type_e sound_type, const char *sound_file);
 int quickpanel_launch_app(char *app_id, void *data);
 void quickpanel_launch_app_inform_result(const char *pkgname, int retcode);
-int quickpanel_ui_check_emul(void);
+int quickpanel_is_emul(void);
 void quickpanel_init_size_genlist(void *data);
 void quickpanel_ui_update_height(void *data);
 void *quickpanel_get_app_data(void);
+int quickpanel_is_suspended(void);
 Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load);
 void quickpanel_ui_set_indicator_cover(void *data);

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ *  http://www.tizenopensource.org/license
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS,
@@ -24,6 +24,7 @@
 
 #define E_DATA_NOTI_BOX_H "noti_box"
 #define E_DATA_CB_SELECTED_ITEM "noti_box_cb_selected"
+#define E_DATA_CB_BUTTON_1 "noti_box_cb_button_1"
 #define E_DATA_CB_DELETED_ITEM "noti_box_cb_deleted"
 
 typedef struct _noti_box_h {
@@ -38,6 +39,8 @@ void *noti_box_node_get(Evas_Object *noti_box);
 void noti_box_remove(Evas_Object *noti_box);
 void noti_box_set_item_selected_cb(Evas_Object *noti_box,
 		void(*selected_cb)(void *data, Evas_Object *obj));
+void noti_box_set_item_button_1_cb(Evas_Object *noti_box,
+		void(*button_1_cb)(void *data, Evas_Object *obj));
 void noti_box_set_item_deleted_cb(Evas_Object *noti_box,
 		void(*deleted_cb)(void *data, Evas_Object *obj));
 int noti_box_get_status(Evas_Object *noti_box);

@@ -37,9 +37,6 @@ msgstr "Увімкнути"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Не підтримується"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "You will no longer be able to use data applications such as Browser, Email and YouTube via mobile network. Calls and text messages will continue to function. Continue?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Щоб отримати доступ до послуг мережі, вставте SIM-картку"
 
@@ -84,4 +81,13 @@ msgstr "Вимкніть Wi-Fi, щоб скористатися прив'язк�
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Мережі Wi-Fi та Mobile AP не можна активувати одночасно. Вимкнути Mobile AP?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Замінити кнопку установок панелі швидкого доступу"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Додати кнопку швидкого доступу до установок"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "Більше не можна буде використовувати такі послуги, як доступ до Інтернету та обмін повідомленнями Email через мобільні мережі. Продовжити?"
 

@@ -20,16 +20,11 @@
 #include "common.h"
 #include "list_util.h"
 
+#define E_DATA_ITEM_LABEL_H "QP_ITEM_DATA"
+
 struct _qp_item_data {
 	qp_item_type_e type;
 	void *data;
-};
-
-static qp_item_count g_qp_item_count = {
-	.group = 0,
-	.ongoing = 0,
-	.noti = 0,
-	.minicontrol = 0,
 };
 
 qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
@@ -48,16 +43,24 @@ qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
 	return qid;
 }
 
-qp_item_type_e quickpanel_list_util_item_get_item_type(qp_item_data *qid)
+void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid)
 {
-	qp_item_type_e item_type = QP_ITEM_TYPE_NONE;
+	retif(item == NULL, , "invalid parameter");
+	retif(qid == NULL, , "invalid parameter");
 
-	if (!qid)
-		return QP_ITEM_TYPE_NONE;
+	evas_object_data_set(item, E_DATA_ITEM_LABEL_H, qid);
+}
 
-	item_type = qid->type;
+void quickpanel_list_util_item_del_tag(Evas_Object *item)
+{
+	retif(item == NULL, , "invalid parameter");
 
-	return item_type;
+	qp_item_data *qid = evas_object_data_get(item, E_DATA_ITEM_LABEL_H);
+
+	if (qid != NULL) {
+		evas_object_data_del(item, E_DATA_ITEM_LABEL_H);
+		free(qid);
+	}
 }
 
 void *quickpanel_list_util_item_get_data(qp_item_data *qid)
@@ -85,21 +88,21 @@ int quickpanel_list_util_item_compare(const void *data1, const void *data2)
 	int diff = 0;
 	qp_item_data *qid1 = NULL;
 	qp_item_data *qid2 = NULL;
-	const Elm_Object_Item *it1 = data1;
-	const Elm_Object_Item *it2 = data2;
+	const Evas_Object *eo1 = data1;
+	const Evas_Object *eo2 = data2;
 
-	if (!it1) {
-		INFO("it1 is NULL");
+	if (!eo1) {
+		INFO("eo1 is NULL");
 		return -1;
 	}
 
-	if (!it2) {
-		INFO("it2 is NULL");
+	if (!eo2) {
+		INFO("eo2 is NULL");
 		return 1;
 	}
 
-	qid1 = elm_object_item_data_get(it1);
-	qid2 = elm_object_item_data_get(it2);
+	qid1 = evas_object_data_get(eo1, E_DATA_ITEM_LABEL_H);
+	qid2 = evas_object_data_get(eo2, E_DATA_ITEM_LABEL_H);
 
 	if (!qid1) {
 		INFO("qid1 is NULL");
@@ -119,130 +122,43 @@ int quickpanel_list_util_item_compare(const void *data1, const void *data2)
 	return diff;
 }
 
-void quickpanel_list_util_item_del_by_type(Evas_Object *list,
-				const Elm_Object_Item *refer_item,
-				qp_item_type_e type)
+void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
+		, qp_item_type_e type)
 {
-	const Elm_Object_Item *start_item = NULL;
+	retif(list == NULL, , "invalid parameter");
 
-	if (!list)
-		return;
+	Eina_List *l;
+	Eina_List *l_next;
+	Evas_Object *obj;
+	Eina_List *item_list = elm_box_children_get(list);
 
-	if (refer_item)
-		start_item = refer_item;
-	else
-		start_item = elm_genlist_first_item_get(list);
-
-	while (start_item) {
-		qp_item_data *qid = NULL;
-		const Elm_Object_Item *next = NULL;
-
-		next = elm_genlist_item_next_get(start_item);
-		qid = elm_object_item_data_get(start_item);
-		if (!qid) {
-			ERR("fail to get qid, continue loop");
-			start_item = next;
-			continue;
-		}
-
-		if (qid->type > type)
-			break;
-		else if (qid->type == type)
-			elm_object_item_del((Elm_Object_Item *)start_item);
-
-		start_item = next;
-	}
-
-	return;
-}
-
-void quickpanel_list_util_item_update_by_type(Evas_Object *list,
-				Elm_Object_Item *refer_item,
-				qp_item_type_e type)
-{
-	Elm_Object_Item *start_item = NULL;
-
-	if (!list)
-		return;
-
-	if (refer_item)
-		start_item = refer_item;
-	else
-		start_item = elm_genlist_first_item_get(list);
-
-	while (start_item) {
-		qp_item_data *qid = NULL;
-		Elm_Object_Item *next = NULL;
-
-		next = elm_genlist_item_next_get(start_item);
-		qid = elm_object_item_data_get(start_item);
-		if (!qid) {
-			ERR("fail to get qid, continue loop");
-			start_item = next;
-			continue;
-		}
-
-		if (qid->type > type)
-			break;
-		else if (qid->type == type) {
-			elm_genlist_item_fields_update(start_item, "*", ELM_GENLIST_ITEM_FIELD_ALL);
-		}
-
-		start_item = next;
-	}
-
-	return;
-}
-
-Elm_Object_Item *quickpanel_list_util_find_item_by_type(Evas_Object *list,
-				void *data,
-				Elm_Object_Item *refer_item,
-				qp_item_type_e type)
-{
-	Elm_Object_Item *start_item = NULL;
-	Elm_Object_Item *found = NULL;
-
-	if (!list)
-		return NULL;
-
-	if (refer_item)
-		start_item = refer_item;
-	else
-		start_item = elm_genlist_first_item_get(list);
-
-	while (start_item) {
-		qp_item_data *qid = NULL;
-		Elm_Object_Item *next = NULL;
-		void *user_data = NULL;
-
-		next = elm_genlist_item_next_get(start_item);
-		qid = elm_object_item_data_get(start_item);
-		if (!qid) {
-			ERR("fail to get qid, continue loop");
-			start_item = next;
-			continue;
-		}
-
-		if (qid->type > type)
-			break;
-		else if (qid->type == type) {
-			user_data = quickpanel_list_util_item_get_data(qid);
-			if (user_data == data) {
-				found = start_item;
-				break;
+	EINA_LIST_FOREACH_SAFE(item_list, l, l_next, obj)
+	{
+		if (obj != NULL) {
+			// call deleted callback
+			qp_item_data *qid = evas_object_data_get(obj, E_DATA_ITEM_LABEL_H);
+			if (qid != NULL) {
+				if (qid->type == type) {
+					elm_box_unpack(list, obj);
+				}
 			}
 		}
-
-		start_item = next;
 	}
+}
 
-	return found;
+void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
+		, Evas_Object *item)
+{
+	retif(list == NULL, , "invalid parameter");
+	retif(item == NULL, , "invalid parameter");
+
+	elm_box_unpack(list, item);
 }
 
 static int __item_compare(const void *data1, const void *data2)
 {
 	int diff = 0;
-	const Elm_Object_Item *it1 = data1;
+	const Evas_Object *eo1 = data1;
 	const qp_item_data *qid1 = NULL;
 	const qp_item_data *qid2 = data2;
 
@@ -256,7 +172,7 @@ static int __item_compare(const void *data1, const void *data2)
 		return 1;
 	}
 
-	qid1 = elm_object_item_data_get(it1);
+	qid1 = evas_object_data_get(eo1, E_DATA_ITEM_LABEL_H);
 
 	if (!qid1) {
 		INFO("qid1 is NULL");
@@ -269,123 +185,39 @@ static int __item_compare(const void *data1, const void *data2)
 }
 
 
-Elm_Object_Item *quickpanel_list_util_sort_insert(Evas_Object *list,
-					const Elm_Genlist_Item_Class *itc,
-					const void *item_data,
-					Elm_Object_Item *parent,
-					Elm_Genlist_Item_Type type,
-					Evas_Smart_Cb func,
-					const void *func_data)
+void quickpanel_list_util_sort_insert(Evas_Object *list,
+					Evas_Object *new_obj)
 {
-	Elm_Object_Item *it = NULL;
-	Elm_Object_Item *first = NULL;
+	retif(list == NULL, , "invalid parameter");
+	retif(new_obj == NULL, , "invalid parameter");
 
-	retif(!list, NULL, "list is NULL");
-	retif(!itc, NULL, "itc is NULL");
-	retif(!item_data, NULL, "item_data is NULL");
+	Eina_List *l;
+	Eina_List *l_next;
+	Evas_Object *obj = NULL;
+	Evas_Object *first = NULL;
+	Eina_List *item_list = elm_box_children_get(list);
+	qp_item_data *item_data = NULL;
 
-	first = elm_genlist_first_item_get(list);
-	while (first) {
-		if (__item_compare(first, item_data) >= 0)
-			break;
+	item_data = evas_object_data_get(new_obj, E_DATA_ITEM_LABEL_H);
+	retif(item_data == NULL, , "invalid parameter");
 
-		first = elm_genlist_item_next_get(first);
-	}
-
-	if (!first)
-		it = elm_genlist_item_append(list, itc, item_data, parent,
-				type, func, func_data);
-	else
-		it = elm_genlist_item_insert_before(list, itc, item_data,
-				parent, first, type, func, func_data);
-
-	if (it != NULL) {
-		quickpanel_list_util_add_count((qp_item_data *)item_data);
-	}
-
-	return it;
-}
-
-qp_item_count *quickpanel_list_util_get_item_count(void)
-{
-	return &g_qp_item_count;
-}
-
-void quickpanel_list_util_add_count(qp_item_data *qid)
-{
-	retif(qid == NULL, , "qid is NULL");
-
-	switch(qid->type)
+	DBG("count:%d", eina_list_count(item_list));
+	EINA_LIST_FOREACH_SAFE(item_list, l, l_next, obj)
 	{
-		case  QP_ITEM_TYPE_ONGOING_NOTI:
-			g_qp_item_count.ongoing++;
-			break;
-		case  QP_ITEM_TYPE_NOTI_GROUP:
-			g_qp_item_count.group++;
-			break;
-		case  QP_ITEM_TYPE_NOTI:
-			g_qp_item_count.noti++;
-			break;
-		case  QP_ITEM_TYPE_MINICTRL_ONGOING:
-		case  QP_ITEM_TYPE_MINICTRL_TOP:
-		case  QP_ITEM_TYPE_MINICTRL_MIDDLE:
-		case  QP_ITEM_TYPE_MINICTRL_LOW:
-			g_qp_item_count.minicontrol++;
-			break;
-		case QP_ITEM_TYPE_NONE:
-		case QP_ITEM_TYPE_SETTING:
-		case QP_ITEM_TYPE_TOGGLE:
-		case QP_ITEM_TYPE_BRIGHTNESS:
-		case QP_ITEM_TYPE_MAX:
-			break;
+		if (obj != NULL) {
+			if (__item_compare(obj, item_data) >= 0)
+				break;
+		}
+
+		first = obj;
+		DBG("first:%p", obj);
 	}
 
-	DBG("(type:%d)\nnum_ongoing:%d, num_group:%d, num_noti:%d, num_minicontrol:%d"
-			, qid->type
-			, g_qp_item_count.ongoing
-			, g_qp_item_count.group
-			, g_qp_item_count.noti
-			, g_qp_item_count.minicontrol);
-}
-
-void quickpanel_list_util_del_count(qp_item_data *qid)
-{
-	retif(qid == NULL, , "qid is NULL");
-
-	quickpanel_list_util_del_count_by_itemtype(qid->type);
-}
-
-void quickpanel_list_util_del_count_by_itemtype(qp_item_type_e type)
-{
-	switch(type)
-	{
-		case  QP_ITEM_TYPE_ONGOING_NOTI:
-			g_qp_item_count.ongoing = (g_qp_item_count.ongoing <= 0) ? 0 : g_qp_item_count.ongoing - 1;
-			break;
-		case  QP_ITEM_TYPE_NOTI_GROUP:
-			g_qp_item_count.group = (g_qp_item_count.group <= 0) ? 0 : g_qp_item_count.group - 1;
-			break;
-		case  QP_ITEM_TYPE_NOTI:
-			g_qp_item_count.noti = (g_qp_item_count.noti <= 0) ? 0 : g_qp_item_count.noti - 1;
-			break;
-		case  QP_ITEM_TYPE_MINICTRL_ONGOING:
-		case  QP_ITEM_TYPE_MINICTRL_TOP:
-		case  QP_ITEM_TYPE_MINICTRL_MIDDLE:
-		case  QP_ITEM_TYPE_MINICTRL_LOW:
-			g_qp_item_count.minicontrol = (g_qp_item_count.minicontrol <= 0) ? 0 : g_qp_item_count.minicontrol - 1;
-			break;
-		case QP_ITEM_TYPE_NONE:
-		case QP_ITEM_TYPE_SETTING:
-		case QP_ITEM_TYPE_TOGGLE:
-		case QP_ITEM_TYPE_BRIGHTNESS:
-		case QP_ITEM_TYPE_MAX:
-			break;
+	if (first == NULL) {
+		DBG("insert first:%p", new_obj);
+		elm_box_pack_start(list, new_obj);
+	} else {
+		DBG("insert aftere:%p (%p)", first, new_obj);
+		elm_box_pack_after(list, new_obj, first);
 	}
-
-	DBG("(type:%d)\nnum_ongoing:%d, num_group:%d, num_noti:%d, num_minicontrol:%d"
-			, type
-			, g_qp_item_count.ongoing
-			, g_qp_item_count.group
-			, g_qp_item_count.noti
-			, g_qp_item_count.minicontrol);
 }

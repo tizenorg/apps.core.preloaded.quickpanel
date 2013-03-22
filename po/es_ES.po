@@ -37,9 +37,6 @@ msgstr "Habilitar"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "No admitido"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "Ya no podrá utilizar aplicaciones de datos como el navegador, el correo electrónico o YouTube mediante la conexión móvil. Las llamadas y los mensajes de texto seguirán funcionando. ¿Continuar?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Inserte la tarjeta SIM para acceder a los servicios de red"
 
@@ -80,8 +77,17 @@ msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCT
 msgstr "Para habilitar el modo de ahorro de energía, active al menos una función relevante"
 
 msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Apague el Wi-Fi para usar anclaje a red"
+msgstr "Apague la Wi-Fi para usar anclaje a red"
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Las conexiones Wi-Fi y Mobile AP no se pueden activar al mismo tiempo. ¿Desactivar Mobile AP?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Reemplazar botón de ajuste rápido"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Añadir botón de ajuste rápido"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "Ya no podrá utilizar aplicaciones de datos como Internet y el correo electrónico mediante redes móviles. ¿Continuar?"
 

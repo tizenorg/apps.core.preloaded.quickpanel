@@ -4,7 +4,7 @@
 
 Name:       org.tizen.quickpanel
 Summary:    Quick Panel
-Version:    0.3.22
+Version:    0.3.27
 Release:    2
 Group:      util
 License:    Flora Software License
@@ -20,7 +20,6 @@ BuildRequires: pkgconfig(capi-network-tethering)
 BuildRequires: pkgconfig(capi-media-player)
 BuildRequires: pkgconfig(feedback)
 BuildRequires: pkgconfig(appcore-common)
-BuildRequires: pkgconfig(heynoti)
 BuildRequires: pkgconfig(notification)
 BuildRequires: pkgconfig(vconf)
 BuildRequires: pkgconfig(appsvc)
@@ -72,12 +71,12 @@ mkdir -p %{buildroot}/usr/share/license
 cp -f LICENSE.Flora %{buildroot}/usr/share/license/%{name}
 
 %post
-vconftool set -t bool db/setting/rotate_lock 0 -u 5000
-vconftool set -t bool db/setting/drivingmode/drivingmode 0 -u 5000
-vconftool set -t bool memory/private/%{name}/started 0 -i -u 5000
-vconftool set -t bool memory/private/%{name}/enable_ask 1 -i -u 5000
-vconftool set -t bool memory/private/%{name}/disable_ask 1 -i -u 5000
-vconftool set -t bool memory/private/%{name}/hotspot/enable_ask 1 -i -u 5000
+vconftool set -t bool db/setting/rotate_lock 0 -u 5000 -f
+vconftool set -t bool db/setting/drivingmode/drivingmode 0 -u 5000 -f
+vconftool set -t bool memory/private/%{name}/started 0 -i -u 5000 -f
+vconftool set -t bool memory/private/%{name}/enable_ask 1 -i -u 5000 -f
+vconftool set -t bool memory/private/%{name}/disable_ask 1 -i -u 5000 -f
+vconftool set -t bool memory/private/%{name}/hotspot/enable_ask 1 -i -u 5000 -f
 
 %files
 %manifest %{name}.manifest

@@ -22,7 +22,6 @@
 typedef enum {
 	QP_ITEM_TYPE_NONE = -1,
 	QP_ITEM_TYPE_SETTING = 0,
-	QP_ITEM_TYPE_TOGGLE,
 	QP_ITEM_TYPE_BRIGHTNESS,
 	QP_ITEM_TYPE_ONGOING_NOTI,
 	QP_ITEM_TYPE_MINICTRL_ONGOING,
@@ -31,6 +30,7 @@ typedef enum {
 	QP_ITEM_TYPE_MINICTRL_LOW,
 	QP_ITEM_TYPE_NOTI_GROUP,
 	QP_ITEM_TYPE_NOTI,
+	QP_ITEM_TYPE_BAR,
 	QP_ITEM_TYPE_MAX,
 } qp_item_type_e;
 
@@ -44,38 +44,20 @@ typedef struct _qp_item_count {
 
 
 qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data);
+void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid);
+void quickpanel_list_util_item_del_tag(Evas_Object *item);
 
-qp_item_type_e quickpanel_list_util_item_get_item_type(qp_item_data *qid);
 void *quickpanel_list_util_item_get_data(qp_item_data *qid);
 void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data);
-
 int quickpanel_list_util_item_compare(const void *data1, const void *data2);
 
-void quickpanel_list_util_item_del_by_type(Evas_Object *list,
-				const Elm_Object_Item *refer_item,
-				qp_item_type_e type);
+void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
+		, qp_item_type_e type);
+void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
+		, Evas_Object *item);
 
-void quickpanel_list_util_item_update_by_type(Evas_Object *list,
-				Elm_Object_Item *refer_item,
-				qp_item_type_e type);
-
-Elm_Object_Item *quickpanel_list_util_find_item_by_type(Evas_Object *list,
-					void *data,
-					Elm_Object_Item *refer_item,
-					qp_item_type_e type);
-
-Elm_Object_Item *quickpanel_list_util_sort_insert(Evas_Object *list,
-					const Elm_Genlist_Item_Class *itc,
-					const void *item_data,
-					Elm_Object_Item *parent,
-					Elm_Genlist_Item_Type type,
-					Evas_Smart_Cb func,
-					const void *func_data);
-
-qp_item_count *quickpanel_list_util_get_item_count(void);
-void quickpanel_list_util_add_count(qp_item_data *qid);
-void quickpanel_list_util_del_count(qp_item_data *qid);
-void quickpanel_list_util_del_count_by_itemtype(qp_item_type_e type);
+void quickpanel_list_util_sort_insert(Evas_Object *list,
+					Evas_Object *new_obj);
 
 #endif /* _QP_LIST_UTIL_DEF_ */
 

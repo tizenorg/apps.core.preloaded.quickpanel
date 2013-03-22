@@ -20,7 +20,7 @@
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "list_util.h"
-#include "quickpanel_theme_def.h"
+#include "quickpanel_def.h"
 #include "noti_box.h"
 #include "noti_node.h"
 #include "noti.h"
@@ -43,6 +43,13 @@ static void _noti_box_call_item_cb(Evas_Object *noti_box, const char *emission) 
 			cb(data->data, noti_box);
 		}
 	}
+	if (strncmp(emission,"button_1", strlen("button_1")) == 0) {
+		cb = evas_object_data_get(noti_box, E_DATA_CB_BUTTON_1);
+
+		if (cb != NULL && data != NULL) {
+			cb(data->data, noti_box);
+		}
+	}
 	if (strncmp(emission,"deleted", strlen("deleted")) == 0) {
 		cb = evas_object_data_get(noti_box, E_DATA_CB_DELETED_ITEM);
 
@@ -52,7 +59,7 @@ static void _noti_box_call_item_cb(Evas_Object *noti_box, const char *emission) 
 	}
 }
 
-void _signal_cb(void *data, Evas_Object *o, const char *emission, const char *source)
+static void _signal_cb(void *data, Evas_Object *o, const char *emission, const char *source)
 {
 	retif(data == NULL, , "invalid parameter");
 	retif(o == NULL, , "invalid parameter");
@@ -92,14 +99,23 @@ Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e layout)
 	//add event
 	elm_object_signal_callback_add(box,
 			"selected",
-			"object.layer.touch",
+			"edje",
 			_signal_cb,
 			parent
 	);
+
+	//add event
+	elm_object_signal_callback_add(box,
+			"button_1",
+			"edje",
+			_signal_cb,
+			parent
+	);
+
 	//add event
 	elm_object_signal_callback_add(box,
 			"deleted",
-			"object.layer.touch",
+			"edje",
 			_signal_cb,
 			parent
 	);
@@ -539,6 +555,14 @@ void noti_box_set_item_selected_cb(Evas_Object *noti_box,
 	retif(selected_cb == NULL, , "invalid parameter");
 
 	evas_object_data_set(noti_box, E_DATA_CB_SELECTED_ITEM, selected_cb);
+}
+
+void noti_box_set_item_button_1_cb(Evas_Object *noti_box,
+		void(*button_1_cb)(void *data, Evas_Object *obj)) {
+	retif(noti_box == NULL, , "invalid parameter");
+	retif(button_1_cb == NULL, , "invalid parameter");
+
+	evas_object_data_set(noti_box, E_DATA_CB_BUTTON_1, button_1_cb);
 }
 
 void noti_box_set_item_deleted_cb(Evas_Object *noti_box,

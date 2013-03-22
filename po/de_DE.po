@@ -37,9 +37,6 @@ msgstr "Aktivieren"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Nicht unterstützt"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "Sie können Datenanwendungen, wie Browser, E-Mail oder YouTube, nicht mehr über das mobile Netzwerk verwenden. Anrufe und Textnachrichten sind weiterhin möglich. Fortfahren?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "SIM-Karte einsetzen, um auf Netzdienste zuzugreifen"
 
@@ -84,4 +81,13 @@ msgstr "WLAN ausschalten, um Tethering zu verwenden"
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "WLAN und Mobile AP können nicht zur gleichen Zeit aktiviert werden. Mobile AP deaktivieren?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "Schnelleinstellungstaste ersetzen"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "Schnelleinstellungstaste hinzufügen"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "Sie können Anwendungen wie Internet und E-Mail mehr über mobile Netzwerke verwenden. Fortfahren?"
 

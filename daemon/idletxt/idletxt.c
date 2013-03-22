@@ -33,8 +33,7 @@
 #define QP_IDLETXT_SLIDE_LEN	130
 
 #define QP_IDLETXT_LABEL_STRING	\
-	"<font_size=36 font=Tizen:style=Medium><color=#959494FF><align=left>%s</align>" \
-	"</color></font_size>"
+	"<font_size=36 font_weight=Medium color=#959494FF align=left>%s</>"
 
 static int quickpanel_idletxt_init(void *data);
 static int quickpanel_idletxt_fini(void *data);
@@ -312,7 +311,11 @@ static Evas_Object *_quickpanel_idletxt_get_sat_text(Evas_Object * box)
 
 static Eina_Bool _quickpanel_idletxt_button_clicked_timer_cb(void *data)
 {
-	quickpanel_launch_app(QP_SETTING_PKG_SETTING, NULL);
+	if (quickpanel_is_emul())
+		quickpanel_launch_app(QP_SETTING_PKG_SETTING_EMUL, NULL);
+	else
+		quickpanel_launch_app(QP_SETTING_PKG_SETTING, NULL);
+
 	quickpanel_close_quickpanel(true);
 
 	return ECORE_CALLBACK_CANCEL;

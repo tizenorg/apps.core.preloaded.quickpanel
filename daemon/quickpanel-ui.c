@@ -22,7 +22,6 @@
 #include <X11/Xlib.h>
 #include <utilX.h>
 #include <Ecore_Input.h>
-#include <heynoti.h>
 #include <vconf.h>
 #include <unistd.h>
 #include <privilege-control.h>
@@ -34,44 +33,121 @@
 #include "quickpanel-ui.h"
 #include "modules.h"
 #include "quickpanel_def.h"
-
-#define HIBERNATION_ENTER_NOTI	"HIBERNATION_ENTER"
-#define HIBERNATION_LEAVE_NOTI	"HIBERNATION_LEAVE"
+#include "list_util.h"
 
 #define QP_WINDOW_PRIO 300
 #define QP_PLAY_DURATION_LIMIT 15
 
-/* heynoti handle */
-static int g_hdl_heynoti;
 static player_h g_sound_player;
 static Ecore_Timer *g_sound_player_timer;
-struct appdata *g_app_data = NULL;
+static struct appdata *g_app_data = NULL;
 
 /* binary information */
 #define QP_EMUL_STR		"Emulator"
 
-static int common_cache_flush(void *evas);
+static void _quickpanel_cache_flush(void *evas);
 static void _quickpanel_player_free(player_h *sound_player);
+static void _quickpanel_init_size_genlist(void *data);
+static void _quickpanel_ui_update_height(void *data);
+static void _quickpanel_ui_set_indicator_cover(void *data);
+static void _quickpanel_move_data_to_service(const char *key, const char *val, void *data);
 
-/*****************************************************************************
-  *
-  * HIBERNATION
-  *
-  ****************************************************************************/
-static void _hibernation_enter_cb(void *data)
+void *quickpanel_get_app_data(void)
 {
-	struct appdata *ad = data;
-
-	INFO(" >>>>>>>>>>>>>>> ENTER HIBERNATION!! <<<<<<<<<<<<<<<< ");
-	hib_enter_modules(data);
-	if (ad)
-		common_cache_flush(ad->evas);
+	return g_app_data;
 }
 
-static void _hibernation_leave_cb(void *data)
+int quickpanel_is_suspended(void)
 {
-	hib_leave_modules(data);
-	INFO(" >>>>>>>>>>>>>>> LEAVE HIBERNATION!! <<<<<<<<<<<<<<<< ");
+	struct appdata *ad = quickpanel_get_app_data();
+	retif(ad == NULL, 0, "invalid data.");
+
+	return ad->is_suspended;
+}
+
+int quickpanel_is_emul(void)
+{
+	int is_emul = 0;
+	char *info = NULL;
+
+	if (system_info_get_value_string(SYSTEM_INFO_KEY_MODEL, &info) == 0) {
+		if (info == NULL) return 0;
+		if (!strncmp(QP_EMUL_STR, info, strlen(info))) {
+			is_emul = 1;
+		}
+	}
+
+	if (info != NULL) free(info);
+
+	return is_emul;
+}
+
+int quickpanel_launch_app(char *app_id, void *data)
+{
+	int ret = SERVICE_ERROR_NONE;
+	service_h service = NULL;
+
+	retif(app_id == NULL && data == NULL, SERVICE_ERROR_INVALID_PARAMETER, "Invialid parameter!");
+
+	ret = service_create(&service);
+	if (ret != SERVICE_ERROR_NONE) {
+		DBG("service_create() return error : %d", ret);
+		return ret;
+	}
+	retif(service == NULL, SERVICE_ERROR_INVALID_PARAMETER, "fail to create service handle!");
+
+	if (app_id != NULL) {
+		service_set_operation(service, SERVICE_OPERATION_DEFAULT);
+		service_set_app_id(service, app_id);
+
+		if (data != NULL) {
+			bundle_iterate((bundle *)data, _quickpanel_move_data_to_service, service);
+		}
+	} else {
+		service_import_from_bundle(service, data);
+	}
+
+	ret = service_send_launch_request(service, NULL, NULL);
+	if (ret != SERVICE_ERROR_NONE) {
+		DBG("service_send_launch_request() is failed : %d", ret);
+		service_destroy(service);
+		return ret;
+	}
+	service_destroy(service);
+	return ret;
+}
+
+void quickpanel_launch_app_inform_result(const char *pkgname, int retcode)
+{
+	retif(retcode == SERVICE_ERROR_NONE, , "Invialid parameter!");
+	retif(pkgname == NULL && retcode != SERVICE_ERROR_APP_NOT_FOUND, , "Invialid parameter!");
+
+	const char *msg = NULL;
+
+	if (retcode == SERVICE_ERROR_APP_NOT_FOUND) {
+		notification_status_message_post(_S("IDS_COM_BODY_NO_APPLICATIONS_CAN_PERFORM_THIS_ACTION"));
+	} else {
+		Eina_Strbuf *strbuf = eina_strbuf_new();
+
+		if (strbuf != NULL) {
+			eina_strbuf_append_printf(strbuf, _S("IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"), pkgname);
+			eina_strbuf_append_printf(strbuf, "(%d)", retcode);
+			msg = eina_strbuf_string_get(strbuf);
+
+			if (msg != NULL) {
+				notification_status_message_post(msg);
+			}
+			eina_strbuf_free(strbuf);
+		}
+	}
+}
+
+static void _quickpanel_move_data_to_service(const char *key, const char *val, void *data)
+{
+	retif(data == NULL || key == NULL || val == NULL, , "Invialid parameter!");
+
+	service_h service = data;
+	service_add_extra_data(service, key, val);
 }
 
 /******************************************************************************
@@ -79,7 +155,7 @@ static void _hibernation_leave_cb(void *data)
   * UI
   *
   ****************************************************************************/
-static Eina_Bool quickpanel_ui_refresh_cb(void *data)
+static Eina_Bool _quickpanel_ui_refresh_cb(void *data)
 {
 	struct appdata *ad = NULL;
 
@@ -89,20 +165,20 @@ static Eina_Bool quickpanel_ui_refresh_cb(void *data)
 	INFO(" >>>>>>>>>>>>>>> Refresh QP modules!! <<<<<<<<<<<<<<<< ");
 	refresh_modules(data);
 
-	quickpanel_init_size_genlist(ad);
-	quickpanel_ui_update_height(ad);
+	_quickpanel_init_size_genlist(ad);
+	_quickpanel_ui_update_height(ad);
 
 	return EINA_FALSE;
 }
 
-static int common_cache_flush(void *evas)
+static void _quickpanel_cache_flush(void *evas)
 {
 	int file_cache;
 	int collection_cache;
 	int image_cache;
 	int font_cache;
 
-	retif(evas == NULL, QP_FAIL, "Evas is NULL\n");
+	retif(evas == NULL, , "Evas is NULL\n");
 
 	file_cache = edje_file_cache_get();
 	collection_cache = edje_collection_cache_get();
@@ -125,11 +201,9 @@ static int common_cache_flush(void *evas)
 	edje_collection_cache_set(collection_cache);
 	evas_image_cache_set(evas, image_cache);
 	evas_font_cache_set(evas, font_cache);
-
-	return QP_OK;
 }
 
-static Eina_Bool quickpanel_hardkey_cb(void *data, int type, void *event)
+static Eina_Bool _quickpanel_hardkey_cb(void *data, int type, void *event)
 {
 	struct appdata *ad = NULL;
 	Ecore_Event_Key *key_event = NULL;
@@ -191,8 +265,8 @@ static void _quickpanel_ui_rotation(void *data, int new_angle)
 							 new_angle);
 			ad->angle = new_angle;
 
-			quickpanel_ui_set_indicator_cover(ad);
-			ecore_idler_add(quickpanel_ui_refresh_cb, ad);
+			_quickpanel_ui_set_indicator_cover(ad);
+			ecore_idler_add(_quickpanel_ui_refresh_cb, ad);
 		}
 	}
 }
@@ -226,6 +300,12 @@ static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
 	return ECORE_CALLBACK_RENEW;
 }
 
+static void _quickpanel_signal_handler(int signum, siginfo_t *info, void *unused)
+{
+	DBG("Terminated...");
+	app_efl_exit();
+}
+
 static Evas_Object *_quickpanel_ui_window_add(const char *name, int prio)
 {
 	Evas_Object *eo = NULL;
@@ -251,6 +331,27 @@ static Evas_Object *_quickpanel_ui_window_add(const char *name, int prio)
 	}
 
 	return eo;
+}
+
+static void _quickpanel_add_debugging_bar(Evas_Object *list)
+{
+	Eina_Bool ret = EINA_FALSE;
+	Evas_Object *bar = elm_layout_add(list);
+
+	DBG("");
+	ret = elm_layout_file_set(bar, DEFAULT_EDJ,
+			"quickpanel/seperator/default");
+
+	if (ret != EINA_FALSE) {
+		evas_object_size_hint_weight_set(bar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(bar, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+		qp_item_data *qid
+			= quickpanel_list_util_item_new(QP_ITEM_TYPE_BAR, NULL);
+		quickpanel_list_util_item_set_tag(bar, qid);
+		quickpanel_list_util_sort_insert(list, bar);
+		evas_object_show(bar);
+	}
 }
 
 Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
@@ -319,19 +420,34 @@ static int _quickpanel_ui_create_win(void *data)
 	/* get noti evas */
 	ad->evas = evas_object_evas_get(ad->win);
 
-	ad->list = elm_genlist_add(ad->ly);
-	if (!ad->list) {
-		ERR("failed to elm_genlist_add");
-		evas_object_del(ad->ly);
-		evas_object_del(ad->win);
-		ad->ly = NULL;
-		ad->win = NULL;
-		ad->evas = NULL;
-		return -1;
+	Evas_Object *sc = elm_scroller_add(ad->ly);
+	retif(!sc, EINA_FALSE, "fail to add scroller");
+	elm_scroller_bounce_set(sc, EINA_TRUE, EINA_TRUE);
+	elm_scroller_policy_set(sc,
+			ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
+	evas_object_size_hint_weight_set(sc,
+			EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_fill_set(sc, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(sc);
+
+	Evas_Object *box = elm_box_add(sc);
+	if (!box) {
+		ERR("fail to add box");
+		evas_object_del(sc);
+		return EINA_FALSE;
 	}
-	elm_genlist_homogeneous_set(ad->list, EINA_TRUE);
-	elm_scroller_policy_set(ad->list, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
-	elm_object_part_content_set(ad->ly, "qp.gl_base.gl.swallow", ad->list);
+	evas_object_size_hint_weight_set(box,
+			EVAS_HINT_EXPAND, 0);
+	elm_box_horizontal_set(box, EINA_FALSE);
+	ad->list = box;
+	ad->scroller = sc;
+
+#ifdef TBD
+	_quickpanel_add_debugging_bar(ad->list);
+#endif
+
+	elm_object_content_set(sc, box);
+	elm_object_part_content_set(ad->ly, "qp.gl_base.gl.swallow", ad->scroller);
 	evas_object_show(ad->list);
 
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
@@ -340,9 +456,8 @@ static int _quickpanel_ui_create_win(void *data)
 	ad->win_width = w;
 	ad->win_height = h;
 
-	quickpanel_init_size_genlist(ad);
-
-	quickpanel_ui_set_indicator_cover(ad);
+	_quickpanel_init_size_genlist(ad);
+	_quickpanel_ui_set_indicator_cover(ad);
 
 	/* key grab */
 	utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_SELECT, SHARED_GRAB);
@@ -352,8 +467,7 @@ static int _quickpanel_ui_create_win(void *data)
 	return 0;
 }
 
-
-void quickpanel_ui_set_indicator_cover(void *data)
+static void _quickpanel_ui_set_indicator_cover(void *data)
 {
 	retif(data == NULL, , "data is NULL");
 	struct appdata *ad = data;
@@ -416,7 +530,7 @@ void quickpanel_ui_set_indicator_cover(void *data)
 	}
 }
 
-void quickpanel_ui_window_set_input_region(void *data, int contents_height)
+static void _quickpanel_ui_window_set_input_region(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
 	Ecore_X_Window xwin;
@@ -467,7 +581,7 @@ void quickpanel_ui_window_set_input_region(void *data, int contents_height)
 	ecore_x_window_prop_card32_set(xwin, atom_window_input_region, window_input_region, 4);
 }
 
-void quickpanel_ui_window_set_content_region(void *data, int contents_height)
+static void _quickpanel_ui_window_set_content_region(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
 	Ecore_X_Window xwin;
@@ -518,73 +632,7 @@ void quickpanel_ui_window_set_content_region(void *data, int contents_height)
     ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
 }
 
-static void _quickpanel_move_data_to_service(const char *key, const char *val, void *data)
-{
-	retif(data == NULL || key == NULL || val == NULL, , "Invialid parameter!");
 
-	service_h service = data;
-	service_add_extra_data(service, key, val);
-}
-
-int quickpanel_launch_app(char *app_id, void *data)
-{
-	int ret = SERVICE_ERROR_NONE;
-	service_h service = NULL;
-
-	retif(app_id == NULL && data == NULL, SERVICE_ERROR_INVALID_PARAMETER, "Invialid parameter!");
-
-	ret = service_create(&service);
-	if (ret != SERVICE_ERROR_NONE) {
-		DBG("service_create() return error : %d", ret);
-		return ret;
-	}
-	retif(service == NULL, SERVICE_ERROR_INVALID_PARAMETER, "fail to create service handle!");
-
-	if (app_id != NULL) {
-		service_set_operation(service, SERVICE_OPERATION_DEFAULT);
-		service_set_app_id(service, app_id);
-
-		if (data != NULL) {
-			bundle_iterate((bundle *)data, _quickpanel_move_data_to_service, service);
-		}
-	} else {
-		service_import_from_bundle(service, data);
-	}
-
-	ret = service_send_launch_request(service, NULL, NULL);
-	if (ret != SERVICE_ERROR_NONE) {
-		DBG("service_send_launch_request() is failed : %d", ret);
-		service_destroy(service);
-		return ret;
-	}
-	service_destroy(service);
-	return ret;
-}
-
-void quickpanel_launch_app_inform_result(const char *pkgname, int retcode)
-{
-	retif(retcode == SERVICE_ERROR_NONE, , "Invialid parameter!");
-	retif(pkgname == NULL && retcode != SERVICE_ERROR_APP_NOT_FOUND, , "Invialid parameter!");
-
-	const char *msg = NULL;
-
-	if (retcode == SERVICE_ERROR_APP_NOT_FOUND) {
-		notification_status_message_post(_S("IDS_COM_BODY_NO_APPLICATIONS_CAN_PERFORM_THIS_ACTION"));
-	} else {
-		Eina_Strbuf *strbuf = eina_strbuf_new();
-
-		if (strbuf != NULL) {
-			eina_strbuf_append_printf(strbuf, _S("IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"), pkgname);
-			eina_strbuf_append_printf(strbuf, "(%d)", retcode);
-			msg = eina_strbuf_string_get(strbuf);
-
-			if (msg != NULL) {
-				notification_status_message_post(msg);
-			}
-			eina_strbuf_free(strbuf);
-		}
-	}
-}
 
 static Eina_Bool _quickpanel_player_free_idler_cb(void *data)
 {
@@ -760,9 +808,10 @@ void quickpanel_play_feedback(void)
 {
 	int vib_status = 0;
 	int snd_status = 0;
-	int snd_disabled_status = 0;
 
 #ifdef VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS
+	int snd_disabled_status = 0;
+
 	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS, &snd_disabled_status);
 
 	if (!snd_disabled_status) {
@@ -798,6 +847,16 @@ static int _quickpanel_ui_delete_win(void *data)
 	return QP_OK;
 }
 
+static void _quickpanel_ui_vconf_event_powerff_cb(keynode_t *node,
+						void *data)
+{
+	int val;
+	if (vconf_get_int(VCONFKEY_SYSMAN_POWER_OFF_STATUS, &val) == 0 &&
+			(val == VCONFKEY_SYSMAN_POWER_OFF_DIRECT || val == VCONFKEY_SYSMAN_POWER_OFF_RESTART)) {
+		app_efl_exit();
+	}
+}
+
 static void _quickpanel_ui_vconf_event_lcdoff_cb(keynode_t *node,
 						void *data)
 {
@@ -820,6 +879,12 @@ static void _quickpanel_ui_vconf_event_init(struct appdata *ad)
 	if (ret != 0) {
 		ERR("VCONFKEY_PM_STATE: %d", ret);
 	}
+
+	ret = vconf_notify_key_changed(VCONFKEY_SYSMAN_POWER_OFF_STATUS,
+			_quickpanel_ui_vconf_event_powerff_cb, ad);
+	if (ret != 0) {
+		ERR("VCONFKEY_PM_STATE: %d", ret);
+	}
 }
 
 static void _quickpanel_ui_vconf_event_fini(struct appdata *ad)
@@ -831,45 +896,11 @@ static void _quickpanel_ui_vconf_event_fini(struct appdata *ad)
 	if (ret != 0) {
 		ERR("VCONFKEY_PM_STATE: %d", ret);
 	}
-}
 
-static void _quickpanel_ui_init_heynoti(struct appdata *ad)
-{
-	int ret = 0;
-
-	/* init heynoti */
-	g_hdl_heynoti = heynoti_init();
-	if (g_hdl_heynoti == -1) {
-		ERR("ui init heynoti : fail to heynoti_init.");
-		g_hdl_heynoti = 0;
-		return;
-	}
-
-	/* subscribe hibernation */
-	heynoti_subscribe(g_hdl_heynoti, HIBERNATION_ENTER_NOTI,
-			  _hibernation_enter_cb, (void *)ad);
-	heynoti_subscribe(g_hdl_heynoti, HIBERNATION_LEAVE_NOTI,
-			  _hibernation_leave_cb, (void *)ad);
-
-	ret = heynoti_attach_handler(g_hdl_heynoti);
-	if (ret == -1) {
-		ERR("ui init heynoti : fail to heynoti_attach_handler.");
-		return;
-	}
-}
-
-static void _quickpanel_ui_fini_heynoti(void)
-{
-	if (g_hdl_heynoti != 0) {
-		/* unsubscribe hibernation */
-		heynoti_unsubscribe(g_hdl_heynoti, HIBERNATION_ENTER_NOTI,
-				    _hibernation_enter_cb);
-		heynoti_unsubscribe(g_hdl_heynoti, HIBERNATION_LEAVE_NOTI,
-				    _hibernation_leave_cb);
-
-		/* close heynoti */
-		heynoti_close(g_hdl_heynoti);
-		g_hdl_heynoti = 0;
+	ret = vconf_ignore_key_changed(VCONFKEY_SYSMAN_POWER_OFF_STATUS,
+			_quickpanel_ui_vconf_event_powerff_cb);
+	if (ret != 0) {
+		ERR("VCONFKEY_PM_STATE: %d", ret);
 	}
 }
 
@@ -886,7 +917,7 @@ static void _quickpanel_ui_init_ecore_event(struct appdata *ad)
 
 	ad->hdl_client_message = hdl;
 
-	hdl_key = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, quickpanel_hardkey_cb, ad);
+	hdl_key = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _quickpanel_hardkey_cb, ad);
 	if (hdl_key == NULL)
 		ERR("failed to add handler(ECORE_EVENT_KEY_UP)");
 
@@ -904,22 +935,6 @@ static void _quickpanel_ui_fini_ecore_event(struct appdata *ad)
 		ad->hdl_hardkey = NULL;
 	}
 }
-int quickpanel_ui_check_emul(void)
-{
-	int is_emul = 0;
-	char *info = NULL;
-
-	if (system_info_get_value_string(SYSTEM_INFO_KEY_MODEL, &info) == 0) {
-		if (info == NULL) return 0;
-		if (!strncmp(QP_EMUL_STR, info, strlen(info))) {
-			is_emul = 1;
-		}
-	}
-
-	if (info != NULL) free(info);
-
-	return is_emul;
-}
 
 static void _quickpanel_ui_setting_show(struct appdata *ad, int show)
 {
@@ -928,19 +943,7 @@ static void _quickpanel_ui_setting_show(struct appdata *ad, int show)
 
 	if (!ad->ly)
 		return;
-
-	ad->show_setting = 1;
-
 }
-
-#ifdef QP_BRIGHTNESS_ENABLE
-/* toggle */
-extern QP_Module brightness_ctrl;
-#endif /* QP_BRIGHTNESS_ENABLE */
-#ifdef QP_MINICTRL_ENABLE
-extern QP_Module minictrl;
-#endif /* QP_MINICTRL_ENABLE */
-extern QP_Module noti;
 
 static void _quickpanel_ui_update_height(void *data)
 {
@@ -952,38 +955,14 @@ static void _quickpanel_ui_update_height(void *data)
 	retif(data == NULL, , "data is NULL");
 	ad = data;
 
-	DBG("current item count:%d", elm_genlist_items_count(ad->list));
-
-	height_genlist += noti.get_height(data);
-#ifdef QP_BRIGHTNESS_ENABLE
-	height_genlist += brightness_ctrl.get_height(data);
-#endif
-#ifdef QP_MINICTRL_ENABLE
-	height_genlist += minictrl.get_height(data);
-#endif
-
 	height_genlist = ad->gl_limit_height;
-
 	contents_height = ad->gl_distance_from_top + height_genlist + ad->gl_distance_to_bottom - ad->scale * QP_HANDLE_H;
 
-	DBG("height_genlist:%d\n gl_distance_from_top:%d\n gl_distance_to_bottom:%d\n gl_limit_height:%d\nnew_height:%d"
-			,height_genlist
-			,ad->gl_distance_from_top
-			,ad->gl_distance_to_bottom
-			,ad->gl_limit_height
-			,contents_height
-			);
-
-	quickpanel_ui_window_set_input_region(ad, contents_height);
-	quickpanel_ui_window_set_content_region(ad, contents_height);
+	_quickpanel_ui_window_set_input_region(ad, contents_height);
+	_quickpanel_ui_window_set_content_region(ad, contents_height);
 }
 
-void quickpanel_ui_update_height(void *data)
-{
-	_quickpanel_ui_update_height(data);
-}
-
-void quickpanel_init_size_genlist(void *data)
+static void _quickpanel_init_size_genlist(void *data)
 {
 	struct appdata *ad = NULL;
 	int max_height_window = 0;
@@ -1009,29 +988,11 @@ void quickpanel_init_size_genlist(void *data)
 	ad->gl_limit_height = max_height_window - ad->gl_distance_from_top - ad->gl_distance_to_bottom;
 }
 
-void *quickpanel_get_app_data(void)
-{
-	return g_app_data;
-}
-
 /*****************************************************************************
   *
   * App efl main interface
   *
   ****************************************************************************/
-
-static void _signal_handler(int signum, siginfo_t *info, void *unused)
-{
-	DBG("Terminated...");
-	app_efl_exit();
-}
-
-static void _heynoti_event_power_off(void *data)
-{
-	DBG("Terminated...");
-	app_efl_exit();
-}
-
 static bool quickpanel_app_create(void *data)
 {
 	DBG("");
@@ -1041,7 +1002,7 @@ static bool quickpanel_app_create(void *data)
 
 	// signal handler
 	struct sigaction act;
-	act.sa_sigaction = _signal_handler;
+	act.sa_sigaction = _quickpanel_signal_handler;
 	act.sa_flags = SA_SIGINFO;
 
 	int ret = sigemptyset(&act.sa_mask);
@@ -1078,14 +1039,12 @@ static void quickpanel_app_terminate(void *data)
 	/* fini quickpanel modules */
 	fini_modules(ad);
 
-	common_cache_flush(ad->evas);
+	_quickpanel_cache_flush(ad->evas);
 
 	feedback_deinitialize();
 
 	/* unregister system event callback */
 	_quickpanel_ui_vconf_event_fini(ad);
-
-	_quickpanel_ui_fini_heynoti();
 
 	_quickpanel_ui_fini_ecore_event(ad);
 
@@ -1112,7 +1071,9 @@ static void quickpanel_app_pause(void *data)
 
 	suspend_modules(ad);
 
-	common_cache_flush(ad->evas);
+	ad->is_suspended = 1;
+
+	_quickpanel_cache_flush(ad->evas);
 }
 
 static void quickpanel_app_resume(void *data)
@@ -1121,6 +1082,8 @@ static void quickpanel_app_resume(void *data)
 
 	struct appdata *ad = data;
 	retif(ad == NULL,, "invalid data.");
+
+	ad->is_suspended = 0;
 
 	resume_modules(data);
 }
@@ -1135,12 +1098,14 @@ static void quickpanel_app_service(service_h service, void *data)
 	INFO(" >>>>>>>>>>>>>>> QUICKPANEL IS STARTED!! <<<<<<<<<<<<<<<< ");
 
 	/* Check emulator */
-	ad->is_emul = quickpanel_ui_check_emul();
+	ad->is_emul = quickpanel_is_emul();
 	INFO("quickpanel run in %s", ad->is_emul ? "Emul" : "Device");
 
 	ad->scale = elm_config_scale_get();
 	if (ad->scale < 0)
 		ad->scale = 1.0;
+
+	INFO("quickpanel scale %f", ad->scale);
 
 	/* Get theme */
 	elm_theme_extension_add(NULL, DEFAULT_THEME_EDJ);
@@ -1150,8 +1115,6 @@ static void quickpanel_app_service(service_h service, void *data)
 	retif(ret != QP_OK, , "Failed to create window!");
 
 	_quickpanel_ui_init_ecore_event(ad);
-
-	_quickpanel_ui_init_heynoti(ad);
 
 	_quickpanel_ui_vconf_event_init(ad);
 
@@ -1166,7 +1129,7 @@ static void quickpanel_app_service(service_h service, void *data)
 	/* init quickpanel modules */
 	init_modules(ad);
 
-	ecore_idler_add(quickpanel_ui_refresh_cb, ad);
+	ecore_idler_add(_quickpanel_ui_refresh_cb, ad);
 }
 
 static void quickpanel_app_language_changed_cb(void *data)
@@ -1214,23 +1177,8 @@ int main(int argc, char *argv[])
 	app_event_callback_s app_callback = {0,};
 
 	r = control_privilege();
-        if (r != 0) {
-                WARN("Failed to control privilege!");
-        }
-
-	int heyfd = heynoti_init();
-	if (heyfd > 0) {
-		int ret = heynoti_subscribe(heyfd, "power_off_start", _heynoti_event_power_off, NULL);
-		if (ret > 0) {
-			ret = heynoti_attach_handler(heyfd);
-			if (ret < 0) {
-				ERR("Failed to heynoti_attach_handler[%d]", ret);
-			}
-		} else {
-			ERR("Failed to heynoti_subscribe[%d]", ret);
-		}
-	} else {
-		ERR("Failed to heynoti_init[%d]", heyfd);
+	if (r != 0) {
+		WARN("Failed to control privilege!");
 	}
 
 	app_callback.create = quickpanel_app_create;

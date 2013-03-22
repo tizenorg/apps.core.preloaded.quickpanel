@@ -15,12 +15,6 @@
  */
 
 #include "quickpanel_def.h"
-#include "quickpanel_theme_def.h"
-
-#define QP_SETTING_H 134
-#define QP_SETTING_SEPERATOR_H 0
-#define QP_SEPERATOR_H 12
-#define QP_TOGGLE_H_MIN 110
 
 images {
 	image: "notification_bg.png" COMP;
@@ -168,7 +162,12 @@ collections {
 			}
 		}
 	}
-#include "quickpanel_noti.edc"
+
 #include "quickpanel_spn.edc"
+#include "quickpanel_brightness.edc"
+
+#include "quickpanel_minictrl.edc"
+#include "quickpanel_noti_section.edc"
 #include "quickpanel_notibox.edc"
+#include "quickpanel_listbox.edc"
 }

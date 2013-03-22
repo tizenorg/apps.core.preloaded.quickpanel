@@ -37,9 +37,6 @@ msgstr "허용"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "지원되지 않습니다"
 
-msgid "IDS_QP_BODY_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_DATA_APPLICATIONS_SUCH_AS_BROWSER_EMAIL_AND_YOUTUBE_VIA_MOBILE_NETWORK_CALLS_AND_TEXT_MESSAGES_WILL_CONTINUE_TO_FUNCTION_CONTINUE_Q_VZW"
-msgstr "모바일 네트워크로는 브라우저, 이메일, YouTube와 같은 데이터 애플리케이션을 사용할 수 없게 됩니다. 전화 및 문자 메시지는 계속 사용할 수 있습니다. 계속할까요?"
-
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "네트워크 서비스를 이용하려면 SIM을 삽입하세요"
 
@@ -68,7 +65,7 @@ msgid "IDS_QP_TAB_DRIVING_MODE"
 msgstr "운전 모드"
 
 msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "비행기 탑승 모드가 실행 중에는 모바일 네트워크에 연결할 수 없습니다. Wi-Fi 네트워크에 연결하거나 비행기 탑승 모드를 해제한 후 다시 시도하세요"
+msgstr "비행기 탑승 모드가 실행 중에는 모바일 네트워크에 연결할 수 없습니다. Wi-Fi 네트워크에 연결하거나 비행기 탑승 모드를 해제한 후 다시 시도하세요."
 
 msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
 msgstr "Wi-Fi 테더링을 사용하면 배터리가 많이 소모되며 데이터 사용량이 증가합니다. 계속할까요?"
@@ -84,4 +81,13 @@ msgstr "테더링을 사용하려면 Wi-Fi를 끄세요"
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi와 모바일 AP를 동시에 실행할 수 없습니다. 모바일 AP를 해제할까요?"
+
+msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
+msgstr "빠른 설정 버튼 교체"
+
+msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
+msgstr "빠른 설정 버튼 추가"
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
+msgstr "모바일 네트워크를 통해 인터넷, 이메일 등의 애플리케이션을 사용할 수 없게 됩니다. 계속할까요?"
 
