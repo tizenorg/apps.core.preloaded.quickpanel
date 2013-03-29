@@ -200,10 +200,15 @@ static char *_noti_get_progress(notification_h noti, char *buf,
 	notification_get_size(noti, &size);
 	notification_get_progress(noti, &percentage);
 
-	if (percentage < 1 && percentage > 0) {
-		if (snprintf(buf, buf_len, "%d%%", (int)(percentage * 100))
-			<= 0)
-			return NULL;
+	if (percentage > 0) {
+		if (percentage < 1.0 ) {
+			if (snprintf(buf, buf_len, "%d%%", (int)(percentage * 100)) <= 0) {
+				return NULL;
+			}
+		}
+		if (percentage >= 1.0) {
+			snprintf(buf, buf_len, "%d%%", 100);
+		}
 
 		return buf;
 	} else if (size > 0 && percentage == 0) {

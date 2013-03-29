@@ -37,6 +37,9 @@ msgstr "Omogući"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Nepodržano"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Odbaci"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Ubaci SIM karticu za pristup mrežnim uslugama"
 
@@ -90,4 +93,16 @@ msgstr "Dodaj dugme za brzo podešavanje"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Nećeš moći više da koristiš aplikacije kao što su Internet i e-pošta putem mobilnih mreža. Nastaviti?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Taster"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Obavešt."
 

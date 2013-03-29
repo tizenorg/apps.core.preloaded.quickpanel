@@ -37,6 +37,9 @@ msgstr "有効"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "未対応です"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "無効"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "ネットワークサービスを利用するにはSIMカードを挿入してください。"
 
@@ -90,4 +93,16 @@ msgstr "クイック設定ボタンを追加"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "モバイルネットワークで、ブラウザやEメールなどのアプリケーションが使用できなくなります。続行しますか？"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "画面\nモニター"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "ボタン"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "通知"
 

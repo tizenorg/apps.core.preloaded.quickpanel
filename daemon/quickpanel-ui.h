@@ -20,7 +20,7 @@
 #include <Elementary.h>
 #include <Ecore_X.h>
 #include <X11/Xatom.h>
-#include <player.h>
+#include "media.h"
 
 #if !defined(VENDOR)
 #  define VENDOR "org.tizen"
@@ -55,6 +55,8 @@
 #define INDICATOR_COVER_W 82
 #define INDICATOR_COVER_H 60
 
+#define _NEWLINE '\n'
+#define _SPACE ' '
 #define QP_SETTING_PKG_SETTING	VENDOR".setting"
 #define QP_SETTING_PKG_SETTING_EMUL	"kto5jikgul.Settings"
 
@@ -80,6 +82,7 @@ struct appdata {
 
 	int is_emul; /* 0 : target, 1 : emul */
 	int is_suspended;
+	int is_opened;
 
 	Ecore_Event_Handler *hdl_client_message;
 	Ecore_Event_Handler *hdl_hardkey;
@@ -91,6 +94,7 @@ struct appdata {
 
 	Evas_Object *cover_indicator_left;
 	Evas_Object *cover_indicator_right;
+	Ecore_X_Atom *E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 };
 
 typedef struct _QP_Module {
@@ -113,7 +117,6 @@ typedef struct _QP_Module {
 	Eina_Bool state;
 } QP_Module;
 
-void quickpanel_player_play(sound_type_e sound_type, const char *sound_file);
 int quickpanel_launch_app(char *app_id, void *data);
 void quickpanel_launch_app_inform_result(const char *pkgname, int retcode);
 int quickpanel_is_emul(void);
@@ -125,6 +128,5 @@ Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load);
 void quickpanel_ui_set_indicator_cover(void *data);
 void quickpanel_close_quickpanel(bool is_check_lock);
-void quickpanel_play_feedback(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

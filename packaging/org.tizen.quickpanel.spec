@@ -4,8 +4,8 @@
 
 Name:       org.tizen.quickpanel
 Summary:    Quick Panel
-Version:    0.3.27
-Release:    2
+Version:    0.3.31
+Release:    1
 Group:      util
 License:    Flora Software License
 Source0:    %{name}-%{version}.tar.gz

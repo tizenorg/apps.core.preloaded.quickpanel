@@ -25,6 +25,9 @@
 #include "noti_node.h"
 #include "noti.h"
 
+#define IMAGE_NO_RESIZE 0
+#define IMAGE_RESIZE 1
+
 static void _noti_box_call_item_cb(Evas_Object *noti_box, const char *emission) {
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(emission == NULL, , "invalid parameter");
@@ -129,6 +132,16 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 	DBG("");
 
 	char *image = NULL;
+	int w = 0, h =0;
+	int part_w = 0, part_h =0;
+	double scale = 1.0;
+
+	retif(part == NULL, ,"invalid parameter");
+
+	struct appdata *ad = quickpanel_get_app_data();
+	if (ad != NULL) {
+		scale = ad->scale;
+	}
 
 	notification_get_image(noti, image_type, &image);
 
@@ -136,9 +149,35 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 		Evas_Object *content = NULL;
 		content = elm_image_add(noti_box);
 		elm_image_file_set(content, image, NULL);
-		if (is_stretch == 1) {
+		if (is_stretch == IMAGE_RESIZE) {
 			elm_image_aspect_fixed_set(content, EINA_FALSE);
 			elm_image_resizable_set(content, EINA_TRUE, EINA_TRUE);
+		} else {
+			elm_image_object_size_get(content, &w, &h);
+
+			if (strcmp(part, BOX_PART_ICON) == 0) {
+				part_w = scale * BOX_ICON_SIZE_W;
+				part_h = scale * BOX_ICON_SIZE_H;
+			}
+			if (strcmp(part, BOX_PART_ICON_SUB) == 0) {
+				part_w = scale * BOX_ICON_SUB_SIZE_W;
+				part_h = scale * BOX_ICON_SUB_SIZE_H;
+			}
+
+			DBG("%d %d --- %d %d", w, h, part_w, part_h);
+
+			if (part_w != 0 && part_h != 0) {
+				if (w > part_w || h > part_h) {
+					elm_image_aspect_fixed_set(content, EINA_FALSE);
+					elm_image_resizable_set(content, EINA_TRUE, EINA_TRUE);
+				} else {
+					elm_image_aspect_fixed_set(content, EINA_TRUE);
+					elm_image_resizable_set(content, EINA_FALSE, EINA_FALSE);
+				}
+			} else {
+				elm_image_aspect_fixed_set(content, EINA_TRUE);
+				elm_image_resizable_set(content, EINA_FALSE, EINA_FALSE);
+			}
 		}
 
 		elm_object_part_content_set(noti_box, part, content);
@@ -277,17 +316,17 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon.sub", 1);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-				"object.icon", 1);
+				"object.icon", IMAGE_NO_RESIZE);
 	} else {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon", 1);
+				"object.icon", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
-				"object.icon.sub", 1);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND,
-			"object.icon.background", 1);
+			"object.icon.background", IMAGE_RESIZE);
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
 		elm_object_signal_emit(noti_box, "box.show.dim", "box.prog");
@@ -375,17 +414,17 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon.sub", 1);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-				"object.icon", 1);
+				"object.icon", IMAGE_NO_RESIZE);
 	} else {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon", 1);
+				"object.icon", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
-				"object.icon.sub", 1);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND,
-			"object.icon.background", 1);
+			"object.icon.background", IMAGE_RESIZE);
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
 		elm_object_signal_emit(noti_box, "box.show.dim", "box.prog");
 	}
@@ -423,28 +462,28 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon.sub", 0);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-				"object.icon", 0);
+				"object.icon", IMAGE_NO_RESIZE);
 	} else {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
-				"object.icon", 0);
+				"object.icon", IMAGE_NO_RESIZE);
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
-				"object.icon.sub", 0);
+				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND,
-			"object.icon.background", 1);
+			"object.icon.background", IMAGE_RESIZE);
 
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_LIST_1,
-			"object.thumbnail.list.1", 1);
+			"object.thumbnail.list.1", IMAGE_RESIZE);
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_LIST_2,
-			"object.thumbnail.list.2", 1);
+			"object.thumbnail.list.2", IMAGE_RESIZE);
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_LIST_3,
-			"object.thumbnail.list.3", 1);
+			"object.thumbnail.list.3", IMAGE_RESIZE);
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_LIST_4,
-			"object.thumbnail.list.4", 1);
+			"object.thumbnail.list.4", IMAGE_RESIZE);
 	_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_LIST_5,
-			"object.thumbnail.list.5", 1);
+			"object.thumbnail.list.5", IMAGE_RESIZE);
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
 		elm_object_signal_emit(noti_box, "box.show.dim", "box.prog");

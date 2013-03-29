@@ -37,6 +37,9 @@ msgstr "허용"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "지원되지 않습니다"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "해제"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "네트워크 서비스를 이용하려면 SIM을 삽입하세요"
 
@@ -90,4 +93,16 @@ msgstr "빠른 설정 버튼 추가"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "모바일 네트워크를 통해 인터넷, 이메일 등의 애플리케이션을 사용할 수 없게 됩니다. 계속할까요?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "버튼"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "알림"
 

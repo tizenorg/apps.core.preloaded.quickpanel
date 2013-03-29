@@ -37,6 +37,9 @@ msgstr "Gera virkt"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Óstutt"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Sleppa"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Setjið SIM kort í til að fá aðgang að netþjónustu"
 
@@ -90,4 +93,16 @@ msgstr "Bæta við flýtistillingahnappi"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Þú munt ekki lengur geta notað forrit eins og netið og tölvupóst í gegnum farsímakerfi. Viltu halda áfram?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Hnappur"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Tilkynning"
 

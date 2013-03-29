@@ -37,6 +37,9 @@ msgstr "Ενεργό"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Δεν υποστηρίζεται"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Ματαίωση"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Εισάγετε την κάρτα SIM για παροχή πρόσβασης στις υπηρεσίες δικτύου"
 
@@ -90,4 +93,16 @@ msgstr "Κουμπί προσθήκης γρήγορης ρύθμισης"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Δεν θα μπορείτε πλέον να χρησιμοποιείτε εφαρμογές όπως το Internet και το Email μέσω δικτύων κινητής τηλεφωνίας. Συνέχεια;"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Κουμπί"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Ειδοποίηση"
 

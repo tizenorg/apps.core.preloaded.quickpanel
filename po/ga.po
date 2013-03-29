@@ -37,6 +37,9 @@ msgstr "Cumasaigh"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Gan tacú"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Ruaig"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Ionsáigh cárta SIM le seirbhísí líonra a rochtain"
 
@@ -90,4 +93,16 @@ msgstr "Cuir cnaipe mear-shocruithe leis"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Ní bheidh tú in ann feidhmchláir amhail Idirlíon agus R-phost a úsáid a thuilleadh le líonraí móibíleacha. Ar aghaidh?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Cnaipe"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Fógra"
 

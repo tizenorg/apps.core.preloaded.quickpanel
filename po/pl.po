@@ -37,6 +37,9 @@ msgstr "Włącz"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Nieobsługiwane"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Porzuć"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Włóż kartę SIM, aby uzyskać dostęp do usług sieciowych"
 
@@ -90,4 +93,16 @@ msgstr "Dodawanie przycisku ustawień szybkiego panelu"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Nie będzie już możliwe korzystanie z takich aplikacji jak przeglądarka czy poczta e-mail za pośrednictwem sieci telefonii komórkowej. Kontynuować?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Przycisk"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Powiadom."
 

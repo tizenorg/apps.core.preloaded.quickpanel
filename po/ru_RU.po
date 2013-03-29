@@ -29,13 +29,16 @@ msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Режим съемного устройства"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Выключить"
+msgstr "Выкл."
 
 msgid "IDS_QP_BUTTON_ENABLE"
 msgstr "Включить"
 
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Не поддерживается"
+
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Отменить"
 
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Вставьте SIM-карту для доступа к услугам сети"
@@ -90,4 +93,16 @@ msgstr "Добавить кнопку быстрых настроек"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Вы больше не сможете использовать Интернет, электронную почту и другие приложения через мобильную сеть. Продолжить?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Кнопка"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Уведомление"
 

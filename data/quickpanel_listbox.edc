@@ -4,7 +4,7 @@
 	styles {
 		style {
 			name: "ongoing_content_text";
-			base: "font=Tizen:style=Medium text_class=tizen align=left valign=top font_size=30 linegap=-6 ellipsis=1.0 color=#828384FF wrap=mixed";
+			base: "font=Tizen:style=Roman text_class=tizen align=left valign=top font_size=28 linegap=-6 ellipsis=1.0 color=#828384FF wrap=mixed";
 		}
 	}
 
@@ -59,7 +59,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 0 20 + QP_THEME_LIST_ITEM_ONGOING_SEPERATOR_HEIGHT;
+					min: 0 16 + QP_THEME_LIST_ITEM_ONGOING_SEPERATOR_HEIGHT;
 					fixed: 0 1;
 					visible: 0;
 					rel1.to:"base";
@@ -69,20 +69,22 @@
 					align: 0.0 0.0;
 				}
 			}
-			part { name: "elm.padding.bottom";
+			part { name: "elm.padding.top.text.contents";
 				type: RECT;
 				scale: 1;
-				description { state: "default" 0.0;
-					min: 0 25;
+				description {
+					state: "default" 0.0;
+					min: 0 61 + QP_THEME_LIST_ITEM_ONGOING_SEPERATOR_HEIGHT;
 					fixed: 0 1;
 					visible: 0;
 					rel1.to:"base";
 					rel2.to:"base";
-					rel1.relative: 0.0 1.0;
-					align: 0.0 1.0;
+					rel1.relative: 0.0 0.0;
+					rel2.relative: 1.0 0.0;
+					align: 0.0 0.0;
 				}
 			}
-			part { name: "elm.padding.bottom.text";
+			part { name: "elm.padding.bottom.mutiline.content";
 				type: RECT;
 				scale: 1;
 				description { state: "default" 0.0;
@@ -95,25 +97,49 @@
 					align: 0.0 1.0;
 				}
 			}
+			part { name: "elm.padding.bottom.time";
+				type: RECT;
+				scale: 1;
+				description { state: "default" 0.0;
+					min: 0 82;
+					fixed: 0 1;
+#ifdef DEBUG
+					visible: 1;
+					color: 0 255 0 255;
+#else
+					visible: 0;
+#endif
+					rel1.to:"base";
+					rel2.to:"base";
+					rel1.relative: 0.0 1.0;
+					rel2.relative: 1.0 1.0;
+					align: 0.0 1.0;
+				}
+			}
 			part { name: "elm.padding.bottom.progress";
 				type: RECT;
 				scale: 1;
 				description { state: "default" 0.0;
-					min: 0 62;
+					min: 0 52;
 					fixed: 0 1;
 					rel1.to:"base";
 					rel2.to:"base";
 					rel1.relative: 0.0 1.0;
 					rel2.relative: 1.0 1.0;
 					align: 0.0 1.0;
+#ifdef DEBUG
+					visible: 1;
+					color: 0 0 255 255;
+#else
 					visible: 0;
+#endif
 				}
 			}
 			part { name: "elm.padding.bottom.icon";
 				type: RECT;
 				scale: 1;
 				description { state: "default" 0.0;
-					min: 0 37;
+					min: 0 31;
 					fixed: 0 1;
 					rel1.to:"base";
 					rel2.to:"base";
@@ -210,14 +236,19 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 18 0;
+					min: 20 0;
 					fixed: 1 0;
 					rel1.to:"base";
 					rel2.to:"base";
 					rel1.relative: 1.0 0.0;
 					rel2.relative: 1.0 1.0;
 					align: 1.0 0.0;
+#ifdef DEBUG
+					visible: 1;
+					color: 255 0 0 190;
+#else
 					visible: 0;
+#endif
 				}
 			}
 			part { name: "elm.rect.thumbnail";
@@ -225,7 +256,7 @@
 				mouse_events: 0;
 				scale: 1;
 				description { state: "default" 0.0;
-					min: 128 128;
+					min: 124 124;
 					fixed: 1 1;
 					rel1 {
 						relative: 0.0 0.0;
@@ -290,12 +321,29 @@
 					align: 1.0 1.0;
 				}
 			}
-
-			part { name: "elm.padding.after.icon.right";
+			part { name: "elm.padding.right.slider.bounder";
 				type: RECT;
 				scale: 1;
 				description { state: "default" 0.0;
-					min: 174 0;
+					min: 202 0;
+					fixed: 1 0;
+					rel1 {
+						relative: 0.0 0.0;
+						to_x: "elm.padding.right";
+					}
+					rel2 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right";
+					}
+					visible: 0;
+					align: 1.0 0.0;
+				}
+			}
+			part { name: "elm.padding.right.text.bounder";
+				type: RECT;
+				scale: 1;
+				description { state: "default" 0.0;
+					min: 144 0;
 					fixed: 1 0;
 					rel1 {
 						relative: 0.0 0.0;
@@ -314,7 +362,7 @@
 				mouse_events: 0;
 				scale: 1;
 				description { state: "default" 0.0;
-					min: 0 50;
+					min: 0 36;
 					align: 0.0 0.0;
 					fixed: 0 1;
 					rel1 {
@@ -324,14 +372,14 @@
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.padding.after.icon.right";
+						to_x: "elm.padding.right.text.bounder";
 						to_y: "elm.padding.top";
 					}
 					color: 248 246 239 255;
 					text {
 						font: "Tizen:style=Regular";
 						text_class: "tizen";
-						size: 44;
+						size: 32;
 						fit: 0 1;
 						ellipsis: 0.0;
 						align: 0.0 0.5;
@@ -348,30 +396,30 @@
 				mouse_events: 0;
 				scale: 1;
 				description { state: "default" 0.0;
-					align: 0.0 0.0;
 					fixed: 0 1;
-					min: 0 42;
+					min: 0 28;
+					align: 0.0 1.0;
 					rel1 {
-						relative: 1.0 1.0;
+						relative: 1.0 0.0;
 						to_x: "elm.padding.left";
-						to_y: "elm.text.title";
+						to_y: "elm.padding.bottom.time";
 					}
 					rel2 {
-						relative: 0.0 1.0;
-						to_x: "elm.padding.after.icon.right";
-						to_y: "elm.text.title";
+						relative: 0.0 0.0;
+						to_x: "elm.padding.right.slider.bounder";
+						to_y: "elm.padding.bottom.time";
 					}
-					color: 248 246 239 255;
+					color: 255 255 255 255;
 					text {
-						font: "Tizen:style=Regular";
+						font: "Tizen:style=Medium";
 						text_class: "tizen";
-						size: 38;
+						size: 28;
 						align: 1.0 0.0;
 					}
 				}
 				description { state: "selected" 0.0;
 					inherit: "default" 0.0;
-					color: 248 246 239 255;
+					color: 255 255 255 255;
 				}
 			}
 			part { name: "elm.rect.content";
@@ -380,17 +428,17 @@
 				scale: 1;
 				description { state: "default" 0.0;
 					align: 0.0 0.0;
-					min: 0 42;
+					min: 0 28;
 					fixed: 0 1;
 					rel1 {
 						relative: 1.0 1.0;
 						to_x: "elm.padding.left";
-						to_y: "elm.text.title";
+						to_y: "elm.padding.top.text.contents";
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.padding.after.icon.right";
-						to_y: "elm.text.title";
+						to_x: "elm.padding.right.text.bounder";
+						to_y: "elm.padding.top.text.contents";
 					}
 					visible: 0;
 				}
@@ -401,7 +449,6 @@
 				scale: 1;
 				description { state: "default" 0.0;
 					align: 0.0 0.0;
-					min: 0 42;
 					fixed: 0 1;
 					rel1 {
 						to: "elm.rect.content";
@@ -411,9 +458,9 @@
 					}
 					color: 130 131 132 255;
 					text {
-						font: "Tizen:style=Medium";
+						font: "Tizen:style=Roman";
 						text_class: "tizen";
-						size: 30;
+						size: 28;
 						fit: 0 1;
 						ellipsis: 0.0;
 						size_range: 26 30;
@@ -446,8 +493,8 @@
 					}
 					rel2 {
 						relative: 0.0 0.0;
-						to_x: "elm.padding.after.icon.right";
-						to_y: "elm.padding.bottom.text";
+						to_x: "elm.padding.right.text.bounder";
+						to_y: "elm.padding.bottom.mutiline.content";
 					}
 					visible: 0;
 				}
@@ -482,13 +529,14 @@
 					visible: 1;
 				}
 			}
-			part { name: "elm.swallow.progress";
-				type: SWALLOW;
+			part { name: "elm.box.progress";
+				type: BOX;
 				mouse_events: 0;
 				scale: 1;
 				description { state: "default" 0.0;
 					min: 0 20;
 					fixed: 0 1;
+					align: 0.0 1.0;
 					rel1 {
 						relative: 1.0 0.0;
 						to_x: "elm.padding.left";
@@ -496,8 +544,27 @@
 					}
 					rel2 {
 						relative: 0.0 0.0;
-						to_x: "elm.padding.after.icon.right";
+						to_x: "elm.padding.right.slider.bounder";
 						to_y: "elm.padding.bottom.progress";
+					}
+#ifdef DEBUG
+					visible: 1;
+					color: 100 100 100 200;
+#else
+					visible: 0;
+#endif
+				}
+			}
+			part { name: "elm.swallow.progress";
+				type: SWALLOW;
+				mouse_events: 0;
+				scale: 1;
+				description { state: "default" 0.0;
+					rel1 {
+						to: "elm.box.progress";
+					}
+					rel2 {
+						to: "elm.box.progress";
 					}
 					align: 0.0 0.0;
 				}
@@ -513,6 +580,24 @@
 					rel1 {to: "base";}
 					rel2 {to: "base";}
 					color: 0 0 0 0;
+				}
+			}
+			part {
+				name: "accessibility";
+				type: RECT;
+				mouse_events: 1;
+				repeat_events: 1;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					rel1 {
+						to: "elm.content.bg";
+					}
+					rel2 {
+						to: "elm.content.bg";
+					}
+					color: QP_ACCESSIBILITY_TEST_COLOR;
+					visible: 1;
 				}
 			}
 		}

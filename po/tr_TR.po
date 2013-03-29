@@ -37,6 +37,9 @@ msgstr "Etkin"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Desteklenmiyor"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Durdur"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Şebeke servislerine erişmek için SIM kartını takın"
 
@@ -90,4 +93,16 @@ msgstr "Hızlı ayar düğmesi ekle"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Artık İnternet ve E-posta gibi uygulamaları mobil ağlar üzerinden kullanamayacaksınız. Devam edin?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Ekran\nYansıtma"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Düğme"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Bildirim"
 

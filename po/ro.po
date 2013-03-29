@@ -37,6 +37,9 @@ msgstr "Activare"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Neacceptat"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Oprire"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Introduceţi cartela SIM pentru a accesa serviciile de reţea"
 
@@ -90,4 +93,16 @@ msgstr "Adăugaţi un buton pentru setare rapidă"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Nu veţi mai putea utiliza aplicaţii precum Internetul şi E-mailul prin intermediul reţelelor mobile. Continuaţi?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Duplicare\nEcran"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Buton"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Notificare"
 

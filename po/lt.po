@@ -37,6 +37,9 @@ msgstr "Įjungti"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Nepalaikoma"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Nutraukti"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Įdėkite SIM kortelę, kad galėtumėte  naudotis tinklo paslaugomis"
 
@@ -90,4 +93,16 @@ msgstr "Pridėti greitojo nustatymo mygtuką"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Daugiau nebegalėsite per mobiliuosius tinklus naudotis tokiomis programomis kaip internetas ir el. paštas. Tęsti?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Mygtukas"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Pranešimas"
 

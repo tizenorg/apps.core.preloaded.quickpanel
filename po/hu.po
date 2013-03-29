@@ -37,6 +37,9 @@ msgstr "Engedélyezés"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Nem támogatott"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Elutasít"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Hálózati szolgáltatások eléréséhez helyezze be a SIM kártyát"
 
@@ -90,4 +93,16 @@ msgstr "Gyorsbeállító gomb hozzáadása"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Nem lesz lehetséges az olyan alkalmazások használata a mobilhálózaton keresztül, mint az Internet vagy az E-mail. Folytatja?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Gomb"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Értesítés"
 

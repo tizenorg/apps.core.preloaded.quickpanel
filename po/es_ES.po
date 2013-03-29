@@ -37,6 +37,9 @@ msgstr "Habilitar"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "No admitido"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Rechazar"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Inserte la tarjeta SIM para acceder a los servicios de red"
 
@@ -90,4 +93,16 @@ msgstr "Añadir botón de ajuste rápido"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Ya no podrá utilizar aplicaciones de datos como Internet y el correo electrónico mediante redes móviles. ¿Continuar?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Botón"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Notificac"
 

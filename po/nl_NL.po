@@ -37,6 +37,9 @@ msgstr "Aanzetten"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Niet ondersteund"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Uitzetten"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Plaats de SIM-kaart voor netwerkdiensten"
 
@@ -90,4 +93,16 @@ msgstr "Snelle instelknop toevoegen"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "U kunt niet langer applicaties als internet en E-mail gebruiken via mobiele netwerken. Doorgaan?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Knop"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Melding"
 

@@ -37,6 +37,9 @@ msgstr "تفعيل"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "غير مدعوم"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "إيقاف"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "قم بإدخال البطاقة للنفاذ إلى خدمات الشبكة"
 
@@ -90,4 +93,16 @@ msgstr "إضافة زر الإعداد السريع"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "لن يمكنك استخدام تطبيقات، مثل الإنترنت والبريد الإلكتروني عبر شبكات الهاتف المحمول بعد الآن. هل تريد المتابعة؟"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "الزر"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "إخطار"
 

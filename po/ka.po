@@ -37,6 +37,9 @@ msgstr "გააქტიურება"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "გაუთვალისწინებელი"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "უარყოფა"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "ქსელის მომსახურების მისაღებად ჩასვით SIM ბარათი"
 
@@ -90,4 +93,16 @@ msgstr "პარამეტრების სწრაფი დაყენ�
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "მობილური ქსელებით ვეღარ შეძლებთ ისეთი პროგრამების გამოყენებას, როგორიცაა ინტერნეტი და ელ.ფოსტა. განაგრძობთ?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "ღილაკი"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "შეტყობინება"
 

@@ -37,6 +37,9 @@ msgstr "啟用"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "不支援"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "關閉"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "請插入 SIM 卡以存取網路服務"
 
@@ -90,4 +93,16 @@ msgstr "新增快速設定按鈕"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "您無法再透過行動網路使用如網際網路和電子郵件等的應用程式。繼續嗎？"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "按鍵"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "通知"
 

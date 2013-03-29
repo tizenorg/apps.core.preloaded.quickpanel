@@ -26,7 +26,6 @@
 #include <unistd.h>
 #include <privilege-control.h>
 #include <bundle.h>
-#include <feedback.h>
 #include <notification.h>
 
 #include "common.h"
@@ -36,17 +35,15 @@
 #include "list_util.h"
 
 #define QP_WINDOW_PRIO 300
-#define QP_PLAY_DURATION_LIMIT 15
+#define QP_ENABLE_HIDING_INDICATOR 0
 
-static player_h g_sound_player;
-static Ecore_Timer *g_sound_player_timer;
 static struct appdata *g_app_data = NULL;
 
 /* binary information */
 #define QP_EMUL_STR		"Emulator"
+static Ecore_X_Atom E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 
 static void _quickpanel_cache_flush(void *evas);
-static void _quickpanel_player_free(player_h *sound_player);
 static void _quickpanel_init_size_genlist(void *data);
 static void _quickpanel_ui_update_height(void *data);
 static void _quickpanel_ui_set_indicator_cover(void *data);
@@ -148,6 +145,11 @@ static void _quickpanel_move_data_to_service(const char *key, const char *val, v
 
 	service_h service = data;
 	service_add_extra_data(service, key, val);
+}
+
+static void atoms_init_quickpanel(void)
+{
+	E_ILLUME_ATOM_MV_QUICKPANEL_STATE = ecore_x_atom_get("_E_MOVE_QUICKPANEL_STATE");
 }
 
 /******************************************************************************
@@ -285,15 +287,31 @@ static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
 		new_angle = ev->data.l[0];
 		_quickpanel_ui_rotation(ad, new_angle);
 	} else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) {
-		if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ON) {
-			qp_opened_modules(data);
-			if (g_sound_player != NULL) {
-				_quickpanel_player_free(&g_sound_player);
-			}
-		} else {
+		if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) {
+			ad->is_opened = 0;
 			qp_closed_modules(data);
-			if (g_sound_player != NULL) {
-				_quickpanel_player_free(&g_sound_player);
+			quickpanel_player_stop();
+#if QP_ENABLE_HIDING_INDICATOR
+			elm_win_indicator_mode_set(ad->win, ELM_WIN_INDICATOR_HIDE);
+#endif
+		}
+	} else if (ad->E_ILLUME_ATOM_MV_QUICKPANEL_STATE != NULL) {
+		if (ev->message_type == *(ad->E_ILLUME_ATOM_MV_QUICKPANEL_STATE)) {
+			if (ev->data.l[0] == 1) {
+				if (ad->is_opened == 0) {
+#if QP_ENABLE_HIDING_INDICATOR
+					elm_win_indicator_mode_set(ad->win, ELM_WIN_INDICATOR_SHOW);
+#endif
+					DBG("quickpanel open start");
+				}
+			}
+			if (ev->data.l[0] == 0) {
+				if (ad->is_opened == 0) {
+					DBG("quickpanel closed");
+					ad->is_opened = 1;
+					qp_opened_modules(data);
+					quickpanel_player_stop();
+				}
 			}
 		}
 	}
@@ -632,204 +650,6 @@ static void _quickpanel_ui_window_set_content_region(void *data, int contents_he
     ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
 }
 
-
-
-static Eina_Bool _quickpanel_player_free_idler_cb(void *data)
-{
-	player_h *sound_player = data;
-	player_state_e state = PLAYER_STATE_NONE;
-
-	retif(data == NULL, QP_FAIL, "Invalid parameter!");
-
-	retif(sound_player == NULL, EINA_FALSE, "invalid parameter");
-	retif(*sound_player == NULL, EINA_FALSE, "invalid parameter");
-
-	if (player_get_state(*sound_player, &state) == PLAYER_ERROR_NONE) {
-
-		DBG("state of player %d", state);
-
-		if (state == PLAYER_STATE_PLAYING) {
-			player_stop(*sound_player);
-			player_unprepare(*sound_player);
-		}
-		if (state == PLAYER_STATE_READY) {
-			player_unprepare(*sound_player);
-		}
-	}
-	player_destroy(*sound_player);
-	*sound_player = NULL;
-
-	return EINA_FALSE;
-}
-
-static void _quickpanel_player_free(player_h *sound_player)
-{
-	retif(sound_player == NULL, , "invalid parameter");
-
-	ecore_idler_add(_quickpanel_player_free_idler_cb, sound_player);
-}
-
-static void
-_quickpanel_player_del_timeout_timer(void)
-{
-	if (g_sound_player_timer) {
-		ecore_timer_del(g_sound_player_timer);
-		g_sound_player_timer = NULL;
-	}
-}
-
-static Eina_Bool _quickpanel_player_timeout_cb(void *data)
-{
-	g_sound_player_timer = NULL;
-
-	retif(data == NULL, ECORE_CALLBACK_CANCEL, "invalid parameter");
-	player_h *sound_player = data;
-
-	_quickpanel_player_free(sound_player);
-
-	return ECORE_CALLBACK_CANCEL;
-}
-
-static void
-_quickpanel_player_completed_cb(void *user_data)
-{
-	retif(user_data == NULL, , "invalid parameter");
-	player_h *sound_player = user_data;
-
-	_quickpanel_player_del_timeout_timer();
-	_quickpanel_player_free(sound_player);
-}
-
-static void
-_quickpanel_player_interrupted_cb(player_interrupted_code_e code, void *user_data)
-{
-	retif(user_data == NULL, , "invalid parameter");
-	player_h *sound_player = user_data;
-
-	_quickpanel_player_del_timeout_timer();
-	_quickpanel_player_free(sound_player);
-}
-
-static void
-_quickpanel_player_error_cb(int error_code, void *user_data)
-{
-	retif(user_data == NULL, , "invalid parameter");
-	player_h *sound_player = user_data;
-
-	_quickpanel_player_del_timeout_timer();
-	_quickpanel_player_free(sound_player);
-}
-
-void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
-{
-	player_h *sound_player = &g_sound_player;
-
-	int ret = PLAYER_ERROR_NONE;
-	player_state_e state = PLAYER_STATE_NONE;
-
-	_quickpanel_player_del_timeout_timer();
-
-	if (*sound_player != NULL) {
-		_quickpanel_player_free(sound_player);
-	}
-
-	ret = player_create(sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
-		ERR("creating the player handle failed[%d]", ret);
-		player_destroy(*sound_player);
-	}
-
-	ret = player_set_sound_type(*sound_player, SOUND_TYPE_MEDIA);
-	if (ret != PLAYER_ERROR_NONE) {
-		ERR("player_set_sound_type() ERR: %x!!!!", ret);
-		_quickpanel_player_free(sound_player);
-		return ;
-	}
-
-	player_get_state(*sound_player, &state);
-	if (state > PLAYER_STATE_READY) {
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	ret = player_set_uri(*sound_player, sound_file);
-	if (ret != PLAYER_ERROR_NONE) {
-		DBG("set attribute---profile_uri[%d]", ret);
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	ret = player_prepare(*sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
-		DBG("realizing the player handle failed[%d]", ret);
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	player_get_state(*sound_player, &state);
-	if (state != PLAYER_STATE_READY) {
-		DBG("state of player is invalid %d", state);
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	/* register callback */
-	ret = player_set_completed_cb(*sound_player, _quickpanel_player_completed_cb, sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
-		DBG("player_set_completed_cb() ERR: %x!!!!", ret);
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	ret = player_set_interrupted_cb(*sound_player, _quickpanel_player_interrupted_cb, sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	ret = player_set_error_cb(*sound_player, _quickpanel_player_error_cb, sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	ret = player_start(*sound_player);
-	if (ret != PLAYER_ERROR_NONE) {	/* if directly return retor.. */
-		DBG("player_start [%d]", ret);
-		_quickpanel_player_free(sound_player);
-		return;
-	}
-
-	g_sound_player_timer = ecore_timer_add(QP_PLAY_DURATION_LIMIT,
-			_quickpanel_player_timeout_cb, sound_player);
-}
-
-void quickpanel_play_feedback(void)
-{
-	int vib_status = 0;
-	int snd_status = 0;
-
-#ifdef VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS
-	int snd_disabled_status = 0;
-
-	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS, &snd_disabled_status);
-
-	if (!snd_disabled_status) {
-		vconf_get_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &snd_status);
-		if (snd_status)
-			feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
-	}
-#else
-	vconf_get_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &snd_status);
-	if (snd_status)
-		feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
-#endif
-
-	vconf_get_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, &vib_status);
-	if (vib_status)
-		feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_TOUCH_TAP);
-}
-
 static int _quickpanel_ui_delete_win(void *data)
 {
 	struct appdata *ad = data;
@@ -1113,6 +933,11 @@ static void quickpanel_app_service(service_h service, void *data)
 	/* create quickpanel window */
 	ret = _quickpanel_ui_create_win(ad);
 	retif(ret != QP_OK, , "Failed to create window!");
+
+
+	atoms_init_quickpanel();
+
+	ad->E_ILLUME_ATOM_MV_QUICKPANEL_STATE = &E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 
 	_quickpanel_ui_init_ecore_event(ad);
 

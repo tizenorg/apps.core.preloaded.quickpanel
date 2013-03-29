@@ -83,15 +83,16 @@ static void _viewer_unfreeze(Evas_Object *viewer)
 	}
 }
 
-static Evas_Object *_get_minictrl_obj(Evas_Object *viewer) {
-	retif(viewer == NULL, NULL, "Invalid parameter!");
+static Evas_Object *_get_minictrl_obj(Evas_Object *layout) {
+	retif(layout == NULL, NULL, "Invalid parameter!");
 
-	return elm_object_part_content_get(viewer, "elm_icon");
+	return elm_object_part_content_get(layout, "elm.icon");
 }
 
-static void _viewer_set_size(Evas_Object *viewer, void *data, int width, int height)
+static void _viewer_set_size(Evas_Object *layout, void *data, int width, int height)
 {
-	retif(viewer == NULL, , "Invalid parameter!");
+	Evas_Object *viewer = NULL;
+	retif(layout == NULL, , "Invalid parameter!");
 	retif(data == NULL, , "Invalid parameter!");
 	retif(width < 0, , "Invalid parameter!");
 	retif(height < 0, , "Invalid parameter!");
@@ -99,12 +100,18 @@ static void _viewer_set_size(Evas_Object *viewer, void *data, int width, int hei
 	int max_width = 0;
 	int resized_width = 0;
 
+	viewer = _get_minictrl_obj(layout);
+	retif(viewer == NULL, , "Invalid parameter!");
+
 	if (ad->angle == 90 || ad->angle == 270) {
 		max_width = (ad->scale * MINICONTROL_WIDTH_L_MAX) - 1;
 	} else {
 		max_width = (ad->scale * MINICONTROL_WIDTH_P_MAX) - 1;
 	}
 	resized_width = (width > max_width) ? max_width : width;
+
+	DBG("resize:%d %d", resized_width, height);
+
 	evas_object_size_hint_min_set(viewer, resized_width, height);
 }
 
@@ -237,7 +244,7 @@ static void _minictrl_add(const char *name, unsigned int width,
 	 *
 	 */
 	viewer = _minictrl_create_view(ad, name);
-	_viewer_set_size(_get_minictrl_obj(viewer), ad, width, height);
+	_viewer_set_size(viewer, ad, width, height);
 
 	evas_object_event_callback_add(_get_minictrl_obj(viewer), EVAS_CALLBACK_MOUSE_UP,
 			_minictrl_release_cb, ad);
@@ -313,7 +320,7 @@ static void _minictrl_update(const char *name, unsigned int width,
 	found->height = height;
 
 	if (found->viewer) {
-		_viewer_set_size(_get_minictrl_obj(found->viewer), ad, width, height);
+		_viewer_set_size(found->viewer, ad, width, height);
 	}
 }
 

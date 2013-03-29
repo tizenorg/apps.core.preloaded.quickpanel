@@ -165,17 +165,6 @@ static void quickpanel_brightness_qp_closed(void *data)
 	}
 }
 
-static int _brightness_is_low_battery(void) {
-	int battery_value;
-
-	vconf_get_int(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, &battery_value);
-
-	if (battery_value < VCONFKEY_SYSMAN_BAT_WARNING_LOW)
-		return 1;
-	else
-		return 0;
-}
-
 static int _brightness_set_level(int level) {
 	int ret = DEVICE_ERROR_NONE;
 
@@ -348,12 +337,6 @@ static void _brightness_set_checker(void)
 	}
 
 	elm_check_state_set(checker, _brightness_get_automate_level());
-
-	if (_brightness_is_low_battery() == 1) {
-		elm_object_disabled_set(checker, EINA_TRUE);
-	} else {
-		elm_object_disabled_set(checker, EINA_FALSE);
-	}
 }
 
 static void _brightness_set_slider(void)
@@ -390,7 +373,7 @@ static void _brightness_set_slider(void)
 
 	elm_slider_value_set(slider, _brightness_get_level());
 
-	if (_brightness_get_automate_level() || _brightness_is_low_battery() == 1) {
+	if (_brightness_get_automate_level()) {
 		elm_object_disabled_set(slider, EINA_TRUE);
 	} else {
 		elm_object_disabled_set(slider, EINA_FALSE);
@@ -452,7 +435,6 @@ static void _brightness_register_event_cb(brightness_ctrl_obj *ctrl_obj)
 {
 	retif(ctrl_obj == NULL, , "Invalid parameter!");
 
-	vconf_notify_key_changed(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, _brightness_vconf_cb, ctrl_obj);
 	vconf_notify_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, _brightness_vconf_cb, ctrl_obj);
 }
 
@@ -460,7 +442,6 @@ static void _brightness_deregister_event_cb(brightness_ctrl_obj *ctrl_obj)
 {
 	retif(ctrl_obj == NULL, , "Invalid parameter!");
 
-	vconf_ignore_key_changed(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, _brightness_vconf_cb);
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, _brightness_vconf_cb);
 }
 

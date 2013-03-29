@@ -37,6 +37,9 @@ msgstr "Luba"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Toetuseta"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Keeldu"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Sisestage SIM-kaart, et pääseda ligi võrguteenustele"
 
@@ -90,4 +93,16 @@ msgstr "Lisa kiirseadistuse nupp"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Te ei saa enam mobiilsidevõrgu kaudu kasutada rakendusi nagu internet ja e-post. Kas jätkata?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Nupp"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Teavitus"
 

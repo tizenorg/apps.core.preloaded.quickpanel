@@ -37,6 +37,9 @@ msgstr "Povolit"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Není podporováno"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Konec"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Chcete-li používat síťové služby, vložte SIM kartu"
 
@@ -90,4 +93,16 @@ msgstr "Přidat tlačítko rychlého nastavení"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Nebudete moci dále používat aplikace jako je Internet a E-mail prostřednictvím mobilních sítí. Chcete pokračovat?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Tlačítko"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Oznámení"
 

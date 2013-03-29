@@ -37,6 +37,9 @@ msgstr "Activer"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Non pris en charge"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Ignorer"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Insérez une carte SIM pour accéder aux services réseau"
 
@@ -90,4 +93,16 @@ msgstr "Ajouter une option de configuration rapide"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Vous ne pourrez plus utiliser les applications telles qu'Internet et la messagerie via les réseaux mobiles. Continuer ?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Bouton"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Notific."
 

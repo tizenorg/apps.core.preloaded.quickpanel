@@ -37,6 +37,9 @@ msgstr "启动"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "不支持"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "解除"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "插入SIM卡以访问网络服务"
 
@@ -90,4 +93,16 @@ msgstr "添加快捷设置按钮"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "您将无法继续通过移动网络使用互联网和电子邮件等应用程序。是否继续？"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "屏幕\n镜像"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "按钮"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "通知"
 

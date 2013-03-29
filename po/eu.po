@@ -37,6 +37,9 @@ msgstr "Gaitu"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Ez bateragarria"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Kendu"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Sartu SIM txartela sare zerbitzuetara sartzeko"
 
@@ -90,4 +93,16 @@ msgstr "Gehitu ezarpen azkarraren botoia"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Aurrerantzean ezingo duzu Internet eta Posta elektronikoa gisako aplikazioak erabili sare mugikorren bidez. Jarraitu?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Botoia"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Jakinaraz."
 

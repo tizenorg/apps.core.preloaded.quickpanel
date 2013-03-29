@@ -37,6 +37,9 @@ msgstr "Aktivizēt"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Neatbalstīts"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Noraidīt"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Lai piekļūtu tīkla pakalpojumiem, ievietojiet SIM karti"
 
@@ -90,4 +93,16 @@ msgstr "Pievienot ātro iestatījumu pogu"
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Jūs vairs nevarēsit lietot atsevišķas programmas, piemēram, interneta pārlūkprogrammas un e-pastu, izmantojot mobilos tīklus. Vai turpināt?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Screen\nMirroring"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Poga"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Paziņojums"
 

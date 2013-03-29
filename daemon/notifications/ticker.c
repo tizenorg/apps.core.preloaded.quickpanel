@@ -691,6 +691,62 @@ static void _quickpanel_ticker_win_rotated(void *data) {
 	}
 }
 
+static void _quickpanel_noti_media_feedback(notification_h noti) {
+
+	retif(noti == NULL, ,"op_list is NULL");
+
+	if (quickpanel_is_sound_enabled() == 1) {
+		notification_sound_type_e nsound_type = NOTIFICATION_SOUND_TYPE_NONE;
+		const char *nsound_path = NULL;
+#ifdef VCONFKEY_SETAPPL_NOTI_MSG_RINGTONE_PATH_STR
+		char *default_msg_tone = NULL;
+#endif
+
+		notification_get_sound(noti, &nsound_type, &nsound_path);
+		DBG("Sound : %d, %s", nsound_type, nsound_path);
+
+		switch (nsound_type) {
+			case NOTIFICATION_SOUND_TYPE_USER_DATA:
+				quickpanel_player_play(SOUND_TYPE_NOTIFICATION, nsound_path);
+				break;
+			case NOTIFICATION_SOUND_TYPE_DEFAULT:
+#ifdef VCONFKEY_SETAPPL_NOTI_MSG_RINGTONE_PATH_STR
+				default_msg_tone = vconf_get_str(VCONFKEY_SETAPPL_NOTI_MSG_RINGTONE_PATH_STR);
+
+				if (default_msg_tone != NULL) {
+					quickpanel_player_play(SOUND_TYPE_NOTIFICATION, default_msg_tone);
+					free(default_msg_tone);
+				} else {
+					feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_UNLOCK);
+				}
+#else
+				feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_UNLOCK);
+#endif
+				break;
+			case NOTIFICATION_SOUND_TYPE_MAX:
+			case NOTIFICATION_SOUND_TYPE_NONE:
+				break;
+		}
+	}
+
+	/* Play Vibration */
+	notification_vibration_type_e nvibration_type =
+		NOTIFICATION_VIBRATION_TYPE_NONE;
+	const char *nvibration_path = NULL;
+
+	notification_get_vibration(noti, &nvibration_type, &nvibration_path);
+	DBG("Vibration : %d, %s", nvibration_type, nvibration_path);
+	switch (nvibration_type) {
+		case NOTIFICATION_VIBRATION_TYPE_USER_DATA:
+		case 	NOTIFICATION_VIBRATION_TYPE_DEFAULT:
+			feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_GENERAL);
+			break;
+		case NOTIFICATION_VIBRATION_TYPE_MAX:
+		case NOTIFICATION_VIBRATION_TYPE_NONE:
+			break;
+	}
+}
+
 static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification_type_e type, notification_op *op_list, int num_op)
 {
 	notification_h noti = NULL;
@@ -723,6 +779,10 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 
 	retif(noti == NULL, ,"noti is NULL");
 
+	if (op_type == NOTIFICATION_OP_INSERT || op_type == NOTIFICATION_OP_UPDATE) {
+		_quickpanel_noti_media_feedback(noti);
+	}
+
 	notification_get_display_applist(noti, &applist);
 	if (!(applist & NOTIFICATION_DISPLAY_APP_TICKER)) {
 		DBG("No Ticker Msg");
@@ -739,47 +799,6 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 		notification_free(noti);
 
 		return;
-	}
-
-	/* Play sound */
-	notification_sound_type_e nsound_type = NOTIFICATION_SOUND_TYPE_NONE;
-	const char *nsound_path = NULL;
-
-	notification_get_sound(noti, &nsound_type, &nsound_path);
-	DBG("Sound : %d, %s", nsound_type, nsound_path);
-	if (nsound_type > NOTIFICATION_SOUND_TYPE_NONE
-	    || nsound_type < NOTIFICATION_SOUND_TYPE_MAX) {
-
-		switch (nsound_type) {
-		case NOTIFICATION_SOUND_TYPE_DEFAULT:
-			feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_UNLOCK);
-			break;
-		case NOTIFICATION_SOUND_TYPE_USER_DATA:
-			quickpanel_player_play(SOUND_TYPE_NOTIFICATION, nsound_path);
-			break;
-		default:
-			break;
-		}
-	}
-	/* Play Vibration */
-	notification_vibration_type_e nvibration_type =
-	    NOTIFICATION_VIBRATION_TYPE_NONE;
-	const char *nvibration_path = NULL;
-
-	notification_get_vibration(noti, &nvibration_type, &nvibration_path);
-	DBG("Vibration : %d, %s", nvibration_type, nvibration_path);
-	if (nvibration_type > NOTIFICATION_VIBRATION_TYPE_NONE
-	    || nvibration_type < NOTIFICATION_VIBRATION_TYPE_MAX) {
-
-		switch (nvibration_type) {
-		case NOTIFICATION_SOUND_TYPE_DEFAULT:
-			feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_GENERAL);
-			break;
-		case NOTIFICATION_SOUND_TYPE_USER_DATA:
-			break;
-		default:
-			break;
-		}
 	}
 
 	/* Skip if previous ticker is still shown */

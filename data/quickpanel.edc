@@ -16,9 +16,12 @@
 
 #include "quickpanel_def.h"
 
+#define QP_SETTING_H 134
+#define QP_SETTING_SEPERATOR_H 0
+
 images {
 	image: "notification_bg.png" COMP;
-	image: "quick_handle.png" COMP;
+	image: "quick_handle_both.png" COMP;
 }
 
 collections {
@@ -127,7 +130,7 @@ collections {
 						relative: 1.0 1.0;
 					}
 					image {
-						normal:"quick_handle.png";
+						normal:"quick_handle_both.png";
 						border: 1 1 1 1;
 						border_scale: 1;
 					}

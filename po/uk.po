@@ -37,6 +37,9 @@ msgstr "Увімкнути"
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Не підтримується"
 
+msgid "IDS_COM_SK_DISMISS"
+msgstr "Відхилити"
+
 msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
 msgstr "Щоб отримати доступ до послуг мережі, вставте SIM-картку"
 
@@ -90,4 +93,16 @@ msgstr "Додати кнопку швидкого доступу до уста�
 
 msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
 msgstr "Більше не можна буде використовувати такі послуги, як доступ до Інтернету та обмін повідомленнями Email через мобільні мережі. Продовжити?"
+
+msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
+msgstr "Дублюв.\nекрана"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Кнопка"
+
+msgid "IDS_QP_BUTTON2_GPS"
+msgstr "GPS"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Сповіщення"
 
