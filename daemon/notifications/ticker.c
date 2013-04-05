@@ -21,19 +21,22 @@
 #include <appsvc.h>
 #include <app_service.h>
 #include <notification.h>
-#include <time.h>
 #include <feedback.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "noti.h"
 #include "noti_win.h"
+#include "noti_util.h"
 
 #define QP_TICKER_DURATION	5
 #define QP_TICKER_DETAIL_DURATION 6
 
 #define TICKER_MSG_LEN				1024
 #define DEFAULT_ICON ICONDIR		"/quickpanel_icon_default.png"
+
+#define E_DATA_IS_TICKERNOTI_CONTENT "E_DATA_TN_CONTENT"
+#define E_DATA_IS_TICKERNOTI_EXECUTED "E_DATA_TN_EXECUTED"
 
 #define FORMAT_1LINE "<font_size=29><color=#BABABA>%s</color></font>"
 #define FORMAT_2LINE "<font_size=26><color=#BABABA>%s</color></font><br><font_size=29><color=#F4F4F4>%s</color></font>"
@@ -50,6 +53,7 @@ static int quickpanel_ticker_fini(void *data);
 static int quickpanel_ticker_enter_hib(void *data);
 static int quickpanel_ticker_leave_hib(void *data);
 static void quickpanel_ticker_reflesh(void *data);
+static void _quickpanel_ticker_destroy_tickernoti(Evas_Object *tickernoti);
 
 QP_Module ticker = {
 	.name = "ticker",
@@ -60,8 +64,6 @@ QP_Module ticker = {
 	.lang_changed = NULL,
 	.refresh = quickpanel_ticker_reflesh
 };
-
-static int latest_inserted_time;
 
 /*****************************************************************************
  *
@@ -82,6 +84,7 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
 	notification_h noti = NULL;
 	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
+	int *is_ticker_executed = NULL;
 
 	noti = data;
 	retif(noti == NULL, , "Invalid parameter!");
@@ -103,10 +106,21 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 	notification_get_property(noti, &flags);
 	notification_get_type(noti, &type);
 
-	if (flags & NOTIFICATION_PROP_DISABLE_APP_LAUNCH)
+	if (flags & NOTIFICATION_PROP_DISABLE_APP_LAUNCH) {
 		flag_launch = 0;
-	else
-		flag_launch = 1;
+	} else {
+		is_ticker_executed = evas_object_data_get(obj, E_DATA_IS_TICKERNOTI_EXECUTED);
+		if (is_ticker_executed != NULL) {
+			if (*is_ticker_executed == 0) {
+				flag_launch = 1;
+				*is_ticker_executed = 1;
+			} else {
+				flag_launch = 0;
+			}
+		} else {
+			flag_launch = 0;
+		}
+	}
 
 	if (flags & NOTIFICATION_PROP_DISABLE_AUTO_DELETE)
 		flag_delete = 0;
@@ -271,7 +285,7 @@ static void _quickpanel_ticker_hide(void *data)
 {
 	if (g_ticker) {
 		evas_object_hide(g_ticker);
-		evas_object_del(g_ticker);
+		_quickpanel_ticker_destroy_tickernoti(g_ticker);
 		g_ticker = NULL;
 	}
 }
@@ -558,6 +572,7 @@ static Evas_Object *_quickpanel_ticker_create_tickernoti(void *data)
 	char *buf = NULL;
 	const char *data_win_height = NULL;
 	int noti_height = 0;
+	int *is_ticker_executed = NULL;
 
 	retif(noti == NULL, NULL, "Invalid parameter!");
 
@@ -567,7 +582,7 @@ static Evas_Object *_quickpanel_ticker_create_tickernoti(void *data)
 	detail = elm_layout_add(tickernoti);
 	if (!detail) {
 		ERR("Failed to get detailview.");
-		evas_object_del(tickernoti);
+		_quickpanel_ticker_destroy_tickernoti(tickernoti);
 		return NULL;
 	}
 	elm_layout_theme_set(detail, "tickernoti", "base", "default");
@@ -603,8 +618,35 @@ static Evas_Object *_quickpanel_ticker_create_tickernoti(void *data)
 	 * "info" for text only mode
 	 */
 	elm_object_style_set(tickernoti, "default");
+	evas_object_data_set(tickernoti, E_DATA_IS_TICKERNOTI_CONTENT, detail);
+	is_ticker_executed = (int *)malloc(sizeof(int));
+	if (is_ticker_executed != NULL) {
+		*is_ticker_executed = 0;
+		evas_object_data_set(detail, E_DATA_IS_TICKERNOTI_EXECUTED, is_ticker_executed);
+	}
 
 	return tickernoti;
+}
+
+static void _quickpanel_ticker_destroy_tickernoti(Evas_Object *tickernoti)
+{
+	int *is_ticker_executed = NULL;
+	Evas_Object *detail = NULL;
+
+	retif(tickernoti == NULL, , "Invalid parameter!");
+
+	detail = evas_object_data_get(tickernoti, E_DATA_IS_TICKERNOTI_CONTENT);
+
+	if (detail != NULL) {
+		is_ticker_executed = evas_object_data_get(detail, E_DATA_IS_TICKERNOTI_EXECUTED);
+		if (is_ticker_executed != NULL) {
+			evas_object_data_del(detail, E_DATA_IS_TICKERNOTI_EXECUTED);
+			free(is_ticker_executed);
+		}
+		evas_object_data_del(detail, E_DATA_IS_TICKERNOTI_CONTENT);
+	}
+
+	evas_object_del(tickernoti);
 }
 
 static int _quickpanel_ticker_get_angle(void *data)
@@ -850,7 +892,6 @@ static int quickpanel_ticker_init(void *data)
 {
 	struct appdata *ad = (struct appdata *)data;
 
-	latest_inserted_time = time(NULL);
 	g_window = ad->win;
 
 	notification_register_detailed_changed_cb(_quickpanel_ticker_noti_detailed_changed_cb,

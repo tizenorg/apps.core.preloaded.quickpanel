@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.3.31-1" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.3.33-1" install-location="internal-only">
 	<label>@PROJECT_NAME@</label>
 	<author email="yjoo93.park@samsung.com" href="www.samsung.com">Youngjoo Park</author>
 	<author email="seungtaek.chung@samsung.com" href="www.samsung.com">seungtaek chung</author>

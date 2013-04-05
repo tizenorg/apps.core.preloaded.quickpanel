@@ -375,6 +375,24 @@
 					}
 				}
 			}
+			part {
+				name: "accessibility.check.label";
+				type: RECT;
+				mouse_events: 1;
+				repeat_events: 1;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					rel1 {
+						to: "elm.check.text.rect";
+					}
+					rel2 {
+						to: "elm.check.text.rect";
+					}
+					color: QP_ACCESSIBILITY_TEST_COLOR;
+					visible: 1;
+				}
+			}
 		}
 
 		programs {

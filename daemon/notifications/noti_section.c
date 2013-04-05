@@ -80,7 +80,7 @@ static void _noti_section_set_text(Evas_Object *noti_section, int count)
 	elm_object_part_text_set(noti_section, "elm.text.text", text);
 }
 
-Evas_Object *noti_section_create(Evas_Object *parent) {
+HAPI Evas_Object *noti_section_create(Evas_Object *parent) {
 	Eina_Bool ret = EINA_FALSE;
 	Evas_Object *section = NULL;
 
@@ -103,14 +103,14 @@ Evas_Object *noti_section_create(Evas_Object *parent) {
 	return section;
 }
 
-void noti_section_update(Evas_Object *noti_section, int noti_count) {
+HAPI void noti_section_update(Evas_Object *noti_section, int noti_count) {
 	retif(noti_section == NULL, , "invalid parameter");
 
 	_noti_section_set_button(noti_section);
 	_noti_section_set_text(noti_section, noti_count);
 }
 
-void noti_section_remove(Evas_Object *noti_section) {
+HAPI void noti_section_remove(Evas_Object *noti_section) {
 	retif(noti_section == NULL, , "invalid parameter");
 
 	quickpanel_list_util_item_del_tag(noti_section);

@@ -21,7 +21,7 @@
 
 static void _noti_node_free(noti_node_item *node);
 
-void noti_node_create(noti_node **handle)
+HAPI void noti_node_create(noti_node **handle)
 {
 	retif(handle == NULL, , "Invalid parameter!");
 
@@ -39,7 +39,7 @@ void noti_node_create(noti_node **handle)
 	}
 }
 
-void noti_node_destroy(noti_node **handle)
+HAPI void noti_node_destroy(noti_node **handle)
 {
 	retif(handle == NULL, , "Invalid parameter!");
 	retif(*handle == NULL, , "Invalid parameter!");
@@ -52,7 +52,7 @@ void noti_node_destroy(noti_node **handle)
 	*handle = NULL;
 }
 
-noti_node_item *noti_node_add(noti_node *handle, notification_h noti, void *view)
+HAPI noti_node_item *noti_node_add(noti_node *handle, notification_h noti, void *view)
 {
 	int priv_id = 0;
 	notification_type_e noti_type = NOTIFICATION_TYPE_NONE;
@@ -85,7 +85,7 @@ noti_node_item *noti_node_add(noti_node *handle, notification_h noti, void *view
 	return NULL;
 }
 
-void noti_node_remove(noti_node *handle, int priv_id)
+HAPI void noti_node_remove(noti_node *handle, int priv_id)
 {
 	notification_type_e noti_type = NOTIFICATION_TYPE_NONE;
 
@@ -115,7 +115,7 @@ void noti_node_remove(noti_node *handle, int priv_id)
 	}
 }
 
-noti_node_item *noti_node_get(noti_node *handle, int priv_id)
+HAPI noti_node_item *noti_node_get(noti_node *handle, int priv_id)
 {
 	retif(handle == NULL, NULL, "Invalid parameter!");
 	retif(handle->table == NULL, NULL, "Invalid parameter!");
@@ -124,7 +124,7 @@ noti_node_item *noti_node_get(noti_node *handle, int priv_id)
 			(handle->table, GINT_TO_POINTER(priv_id));
 }
 
-int noti_node_get_item_count(noti_node *handle, notification_type_e noti_type)
+HAPI int noti_node_get_item_count(noti_node *handle, notification_type_e noti_type)
 {
 	retif(handle == NULL, 0, "Invalid parameter!");
 

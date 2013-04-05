@@ -20,13 +20,7 @@
 #include <vconf.h>
 #include <appcore-common.h>
 #include <app_service.h>
-#include <runtime_info.h>
 #include <Ecore_X.h>
-
-#include <unicode/uloc.h>
-#include <unicode/udat.h>
-#include <unicode/udatpg.h>
-#include <unicode/ustring.h>
 #include <notification.h>
 
 #include "quickpanel-ui.h"
@@ -44,8 +38,6 @@
 #ifndef VCONFKEY_QUICKPANEL_STARTED
 #define VCONFKEY_QUICKPANEL_STARTED "memory/private/"PACKAGE_NAME"/started"
 #endif /* VCONFKEY_QUICKPANEL_STARTED */
-
-#define QP_NOTI_DAY_DEC	(24 * 60 * 60)
 
 #define QP_NOTI_ONGOING_DBUS_PATH	"/dbus/signal"
 #define QP_NOTI_ONGOING_DBUS_INTERFACE	"notification.ongoing"
@@ -294,116 +286,6 @@ static void _quickpanel_noti_item_content_update_cb(void *data,
 
 	if (!quickpanel_is_suspended())
 		_quickpanel_noti_update_progressbar(data, noti);
-}
-
-char *quickpanel_noti_get_time(time_t t, char *buf, int buf_len)
-{
-	UErrorCode status = U_ZERO_ERROR;
-	UDateTimePatternGenerator *generator;
-	UDateFormat *formatter;
-	UChar skeleton[40] = { 0 };
-	UChar pattern[40] = { 0 };
-	UChar formatted[40] = { 0 };
-	int32_t patternCapacity, formattedCapacity;
-	int32_t skeletonLength, patternLength, formattedLength;
-	UDate date;
-	const char *locale;
-	const char customSkeleton[] = UDAT_YEAR_NUM_MONTH_DAY;
-	char bf1[32] = { 0, };
-	bool is_24hour_enabled = FALSE;
-
-	struct tm loc_time;
-	time_t today, yesterday;
-	int ret = 0;
-
-	today = time(NULL);
-	localtime_r(&today, &loc_time);
-
-	loc_time.tm_sec = 0;
-	loc_time.tm_min = 0;
-	loc_time.tm_hour = 0;
-	today = mktime(&loc_time);
-
-	yesterday = today - QP_NOTI_DAY_DEC;
-
-	localtime_r(&t, &loc_time);
-
-	if (t >= yesterday && t < today) {
-		ret = snprintf(buf, buf_len, _S("IDS_COM_BODY_YESTERDAY"));
-	} else if (t < yesterday) {
-		/* set UDate  from time_t */
-		date = (UDate) t * 1000;
-
-		/* get default locale  */
-		/* for thread saftey  */
-		uloc_setDefault(__secure_getenv("LC_TIME"), &status);
-		locale = uloc_getDefault();
-
-		/* open datetime pattern generator */
-		generator = udatpg_open(locale, &status);
-		if (generator == NULL)
-			return NULL;
-
-		/* calculate pattern string capacity */
-		patternCapacity =
-		    (int32_t) (sizeof(pattern) / sizeof((pattern)[0]));
-
-		/* ascii to unicode for input skeleton */
-		u_uastrcpy(skeleton, customSkeleton);
-
-		/* get skeleton length */
-		skeletonLength = strlen(customSkeleton);
-
-		/* get best pattern using skeleton */
-		patternLength =
-		    udatpg_getBestPattern(generator, skeleton, skeletonLength,
-					  pattern, patternCapacity, &status);
-
-		/* open datetime formatter using best pattern */
-		formatter =
-		    udat_open(UDAT_IGNORE, UDAT_DEFAULT, locale, NULL, -1,
-			      pattern, patternLength, &status);
-		if (formatter == NULL) {
-			udatpg_close(generator);
-			return NULL;
-		}
-
-		/* calculate formatted string capacity */
-		formattedCapacity =
-		    (int32_t) (sizeof(formatted) / sizeof((formatted)[0]));
-
-		/* formatting date using formatter by best pattern */
-		formattedLength =
-		    udat_format(formatter, date, formatted, formattedCapacity,
-				NULL, &status);
-
-		/* unicode to ascii to display */
-		u_austrcpy(bf1, formatted);
-
-		/* close datetime pattern generator */
-		udatpg_close(generator);
-
-		/* close datetime formatter */
-		udat_close(formatter);
-
-		ret = snprintf(buf, buf_len, "%s", bf1);
-	} else {
-		ret = runtime_info_get_value_bool(
-					RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED, &is_24hour_enabled);
-		if (ret == RUNTIME_INFO_ERROR_NONE && is_24hour_enabled == TRUE) {
-			ret = strftime(buf, buf_len, "%H:%M", &loc_time);
-		} else {
-			strftime(bf1, sizeof(bf1), "%l:%M", &loc_time);
-
-			if (loc_time.tm_hour >= 0 && loc_time.tm_hour < 12)
-				ret = snprintf(buf, buf_len, "%s%s", bf1, "AM");
-			else
-				ret = snprintf(buf, buf_len, "%s%s", bf1, "PM");
-		}
-
-	}
-
-	return ret <= 0 ? NULL : buf;
 }
 
 static void _quickpanel_noti_ani_image_control(Eina_Bool on)
@@ -715,7 +597,7 @@ static void _quickpanel_noti_section_remove(void)
 	}
 }
 
-void _quickpanel_noti_box_deleted_cb(void *data, Evas_Object *obj) {
+static void _quickpanel_noti_box_deleted_cb(void *data, Evas_Object *obj) {
 	int priv_id = -1;
 
 	retif(data == NULL, , "Invalid parameter!");
@@ -730,7 +612,7 @@ void _quickpanel_noti_box_deleted_cb(void *data, Evas_Object *obj) {
 	}
 }
 
-void _quickpanel_list_box_deleted_cb(void *data, Evas_Object *obj) {
+static void _quickpanel_list_box_deleted_cb(void *data, Evas_Object *obj) {
 	int priv_id = -1;
 
 	retif(data == NULL, , "Invalid parameter!");
@@ -812,7 +694,7 @@ static void _quickpanel_noti_noti_add(Evas_Object *list, void *data, int is_prep
 			data, noti_box, g_noti_gridbox);
 }
 
-void _quickpanel_noti_update_notilist(struct appdata *ad)
+static void _quickpanel_noti_update_notilist(struct appdata *ad)
 {
 	Evas_Object *list = NULL;
 	notification_h noti = NULL;
@@ -1256,13 +1138,13 @@ static int quickpanel_noti_fini(void *data)
 	/* Unregister event handler */
 	_quickpanel_noti_unregister_event_handler(data);
 
-	if (g_noti_node != NULL) {
-		noti_node_destroy(&g_noti_node);
-	}
-
 	_quickpanel_noti_clear_list_all();
 
 	_quickpanel_noti_fini(ad);
+
+	if (g_noti_node != NULL) {
+		noti_node_destroy(&g_noti_node);
+	}
 
 	return QP_OK;
 }
@@ -1304,7 +1186,7 @@ static void quickpanel_noti_refresh(void *data) {
 	}
 }
 
-void quickpanel_noti_lang_changed(void *data)
+static void quickpanel_noti_lang_changed(void *data)
 {
 	struct appdata *ad = data;
 

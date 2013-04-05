@@ -26,8 +26,10 @@
 #define QP_FAIL	(-1)
 
 #ifdef _DLOG_USED
-#define LOG_TAG "quickpanel"
+#define LOG_TAG "QUICKPANEL"
 #include <dlog.h>
+
+#define HAPI __attribute__((visibility("hidden")))
 
 #define DBG(fmt , args...) \
 	do { \
@@ -109,5 +111,8 @@
 		goto target; \
 	} \
 } while (0);
+
+
+void quickpanel_util_char_replace(char *text, char s, char t);
 
 #endif				/* __QP_COMMON_H_ */

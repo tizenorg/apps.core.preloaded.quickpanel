@@ -24,9 +24,13 @@
 #include "noti_box.h"
 #include "noti_node.h"
 #include "noti.h"
+#include "noti_util.h"
 
 #define IMAGE_NO_RESIZE 0
 #define IMAGE_RESIZE 1
+
+#define TEXT_NO_CR 0
+#define TEXT_CR 1
 
 static void _noti_box_call_item_cb(Evas_Object *noti_box, const char *emission) {
 	retif(noti_box == NULL, , "invalid parameter");
@@ -71,7 +75,8 @@ static void _signal_cb(void *data, Evas_Object *o, const char *emission, const c
 	_noti_box_call_item_cb(o, emission);
 }
 
-Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e layout) {
+
+HAPI Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e layout) {
 	Evas_Object *box = NULL;
 
 	box = elm_layout_add(parent);
@@ -186,10 +191,11 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 }
 
 static int _set_text(Evas_Object *noti_box, notification_h noti,
-		notification_text_type_e text_type, const char *part, int is_need_effect) {
+		notification_text_type_e text_type, const char *part, int is_need_effect, int is_support_cr) {
 	char buf[128] = { 0, };
 
 	char *text = NULL;
+	char *text_utf8 = NULL;
 	time_t time = 0;
 
 	if (notification_get_time_from_text(noti, text_type, &time) == NOTIFICATION_ERROR_NONE) {
@@ -203,7 +209,20 @@ static int _set_text(Evas_Object *noti_box, notification_h noti,
 
 	if (text != NULL) {
 		if (strlen(text) > 0) {
-			elm_object_part_text_set(noti_box, part, text);
+
+			if (is_support_cr == TEXT_CR) {
+				text_utf8 = elm_entry_utf8_to_markup(text);
+				if (text_utf8 != NULL) {
+					elm_object_part_text_set(noti_box, part, text_utf8);
+					free(text_utf8);
+				} else {
+					elm_object_part_text_set(noti_box, part, text);
+				}
+			} else {
+				quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
+				elm_object_part_text_set(noti_box, part, text);
+			}
+
 			if (is_need_effect == 1)
 				elm_object_signal_emit(noti_box, "object.show.effect", part);
 			else
@@ -285,32 +304,32 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title", is_need_effect);
+			"object.text.title", is_need_effect, TEXT_CR);
 
 	if (is_contents_only == 1) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents.multiline", is_need_effect);
+				"object.text.contents.multiline", is_need_effect, TEXT_CR);
 	} else {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents", is_need_effect);
+				"object.text.contents", is_need_effect, TEXT_NO_CR);
 
 		if (is_sub_info_1_only == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-										"object.text.info.1.multiline", is_need_effect);
+										"object.text.info.1.multiline", is_need_effect, TEXT_CR);
 		} else {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
 				if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
 					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-							"object.text.info.1", is_need_effect);
+							"object.text.info.1", is_need_effect, TEXT_NO_CR);
 				} else {
 					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-							"object.text.info.1.short", is_need_effect);
+							"object.text.info.1.short", is_need_effect, TEXT_NO_CR);
 					_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
-							"object.text.info.sub.1", is_need_effect);
+							"object.text.info.sub.1", is_need_effect, TEXT_NO_CR);
 				}
 			}
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-					"object.text.info.2", is_need_effect);
+					"object.text.info.2", is_need_effect, TEXT_NO_CR);
 		}
 	}
 
@@ -370,44 +389,44 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title", is_need_effect);
+			"object.text.title", is_need_effect, TEXT_CR);
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 0) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents.short", is_need_effect);
+				"object.text.contents.short", is_need_effect, TEXT_NO_CR);
 		length = _set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT,
-				"object.text.count", is_need_effect);
+				"object.text.count", is_need_effect, TEXT_NO_CR);
 		length = (length >= 5) ? 5 : length;
 		snprintf(buf, sizeof(buf), "box.count.%d", length);
 		elm_object_signal_emit(noti_box, buf, "box.prog");
 	} else {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-				"object.text.contents", is_need_effect);
+				"object.text.contents", is_need_effect, TEXT_NO_CR);
 	}
 
 	if (is_sub_info_1_only == 1) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-									"object.text.info.1.multiline", is_need_effect);
+									"object.text.info.1.multiline", is_need_effect, TEXT_CR);
 	} else {
 		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-						"object.text.info.1", is_need_effect);
+						"object.text.info.1", is_need_effect, TEXT_NO_CR);
 			} else {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-						"object.text.info.1.short", is_need_effect);
+						"object.text.info.1.short", is_need_effect, TEXT_NO_CR);
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1,
-						"object.text.info.sub.1", is_need_effect);
+						"object.text.info.sub.1", is_need_effect, TEXT_NO_CR);
 			}
 		}
 		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 0) {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-						"object.text.info.2", is_need_effect);
+						"object.text.info.2", is_need_effect, TEXT_NO_CR);
 			} else {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-						"object.text.info.2.short", is_need_effect);
+						"object.text.info.2.short", is_need_effect, TEXT_NO_CR);
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2,
-						"object.text.info.sub.2", is_need_effect);
+						"object.text.info.sub.2", is_need_effect, TEXT_NO_CR);
 			}
 		}
 	}
@@ -456,9 +475,9 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 		bindtextdomain(domain, dir);
 
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_TITLE,
-			"object.text.title", is_need_effect);
+			"object.text.title", is_need_effect, TEXT_CR);
 	_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-			"object.text.contents", is_need_effect);
+			"object.text.contents", is_need_effect, TEXT_NO_CR);
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
@@ -522,7 +541,7 @@ static void _noti_box_set_layout(Evas_Object *noti_box, notification_h noti,
 	}
 }
 
-void noti_box_remove(Evas_Object *noti_box) {
+HAPI void noti_box_remove(Evas_Object *noti_box) {
 
 	retif(noti_box == NULL, , "invalid parameter");
 
@@ -538,7 +557,7 @@ void noti_box_remove(Evas_Object *noti_box) {
 	evas_object_del(noti_box);
 }
 
-void noti_box_set_status(Evas_Object *noti_box, int status) {
+HAPI void noti_box_set_status(Evas_Object *noti_box, int status) {
 	retif(noti_box == NULL, , "invalid parameter");
 
 	noti_box_h *noti_box_h = evas_object_data_get(noti_box, E_DATA_NOTI_BOX_H);
@@ -548,7 +567,7 @@ void noti_box_set_status(Evas_Object *noti_box, int status) {
 	}
 }
 
-int noti_box_get_status(Evas_Object *noti_box) {
+HAPI int noti_box_get_status(Evas_Object *noti_box) {
 	retif(noti_box == NULL, STATE_NORMAL, "invalid parameter");
 
 	noti_box_h *noti_box_h = evas_object_data_get(noti_box, E_DATA_NOTI_BOX_H);
@@ -560,7 +579,7 @@ int noti_box_get_status(Evas_Object *noti_box) {
 	return STATE_DELETING;
 }
 
-void noti_box_node_set(Evas_Object *noti_box, void *data) {
+HAPI void noti_box_node_set(Evas_Object *noti_box, void *data) {
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(data == NULL, , "invalid parameter");
 
@@ -576,7 +595,7 @@ void noti_box_node_set(Evas_Object *noti_box, void *data) {
 	}
 }
 
-void *noti_box_node_get(Evas_Object *noti_box) {
+HAPI void *noti_box_node_get(Evas_Object *noti_box) {
 	retif(noti_box == NULL, NULL, "invalid parameter");
 
 	noti_box_h *noti_box_data = evas_object_data_get(noti_box, E_DATA_NOTI_BOX_H);
@@ -588,7 +607,7 @@ void *noti_box_node_get(Evas_Object *noti_box) {
 	return NULL;
 }
 
-void noti_box_set_item_selected_cb(Evas_Object *noti_box,
+HAPI void noti_box_set_item_selected_cb(Evas_Object *noti_box,
 		void(*selected_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(selected_cb == NULL, , "invalid parameter");
@@ -596,7 +615,7 @@ void noti_box_set_item_selected_cb(Evas_Object *noti_box,
 	evas_object_data_set(noti_box, E_DATA_CB_SELECTED_ITEM, selected_cb);
 }
 
-void noti_box_set_item_button_1_cb(Evas_Object *noti_box,
+HAPI void noti_box_set_item_button_1_cb(Evas_Object *noti_box,
 		void(*button_1_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(button_1_cb == NULL, , "invalid parameter");
@@ -604,7 +623,7 @@ void noti_box_set_item_button_1_cb(Evas_Object *noti_box,
 	evas_object_data_set(noti_box, E_DATA_CB_BUTTON_1, button_1_cb);
 }
 
-void noti_box_set_item_deleted_cb(Evas_Object *noti_box,
+HAPI void noti_box_set_item_deleted_cb(Evas_Object *noti_box,
 		void(*deleted_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");

@@ -204,7 +204,7 @@ static Eina_Bool _prop_change(void *data, int type __UNUSED__, void *event)
 }
 #endif
 
-Evas_Object *noti_win_add(Evas_Object *parent)
+HAPI Evas_Object *noti_win_add(Evas_Object *parent)
 {
 	Evas_Object *win;
 	Evas_Object *bg;
@@ -250,7 +250,7 @@ Evas_Object *noti_win_add(Evas_Object *parent)
 	return win;
 }
 
-void noti_win_content_set(Evas_Object *obj, Evas_Object *content)
+HAPI void noti_win_content_set(Evas_Object *obj, Evas_Object *content)
 {
 	Evas_Coord h;
 	struct Internal_Data *wd;
@@ -280,7 +280,7 @@ void noti_win_content_set(Evas_Object *obj, Evas_Object *content)
 	}
 }
 
-void noti_win_orient_set(Evas_Object *obj, enum Noti_Orient orient)
+HAPI void noti_win_orient_set(Evas_Object *obj, enum Noti_Orient orient)
 {
 #ifdef HAVE_X
 	Evas_Coord root_w, root_h;

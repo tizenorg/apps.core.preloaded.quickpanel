@@ -24,6 +24,7 @@
 #include "noti_list_item.h"
 #include "noti_node.h"
 #include "noti.h"
+#include "noti_util.h"
 
 #define QP_DEFAULT_ICON	ICONDIR"/quickpanel_icon_default.png"
 
@@ -388,6 +389,7 @@ static void _noti_list_item_ongoing_set_text(Evas_Object *noti_list_item)
 	notification_h noti = NULL;
 	notification_error_e noti_err = NOTIFICATION_ERROR_NONE;
 	char *text = NULL;
+	char *text_utf8 = NULL;
 	char *domain = NULL;
 	char *dir = NULL;
 	char *pkgname = NULL;
@@ -436,6 +438,7 @@ static void _noti_list_item_ongoing_set_text(Evas_Object *noti_list_item)
 							&text);
 
 	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
+		quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
 		_set_text_to_part(noti_list_item, "elm.text.title", text);
 	}
 
@@ -444,9 +447,17 @@ static void _noti_list_item_ongoing_set_text(Evas_Object *noti_list_item)
 							&text);
 	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
 		if (layout == NOTIFICATION_LY_ONGOING_EVENT) {
-			_set_text_to_part(noti_list_item, "elm.text.content.multiline", text);
+			text_utf8 = elm_entry_utf8_to_markup(text);
+			if (text_utf8 != NULL) {
+				_set_text_to_part(noti_list_item, "elm.text.content.multiline", text_utf8);
+				free(text_utf8);
+			} else {
+				_set_text_to_part(noti_list_item, "elm.text.content.multiline", text);
+			}
+
 			elm_object_signal_emit(noti_list_item, "elm,state,elm.text.content.multiline,active", "elm");
 		} else {
+			quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
 			_set_text_to_part(noti_list_item, "elm.text.content", text);
 			elm_object_signal_emit(noti_list_item, "elm,state,elm.text.content,active", "elm");
 		}
@@ -457,6 +468,7 @@ static void _noti_list_item_ongoing_set_text(Evas_Object *noti_list_item)
 		text = _noti_get_progress(noti, buf,
 									  sizeof(buf));
 		if (text != NULL) {
+			quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
 			_set_text_to_part(noti_list_item, "elm.text.time", text);
 		}
 	}
@@ -505,7 +517,7 @@ static void _signal_cb(void *data, Evas_Object *o, const char *emission, const c
 	_noti_list_item_call_item_cb(o, emission);
 }
 
-Evas_Object *noti_list_item_create(Evas_Object *parent, notification_ly_type_e layout) {
+HAPI Evas_Object *noti_list_item_create(Evas_Object *parent, notification_ly_type_e layout) {
 	Evas_Object *box = NULL;
 
 	retif(parent == NULL, NULL, "Invalid parameter!");
@@ -588,7 +600,7 @@ static void _noti_list_item_set_layout(Evas_Object *noti_list_item, notification
 	}
 }
 
-void noti_list_item_remove(Evas_Object *noti_list_item) {
+HAPI void noti_list_item_remove(Evas_Object *noti_list_item) {
 
 	retif(noti_list_item == NULL, , "invalid parameter");
 
@@ -605,7 +617,7 @@ void noti_list_item_remove(Evas_Object *noti_list_item) {
 	evas_object_del(noti_list_item);
 }
 
-void noti_list_item_update(Evas_Object *noti_list_item) {
+HAPI void noti_list_item_update(Evas_Object *noti_list_item) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 
 	_noti_list_item_ongoing_set_progressbar(noti_list_item);
@@ -613,7 +625,7 @@ void noti_list_item_update(Evas_Object *noti_list_item) {
 	_noti_list_item_ongoing_set_text(noti_list_item);
 }
 
-void noti_list_item_set_status(Evas_Object *noti_list_item, int status) {
+HAPI void noti_list_item_set_status(Evas_Object *noti_list_item, int status) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 
 	noti_list_item_h *noti_list_item_h = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
@@ -623,7 +635,7 @@ void noti_list_item_set_status(Evas_Object *noti_list_item, int status) {
 	}
 }
 
-int noti_list_item_get_status(Evas_Object *noti_list_item) {
+HAPI int noti_list_item_get_status(Evas_Object *noti_list_item) {
 	retif(noti_list_item == NULL, STATE_NORMAL, "invalid parameter");
 
 	noti_list_item_h *noti_list_item_h = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
@@ -635,7 +647,7 @@ int noti_list_item_get_status(Evas_Object *noti_list_item) {
 	return STATE_DELETING;
 }
 
-void noti_list_item_node_set(Evas_Object *noti_list_item, void *data) {
+HAPI void noti_list_item_node_set(Evas_Object *noti_list_item, void *data) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 	retif(data == NULL, , "invalid parameter");
 
@@ -651,7 +663,7 @@ void noti_list_item_node_set(Evas_Object *noti_list_item, void *data) {
 	}
 }
 
-void *noti_list_item_node_get(Evas_Object *noti_list_item) {
+HAPI void *noti_list_item_node_get(Evas_Object *noti_list_item) {
 	retif(noti_list_item == NULL, NULL, "invalid parameter");
 
 	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
@@ -663,7 +675,7 @@ void *noti_list_item_node_get(Evas_Object *noti_list_item) {
 	return NULL;
 }
 
-void noti_list_item_set_item_selected_cb(Evas_Object *noti_list_item,
+HAPI void noti_list_item_set_item_selected_cb(Evas_Object *noti_list_item,
 		void(*selected_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 	retif(selected_cb == NULL, , "invalid parameter");
@@ -671,7 +683,7 @@ void noti_list_item_set_item_selected_cb(Evas_Object *noti_list_item,
 	evas_object_data_set(noti_list_item, E_DATA_NOTI_LIST_CB_SELECTED_ITEM, selected_cb);
 }
 
-void noti_list_item_set_item_button_1_cb(Evas_Object *noti_list_item,
+HAPI void noti_list_item_set_item_button_1_cb(Evas_Object *noti_list_item,
 		void(*button_1_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 	retif(button_1_cb == NULL, , "invalid parameter");
@@ -679,7 +691,7 @@ void noti_list_item_set_item_button_1_cb(Evas_Object *noti_list_item,
 	evas_object_data_set(noti_list_item, E_DATA_NOTI_LIST_CB_BUTTON_1, button_1_cb);
 }
 
-void noti_list_item_set_item_deleted_cb(Evas_Object *noti_list_item,
+HAPI void noti_list_item_set_item_deleted_cb(Evas_Object *noti_list_item,
 		void(*deleted_cb)(void *data, Evas_Object *obj)) {
 	retif(noti_list_item == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");

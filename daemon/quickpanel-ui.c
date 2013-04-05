@@ -35,7 +35,7 @@
 #include "list_util.h"
 
 #define QP_WINDOW_PRIO 300
-#define QP_ENABLE_HIDING_INDICATOR 0
+#define QP_ENABLE_HIDING_INDICATOR 1
 
 static struct appdata *g_app_data = NULL;
 
@@ -49,12 +49,12 @@ static void _quickpanel_ui_update_height(void *data);
 static void _quickpanel_ui_set_indicator_cover(void *data);
 static void _quickpanel_move_data_to_service(const char *key, const char *val, void *data);
 
-void *quickpanel_get_app_data(void)
+HAPI void *quickpanel_get_app_data(void)
 {
 	return g_app_data;
 }
 
-int quickpanel_is_suspended(void)
+HAPI int quickpanel_is_suspended(void)
 {
 	struct appdata *ad = quickpanel_get_app_data();
 	retif(ad == NULL, 0, "invalid data.");
@@ -62,7 +62,7 @@ int quickpanel_is_suspended(void)
 	return ad->is_suspended;
 }
 
-int quickpanel_is_emul(void)
+HAPI int quickpanel_is_emul(void)
 {
 	int is_emul = 0;
 	char *info = NULL;
@@ -79,7 +79,7 @@ int quickpanel_is_emul(void)
 	return is_emul;
 }
 
-int quickpanel_launch_app(char *app_id, void *data)
+HAPI int quickpanel_launch_app(char *app_id, void *data)
 {
 	int ret = SERVICE_ERROR_NONE;
 	service_h service = NULL;
@@ -114,7 +114,7 @@ int quickpanel_launch_app(char *app_id, void *data)
 	return ret;
 }
 
-void quickpanel_launch_app_inform_result(const char *pkgname, int retcode)
+HAPI void quickpanel_launch_app_inform_result(const char *pkgname, int retcode)
 {
 	retif(retcode == SERVICE_ERROR_NONE, , "Invialid parameter!");
 	retif(pkgname == NULL && retcode != SERVICE_ERROR_APP_NOT_FOUND, , "Invialid parameter!");
@@ -372,7 +372,7 @@ static void _quickpanel_add_debugging_bar(Evas_Object *list)
 	}
 }
 
-Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
+HAPI Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load)
 {
 	Eina_Bool r;
@@ -415,7 +415,11 @@ static int _quickpanel_ui_create_win(void *data)
 	}
 #ifdef QP_INDICATOR_WIDGET_ENABLE
 	ad->comformant = elm_conformant_add(ad->win);
+#if QP_ENABLE_HIDING_INDICATOR
+	elm_object_style_set(ad->comformant, "without_resize");
+#else
 	elm_object_style_set(ad->comformant, "nokeypad");
+#endif
 
 	ad->ly = quickpanel_ui_load_edj(ad->comformant,
 				DEFAULT_EDJ, "quickpanel/gl_base", 0);
@@ -970,7 +974,22 @@ static void quickpanel_app_region_format_changed_cb(void *data)
 	INFO(" >>>>>>>>>>>>>>> region_format CHANGED!! <<<<<<<<<<<<<<<< ");
 }
 
-void quickpanel_close_quickpanel(bool is_check_lock) {
+HAPI void quickpanel_open_quickpanel(void) {
+	Ecore_X_Window xwin;
+	struct appdata *ad = g_app_data;
+
+	DBG("");
+
+	retif(ad == NULL, , "Invalid parameter!");
+	retif(ad->win == NULL, , "Invalid parameter!");
+
+	xwin = elm_win_xwindow_get(ad->win);
+
+	if (xwin != 0)
+		ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+}
+
+HAPI void quickpanel_close_quickpanel(bool is_check_lock) {
 	Ecore_X_Window xwin;
 	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
 	struct appdata *ad = g_app_data;

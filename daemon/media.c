@@ -104,7 +104,7 @@ _quickpanel_player_error_cb(int error_code, void *user_data)
 	_quickpanel_player_free(sound_player);
 }
 
-void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
+HAPI void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
 {
 	player_h *sound_player = &g_sound_player;
 
@@ -123,7 +123,7 @@ void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
 		player_destroy(*sound_player);
 	}
 
-	ret = player_set_sound_type(*sound_player, SOUND_TYPE_MEDIA);
+	ret = player_set_sound_type(*sound_player, sound_type);
 	if (ret != PLAYER_ERROR_NONE) {
 		ERR("player_set_sound_type() ERR: %x!!!!", ret);
 		_quickpanel_player_free(sound_player);
@@ -188,7 +188,7 @@ void quickpanel_player_play(sound_type_e sound_type, const char *sound_file)
 			_quickpanel_player_timeout_cb, sound_player);
 }
 
-void quickpanel_player_stop(void)
+HAPI void quickpanel_player_stop(void)
 {
 	_quickpanel_player_del_timeout_timer();
 
@@ -197,7 +197,7 @@ void quickpanel_player_stop(void)
 	}
 }
 
-int quickpanel_is_sound_enabled(void)
+HAPI int quickpanel_is_sound_enabled(void)
 {
 	int snd_status = 0;
 
@@ -221,7 +221,7 @@ int quickpanel_is_sound_enabled(void)
 	return 0;
 }
 
-int quickpanel_is_vib_enabled(void)
+HAPI int quickpanel_is_vib_enabled(void)
 {
 	int vib_status = 0;
 
@@ -233,7 +233,7 @@ int quickpanel_is_vib_enabled(void)
 		return 0;
 }
 
-void quickpanel_play_feedback(void)
+HAPI void quickpanel_play_feedback(void)
 {
 	int snd_enabled = quickpanel_is_sound_enabled();
 	int vib_enabled = quickpanel_is_vib_enabled();

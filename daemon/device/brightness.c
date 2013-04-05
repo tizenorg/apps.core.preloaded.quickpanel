@@ -342,6 +342,7 @@ static void _brightness_set_checker(void)
 static void _brightness_set_slider(void)
 {
 	DBG("");
+	int value = 0;
 	Evas_Object *slider = NULL;
 	Evas_Object *old_obj = NULL;
 	brightness_ctrl_obj *ctrl_obj = g_ctrl_obj;
@@ -371,7 +372,9 @@ static void _brightness_set_slider(void)
 		slider = old_obj;
 	}
 
-	elm_slider_value_set(slider, _brightness_get_level());
+	value = _brightness_get_level();
+
+	elm_slider_value_set(slider, value);
 
 	if (_brightness_get_automate_level()) {
 		elm_object_disabled_set(slider, EINA_TRUE);

@@ -94,6 +94,7 @@ struct appdata {
 
 	Evas_Object *cover_indicator_left;
 	Evas_Object *cover_indicator_right;
+
 	Ecore_X_Atom *E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 };
 
@@ -128,5 +129,6 @@ Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load);
 void quickpanel_ui_set_indicator_cover(void *data);
 void quickpanel_close_quickpanel(bool is_check_lock);
+void quickpanel_open_quickpanel(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

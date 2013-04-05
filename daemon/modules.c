@@ -52,7 +52,7 @@ static QP_Module *modules[] = {
 	&idletxt
 };
 
-int init_modules(void *data)
+HAPI int init_modules(void *data)
 {
 	int i;
 
@@ -66,7 +66,7 @@ int init_modules(void *data)
 	return QP_OK;
 }
 
-int fini_modules(void *data)
+HAPI int fini_modules(void *data)
 {
 	int i;
 
@@ -80,7 +80,7 @@ int fini_modules(void *data)
 	return QP_OK;
 }
 
-int suspend_modules(void *data)
+HAPI int suspend_modules(void *data)
 {
 	int i;
 
@@ -94,7 +94,7 @@ int suspend_modules(void *data)
 	return QP_OK;
 }
 
-int resume_modules(void *data)
+HAPI int resume_modules(void *data)
 {
 	int i;
 
@@ -108,7 +108,7 @@ int resume_modules(void *data)
 	return QP_OK;
 }
 
-int hib_enter_modules(void *data)
+HAPI int hib_enter_modules(void *data)
 {
 	int i;
 
@@ -122,7 +122,7 @@ int hib_enter_modules(void *data)
 	return QP_OK;
 }
 
-int hib_leave_modules(void *data)
+HAPI int hib_leave_modules(void *data)
 {
 	int i;
 
@@ -142,7 +142,7 @@ int hib_leave_modules(void *data)
   *
   ****************************************************************/
 
-void lang_change_modules(void *data)
+HAPI void lang_change_modules(void *data)
 {
 	int i;
 	retif(data == NULL, , "Invalid parameter!");
@@ -153,7 +153,7 @@ void lang_change_modules(void *data)
 	}
 }
 
-void refresh_modules(void *data)
+HAPI void refresh_modules(void *data)
 {
 	int i;
 	retif(data == NULL, , "Invalid parameter!");
@@ -169,7 +169,7 @@ void refresh_modules(void *data)
   * Quickpanel open/close Events
   *
   ****************************************************************/
-int qp_opened_modules(void *data)
+HAPI int qp_opened_modules(void *data)
 {
 	int i;
 
@@ -183,7 +183,7 @@ int qp_opened_modules(void *data)
 	return QP_OK;
 }
 
-int qp_closed_modules(void *data)
+HAPI int qp_closed_modules(void *data)
 {
 	int i;
 

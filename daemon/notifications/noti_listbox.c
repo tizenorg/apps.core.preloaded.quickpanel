@@ -51,7 +51,7 @@ typedef struct _listbox_info_animation {
 	int pos;
 } listbox_info_animation;
 
-Evas_Object *listbox_create(Evas_Object *parent, void *data) {
+HAPI Evas_Object *listbox_create(Evas_Object *parent, void *data) {
 	struct appdata *ad = data;
 	Evas_Object *listbox = NULL;
 
@@ -75,7 +75,7 @@ Evas_Object *listbox_create(Evas_Object *parent, void *data) {
 	return listbox;
 }
 
-void listbox_remove(Evas_Object *listbox) {
+HAPI void listbox_remove(Evas_Object *listbox) {
 
 	retif(listbox == NULL, , "invalid parameter");
 
@@ -86,7 +86,7 @@ void listbox_remove(Evas_Object *listbox) {
 	evas_object_del(listbox);
 }
 
-void listbox_set_item_deleted_cb(Evas_Object *listbox,
+HAPI void listbox_set_item_deleted_cb(Evas_Object *listbox,
 		void(*deleted_cb)(void *data, Evas_Object *obj)) {
 	retif(listbox == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");
@@ -107,7 +107,7 @@ static void _listbox_call_item_deleted_cb(Evas_Object *listbox, void *data,
 	}
 }
 
-void listbox_add_item(Evas_Object *listbox, Evas_Object *item, int is_prepend) {
+HAPI void listbox_add_item(Evas_Object *listbox, Evas_Object *item, int is_prepend) {
 	const char *signal = NULL;
 
 	retif(listbox == NULL, , "invalid parameter");
@@ -164,7 +164,7 @@ static void _listbox_remove_item_anim_cb(void *data, Elm_Transit *transit) {
 	info_animation = NULL;
 }
 
-void listbox_remove_item(Evas_Object *listbox, Evas_Object *item, int with_animation) {
+HAPI void listbox_remove_item(Evas_Object *listbox, Evas_Object *item, int with_animation) {
 	retif(listbox == NULL, , "invalid parameter");
 	retif(item == NULL, , "invalid parameter");
 
@@ -205,7 +205,7 @@ void listbox_remove_item(Evas_Object *listbox, Evas_Object *item, int with_anima
 	}
 }
 
-void listbox_remove_all_item(Evas_Object *listbox, int with_animation) {
+HAPI void listbox_remove_all_item(Evas_Object *listbox, int with_animation) {
 	DBG("");
 	retif(listbox == NULL, , "invalid parameter");
 
@@ -223,7 +223,7 @@ void listbox_remove_all_item(Evas_Object *listbox, int with_animation) {
 	}
 }
 
-void listbox_update(Evas_Object *listbox) {
+HAPI void listbox_update(Evas_Object *listbox) {
 	retif(listbox == NULL, , "invalid parameter");
 
 	Eina_List *l;
@@ -241,14 +241,14 @@ void listbox_update(Evas_Object *listbox) {
 	}
 }
 
-void listbox_update_item(Evas_Object *listbox, Evas_Object *item) {
+HAPI void listbox_update_item(Evas_Object *listbox, Evas_Object *item) {
 	retif(listbox == NULL, , "invalid parameter");
 	retif(item == NULL, , "invalid parameter");
 
 	noti_list_item_update(item);
 }
 
-void listbox_remove_and_add_item(Evas_Object *listbox, Evas_Object *item
+HAPI void listbox_remove_and_add_item(Evas_Object *listbox, Evas_Object *item
 		,void (*update_cb)(Evas_Object *list, void *data, int is_prepend)
 		,void *container, void *data, int pos) {
 
@@ -291,7 +291,7 @@ static void listbox_finalize_rotation_cb(void *data) {
 	elm_box_recalculate(listbox);
 }
 
-void listbox_rotation(Evas_Object *listbox, int angle) {
+HAPI void listbox_rotation(Evas_Object *listbox, int angle) {
 	const char *signal = NULL;
 
 	retif(listbox == NULL, , "invalid parameter");

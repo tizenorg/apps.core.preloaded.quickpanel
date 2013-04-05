@@ -179,7 +179,7 @@ static int _minictrl_is_ongoing(const char *str)
 	}
 }
 
-qp_item_type_e _minictrl_priority_to_type(minicontrol_priority_e priority)
+static qp_item_type_e _minictrl_priority_to_type(minicontrol_priority_e priority)
 {
 	qp_item_type_e type;
 

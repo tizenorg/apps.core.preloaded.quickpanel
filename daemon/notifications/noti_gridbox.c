@@ -124,7 +124,7 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 			off_y + info_layout->child_h + info_layout->padding_bottom);
 }
 
-Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
+HAPI Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 
 	retif(parent == NULL, NULL, "invalid parameter");
 	retif(data == NULL, NULL, "invalid parameter");
@@ -185,7 +185,7 @@ Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 	return gridbox;
 }
 
-void gridbox_remove(Evas_Object *gridbox) {
+HAPI void gridbox_remove(Evas_Object *gridbox) {
 
 	retif(gridbox == NULL, , "invalid parameter");
 
@@ -208,7 +208,7 @@ void gridbox_remove(Evas_Object *gridbox) {
 		free(info_layout_landscape);
 }
 
-void gridbox_set_item_deleted_cb(Evas_Object *gridbox,
+HAPI void gridbox_set_item_deleted_cb(Evas_Object *gridbox,
 		void(*deleted_cb)(void *data, Evas_Object *obj)) {
 	retif(gridbox == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");
@@ -229,7 +229,7 @@ static void _gridbox_call_item_deleted_cb(Evas_Object *gridbox, void *data,
 	}
 }
 
-void gridbox_add_item(Evas_Object *gridbox, Evas_Object *item, int is_prepend) {
+HAPI void gridbox_add_item(Evas_Object *gridbox, Evas_Object *item, int is_prepend) {
 	const char *signal = NULL;
 
 	retif(gridbox == NULL, , "invalid parameter");
@@ -287,7 +287,7 @@ static void _gridbox_remove_item_anim_cb(void *data, Elm_Transit *transit) {
 	info_animation = NULL;
 }
 
-void gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_animation) {
+HAPI void gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_animation) {
 	DBG("remove:%p", item);
 	retif(gridbox == NULL, , "invalid parameter");
 	retif(item == NULL, , "invalid parameter");
@@ -326,7 +326,7 @@ void gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_anima
 	}
 }
 
-void gridbox_remove_all_item(Evas_Object *gridbox, int with_animation) {
+HAPI void gridbox_remove_all_item(Evas_Object *gridbox, int with_animation) {
 	DBG("");
 	retif(gridbox == NULL, , "invalid parameter");
 
@@ -344,13 +344,13 @@ void gridbox_remove_all_item(Evas_Object *gridbox, int with_animation) {
 	}
 }
 
-void gridbox_update_item(Evas_Object *gridbox, Evas_Object *item) {
+HAPI void gridbox_update_item(Evas_Object *gridbox, Evas_Object *item) {
 
 	retif(gridbox == NULL, , "invalid parameter");
 	retif(item == NULL, , "invalid parameter");
 }
 
-void gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item
+HAPI void gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item
 		,void (*update_cb)(Evas_Object *list, void *data, int is_prepend)
 		,void *container, void *data, int pos) {
 
@@ -386,14 +386,14 @@ void gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item
 	elm_transit_go(transit);
 }
 
-void gridbox_finalize_rotation_cb(void *data) {
+HAPI void gridbox_finalize_rotation_cb(void *data) {
 	retif(data == NULL, , "invalid parameter");
 	Evas_Object *gridbox = data;
 
 	elm_box_recalculate(gridbox);
 }
 
-void gridbox_rotation(Evas_Object *gridbox, int angle) {
+HAPI void gridbox_rotation(Evas_Object *gridbox, int angle) {
 	const char *signal = NULL;
 
 	retif(gridbox == NULL, , "invalid parameter");

@@ -27,7 +27,7 @@ struct _qp_item_data {
 	void *data;
 };
 
-qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
+HAPI qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
 {
 	qp_item_data *qid = NULL;
 
@@ -43,7 +43,7 @@ qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
 	return qid;
 }
 
-void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid)
+HAPI void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid)
 {
 	retif(item == NULL, , "invalid parameter");
 	retif(qid == NULL, , "invalid parameter");
@@ -51,7 +51,7 @@ void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid)
 	evas_object_data_set(item, E_DATA_ITEM_LABEL_H, qid);
 }
 
-void quickpanel_list_util_item_del_tag(Evas_Object *item)
+HAPI void quickpanel_list_util_item_del_tag(Evas_Object *item)
 {
 	retif(item == NULL, , "invalid parameter");
 
@@ -63,7 +63,7 @@ void quickpanel_list_util_item_del_tag(Evas_Object *item)
 	}
 }
 
-void *quickpanel_list_util_item_get_data(qp_item_data *qid)
+HAPI void *quickpanel_list_util_item_get_data(qp_item_data *qid)
 {
 	void *user_data = NULL;
 
@@ -75,7 +75,7 @@ void *quickpanel_list_util_item_get_data(qp_item_data *qid)
 	return user_data;
 }
 
-void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data)
+HAPI void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data)
 {
 	if (!qid)
 		return ;
@@ -83,7 +83,7 @@ void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data)
 	qid->data = data;
 }
 
-int quickpanel_list_util_item_compare(const void *data1, const void *data2)
+HAPI int quickpanel_list_util_item_compare(const void *data1, const void *data2)
 {
 	int diff = 0;
 	qp_item_data *qid1 = NULL;
@@ -122,7 +122,7 @@ int quickpanel_list_util_item_compare(const void *data1, const void *data2)
 	return diff;
 }
 
-void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
+HAPI void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
 		, qp_item_type_e type)
 {
 	retif(list == NULL, , "invalid parameter");
@@ -146,7 +146,7 @@ void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
 	}
 }
 
-void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
+HAPI void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
 		, Evas_Object *item)
 {
 	retif(list == NULL, , "invalid parameter");
@@ -185,7 +185,7 @@ static int __item_compare(const void *data1, const void *data2)
 }
 
 
-void quickpanel_list_util_sort_insert(Evas_Object *list,
+HAPI void quickpanel_list_util_sort_insert(Evas_Object *list,
 					Evas_Object *new_obj)
 {
 	retif(list == NULL, , "invalid parameter");
