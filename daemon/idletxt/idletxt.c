@@ -228,8 +228,10 @@ static Evas_Object *_quickpanel_idletxt_exception_add_label(Evas_Object * box)
 		default:
 			if (service_type > VCONFKEY_TELEPHONY_SVCTYPE_SEARCH) {
 				text = vconf_get_str(VCONFKEY_TELEPHONY_NWNAME);
-			} else {
+			} else if (service_type == VCONFKEY_TELEPHONY_SVCTYPE_SEARCH)  {
 				text = _S("IDS_COM_BODY_SEARCHING");
+			} else {
+				return NULL;
 			}
 			break;
 	}
