@@ -313,10 +313,7 @@ static Evas_Object *_quickpanel_idletxt_get_sat_text(Evas_Object * box)
 
 static Eina_Bool _quickpanel_idletxt_button_clicked_timer_cb(void *data)
 {
-	if (quickpanel_is_emul())
-		quickpanel_launch_app(QP_SETTING_PKG_SETTING_EMUL, NULL);
-	else
-		quickpanel_launch_app(QP_SETTING_PKG_SETTING, NULL);
+	quickpanel_launch_app(QP_SETTING_PKG_SETTING_EMUL, NULL);
 
 	quickpanel_close_quickpanel(true);
 
