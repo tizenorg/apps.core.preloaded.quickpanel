@@ -38,6 +38,7 @@ typedef struct _gridbox_info_layout {
 	int padding_between;
 	int child_w;
 	int child_h;
+	int limit_w;
 	double scale;
 } gridbox_info_layout;
 
@@ -83,7 +84,9 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 	Eina_List *l;
 	Eina_List *l_next;
 	Evas_Object_Box_Option *opt;
-	int child_w, child_h;
+	int child_w;
+	int space_w = 0;
+	int num_padding_between = 0;
 
 	retif(o == NULL, , "invalid parameter");
 	retif(priv == NULL, , "invalid parameter");
@@ -103,18 +106,24 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 
 	//set info about children
 	opt = eina_list_data_get(priv->children);
-	evas_object_size_hint_min_get(opt->obj, &child_w, &child_h);
+
+	num_padding_between = info_layout->n_per_rows / 2;
+	num_padding_between += (info_layout->n_per_rows > 1 && (info_layout->n_per_rows % 2) > 0) ? 1 : 0;
+
+	space_w = (info_layout->padding_left * 2) + (info_layout->padding_between * num_padding_between);
+	child_w = (info_layout->limit_w - space_w) / info_layout->n_per_rows;
 
 	info_layout->child_w = child_w;
-	info_layout->child_h = child_h;
 
-	DBG("grid layout children:%d %d", child_w, child_h);
+	DBG("grid layout children:%d %d", info_layout->child_w, info_layout->child_h);
 
 	int order_children = 1;
 	EINA_LIST_FOREACH_SAFE(priv->children, l, l_next, opt)
 	{
 		_gridbox_layout_get_pos(order_children, &off_x, &off_y, info_layout);
 		evas_object_move(opt->obj, x + off_x, y + off_y);
+		evas_object_size_hint_min_set(opt->obj, info_layout->child_w,
+				info_layout->child_h);
 		evas_object_resize(opt->obj, info_layout->child_w,
 				info_layout->child_h);
 		order_children++;
@@ -143,7 +152,8 @@ HAPI Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 	info_layout_portrait->padding_bottom = 12 * ad->scale;
 	info_layout_portrait->n_per_rows = 2;
 	info_layout_portrait->child_w = 0; //340;
-	info_layout_portrait->child_h = 0; //400;
+	info_layout_portrait->child_h = BOX_HEIGHT_P * ad->scale; //400;
+	info_layout_portrait->limit_w = ad->win_width; //400;
 	info_layout_portrait->scale = ad->scale;
 
 	info_layout_landscape = (gridbox_info_layout *) malloc(
@@ -155,7 +165,8 @@ HAPI Evas_Object *gridbox_create(Evas_Object *parent, void *data) {
 	info_layout_landscape->padding_bottom = 12 * ad->scale;
 	info_layout_landscape->n_per_rows = 3;
 	info_layout_landscape->child_w = 0; //409;
-	info_layout_landscape->child_h = 0; //400;
+	info_layout_landscape->child_h = BOX_HEIGHT_L * ad->scale; //400;
+	info_layout_landscape->limit_w = ad->win_height; //400;
 	info_layout_landscape->scale = ad->scale;
 
 	gridbox = elm_box_add(parent);
