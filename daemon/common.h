@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <Elementary.h>
 #include "quickpanel_debug_util.h"
 
 #define QP_OK	(0)
@@ -48,7 +49,7 @@
 
 #define ERR(fmt , args...) \
 	do { \
-		LOGI("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
+		LOGE("[%s : %d] "fmt"\n", __func__, __LINE__, ##args); \
 	} while (0)
 
 #elif FILE_DEBUG /*_DLOG_USED*/
@@ -98,9 +99,15 @@
 	} while (0)
 #endif /*_DLOG_USED*/
 
+#define msgif(cond, str, args...) do { \
+	if (cond) { \
+		ERR(str, ##args);\
+	} \
+} while (0);
+
 #define retif(cond, ret, str, args...) do { \
 	if (cond) { \
-		WARN(str, ##args);\
+		ERR(str, ##args);\
 		return ret;\
 	} \
 } while (0);
@@ -114,5 +121,7 @@
 
 
 void quickpanel_util_char_replace(char *text, char s, char t);
+void quickpanel_ui_set_current_popup(Evas_Object *popup);
+void quickpanel_ui_del_current_popup(void);
 
 #endif				/* __QP_COMMON_H_ */

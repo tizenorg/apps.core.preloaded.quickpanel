@@ -23,7 +23,7 @@
 #define QP_HANDLE_H	 64
 #define QP_HANDLE_TOTAL_H	 80
 #define QP_SPN_H 80
-#define QP_SPN_TEXT_W 500
+#define QP_SPN_TEXT_W 520
 
 #define QP_BG_VISIBILITY	0
 #define QP_BG_COLOR	255 255 255 255

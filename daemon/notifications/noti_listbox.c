@@ -284,13 +284,6 @@ HAPI void listbox_remove_and_add_item(Evas_Object *listbox, Evas_Object *item
 	elm_transit_go(transit);
 }
 
-static void listbox_finalize_rotation_cb(void *data) {
-	retif(data == NULL, , "invalid parameter");
-	Evas_Object *listbox = data;
-
-	elm_box_recalculate(listbox);
-}
-
 HAPI void listbox_rotation(Evas_Object *listbox, int angle) {
 	const char *signal = NULL;
 

@@ -66,6 +66,8 @@ static void _viewer_freeze(Evas_Object *viewer)
 
 	freezed_count = elm_object_scroll_freeze_get(viewer);
 
+	WARN("viewer(scroller) is freezed");
+
 	if (freezed_count <= 0) {
 		elm_object_scroll_freeze_push(viewer);
 	}
@@ -77,6 +79,8 @@ static void _viewer_unfreeze(Evas_Object *viewer)
 	retif(viewer == NULL, , "Invalid parameter!");
 
 	freezed_count = elm_object_scroll_freeze_get(viewer);
+
+	WARN("viewer(scroller) is unfreezed");
 
 	for (i = 0 ; i < freezed_count; i++) {
 		elm_object_scroll_freeze_pop(viewer);
@@ -110,7 +114,7 @@ static void _viewer_set_size(Evas_Object *layout, void *data, int width, int hei
 	}
 	resized_width = (width > max_width) ? max_width : width;
 
-	DBG("resize:%d %d", resized_width, height);
+	DBG("minicontroller view is resized to w:%d h:%d", resized_width, height);
 
 	evas_object_size_hint_min_set(viewer, resized_width, height);
 }
@@ -147,7 +151,6 @@ static Evas_Object *_minictrl_create_view(struct appdata *ad, const char *name)
 
 	layout = elm_layout_add(ad->list);
 
-	DBG("");
 	elm_layout_file_set(layout, DEFAULT_EDJ,
 			"quickpanel/minictrl/default");
 
@@ -205,7 +208,6 @@ static void _minictrl_release_cb(void *data, Evas *e,
 	retif(!data, , "data is NULL");
 	ad = data;
 
-	DBG("");
 	_viewer_unfreeze(ad->scroller);
 }
 
@@ -257,7 +259,6 @@ static void _minictrl_add(const char *name, unsigned int width,
 	}
 
 	if (_minictrl_is_ongoing(name) == 1) {
-		DBG("QP_ITEM_TYPE_MINICTRL_ONGOING is added");
 		type = QP_ITEM_TYPE_MINICTRL_ONGOING;
 	} else {
 		type = _minictrl_priority_to_type(priority);
@@ -280,7 +281,7 @@ static void _minictrl_add(const char *name, unsigned int width,
 
 	g_hash_table_insert(g_prov_table, g_strdup(name), vit);
 
-	INFO("success to add %s", name);
+	INFO("success to add minicontrol %s", name);
 }
 
 static void _minictrl_remove(const char *name, void *data)

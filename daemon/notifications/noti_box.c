@@ -25,6 +25,9 @@
 #include "noti_node.h"
 #include "noti.h"
 #include "noti_util.h"
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+#include "animated_image.h"
+#endif
 
 #define IMAGE_NO_RESIZE 0
 #define IMAGE_RESIZE 1
@@ -36,7 +39,7 @@ static void _noti_box_call_item_cb(Evas_Object *noti_box, const char *emission) 
 	retif(noti_box == NULL, , "invalid parameter");
 	retif(emission == NULL, , "invalid parameter");
 
-	DBG("%s", emission);
+	INFO("recevied emission:%s", emission);
 
 	void (*cb)(void *data, Evas_Object *obj) = NULL;
 	noti_box_h *data = NULL;
@@ -81,7 +84,6 @@ HAPI Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e la
 
 	box = elm_layout_add(parent);
 
-	DBG("");
 	if (layout == NOTIFICATION_LY_NOTI_EVENT_SINGLE
 			|| layout == NOTIFICATION_LY_NOTI_EVENT_MULTIPLE) {
 		elm_layout_file_set(box, DEFAULT_EDJ,
@@ -102,7 +104,7 @@ HAPI Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e la
 	box_h->status = STATE_NORMAL;
 	box_h->data = NULL;
 	evas_object_data_set(box, E_DATA_NOTI_BOX_H, box_h);
-	DBG("created box:%p", box);
+	INFO("created notibox:%p", box);
 
 	//add event
 	elm_object_signal_callback_add(box,
@@ -131,17 +133,16 @@ HAPI Evas_Object *noti_box_create(Evas_Object *parent, notification_ly_type_e la
 	return box;
 }
 
-static void _set_image(Evas_Object *noti_box, notification_h noti,
+static Evas_Object *_set_image(Evas_Object *noti_box, notification_h noti,
 		notification_image_type_e image_type, const char *part, int is_stretch) {
 
-	DBG("");
-
+	Evas_Object *content = NULL;
 	char *image = NULL;
 	int w = 0, h =0;
 	int part_w = 0, part_h =0;
 	double scale = 1.0;
 
-	retif(part == NULL, ,"invalid parameter");
+	retif(part == NULL, NULL,"invalid parameter");
 
 	struct appdata *ad = quickpanel_get_app_data();
 	if (ad != NULL) {
@@ -151,9 +152,8 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 	notification_get_image(noti, image_type, &image);
 
 	if (image != NULL) {
-		Evas_Object *content = NULL;
 		content = elm_image_add(noti_box);
-		elm_image_file_set(content, image, NULL);
+		elm_image_file_set(content, image, image);
 		if (is_stretch == IMAGE_RESIZE) {
 			elm_image_aspect_fixed_set(content, EINA_FALSE);
 			elm_image_resizable_set(content, EINA_TRUE, EINA_TRUE);
@@ -168,8 +168,6 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 				part_w = scale * BOX_ICON_SUB_SIZE_W;
 				part_h = scale * BOX_ICON_SUB_SIZE_H;
 			}
-
-			DBG("%d %d --- %d %d", w, h, part_w, part_h);
 
 			if (part_w != 0 && part_h != 0) {
 				if (w > part_w || h > part_h) {
@@ -188,6 +186,8 @@ static void _set_image(Evas_Object *noti_box, notification_h noti,
 		elm_object_part_content_set(noti_box, part, content);
 		elm_object_signal_emit(noti_box, "object.show", part);
 	}
+
+	return content;
 }
 
 static int _set_text(Evas_Object *noti_box, notification_h noti,
@@ -237,8 +237,6 @@ static int _set_text(Evas_Object *noti_box, notification_h noti,
 
 static int _check_text_null(notification_h noti,
 		notification_text_type_e text_type) {
-	DBG("");
-
 	char *text = NULL;
 
 	notification_get_text(noti, text_type, &text);
@@ -252,8 +250,6 @@ static int _check_text_null(notification_h noti,
 
 static int _check_image_null(notification_h noti,
 		notification_image_type_e image_type) {
-	DBG("");
-
 	char *image = NULL;
 
 	notification_get_image(noti, image_type, &image);
@@ -271,13 +267,12 @@ static int _check_image_null(notification_h noti,
 
 static void _noti_box_set_layout_single(Evas_Object *noti_box,
 		notification_h noti) {
-	DBG("");
-
 	char *dir = NULL;
 	char *domain = NULL;
 	int is_need_effect = 0;
 	int is_contents_only = 0;
 	int is_sub_info_1_only = 0;
+	Evas_Object *icon = NULL;
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
 		is_need_effect = 1;
@@ -336,11 +331,17 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon.sub", IMAGE_NO_RESIZE);
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 	} else {
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
 				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
@@ -362,14 +363,13 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 
 static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 		notification_h noti) {
-	DBG("");
-
 	int length = 0;
 	char *dir = NULL;
 	char *domain = NULL;
 	char buf[128] = {0,};
 	int is_need_effect = 0;
 	int is_sub_info_1_only = 0;
+	Evas_Object *icon = NULL;
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0) {
 		is_need_effect = 1;
@@ -434,11 +434,17 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon.sub", IMAGE_NO_RESIZE);
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 	} else {
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
 				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
@@ -459,11 +465,10 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 
 static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 		notification_h noti) {
-	DBG("");
-
 	char *dir = NULL;
 	char *domain = NULL;
 	int is_need_effect = 0;
+	Evas_Object *icon = NULL;
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_BACKGROUND) == 0)
 		is_need_effect = 1;
@@ -482,11 +487,17 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0) {
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon.sub", IMAGE_NO_RESIZE);
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 	} else {
-		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
+		icon = _set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON,
 				"object.icon", IMAGE_NO_RESIZE);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+		quickpanel_animated_image_add(icon);
+#endif
 		_set_image(noti_box, noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB,
 				"object.icon.sub", IMAGE_NO_RESIZE);
 	}
@@ -520,7 +531,7 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 static void _noti_box_set_layout(Evas_Object *noti_box, notification_h noti,
 		notification_ly_type_e layout) {
 
-	DBG("layout:%d", layout);
+	INFO("layout:%d", layout);
 
 	switch (layout) {
 		case NOTIFICATION_LY_NOTI_EVENT_SINGLE:
@@ -536,7 +547,7 @@ static void _noti_box_set_layout(Evas_Object *noti_box, notification_h noti,
 		case NOTIFICATION_LY_ONGOING_EVENT:
 		case NOTIFICATION_LY_ONGOING_PROGRESS:
 		case NOTIFICATION_LY_MAX:
-			DBG("not supported layout type:%d", layout);
+			ERR("not supported layout type:%d", layout);
 			break;
 	}
 }
@@ -553,6 +564,8 @@ HAPI void noti_box_remove(Evas_Object *noti_box) {
 	evas_object_data_del(noti_box, E_DATA_NOTI_BOX_H);
 	evas_object_data_del(noti_box, E_DATA_CB_SELECTED_ITEM);
 	evas_object_data_del(noti_box, E_DATA_CB_DELETED_ITEM);
+
+	INFO("removed notibox:%p", noti_box);
 
 	evas_object_del(noti_box);
 }

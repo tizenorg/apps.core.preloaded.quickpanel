@@ -29,7 +29,7 @@ static void _noti_section_button_clicked_cb(void *data, Evas_Object * obj,
 
 	noti_err = notifiation_clear(NOTIFICATION_TYPE_NOTI);
 
-	DBG("Clear Clicked : noti_err(%d)", noti_err);
+	DBG("notiifcations going to be cleared: noti_err(%d)", noti_err);
 
 	quickpanel_play_feedback();
 }
@@ -39,7 +39,6 @@ static void _noti_section_set_button(Evas_Object *noti_section)
 	Evas_Object *eo = NULL;
 	Evas_Object *old_eo = NULL;
 
-	DBG("");
 	retif(noti_section == NULL, , "invalid parameter");
 
 	old_eo = elm_object_part_content_get(noti_section, "elm.swallow.icon");
@@ -64,7 +63,6 @@ static void _noti_section_set_text(Evas_Object *noti_section, int count)
 	char format[256] = {0,};
 	const char *old_text = NULL;
 
-	DBG("");
 	retif(noti_section == NULL, , "invalid parameter");
 
 	snprintf(format, sizeof(format), "%s %%d", _("IDS_QP_BODY_NOTIFICATIONS_ABB2"));
@@ -84,7 +82,6 @@ HAPI Evas_Object *noti_section_create(Evas_Object *parent) {
 	Eina_Bool ret = EINA_FALSE;
 	Evas_Object *section = NULL;
 
-	DBG("");
 	retif(parent == NULL, NULL, "invalid parameter");
 
 	section = elm_layout_add(parent);

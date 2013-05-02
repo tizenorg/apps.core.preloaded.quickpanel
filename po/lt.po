@@ -85,6 +85,9 @@ msgstr "Išjunkite „Wi-Fi“, kad galėtumėte naudoti siejimą"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Tuo pat metu negalima suaktyvinti ir „Wi-Fi“, ir „Mobile AP“. Išjungti „Mobile AP“?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Pakeisti greitojo nustatymo mygtuką"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Pranešimas"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Sutikti"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Nesutikti"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "Vietos nustatymą naudojant GPS ir jūsų vietos duomenis kontroliuoja jūsų naudojamos programos"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Naudotojo sutikimas"
 

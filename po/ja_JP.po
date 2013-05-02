@@ -85,6 +85,9 @@ msgstr "テザリングを使用するには、Wi-FiをOFFにしてください�
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-FiとWi-Fiテザリング両方は同時起動できません。Wi-Fiテザリングを無効にしますか？"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "クイック設定ボタンを置き換え"
 
@@ -95,7 +98,7 @@ msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNE
 msgstr "モバイルネットワークで、ブラウザやEメールなどのアプリケーションが使用できなくなります。続行しますか？"
 
 msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "画面\nモニター"
+msgstr "Screen\nMirroring"
 
 msgid "IDS_COM_BODY_BUTTON_T_TTS"
 msgstr "ボタン"
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "通知"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "同意"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "同意しない"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPSからの位置情報取得は、使用するアプリケーションによって管理されます。"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "ユーザー同意"
 

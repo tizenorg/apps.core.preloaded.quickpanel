@@ -34,6 +34,9 @@
 #include "noti_section.h"
 #include "noti.h"
 #include "list_util.h"
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+#include "noti_led.h"
+#endif
 
 #ifndef VCONFKEY_QUICKPANEL_STARTED
 #define VCONFKEY_QUICKPANEL_STARTED "memory/private/"PACKAGE_NAME"/started"
@@ -46,7 +49,6 @@ static noti_node *g_noti_node;
 static Evas_Object *g_noti_section;
 static Evas_Object *g_noti_listbox;
 static Evas_Object *g_noti_gridbox;
-static Eina_List *g_animated_image_list;
 
 static int quickpanel_noti_init(void *data);
 static int quickpanel_noti_fini(void *data);
@@ -286,37 +288,6 @@ static void _quickpanel_noti_item_content_update_cb(void *data,
 
 	if (!quickpanel_is_suspended())
 		_quickpanel_noti_update_progressbar(data, noti);
-}
-
-static void _quickpanel_noti_ani_image_control(Eina_Bool on)
-{
-	const Eina_List *l = NULL;
-	const Eina_List *ln = NULL;
-	Evas_Object *entry_obj = NULL;
-
-	retif(g_animated_image_list == NULL, ,"");
-
-	EINA_LIST_FOREACH_SAFE(g_animated_image_list, l, ln, entry_obj) {
-		if (entry_obj == NULL) continue;
-
-		if (on == EINA_TRUE) {
-			if (elm_image_animated_play_get(entry_obj) == EINA_FALSE) {
-				elm_image_animated_play_set(entry_obj, EINA_TRUE);
-			}
-		} else {
-			if (elm_image_animated_play_get(entry_obj) == EINA_TRUE) {
-				elm_image_animated_play_set(entry_obj, EINA_FALSE);
-			}
-		}
-	}
-}
-
-static void _quickpanel_noti_ani_image_deleted_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	retif(obj == NULL, , "obj is NULL");
-	retif(g_animated_image_list == NULL, , "list is empty");
-
-	g_animated_image_list = eina_list_remove(g_animated_image_list, obj);
 }
 
 static void _quickpanel_do_noti_delete(notification_h noti) {
@@ -774,6 +745,27 @@ static void _quickpanel_noti_delete_volatil_data(void)
 	notification_update(NULL);
 }
 
+inline static void _print_debuginfo_from_noti(notification_h noti) {
+	retif(noti == NULL, , "Invalid parameter!");
+
+	char *noti_pkgname = NULL;
+	char *noti_launch_pkgname = NULL;
+	notification_type_e noti_type = NOTIFICATION_TYPE_NONE;
+
+	notification_get_pkgname(noti, &noti_pkgname);
+	notification_get_application(noti, &noti_launch_pkgname);
+	notification_get_type(noti, &noti_type);
+
+	if (noti_pkgname != NULL) {
+		ERR("pkg:%s", noti_pkgname);
+	}
+	if (noti_launch_pkgname != NULL) {
+		ERR("pkgl:%s", noti_launch_pkgname);
+	}
+
+	ERR("type:%d", noti_type);
+}
+
 static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e type, notification_op *op_list, int num_op)
 {
 	int i = 0;
@@ -889,15 +881,15 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 
 	if ((noti_count = noti_node_get_item_count(g_noti_node, NOTIFICATION_TYPE_NOTI))
 			<= 0) {
-		DBG("");
 		_quickpanel_noti_clear_notilist();
 		_quickpanel_noti_section_remove();
 	} else {
 		if (g_noti_section != NULL) {
-			DBG("");
 			noti_section_update(g_noti_section, noti_count);
 		}
 	}
+
+	ERR("current noti count:%d", noti_count);
 }
 
 static void _quickpanel_noti_update_desktop_cb(keynode_t *node, void *data)
@@ -1041,8 +1033,7 @@ static int _quickpanel_noti_check_first_start(void)
 	int ret = 0;
 
 	ret = vconf_get_bool(VCONFKEY_QUICKPANEL_STARTED, &status);
-	if (ret) {
-		INFO("fail to get %s", VCONFKEY_QUICKPANEL_STARTED);
+	if (ret == 0 && status == 0) {
 		/* reboot */
 		ret = vconf_set_bool(VCONFKEY_QUICKPANEL_STARTED, 1);
 		INFO("set : %s, result : %d", VCONFKEY_QUICKPANEL_STARTED, ret);
@@ -1135,6 +1126,11 @@ static int quickpanel_noti_fini(void *data)
 	struct appdata *ad = data;
 	retif(ad == NULL, QP_FAIL, "Invalid parameter!");
 
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+	quickpanel_service_noti_fini(ad);
+	quickpanel_service_noti_led_off(NULL);
+#endif
+
 	/* Unregister event handler */
 	_quickpanel_noti_unregister_event_handler(data);
 
@@ -1154,10 +1150,6 @@ static int quickpanel_noti_suspend(void *data)
 	struct appdata *ad = data;
 	retif(ad == NULL, QP_FAIL, "Invalid parameter!");
 
-	if (ad->list) {
-		_quickpanel_noti_ani_image_control(EINA_FALSE);
-	}
-
 	return QP_OK;
 }
 
@@ -1168,8 +1160,6 @@ static int quickpanel_noti_resume(void *data)
 
 	if (ad->list) {
 		listbox_update(g_noti_listbox);
-
-		_quickpanel_noti_ani_image_control(EINA_TRUE);
 	}
 
 	return QP_OK;

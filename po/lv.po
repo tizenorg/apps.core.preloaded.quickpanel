@@ -85,6 +85,9 @@ msgstr "Lai izmantotu piesaisti, izslēdziet Wi-Fi"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Vienlaikus nevar aktivizēt Wi-Fi un Mobile AP. Vai deaktivizēt Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Aizstāt ātro iestatījumu pogu"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Paziņojums"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Piekrist"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Nepiekrītu"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS atrašanās vietu un jūsu atrašanās vietas datu izmantošanu pārvalda jūsu lietotās programmas"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Lietotāja piekrišana"
 

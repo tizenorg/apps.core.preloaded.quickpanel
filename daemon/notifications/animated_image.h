@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org
+ *  http://www.tizenopensource.org/license
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS,
@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __QUICKPANEL_MEDIA_H__
-#define __QUICKPANEL_MEDIA_H__
 
-#include <player.h>
-#include <feedback.h>
+#ifndef __QUICKPANEL_ANIMATED_IMAGE_H__
+#define __QUICKPANEL_ANIMATED_IMAGE_H__
 
-#define QP_PLAY_DURATION_LIMIT 15
+#include "quickpanel-ui.h"
+#include "common.h"
 
-void quickpanel_player_play(sound_type_e sound_type, const char *sound_file);
-void quickpanel_player_stop(void);
-int quickpanel_is_sound_enabled(void);
-int quickpanel_is_vib_enabled(void);
-void quickpanel_play_feedback(void);
-int quickpanel_set_mute_toggle(void);
+HAPI void quickpanel_animated_image_add(Evas_Object *image);
 
 #endif

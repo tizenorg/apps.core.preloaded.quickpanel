@@ -201,7 +201,7 @@ HAPI void quickpanel_list_util_sort_insert(Evas_Object *list,
 	item_data = evas_object_data_get(new_obj, E_DATA_ITEM_LABEL_H);
 	retif(item_data == NULL, , "invalid parameter");
 
-	DBG("count:%d", eina_list_count(item_list));
+	INFO("current entry count in list:%d", eina_list_count(item_list));
 	EINA_LIST_FOREACH_SAFE(item_list, l, l_next, obj)
 	{
 		if (obj != NULL) {
@@ -210,14 +210,11 @@ HAPI void quickpanel_list_util_sort_insert(Evas_Object *list,
 		}
 
 		first = obj;
-		DBG("first:%p", obj);
 	}
 
 	if (first == NULL) {
-		DBG("insert first:%p", new_obj);
 		elm_box_pack_start(list, new_obj);
 	} else {
-		DBG("insert aftere:%p (%p)", first, new_obj);
 		elm_box_pack_after(list, new_obj, first);
 	}
 }

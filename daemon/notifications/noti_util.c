@@ -45,8 +45,6 @@ HAPI int quickpanel_noti_get_event_count_by_pkgname(const char *pkgname) {
 
 	retif(pkgname == NULL, 0, "Invalid parameter!");
 
-	DBG("%s", pkgname);
-
 	notification_get_detail_list(pkgname, NOTIFICATION_GROUP_ID_NONE, NOTIFICATION_PRIV_ID_NONE, -1, &noti_list);
 	if (noti_list != NULL) {
 		noti = notification_list_get_data(noti_list);

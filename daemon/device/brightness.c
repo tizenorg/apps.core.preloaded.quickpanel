@@ -28,12 +28,21 @@
 
 #define QP_BRIGHTNESS_CONTROL_ICON_IMG ICONDIR"/Q02_Notification_brightness.png"
 
+typedef struct _brightness_ctrl_obj {
+	int min_level;
+	int max_level;
+	Evas_Object *viewer;
+	void *data;
+} brightness_ctrl_obj;
+
 static int quickpanel_brightness_init(void *data);
 static int quickpanel_brightness_fini(void *data);
 static void quickpanel_brightness_lang_changed(void *data);
 static void quickpanel_brightness_qp_opened(void *data);
 static void quickpanel_brightness_qp_closed(void *data);
 static void _brightness_view_update(void);
+static void _brightness_register_event_cb(brightness_ctrl_obj *ctrl_obj);
+static void _brightness_deregister_event_cb(brightness_ctrl_obj *ctrl_obj);
 
 QP_Module brightness_ctrl = {
 	.name = "brightness_ctrl",
@@ -49,13 +58,6 @@ QP_Module brightness_ctrl = {
 	.qp_opened = quickpanel_brightness_qp_opened,
 	.qp_closed = quickpanel_brightness_qp_closed,
 };
-
-typedef struct _brightness_ctrl_obj {
-	int min_level;
-	int max_level;
-	Evas_Object *viewer;
-	void *data;
-} brightness_ctrl_obj;
 
 static brightness_ctrl_obj *g_ctrl_obj;
 
@@ -88,7 +90,6 @@ static Evas_Object *_check_duplicated_image_loading(Evas_Object *obj, const char
 	if (old_ic != NULL) {
 		elm_image_file_get(old_ic, &old_ic_path, NULL);
 		if (old_ic_path != NULL) {
-			DBG("%s:%s", old_ic_path, file_path);
 			if (strcmp(old_ic_path, file_path) == 0)
 				return old_ic;
 		}
@@ -105,8 +106,6 @@ static Evas_Object *_check_duplicated_loading(Evas_Object *obj, const char *part
 
 	retif(obj == NULL, NULL, "Invalid parameter!");
 	retif(part == NULL, NULL, "Invalid parameter!");
-
-	DBG("");
 
 	old_content = elm_object_part_content_get(obj, part);
 	if (old_content != NULL) {
@@ -147,7 +146,6 @@ static void quickpanel_brightness_qp_opened(void *data)
 
 	if (g_ctrl_obj->viewer != NULL) {
 		_brightness_view_update();
-		vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, _brightness_vconf_cb);
 	}
 }
 
@@ -198,21 +196,16 @@ _brightness_ctrl_slider_changed_cb(void *data,
 	static int old_val = -1;
 	brightness_ctrl_obj *ctrl_obj = NULL;
 
-	DBG("");
-
 	retif(data == NULL, , "Data parameter is NULL");
 	ctrl_obj = data;
 
 	double val = elm_slider_value_get(obj);
 	value = (int)(val + 0.5);
 
-	DBG("value:%d old_val:%d", value, old_val);
-
 	if (value != old_val)
 	{
-		DBG("min_level:%d max_level:%d", ctrl_obj->min_level, ctrl_obj->max_level);
 		if (value >= ctrl_obj->min_level && value <= ctrl_obj->max_level) {
-			DBG("new brgt:%d", value);
+			DBG("brightness is changed to %d", value);
 			_brightness_set_level(value);
 		}
 	}
@@ -226,8 +219,24 @@ _brightness_ctrl_slider_delayed_changed_cb(void *data,
 	int value = 0;
 
 	value = _brightness_get_level();
-	DBG("value:%d", value);
+	DBG("brightness is changed to %d", value);
 	_brightness_set_level(value);
+}
+
+static void
+_brightness_ctrl_slider_drag_start_cb(void *data,
+							 Evas_Object *obj,
+							 void *event_info)
+{
+	_brightness_deregister_event_cb(data);
+}
+
+static void
+_brightness_ctrl_slider_drag_stop_cb(void *data,
+							 Evas_Object *obj,
+							 void *event_info)
+{
+	_brightness_register_event_cb(data);
 }
 
 static void _brightness_ctrl_checker_toggle_cb(void *data,
@@ -277,7 +286,6 @@ static Evas_Object *_brightness_view_create(Evas_Object *list)
 
 static void _brightness_set_text(void)
 {
-	DBG("");
 	brightness_ctrl_obj *ctrl_obj = g_ctrl_obj;
 	retif(ctrl_obj == NULL, , "Invalid parameter!");
 	retif(ctrl_obj->viewer == NULL, , "Invalid parameter!");
@@ -288,7 +296,6 @@ static void _brightness_set_text(void)
 
 static void _brightness_set_image(void)
 {
-	DBG("");
 	Evas_Object *ic = NULL;
 	Evas_Object *old_ic = NULL;
 	brightness_ctrl_obj *ctrl_obj = g_ctrl_obj;
@@ -311,7 +318,6 @@ static void _brightness_set_image(void)
 
 static void _brightness_set_checker(void)
 {
-	DBG("");
 	Evas_Object *checker = NULL;
 	Evas_Object *old_obj = NULL;
 	brightness_ctrl_obj *ctrl_obj = g_ctrl_obj;
@@ -341,7 +347,6 @@ static void _brightness_set_checker(void)
 
 static void _brightness_set_slider(void)
 {
-	DBG("");
 	int value = 0;
 	Evas_Object *slider = NULL;
 	Evas_Object *old_obj = NULL;
@@ -361,8 +366,14 @@ static void _brightness_set_slider(void)
 			evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
 			evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, 0.5);
 			elm_slider_min_max_set(slider, ctrl_obj->min_level, ctrl_obj->max_level);
-			evas_object_smart_callback_add(slider, "changed", _brightness_ctrl_slider_changed_cb, ctrl_obj);
-			evas_object_smart_callback_add(slider, "delay,changed", _brightness_ctrl_slider_delayed_changed_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "changed",
+					_brightness_ctrl_slider_changed_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "delay,changed",
+					_brightness_ctrl_slider_delayed_changed_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "slider,drag,start",
+					_brightness_ctrl_slider_drag_start_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "slider,drag,stop",
+					_brightness_ctrl_slider_drag_stop_cb, ctrl_obj);
 			elm_object_part_content_set(ctrl_obj->viewer, "elm.swallow.slider", slider);
 		} else {
 			ERR("failed to create slider");
@@ -436,16 +447,25 @@ static void _brightness_remove(brightness_ctrl_obj *ctrl_obj, void *data)
 
 static void _brightness_register_event_cb(brightness_ctrl_obj *ctrl_obj)
 {
-	retif(ctrl_obj == NULL, , "Invalid parameter!");
+	int ret = 0;
+	retif(ctrl_obj == NULL, , "Data parameter is NULL");
 
-	vconf_notify_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, _brightness_vconf_cb, ctrl_obj);
+	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_BRIGHTNESS,
+			_brightness_vconf_cb, ctrl_obj);
+	if (ret != 0) {
+		ERR("failed to register a cb key:%s err:%d",
+				"VCONFKEY_SETAPPL_LCD_BRIGHTNESS", ret);
+	}
 }
 
 static void _brightness_deregister_event_cb(brightness_ctrl_obj *ctrl_obj)
 {
-	retif(ctrl_obj == NULL, , "Invalid parameter!");
+	int ret = 0;
 
-	vconf_ignore_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, _brightness_vconf_cb);
+	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, _brightness_vconf_cb);
+	if (ret != 0) {
+		ERR("failed to register a cb key:%s err:%d", "VCONFKEY_SETAPPL_LCD_BRIGHTNESS", ret);
+	}
 }
 
 static int quickpanel_brightness_init(void *data)
@@ -453,11 +473,8 @@ static int quickpanel_brightness_init(void *data)
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	if (g_ctrl_obj == NULL) {
-		DBG("brightness controller alloced");
 		g_ctrl_obj = (brightness_ctrl_obj *)malloc(sizeof(brightness_ctrl_obj));
 	}
-
-	DBG("");
 
 	if (g_ctrl_obj != NULL) {
 		g_ctrl_obj->min_level = BRIGHTNESS_MIN;

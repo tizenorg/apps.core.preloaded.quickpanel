@@ -4,7 +4,7 @@
 
 Name:       org.tizen.quickpanel
 Summary:    Quick Panel
-Version:    0.3.33
+Version:    0.3.38
 Release:    1
 Group:      util
 License:    Flora Software License
@@ -36,6 +36,7 @@ BuildRequires: pkgconfig(elementary)
 BuildRequires: pkgconfig(syspopup-caller)
 BuildRequires: pkgconfig(minicontrol-viewer)
 BuildRequires: pkgconfig(minicontrol-monitor)
+#BuildRequires: pkgconfig(deviced)
 BuildRequires: pkgconfig(utilX)
 BuildRequires: gettext-tools
 BuildRequires: cmake

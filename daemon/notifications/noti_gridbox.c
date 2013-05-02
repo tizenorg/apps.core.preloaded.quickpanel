@@ -38,8 +38,8 @@ typedef struct _gridbox_info_layout {
 	int padding_between;
 	int child_w;
 	int child_h;
-	int limit_w;
 	double scale;
+	int limit_w;
 } gridbox_info_layout;
 
 typedef struct _gridbox_info_animation {
@@ -115,7 +115,7 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 
 	info_layout->child_w = child_w;
 
-	DBG("grid layout children:%d %d", info_layout->child_w, info_layout->child_h);
+	DBG("grid layout children pos:%d %d", info_layout->child_w, info_layout->child_h);
 
 	int order_children = 1;
 	EINA_LIST_FOREACH_SAFE(priv->children, l, l_next, opt)

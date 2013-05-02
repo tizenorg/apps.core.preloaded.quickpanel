@@ -85,6 +85,9 @@ msgstr "टेथरिंग का उपयोग करने के लि�
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "एक ही समय में Wi-Fi और Mobile AP सक्रिय नहीं कर सकते हैं। Mobile AP निष्क्रिय करें?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "स्क्रीन मिररिंग"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "त्वरित सेटिंग्स बटन बदलें"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "अधिसूचना"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "सहमत"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "असहमती"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS स्थान और आप के स्थान डाटा का उपयोग आप के द्वारा उपयोगित एप्लीकेशंस नियंत्रित करते हैं"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "उपभोक्ता स्वीकृति"
 

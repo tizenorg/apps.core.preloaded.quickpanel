@@ -85,6 +85,9 @@ msgstr "關閉 Wi-Fi 以使用網絡共享"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi和Mobile AP不可同時啟動。關閉Mobile AP嗎?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "取代快速設定按鈕"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "通知"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "同意"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "不同意"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS 位置和位置數據的使用由您使用的應用程式控制"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "用戶贊成"
 

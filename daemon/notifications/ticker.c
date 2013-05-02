@@ -65,6 +65,19 @@ QP_Module ticker = {
 	.refresh = quickpanel_ticker_reflesh
 };
 
+static int _is_lockscreen_launched(void) {
+	int ret = 0;
+	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
+
+	if ((ret = vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &is_lock_launched)) == 0) {
+		if (ret == 0 && is_lock_launched == VCONFKEY_IDLE_LOCK) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 /*****************************************************************************
  *
  * (Static) Util functions
@@ -83,7 +96,6 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 			flag_delete = 0;
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
 	notification_h noti = NULL;
-	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
 	int *is_ticker_executed = NULL;
 
 	noti = data;
@@ -91,10 +103,8 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 
 	quickpanel_play_feedback();
 
-	if (vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &is_lock_launched) == 0) {
-		if (is_lock_launched == VCONFKEY_IDLE_LOCK) {
-			return ;
-		}
+	if (_is_lockscreen_launched()) {
+		return ;
 	}
 
 	notification_get_pkgname(noti, &caller_pkgname);
@@ -184,82 +194,6 @@ static void _quickpanel_ticker_clicked_cb(void *data, Evas_Object *obj,
 	}
 }
 
-static int _quickpanel_ticker_check_ticker_off(notification_h noti)
-{
-	char *pkgname = NULL;
-	int ret = 0;
-	int boolval = 0;
-
-	notification_get_application(noti, &pkgname);
-
-	if (pkgname == NULL)
-		notification_get_pkgname(noti, &pkgname);
-
-	if (pkgname == NULL)
-		return 1;	/* Ticker is not displaying. */
-
-	if (!strcmp(pkgname, VENDOR".message")) {
-		ret = vconf_get_bool(
-			VCONFKEY_SETAPPL_STATE_TICKER_NOTI_MESSAGES_BOOL,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	} else if (!strcmp(pkgname, VENDOR".email")) {
-		ret = vconf_get_bool(
-			VCONFKEY_SETAPPL_STATE_TICKER_NOTI_EMAIL_BOOL,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	} else if (!strcmp(pkgname, VENDOR".ims-syspopup")) {
-		ret = vconf_get_bool(
-				VCONFKEY_SETAPPL_STATE_TICKER_NOTI_IM_BOOL,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	}
-
-	/* Displaying ticker! */
-	return 0;
-}
-
-static int _quickpanel_ticker_check_displaying_contents_off(notification_h noti)
-{
-	char *pkgname = NULL;
-	int ret = 0;
-	int boolval = 0;
-
-	notification_get_application(noti, &pkgname);
-
-	if (pkgname == NULL)
-		notification_get_pkgname(noti, &pkgname);
-
-	if (pkgname == NULL)
-		return 0;	/* Ticker is not displaying. */
-
-	if (!strcmp(pkgname, VENDOR".message")) {
-		ret = vconf_get_bool(
-			VCONFKEY_TICKER_NOTI_DISPLAY_CONTENT_MESSASGES,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	} else if (!strcmp(pkgname, VENDOR".email")) {
-		ret = vconf_get_bool(
-			VCONFKEY_TICKER_NOTI_DISPLAY_CONTENT_EMAIL,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	} else if (!strcmp(pkgname, VENDOR".ims-syspopup")) {
-		ret = vconf_get_bool(
-			VCONFKEY_TICKER_NOTI_DISPLAY_CONTENT_IM,
-			&boolval);
-		if (ret == 0 && boolval == 0)
-			return 1;
-	}
-
-	/* Displaying ticker! */
-	return 0;
-}
-
 static inline void __ticker_only_noti_del(notification_h noti)
 {
 	int applist = NOTIFICATION_DISPLAY_APP_ALL;
@@ -292,7 +226,7 @@ static void _quickpanel_ticker_hide(void *data)
 
 static Eina_Bool _quickpanel_ticker_timeout_cb(void *data)
 {
-	DBG("");
+	INFO("ticker dismissed by timeout callback");
 
 	g_timer = NULL;
 
@@ -305,7 +239,8 @@ static void _quickpanel_ticker_detail_hide_cb(void *data, Evas *e,
 					Evas_Object *obj,
 					void *event_info)
 {
-	DBG("");
+	INFO("ticker dismissed by touching a hide button");
+
 	notification_h noti = (notification_h) data;
 
 	if (g_timer) {
@@ -329,8 +264,6 @@ static void _quickpanel_ticker_detail_show_cb(void *data, Evas *e,
 static void _quickpanel_ticker_button_clicked_cb(void *data, Evas_Object *obj,
 					void *event_info)
 {
-	DBG("");
-
 	if (g_timer) {
 		ecore_timer_del(g_timer);
 		g_timer = NULL;
@@ -343,16 +276,12 @@ static Evas_Object *_quickpanel_ticker_create_button(Evas_Object *parent,
 						notification_h noti)
 {
 	Evas_Object *button = NULL;
-	int ret = 0;
-	int val = 0;
 
 	retif(noti == NULL || parent == NULL, NULL, "Invalid parameter!");
 
-	/* Check idle lock state */
-	ret = vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &val);
-	/* If Lock state, button is diabled */
-	if (ret != 0 || val == VCONFKEY_IDLE_LOCK)
+	if (_is_lockscreen_launched()) {
 		return NULL;
+	}
 
 	button = elm_button_add(parent);
 	elm_object_style_set(button, "tickernoti");
@@ -420,13 +349,7 @@ static char *_quickpanel_ticker_get_label_layout_default(notification_h noti)
 		bindtextdomain(domain, dir);
 
 	title_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE);
-
-	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
-		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT_FOR_DISPLAY_OPTION_IS_OFF);
-	}
-	else {
-		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
-	}
+	content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
 
 	event_count_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT);
 
@@ -438,10 +361,7 @@ static char *_quickpanel_ticker_get_label_layout_default(notification_h noti)
 		}
 	} else {
 		if (title_utf8 && content_utf8) {
-			if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1)
-				len = snprintf(buf, sizeof(buf),FORMAT_2LINE, title_utf8, content_utf8);
-			else
-				len = snprintf(buf, sizeof(buf),FORMAT_2LINE_MULTI, title_utf8, event_count_utf8, content_utf8);
+			len = snprintf(buf, sizeof(buf),FORMAT_2LINE_MULTI, title_utf8, event_count_utf8, content_utf8);
 		} else if (title_utf8) {
 			len = snprintf(buf, sizeof(buf),FORMAT_1LINE, title_utf8);
 		}
@@ -480,13 +400,7 @@ static char *_quickpanel_ticker_get_label_layout_single(notification_h noti)
 		bindtextdomain(domain, dir);
 
 	title_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE);
-
-	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
-		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT_FOR_DISPLAY_OPTION_IS_OFF);
-	}
-	else {
-		content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
-	}
+	content_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT);
 
 	info_1_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_INFO_1);
 	info_sub_1_utf8 = _get_text(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1);
@@ -538,9 +452,8 @@ static char *_quickpanel_ticker_get_label(notification_h noti)
 
 	notification_get_layout(noti, &layout);
 
-	if (_quickpanel_ticker_check_displaying_contents_off(noti) == 1) {
-		result = _quickpanel_ticker_get_label_layout_default(noti);
-	} else if (layout == NOTIFICATION_LY_NOTI_EVENT_SINGLE) {
+
+	if (layout == NOTIFICATION_LY_NOTI_EVENT_SINGLE) {
 		result = _quickpanel_ticker_get_label_layout_single(noti);
 	} else {
 		result = _quickpanel_ticker_get_label_layout_default(noti);
@@ -745,7 +658,7 @@ static void _quickpanel_noti_media_feedback(notification_h noti) {
 #endif
 
 		notification_get_sound(noti, &nsound_type, &nsound_path);
-		DBG("Sound : %d, %s", nsound_type, nsound_path);
+		DBG("notification sound: %d, %s", nsound_type, nsound_path);
 
 		switch (nsound_type) {
 			case NOTIFICATION_SOUND_TYPE_USER_DATA:
@@ -777,7 +690,7 @@ static void _quickpanel_noti_media_feedback(notification_h noti) {
 	const char *nvibration_path = NULL;
 
 	notification_get_vibration(noti, &nvibration_type, &nvibration_path);
-	DBG("Vibration : %d, %s", nvibration_type, nvibration_path);
+	DBG("notification vibration: %d, %s", nvibration_type, nvibration_path);
 	switch (nvibration_type) {
 		case NOTIFICATION_VIBRATION_TYPE_USER_DATA:
 		case 	NOTIFICATION_VIBRATION_TYPE_DEFAULT:
@@ -794,13 +707,17 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 	notification_h noti = NULL;
 	int flags = 0;
 	int applist = NOTIFICATION_DISPLAY_APP_ALL;
-	int ret = 0;
 	int op_type = 0;
 	int priv_id = 0;
 
 	INFO("_quickpanel_ticker_noti_changed_cb");
 
 	retif(op_list == NULL, ,"op_list is NULL");
+
+	if (_is_lockscreen_launched()) {
+		ERR("lockscreen launched, creating a ticker canceled");
+		return;
+	}
 
 	if (num_op == 1) {
 		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_TYPE, &op_type);
@@ -822,25 +739,15 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 	retif(noti == NULL, ,"noti is NULL");
 
 	if (op_type == NOTIFICATION_OP_INSERT || op_type == NOTIFICATION_OP_UPDATE) {
+		INFO("playing notification sound");
 		_quickpanel_noti_media_feedback(noti);
 	}
 
 	notification_get_display_applist(noti, &applist);
 	if (!(applist & NOTIFICATION_DISPLAY_APP_TICKER)) {
-		DBG("No Ticker Msg");
+		INFO("displaying ticker option is off");
 		notification_free(noti);
 		return ;
-	}
-
-	/* Check setting's event notification */
-	ret = _quickpanel_ticker_check_ticker_off(noti);
-	if (ret == 1) {
-		INFO("Disable tickernoti ret : %d", ret);
-		/* delete temporary here only ticker noti display item */
-		__ticker_only_noti_del(noti);
-		notification_free(noti);
-
-		return;
 	}
 
 	/* Skip if previous ticker is still shown */

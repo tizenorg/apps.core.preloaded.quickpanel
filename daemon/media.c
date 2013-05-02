@@ -30,7 +30,7 @@ static void _quickpanel_player_free_job_cb(void *data)
 
 	if (player_get_state(sound_player, &state) == PLAYER_ERROR_NONE) {
 
-		DBG("state of player %d", state);
+		INFO("the state of sound player %d", state);
 
 		if (state == PLAYER_STATE_PLAYING) {
 			player_stop(sound_player);
@@ -138,21 +138,21 @@ HAPI void quickpanel_player_play(sound_type_e sound_type, const char *sound_file
 
 	ret = player_set_uri(*sound_player, sound_file);
 	if (ret != PLAYER_ERROR_NONE) {
-		DBG("set attribute---profile_uri[%d]", ret);
+		ERR("set attribute---profile_uri[%d]", ret);
 		_quickpanel_player_free(sound_player);
 		return;
 	}
 
 	ret = player_prepare(*sound_player);
 	if (ret != PLAYER_ERROR_NONE) {
-		DBG("realizing the player handle failed[%d]", ret);
+		ERR("realizing the player handle failed[%d]", ret);
 		_quickpanel_player_free(sound_player);
 		return;
 	}
 
 	player_get_state(*sound_player, &state);
 	if (state != PLAYER_STATE_READY) {
-		DBG("state of player is invalid %d", state);
+		ERR("state of player is invalid %d", state);
 		_quickpanel_player_free(sound_player);
 		return;
 	}
@@ -160,7 +160,7 @@ HAPI void quickpanel_player_play(sound_type_e sound_type, const char *sound_file
 	/* register callback */
 	ret = player_set_completed_cb(*sound_player, _quickpanel_player_completed_cb, sound_player);
 	if (ret != PLAYER_ERROR_NONE) {
-		DBG("player_set_completed_cb() ERR: %x!!!!", ret);
+		ERR("player_set_completed_cb() ERR: %x!!!!", ret);
 		_quickpanel_player_free(sound_player);
 		return;
 	}
@@ -179,7 +179,7 @@ HAPI void quickpanel_player_play(sound_type_e sound_type, const char *sound_file
 
 	ret = player_start(*sound_player);
 	if (ret != PLAYER_ERROR_NONE) {	/* if directly return retor.. */
-		DBG("player_start [%d]", ret);
+		ERR("player_start [%d]", ret);
 		_quickpanel_player_free(sound_player);
 		return;
 	}
@@ -242,5 +242,29 @@ HAPI void quickpanel_play_feedback(void)
 		feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
 	} else  if (vib_enabled == 1) {
 		feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_TOUCH_TAP);
+	}
+}
+
+HAPI int quickpanel_set_mute_toggle(void)
+{
+	int ret = -1;
+
+	if (quickpanel_is_sound_enabled() == 1 ||
+			quickpanel_is_vib_enabled() == 1) {
+		ret = vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, 0);
+		msgif(ret != 0, "failed to set VCONFKEY_SETAPPL_SOUND_STATUS_BOOL");
+
+		ret = vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, 0);
+		msgif(ret != 0, "failed to set VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL");
+
+		return 0;
+	} else {
+		ret = vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, 1);
+		msgif(ret != 0, "failed to set VCONFKEY_SETAPPL_SOUND_STATUS_BOOL");
+
+		ret = vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, 0);
+		msgif(ret != 0, "failed to set VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL");
+
+		return 1;
 	}
 }

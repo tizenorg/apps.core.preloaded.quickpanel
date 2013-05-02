@@ -85,6 +85,9 @@ msgstr "Stäng av Wi-Fi för att använda internetdelning"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Det går inte att aktivera både Wi-Fi och Mobile AP samtidigt. Avaktivera Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Ersätt snabbinställningsknappen"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Meddelande"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Godkänn"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Samtycker inte"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS-position och användning av dina positionsdata hanteras av programmet som används"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Användarmedgivande"
 

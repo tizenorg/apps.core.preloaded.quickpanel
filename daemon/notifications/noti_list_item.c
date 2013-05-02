@@ -25,102 +25,12 @@
 #include "noti_node.h"
 #include "noti.h"
 #include "noti_util.h"
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+#include "animated_image.h"
+#endif
 
 #define QP_DEFAULT_ICON	ICONDIR"/quickpanel_icon_default.png"
 
-static void _set_image(Evas_Object *noti_list_item, notification_h noti,
-		notification_image_type_e image_type, const char *part, int is_stretch) {
-	char *image = NULL;
-
-	DBG("");
-
-	retif(noti_list_item == NULL, , "Invalid parameter!");
-	retif(noti == NULL, , "Invalid parameter!");
-	retif(part == NULL, , "Invalid parameter!");
-
-	notification_get_image(noti, image_type, &image);
-
-	if (image != NULL) {
-		Evas_Object *content = NULL;
-		content = elm_image_add(noti_list_item);
-		elm_image_file_set(content, image, NULL);
-		if (is_stretch == 1) {
-			elm_image_aspect_fixed_set(content, EINA_FALSE);
-			elm_image_resizable_set(content, EINA_TRUE, EINA_TRUE);
-		}
-
-		elm_object_part_content_set(noti_list_item, part, content);
-		elm_object_signal_emit(noti_list_item, "object.show", part);
-	}
-}
-
-static int _set_text(Evas_Object *noti_list_item, notification_h noti,
-		notification_text_type_e text_type, const char *part, int is_need_effect) {
-	char buf[128] = { 0, };
-	char *text = NULL;
-	time_t time = 0;
-
-	retif(noti_list_item == NULL, 0, "Invalid parameter!");
-	retif(noti == NULL, 0, "Invalid parameter!");
-	retif(part == NULL, 0, "Invalid parameter!");
-
-	if (notification_get_time_from_text(noti, text_type, &time) == NOTIFICATION_ERROR_NONE) {
-		if ((int)time > 0) {
-			quickpanel_noti_get_time(time, buf, sizeof(buf));
-			text = buf;
-		}
-	} else {
-		notification_get_text(noti, text_type, &text);
-	}
-
-	if (text != NULL) {
-		if (strlen(text) > 0) {
-			elm_object_part_text_set(noti_list_item, part, text);
-			if (is_need_effect == 1)
-				elm_object_signal_emit(noti_list_item, "object.show.effect", part);
-			else
-				elm_object_signal_emit(noti_list_item, "object.show", part);
-		}
-
-		return strlen(text);
-	}
-
-	return 0;
-}
-
-static int _check_text_null(notification_h noti,
-		notification_text_type_e text_type) {
-	char *text = NULL;
-
-	retif(noti == NULL, 0, "Invalid parameter!");
-
-	notification_get_text(noti, text_type, &text);
-
-	if (text == NULL) {
-		return 1;
-	}
-
-	return 0;
-}
-
-static int _check_image_null(notification_h noti,
-		notification_image_type_e image_type) {
-	char *image = NULL;
-
-	retif(noti == NULL, 0, "Invalid parameter!");
-
-	notification_get_image(noti, image_type, &image);
-
-	if (image == NULL) {
-		return 1;
-	}
-
-	if (strncasecmp(image, "(null)", strlen(image)) == 0) {
-		return 1;
-	}
-
-	return 0;
-}
 
 static Evas_Object *_check_duplicated_progress_loading(Evas_Object *obj, const char *part, const char *style_name) {
 	Evas_Object *old_content = NULL;
@@ -354,8 +264,11 @@ static void _noti_list_item_ongoing_set_icon(Evas_Object *noti_list_item)
 		if (old_ic == NULL) {
 			ic = elm_image_add(noti_list_item);
 			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, main_icon_path, "elm.swallow.thumbnail");
+			elm_image_file_set(ic, main_icon_path, main_icon_path);
 			elm_object_part_content_set(noti_list_item, "elm.swallow.thumbnail", ic);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+			quickpanel_animated_image_add(ic);
+#endif
 		}
 	}
 
@@ -366,7 +279,7 @@ static void _noti_list_item_ongoing_set_icon(Evas_Object *noti_list_item)
 		if (old_ic == NULL) {
 			ic = elm_image_add(noti_list_item);
 			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, sub_icon_path, "elm.swallow.icon");
+			elm_image_file_set(ic, sub_icon_path, sub_icon_path);
 			elm_object_part_content_set(noti_list_item, "elm.swallow.icon", ic);
 		}
 	}
@@ -378,8 +291,11 @@ static void _noti_list_item_ongoing_set_icon(Evas_Object *noti_list_item)
 		if (old_ic == NULL) {
 			ic = elm_image_add(noti_list_item);
 			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, QP_DEFAULT_ICON, "elm.swallow.thumbnail");
+			elm_image_file_set(ic, QP_DEFAULT_ICON, QP_DEFAULT_ICON);
 			elm_object_part_content_set(noti_list_item, "elm.swallow.thumbnail", ic);
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+			quickpanel_animated_image_add(ic);
+#endif
 		}
 	}
 }

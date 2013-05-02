@@ -85,6 +85,9 @@ msgstr "Вимкніть Wi-Fi, щоб скористатися прив'язк�
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Мережі Wi-Fi та Mobile AP не можна активувати одночасно. Вимкнути Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Дублювання екрану"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Замінити кнопку установок панелі швидкого доступу"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Сповіщення"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Згоден"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Не погодитися"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "Керування GPS-розташуванням і використанням даних про розташування здійснюється за допомогою програми, яка використовується вами"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Згода користувача"
 

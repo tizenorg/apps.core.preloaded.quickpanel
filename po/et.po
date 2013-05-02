@@ -85,6 +85,9 @@ msgstr "Modemi kasutamiseks lülitage Wi-Fi välja"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fit ja Mobile AP-d ei saa aktiveerida samaaegselt. Kas desaktiveerida Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Asenda kiirseadistuse nupp"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Teavitus"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Nõustu"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Ei nõustu"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS-asukohta ja teie asukohaandmete kasutamist kontrollib rakendus, mida te kasutate"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Kasutaja nõusolek"
 

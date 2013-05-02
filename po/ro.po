@@ -85,6 +85,9 @@ msgstr "Opriţi Wi-Fi pentru a utiliza furnizarea accesului la internet"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi şi PA mobil nu pot fi activate simultan. Dezactivaţi PA mobil?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Oglindire ecran"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Înlocuiţi butonul pentru setare rapidă"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notificare"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "De acord"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Refuzare"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "Locaţia GPS şi utilizarea datelor locaţiei dvs. sunt controlate de aplicaţiile pe care le utilizaţi"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Consimţământ utilizator"
 

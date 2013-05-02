@@ -29,10 +29,10 @@ msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
 msgstr "Mass storage mode"
 
 msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Disable"
+msgstr "Turn off"
 
 msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Enable"
+msgstr "Turn on"
 
 msgid "IDS_COM_POP_UNSUPPORTED"
 msgstr "Unsupported"
@@ -68,22 +68,25 @@ msgid "IDS_QP_TAB_DRIVING_MODE"
 msgstr "Driving mode"
 
 msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Unable to connect to mobile networks while Airplane mode is enabled. Connect to Wi-Fi network instead, or disable Airplane mode and try again."
+msgstr "Unable to connect to mobile networks while Airplane mode is turned on. Connect to Wi-Fi network instead, or turn off Airplane mode and try again."
 
 msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
 msgstr "Wi-Fi tethering consumes more battery power and increases your data usage. Continue?"
 
 msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Disable tethering to use Wi-Fi."
+msgstr "Turn off tethering to use Wi-Fi"
 
 msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "To enable Power saving mode, enable at least one relevant function."
+msgstr "To turn on Power saving mode, turn on at least one relevant function"
 
 msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
 msgstr "Turn off Wi-Fi to use tethering."
 
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Both Wi-Fi and Mobile AP cannot be activated at the same time. Deactivate Mobile AP?"
+
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
 
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Replace quick setting button"
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notification"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Agree"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Disagree"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS location and use of your location data are controlled by the applications you use"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "User consent"
 

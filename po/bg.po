@@ -85,6 +85,9 @@ msgstr "Изключете Wi-Fi, за да използвате привърз�
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi и Mobile AP не могат да бъдат активирани едновременно.. Деактивиране на Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Огледален режим на екрана"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Заместване на бутона за бърза настройка"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Уведом."
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Съгласен"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Несъгласен"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS местоположението и използването на вашите данни за местоположение се контролират от приложенията, които използвате"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Съгласие от потребителя"
 

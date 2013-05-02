@@ -85,6 +85,9 @@ msgstr "Poista Wi-Fi käytöstä yhteyden jakamista varten"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fiä ja mobiilitukiasemaa ei voi ottaa käyttöön samaan aikaan. Haluatko poistaa mobiilitukiaseman käytöstä?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Näytön peilaus"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Vaihda pika-asetuspainike"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Ilmoitus"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Hyväksyn"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Eri mieltä"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "Käytettävät sovellukset säätelevät GPS-sijaintia ja sijaintitietojen käyttöä"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Käyttäjän suostumus"
 

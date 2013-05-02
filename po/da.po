@@ -85,6 +85,9 @@ msgstr "Sluk for Wi-Fi for at bruge deling"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Både Wi-Fi og mobilt adgangspunkt kan ikke være aktiveret på samme tid. Deaktivér mobilt adgangspunkt?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Skærmspejling"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Erstat hurtig indstillingsknap"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Besked"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Acceptér"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Uenig"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS-placering og brug af dine placeringsdata styres af det program, du anvender"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Brugersamtykke"
 

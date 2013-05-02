@@ -85,6 +85,9 @@ msgstr "Cas as Wi-Fi le nascaireacht a úsáid"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Ní féidir Wi-Fi agus AP Móibíleach a chur i ngníomh ag an am céanna. Díghníomhachtaigh AP Móibíleach?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Scáthánú Scáileáin"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Ionadaigh cnaipe mear-shocruithe"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Fógra"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Aontaim"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Ní aontaím"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "Tá suíomh GPS agus úsáid sonraí do shuímh á rialú ag na feidhmchláir a úsáideann tú"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Toiliú úsáideora"
 

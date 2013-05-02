@@ -85,6 +85,9 @@ msgstr "Bağlanmayı kullanmak için Wi-Fi'yi kapatın"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Hem Wi-Fi hem de Mobil AP aynı anda etkinleştirilemez. Mobil AP devre dışı bırakılsın mı?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Ekran Yansıtma"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Hızlı ayar düğmesini değiştir"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Bildirim"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Onayla"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Onaylama"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS konumu ve konum verinizin kullanımı kullandığınız uygulamalar tarafından kontrol edilir"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "Kullanıcı izni"
 

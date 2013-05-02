@@ -88,7 +88,7 @@ HAPI int quickpanel_launch_app(char *app_id, void *data)
 
 	ret = service_create(&service);
 	if (ret != SERVICE_ERROR_NONE) {
-		DBG("service_create() return error : %d", ret);
+		ERR("service_create() return error : %d", ret);
 		return ret;
 	}
 	retif(service == NULL, SERVICE_ERROR_INVALID_PARAMETER, "fail to create service handle!");
@@ -106,7 +106,7 @@ HAPI int quickpanel_launch_app(char *app_id, void *data)
 
 	ret = service_send_launch_request(service, NULL, NULL);
 	if (ret != SERVICE_ERROR_NONE) {
-		DBG("service_send_launch_request() is failed : %d", ret);
+		ERR("service_send_launch_request() is failed : %d", ret);
 		service_destroy(service);
 		return ret;
 	}
@@ -302,12 +302,12 @@ static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
 #if QP_ENABLE_HIDING_INDICATOR
 					elm_win_indicator_mode_set(ad->win, ELM_WIN_INDICATOR_SHOW);
 #endif
-					DBG("quickpanel open start");
+					INFO("quickpanel going to be opened");
 				}
 			}
 			if (ev->data.l[0] == 0) {
 				if (ad->is_opened == 0) {
-					DBG("quickpanel closed");
+					INFO("quickpanel is closed");
 					ad->is_opened = 1;
 					qp_opened_modules(data);
 					quickpanel_player_stop();
@@ -320,7 +320,7 @@ static Eina_Bool quickpanel_ui_client_message_cb(void *data, int type,
 
 static void _quickpanel_signal_handler(int signum, siginfo_t *info, void *unused)
 {
-	DBG("Terminated...");
+	ERR("quickpanel going to be terminated");
 	app_efl_exit();
 }
 
@@ -333,7 +333,12 @@ static Evas_Object *_quickpanel_ui_window_add(const char *name, int prio)
 
 	if (eo != NULL) {
 		elm_win_alpha_set(eo, EINA_TRUE);
+#if QP_ENABLE_HIDING_INDICATOR
+		elm_win_indicator_mode_set(eo, ELM_WIN_INDICATOR_HIDE);
+#else
 		elm_win_indicator_mode_set(eo, ELM_WIN_INDICATOR_SHOW);
+#endif
+
 		elm_win_title_set(eo, name);
 		elm_win_borderless_set(eo, EINA_TRUE);
 		elm_win_autodel_set(eo, EINA_TRUE);
@@ -351,12 +356,12 @@ static Evas_Object *_quickpanel_ui_window_add(const char *name, int prio)
 	return eo;
 }
 
+#ifdef TBD
 static void _quickpanel_add_debugging_bar(Evas_Object *list)
 {
 	Eina_Bool ret = EINA_FALSE;
 	Evas_Object *bar = elm_layout_add(list);
 
-	DBG("");
 	ret = elm_layout_file_set(bar, DEFAULT_EDJ,
 			"quickpanel/seperator/default");
 
@@ -371,6 +376,7 @@ static void _quickpanel_add_debugging_bar(Evas_Object *list)
 		evas_object_show(bar);
 	}
 }
+#endif
 
 HAPI Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 					    const char *group, int is_just_load)
@@ -494,7 +500,6 @@ static void _quickpanel_ui_set_indicator_cover(void *data)
 	retif(data == NULL, , "data is NULL");
 	struct appdata *ad = data;
 
-	int x_1 = 0, y_1 = 0;
 	int x_2 = 0, y_2 = 0;
 	int angle = ad->angle;
 
@@ -503,42 +508,23 @@ static void _quickpanel_ui_set_indicator_cover(void *data)
 
 	switch (angle) {
 		case 0:
-			x_1 = 0;
-			y_1 = 0;
 			x_2 = ad->win_width - width;
 			y_2 = 0;
 			break;
 		case 90:
-			x_1 = 0;
-			y_1 = 0;
 			x_2 = ad->win_height - width;
 			y_2 = 0;
 			break;
 		case 180:
-			x_1 = 0;
-			y_1 = 0;
 			x_2 = ad->win_width - width;
 			y_2 = 0;
 			break;
 		case 270:
-			x_1 = 0;
-			y_1 = 0;
 			x_2 = ad->win_height - width;
 			y_2 = 0;
 			break;
 	}
 
-	if (ad->cover_indicator_left == NULL) {
-		Evas_Object *bg = evas_object_rectangle_add(ad->evas);
-		evas_object_color_set(bg, 52, 52, 50, 255); // opaque white background
-		evas_object_repeat_events_set(bg, EINA_FALSE);
-		evas_object_resize(bg, width, height); // covers full canvas
-		evas_object_move(bg, x_1, y_1);
-		evas_object_show(bg);
-		ad->cover_indicator_left = bg;
-	} else {
-		evas_object_move(ad->cover_indicator_left, x_1, y_1);
-	}
 	if (ad->cover_indicator_right == NULL) {
 		Evas_Object *bg = evas_object_rectangle_add(ad->evas);
 		evas_object_color_set(bg, 52, 52, 50, 255); // opaque white background
@@ -564,7 +550,7 @@ static void _quickpanel_ui_window_set_input_region(void *data, int contents_heig
 
 	xwin = elm_win_xwindow_get(ad->win);
 
-	DBG("angle:%d", ad->angle);
+	INFO("angle:%d", ad->angle);
 	switch (ad->angle) {
 		case 0:
 			window_input_region[0] = 0; //X
@@ -592,7 +578,7 @@ static void _quickpanel_ui_window_set_input_region(void *data, int contents_heig
 			break;
 	}
 
-	DBG("win_input_0:%d\nwin_input_1:%d\nwin_input_2:%d\nwin_input_3:%d\n"
+	INFO("win_input_0:%d\nwin_input_1:%d\nwin_input_2:%d\nwin_input_3:%d\n"
 			,window_input_region[0]
 			,window_input_region[1]
 			,window_input_region[2]
@@ -615,7 +601,7 @@ static void _quickpanel_ui_window_set_content_region(void *data, int contents_he
 
 	xwin = elm_win_xwindow_get(ad->win);
 
-	DBG("angle:%d", ad->angle);
+	INFO("angle:%d", ad->angle);
 	switch (ad->angle) {
 		case 0:
 			window_contents_region[0] = 0; //X
@@ -802,10 +788,7 @@ static void _quickpanel_init_size_genlist(void *data)
 		max_height_window = ad->win_height;
 
 	edje_object_part_geometry_get(_EDJ(ad->ly), "qp.gl_base.gl.swallow", NULL, &genlist_y, NULL, NULL);
-	DBG("quickpanel, qp.gl_base.gl.swallow y: %d",genlist_y);
-
 	edje_object_part_geometry_get(_EDJ(ad->ly), "qp.base.spn.swallow", NULL, NULL, NULL, &spn_height);
-	DBG("quickpanel, to spn_height: %d",spn_height);
 
 	ad->gl_distance_from_top = genlist_y;
 	ad->gl_distance_to_bottom = spn_height + (1 * ad->scale) + (ad->scale*QP_HANDLE_H) ;
@@ -872,10 +855,6 @@ static void quickpanel_app_terminate(void *data)
 
 	_quickpanel_ui_fini_ecore_event(ad);
 
-	if (ad->cover_indicator_left != NULL) {
-		evas_object_del(ad->cover_indicator_left);
-		ad->cover_indicator_left = NULL;
-	}
 	if (ad->cover_indicator_right != NULL) {
 		evas_object_del(ad->cover_indicator_right);
 		ad->cover_indicator_right = NULL;
@@ -894,6 +873,7 @@ static void quickpanel_app_pause(void *data)
 	retif(ad == NULL,, "invalid data.");
 
 	suspend_modules(ad);
+	quickpanel_ui_del_current_popup();
 
 	ad->is_suspended = 1;
 
@@ -938,7 +918,6 @@ static void quickpanel_app_service(service_h service, void *data)
 	ret = _quickpanel_ui_create_win(ad);
 	retif(ret != QP_OK, , "Failed to create window!");
 
-
 	atoms_init_quickpanel();
 
 	ad->E_ILLUME_ATOM_MV_QUICKPANEL_STATE = &E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
@@ -976,6 +955,7 @@ static void quickpanel_app_region_format_changed_cb(void *data)
 
 HAPI void quickpanel_open_quickpanel(void) {
 	Ecore_X_Window xwin;
+	Ecore_X_Window zone;
 	struct appdata *ad = g_app_data;
 
 	DBG("");
@@ -984,13 +964,20 @@ HAPI void quickpanel_open_quickpanel(void) {
 	retif(ad->win == NULL, , "Invalid parameter!");
 
 	xwin = elm_win_xwindow_get(ad->win);
-
-	if (xwin != 0)
-		ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+	if (xwin != 0) {
+		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
+			ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+		} else {
+			ERR("failed to get zone");
+		}
+	} else {
+		ERR("failed to get xwin");
+	}
 }
 
 HAPI void quickpanel_close_quickpanel(bool is_check_lock) {
 	Ecore_X_Window xwin;
+	Ecore_X_Window zone;
 	int is_lock_launched = VCONFKEY_IDLE_UNLOCK;
 	struct appdata *ad = g_app_data;
 
@@ -998,8 +985,6 @@ HAPI void quickpanel_close_quickpanel(bool is_check_lock) {
 
 	retif(ad == NULL, , "Invalid parameter!");
 	retif(ad->win == NULL, , "Invalid parameter!");
-
-	xwin = elm_win_xwindow_get(ad->win);
 
 	if (is_check_lock == true) {
 		if (vconf_get_int(VCONFKEY_IDLE_LOCK_STATE, &is_lock_launched) == 0) {
@@ -1010,8 +995,42 @@ HAPI void quickpanel_close_quickpanel(bool is_check_lock) {
 		}
 	}
 
-	if (xwin != 0)
-		ecore_x_e_illume_quickpanel_state_send(ecore_x_e_illume_zone_get(xwin),ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+	xwin = elm_win_xwindow_get(ad->win);
+	if (xwin != 0) {
+		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
+			ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+		} else {
+			ERR("failed to get zone");
+		}
+	} else {
+		ERR("failed to get xwin");
+	}
+}
+
+HAPI void quickpanel_toggle_openning_quickpanel(void) {
+	Ecore_X_Window xwin;
+	Ecore_X_Window zone;
+	struct appdata *ad = g_app_data;
+
+	DBG("");
+
+	retif(ad == NULL, , "Invalid parameter!");
+	retif(ad->win == NULL, , "Invalid parameter!");
+
+	xwin = elm_win_xwindow_get(ad->win);
+	if (xwin != 0) {
+		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
+			if (ecore_x_e_illume_quickpanel_state_get(zone) == ECORE_X_ILLUME_QUICKPANEL_STATE_ON) {
+				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+			} else {
+				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+			}
+		} else {
+			ERR("failed to get zone");
+		}
+	} else {
+		ERR("failed to get xwin");
+	}
 }
 
 int main(int argc, char *argv[])
@@ -1040,6 +1059,5 @@ int main(int argc, char *argv[])
 
 	g_app_data = &ad;
 
-	DBG("start main");
 	return app_efl_main(&argc, &argv, &app_callback, (void *)&ad);
 }

@@ -47,6 +47,9 @@
 #define _(str) gettext(str)
 #define _NOT_LOCALIZED(str) (str)
 
+#define QP_SETTING_SOUND_SIP_PATH \
+	"/usr/apps/com.samsung.quickpanel/data/sip.wav"
+
 #define STR_ATOM_WINDOW_INPUT_REGION    "_E_COMP_WINDOW_INPUT_REGION"
 #define STR_ATOM_WINDOW_CONTENTS_REGION "_E_COMP_WINDOW_CONTENTS_REGION"
 
@@ -70,6 +73,7 @@ struct appdata {
 
 	Evas_Object *scroller;
 	Evas_Object *list;
+	Evas_Object *popup;
 	int angle;
 	double scale;
 	char *theme;
@@ -92,7 +96,6 @@ struct appdata {
 	E_DBus_Signal_Handler *dbus_handler_progress;
 	E_DBus_Signal_Handler *dbus_handler_content;
 
-	Evas_Object *cover_indicator_left;
 	Evas_Object *cover_indicator_right;
 
 	Ecore_X_Atom *E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
@@ -130,5 +133,6 @@ Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
 void quickpanel_ui_set_indicator_cover(void *data);
 void quickpanel_close_quickpanel(bool is_check_lock);
 void quickpanel_open_quickpanel(void);
+void quickpanel_toggle_openning_quickpanel(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

@@ -32,6 +32,10 @@ extern QP_Module minictrl;
 /* brightness */
 extern QP_Module brightness_ctrl;
 #endif /* QP_BRIGHTNESS_ENABLE */
+
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+extern QP_Module animated_image;
+#endif
 /* notification */
 extern QP_Module noti;
 extern QP_Module ticker;
@@ -49,7 +53,10 @@ static QP_Module *modules[] = {
 	&noti,
 	&ticker,
 	&ticker_status,
-	&idletxt
+	&idletxt,
+#ifdef QP_ANIMATED_IMAGE_ENABLE
+	&animated_image
+#endif
 };
 
 HAPI int init_modules(void *data)

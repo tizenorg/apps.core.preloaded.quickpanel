@@ -85,6 +85,9 @@ msgstr "Turn off Wi-Fi to use tethering"
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Both Wi-Fi and Mobile AP cannot be activated at the same time. Deactivate Mobile AP?"
 
+msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
 msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
 msgstr "Replace quick setting button"
 
@@ -105,4 +108,16 @@ msgstr "GPS"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notification"
+
+msgid "IDS_COM_BUTTON_AGREE"
+msgstr "Agree"
+
+msgid "IDS_COM_BUTTON_DISAGREE"
+msgstr "Disagree"
+
+msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
+msgstr "GPS location and use of your location data are controlled by the applications you use"
+
+msgid "IDS_ST_HEADER_USER_CONSENT"
+msgstr "User consent"
 

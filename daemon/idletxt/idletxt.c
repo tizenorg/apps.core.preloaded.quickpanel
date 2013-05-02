@@ -33,7 +33,7 @@
 #define QP_IDLETXT_SLIDE_LEN	130
 
 #define QP_IDLETXT_LABEL_STRING	\
-	"<font_size=36 font_weight=Medium color=#959494FF align=left>%s</>"
+	"<font_size=30 font_weight=Medium color=#959494FF align=left>%s</>"
 
 static int quickpanel_idletxt_init(void *data);
 static int quickpanel_idletxt_fini(void *data);
@@ -215,7 +215,7 @@ static Evas_Object *_quickpanel_idletxt_exception_add_label(Evas_Object * box)
 	Evas_Object *obj = NULL;
 
 	if (vconf_get_int(VCONFKEY_TELEPHONY_SVCTYPE, &service_type) != 0) {
-		DBG("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
+		ERR("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
 	}
 
 	switch(service_type) {
@@ -258,7 +258,7 @@ static Evas_Object *_quickpanel_idletxt_get_spn(Evas_Object * box)
 
 	/* make keylist */
 	if (vconf_get_int(VCONFKEY_TELEPHONY_SVCTYPE, &service_type) != 0) {
-		DBG("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
+		ERR("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
 	}
 
 	ret = vconf_get_int(VCONFKEY_TELEPHONY_SPN_DISP_CONDITION, &state);
@@ -300,6 +300,7 @@ static Evas_Object *_quickpanel_idletxt_get_spn(Evas_Object * box)
 	return label;
 }
 
+#ifdef TBD
 static Evas_Object *_quickpanel_idletxt_get_sat_text(Evas_Object * box)
 {
 	Evas_Object *label = NULL;
@@ -310,6 +311,7 @@ static Evas_Object *_quickpanel_idletxt_get_sat_text(Evas_Object * box)
 
 	return label;
 }
+#endif
 
 static Eina_Bool _quickpanel_idletxt_button_clicked_timer_cb(void *data)
 {
