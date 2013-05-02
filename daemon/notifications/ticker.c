@@ -1,7 +1,7 @@
 /*
  * Copyright 2012  Samsung Electronics Co., Ltd
  *
- * Licensed under the Flora License, Version 1.0 (the "License");
+ * Licensed under the Flora License, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -705,6 +705,7 @@ static void _quickpanel_noti_media_feedback(notification_h noti) {
 static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification_type_e type, notification_op *op_list, int num_op)
 {
 	notification_h noti = NULL;
+	notification_h noti_from_master = NULL;
 	int flags = 0;
 	int applist = NOTIFICATION_DISPLAY_APP_ALL;
 	int op_type = 0;
@@ -722,18 +723,23 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 	if (num_op == 1) {
 		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_TYPE, &op_type);
 		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_PRIV_ID, &priv_id);
+		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_NOTI, &noti_from_master);
 		DBG("op_type:%d", op_type);
 		DBG("op_priv_id:%d", priv_id);
+		DBG("noti:%p", noti_from_master);
 
-		if (op_type == NOTIFICATION_OP_INSERT) {
-			noti = notification_load(NULL, priv_id);
-		} else if (op_type == NOTIFICATION_OP_UPDATE) {
-			noti = notification_load(NULL, priv_id);
-		} else {
+		if (op_type != NOTIFICATION_OP_INSERT &&
+				op_type != NOTIFICATION_OP_UPDATE) {
 			return ;
 		}
-	} else {
-		return ;
+		if (noti_from_master == NULL) {
+			ERR("failed to get a notification from master");
+			return ;
+		}
+		if (notification_clone(noti_from_master, &noti) != NOTIFICATION_ERROR_NONE) {
+			ERR("failed to create a cloned notification");
+			return ;
+		}
 	}
 
 	retif(noti == NULL, ,"noti is NULL");

@@ -1,7 +1,7 @@
 /*
  * Copyright 2012  Samsung Electronics Co., Ltd
  *
- * Licensed under the Flora License, Version 1.0 (the License);
+ * Licensed under the Flora License, Version 1.1 (the License);
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -772,7 +772,8 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 	int op_type = 0;
 	int priv_id = 0;
 	struct appdata *ad = NULL;
-	notification_h new_noti = NULL;
+	notification_h noti_new = NULL;
+	notification_h noti_from_master = NULL;
 	notification_type_e noti_type = NOTIFICATION_TYPE_NONE;
 	int noti_applist = NOTIFICATION_DISPLAY_APP_ALL;
 	notification_ly_type_e noti_layout = NOTIFICATION_LY_NONE;
@@ -780,23 +781,34 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 	retif(data == NULL, , "Invalid parameter!");
 	ad = data;
 
-	DBG("test detailed quickpanel:%d", num_op);
+	ERR("num_op:%d", num_op);
 
 	for (i = 0; i < num_op; i++) {
 		notification_op_get_data(op_list + i, NOTIFICATION_OP_DATA_TYPE, &op_type);
-		DBG("op_type:%d", op_type);
 		notification_op_get_data(op_list + i, NOTIFICATION_OP_DATA_PRIV_ID, &priv_id);
-		DBG("op_priv_id:%d", priv_id);
+		notification_op_get_data(op_list + i, NOTIFICATION_OP_DATA_NOTI, &noti_from_master);
+
+		ERR("noti operation:%d privid:%d", op_type, priv_id);
 
 		if (op_type == NOTIFICATION_OP_INSERT) {
-			new_noti = notification_load(NULL, priv_id);
-			if (new_noti == NULL) continue;
 
-			notification_get_type(new_noti, &noti_type);
-			notification_get_display_applist(new_noti, &noti_applist);
-			notification_get_layout(new_noti, &noti_layout);
+			if (noti_from_master == NULL) {
+				ERR("failed to get a notification from master");
+				continue;
+			}
+			if (notification_clone(noti_from_master, &noti_new) != NOTIFICATION_ERROR_NONE) {
+				ERR("failed to create a cloned notification");
+				continue;
+			}
 
-			DBG("layout:%d", noti_layout);
+			_print_debuginfo_from_noti(noti_new);
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+			quickpanel_service_noti_led_on(noti_new);
+#endif
+
+			notification_get_type(noti_new, &noti_type);
+			notification_get_display_applist(noti_new, &noti_applist);
+			notification_get_layout(noti_new, &noti_layout);
 
 			if (noti_applist & NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
 				noti_node_item *node = noti_node_get(g_noti_node, priv_id);
@@ -804,24 +816,28 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 					if (noti_type == NOTIFICATION_TYPE_NOTI) {
 						DBG("cb after inserted:%d", priv_id);
 					}
+					notification_free(noti_new);
 				} else {
 					if (noti_type == NOTIFICATION_TYPE_NOTI) {
-						_quickpanel_noti_noti_add(ad->list, new_noti, GRIDBOX_PREPEND);
+						_quickpanel_noti_noti_add(ad->list, noti_new, GRIDBOX_PREPEND);
 					} else if (noti_type == NOTIFICATION_TYPE_ONGOING) {
-						_quickpanel_noti_ongoing_add(ad->list, new_noti, LISTBOX_PREPEND);
+						_quickpanel_noti_ongoing_add(ad->list, noti_new, LISTBOX_PREPEND);
 					}
 				}
-				DBG("%d noti added", priv_id);
 			} else {
-				notification_free(new_noti);
+				notification_free(noti_new);
 			}
-		}
-		if (op_type == NOTIFICATION_OP_DELETE) {
+		} else if (op_type == NOTIFICATION_OP_DELETE) {
 			noti_node_item *node = noti_node_get(g_noti_node, priv_id);
 
 			if (node != NULL && node->noti != NULL) {
 				notification_h noti = node->noti;
 				notification_get_type(noti, &noti_type);
+
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+				quickpanel_service_noti_led_off(noti);
+#endif
+				_print_debuginfo_from_noti(noti);
 
 				if (noti_type == NOTIFICATION_TYPE_NOTI) {
 					gridbox_remove_item(g_noti_gridbox, node->view, 0);
@@ -830,29 +846,38 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 				}
 				noti_node_remove(g_noti_node, priv_id);
 			}
-			DBG("%d noti deleted", priv_id);
-		}
-		if (op_type == NOTIFICATION_OP_UPDATE) {
+		} else if (op_type == NOTIFICATION_OP_UPDATE) {
 			noti_node_item *node = noti_node_get(g_noti_node, priv_id);
 			notification_h old_noti = NULL;
 
-			new_noti = notification_load(NULL, priv_id);
-			retif(new_noti == NULL, , "fail to load updated noti");
+			if (noti_from_master == NULL) {
+				ERR("failed to get a notification from master");
+				continue;
+			}
+			if (notification_clone(noti_from_master, &noti_new) != NOTIFICATION_ERROR_NONE) {
+				ERR("failed to create a cloned notification");
+				continue;
+			}
+
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+			quickpanel_service_noti_led_on(noti_new);
+#endif
+			_print_debuginfo_from_noti(noti_new);
 
 			if (node != NULL && node->view != NULL && node->noti != NULL) {
-				notification_get_type(new_noti, &noti_type);
+				notification_get_type(noti_new, &noti_type);
 
 				if (noti_type == NOTIFICATION_TYPE_NOTI) {
 					gridbox_remove_item(g_noti_gridbox, node->view, 0);
-					_quickpanel_noti_noti_add(ad->list, new_noti, GRIDBOX_PREPEND);
+					_quickpanel_noti_noti_add(ad->list, noti_new, GRIDBOX_PREPEND);
 /*
 					gridbox_remove_and_add_item(g_noti_gridbox, node->view,
 							_quickpanel_noti_noti_add
-							,ad->list, new_noti, GRIDBOX_PREPEND);
+							,ad->list, noti_new, GRIDBOX_PREPEND);
 */
 				} else if (noti_type == NOTIFICATION_TYPE_ONGOING) {
 					old_noti = node->noti;
-					node->noti = new_noti;
+					node->noti = noti_new;
 
 					listbox_update_item(g_noti_listbox, node->view);
 				}
@@ -861,19 +886,27 @@ static void _quickpanel_noti_detailed_changed_cb(void *data, notification_type_e
 					notification_free(old_noti);
 				}
 			} else {
-				notification_get_display_applist(new_noti, &noti_applist);
+				notification_get_display_applist(noti_new, &noti_applist);
 
 				if (noti_applist & NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
-
 					if (noti_type == NOTIFICATION_TYPE_NOTI) {
-						_quickpanel_noti_noti_add(ad->list, new_noti, GRIDBOX_PREPEND);
+						_quickpanel_noti_noti_add(ad->list, noti_new, GRIDBOX_PREPEND);
 					} else if (noti_type == NOTIFICATION_TYPE_ONGOING) {
-						_quickpanel_noti_ongoing_add(ad->list, new_noti, GRIDBOX_PREPEND);
+						_quickpanel_noti_ongoing_add(ad->list, noti_new, GRIDBOX_PREPEND);
 					}
+				} else {
+					notification_free(noti_new);
 				}
 			}
+		} else if (op_type == NOTIFICATION_OP_REFRESH) {
+			_quickpanel_noti_update_notilist(ad);
+		} else if (op_type == NOTIFICATION_OP_SERVICE_READY) {
+			_quickpanel_noti_update_notilist(ad);
 
-			DBG("%d noti updated", priv_id);
+#ifdef QP_SERVICE_NOTI_LED_ENABLE
+			quickpanel_service_noti_init(ad);
+			quickpanel_service_noti_led_on(NULL);
+#endif
 		}
 	}
 
@@ -1067,9 +1100,6 @@ static void _quickpanel_noti_init(void *data)
 		gridbox_set_item_deleted_cb(g_noti_gridbox, _quickpanel_noti_box_deleted_cb);
 		quickpanel_list_util_sort_insert(ad->list, g_noti_gridbox);
 	}
-
-	/* Update notification list */
-	_quickpanel_noti_update_notilist(ad);
 }
 
 static void _quickpanel_noti_fini(void *data)
@@ -1098,6 +1128,11 @@ static void _quickpanel_noti_fini(void *data)
 	}
 }
 
+static void _quickpanel_noti_cleanup(void *data) {
+	notifiation_clear(NOTIFICATION_TYPE_ONGOING);
+	_quickpanel_noti_delete_volatil_data();
+}
+
 static int quickpanel_noti_init(void *data)
 {
 	struct appdata *ad = data;
@@ -1109,9 +1144,11 @@ static int quickpanel_noti_init(void *data)
 
 	is_first = _quickpanel_noti_check_first_start();
 	if (is_first) {
-		/* Remove ongoing and volatile noti data */
-		notifiation_clear(NOTIFICATION_TYPE_ONGOING);
-		_quickpanel_noti_delete_volatil_data();
+		if (notification_is_service_ready()) {
+			_quickpanel_noti_cleanup(ad);
+		} else {
+			notification_add_deffered_task(_quickpanel_noti_cleanup, ad);
+		}
 	}
 
 	_quickpanel_noti_init(ad);
