@@ -715,11 +715,6 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 
 	retif(op_list == NULL, ,"op_list is NULL");
 
-	if (_is_lockscreen_launched()) {
-		ERR("lockscreen launched, creating a ticker canceled");
-		return;
-	}
-
 	if (num_op == 1) {
 		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_TYPE, &op_type);
 		notification_op_get_data(op_list, NOTIFICATION_OP_DATA_PRIV_ID, &priv_id);
@@ -769,6 +764,12 @@ static void _quickpanel_ticker_noti_detailed_changed_cb(void *data, notification
 		__ticker_only_noti_del(noti);
 		notification_free(noti);
 	} else if (applist & NOTIFICATION_DISPLAY_APP_TICKER) {
+		if (_is_lockscreen_launched()) {
+			ERR("lockscreen launched, creating a ticker canceled");
+			notification_free(noti);
+			return;
+		}
+
 		/* Display ticker */
 		if (g_timer)
 			ecore_timer_del(g_timer);
