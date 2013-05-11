@@ -24,7 +24,6 @@
                 <smack request="notification::db" type="rw"/>
                 <smack request="svi-data" type="x"/>
                 <smack request="ail::db" type="rw"/>
-                <smack request="org.tizen.oma-dm" type="rx"/>
                 <smack request="svi-data" type="rx"/>
                 <smack request="sys-assert::core" type="rwxat"/>
                 <smack request="isf" type="rwx"/>
