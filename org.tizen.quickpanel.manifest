@@ -7,13 +7,11 @@
                 <smack request="system::media" type="rwxat"/>
                 <smack request="system::share" type="rwxat"/>
                 <smack request="system::use_internet" type="r"/>
-                <smack request="mdm-server" type="rwx"/>
                 <smack request="pulseaudio" type="rwxat"/>
                 <smack request="xorg" type="rw"/>
                 <smack request="device::bklight" type="rw"/>
                 <smack request="org.tizen.indicator" type="rwx"/>
                 <smack request="crash-popup" type="rx"/>
-                <smack request="system-server" type="rwx"/>
                 <smack request="sound_server" type="rwxa"/>
                 <smack request="dbus" type="rwx"/>
                 <smack request="e17" type="rw"/>
