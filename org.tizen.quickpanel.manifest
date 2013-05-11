@@ -17,7 +17,6 @@
                 <smack request="crash-popup" type="rx"/>
                 <smack request="system-server" type="rwx"/>
                 <smack request="immvibed" type="rw"/>
-                <smack request="display_wd" type="rx"/>
                 <smack request="sound_server" type="rwxa"/>
                 <smack request="dbus" type="rwx"/>
                 <smack request="e17" type="rw"/>
