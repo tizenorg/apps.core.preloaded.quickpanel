@@ -1,0 +1,23 @@
+org.tizen.quickpanel system::vconf rwxat
+org.tizen.quickpanel system::homedir rwxat
+org.tizen.quickpanel system::media rwxat
+org.tizen.quickpanel system::share rwxat
+org.tizen.quickpanel system::use_internet r
+org.tizen.quickpanel pulseaudio rwxat
+org.tizen.quickpanel xorg rw
+org.tizen.quickpanel device::bklight rw
+org.tizen.quickpanel org.tizen.indicator rwx
+org.tizen.quickpanel crash-popup rx
+org.tizen.quickpanel sound_server rwxa
+org.tizen.quickpanel dbus rwx
+org.tizen.quickpanel e17 rw
+org.tizen.quickpanel notification::db rw
+org.tizen.quickpanel ail::db rw
+org.tizen.quickpanel svi-data rx
+org.tizen.quickpanel sys-assert::core rwxat
+org.tizen.quickpanel isf rwx
+org.tizen.quickpanel media-server rx
+org.tizen.quickpanel data-provider-master rw
+
+e17 org.tizen.quickpanel w
+dbus org.tizen.quickpanel rwx
