@@ -104,9 +104,6 @@ static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
 	//box geometry
 	evas_object_geometry_get(o, &x, &y, &w, &h);
 
-	//set info about children
-	opt = eina_list_data_get(priv->children);
-
 	num_padding_between = info_layout->n_per_rows / 2;
 	num_padding_between += (info_layout->n_per_rows > 1 && (info_layout->n_per_rows % 2) > 0) ? 1 : 0;
 
