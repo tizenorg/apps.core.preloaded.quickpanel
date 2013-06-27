@@ -449,7 +449,7 @@ static char *_quickpanel_noti_get_time(time_t t, char *buf, int buf_len)
 
 		/* get default locale  */
 		/* for thread saftey  */
-		uloc_setDefault(__secure_getenv("LC_TIME"), &status);
+		uloc_setDefault(secure_getenv("LC_TIME"), &status);
 		locale = uloc_getDefault();
 
 		/* open datetime pattern generator */
