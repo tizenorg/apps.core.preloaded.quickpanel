@@ -1039,9 +1039,9 @@ int main(int argc, char *argv[])
 	struct appdata ad;
 	app_event_callback_s app_callback = {0,};
 
-	r = control_privilege();
-	if (r != 0) {
-		WARN("Failed to control privilege!");
+	r = perm_app_set_privilege("org.tizen.quickpanel", NULL, NULL);
+	if (r != PC_OPERATION_SUCCESS) {
+		WARN("Failed to set privilege!");
 	}
 
 	app_callback.create = quickpanel_app_create;
