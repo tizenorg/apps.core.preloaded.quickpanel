@@ -1,18 +1,20 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
 
 #include "common.h"
 #include "modules.h"
@@ -22,8 +24,14 @@
   * MODULES
   *
   *****************************************************************/
-/* searchbar */
-/* extern QP_Module searchbar; */
+
+#ifdef QP_SETTING_ENABLE
+/* setting */
+extern QP_Module settings;
+extern QP_Module settings_view_featured;
+extern QP_Module settings_view_all;
+#endif /* QP_SETTING_ENABLE */
+
 #ifdef QP_MINICTRL_ENABLE
 extern QP_Module minictrl;
 #endif /* QP_MINICTRL_ENABLE */
@@ -36,14 +44,27 @@ extern QP_Module brightness_ctrl;
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 extern QP_Module animated_image;
 #endif
+
+extern QP_Module vi_manager;
+extern QP_Module pager;
+
 /* notification */
 extern QP_Module noti;
-extern QP_Module ticker;
-extern QP_Module ticker_status;
-/* idle test */
-extern QP_Module idletxt;
+extern QP_Module activenoti;
+extern QP_Module qp_datetime_controller;
+extern QP_Module qp_datetime_view;
 
+/* do not change the order of modules, result may be changed up to order */
 static QP_Module *modules[] = {
+	&vi_manager,
+	&pager,
+	&qp_datetime_controller,
+	&qp_datetime_view,
+#ifdef QP_SETTING_ENABLE
+	&settings,
+	&settings_view_featured,
+	&settings_view_all,
+#endif /* QP_SETTING_ENABLE */
 #ifdef QP_MINICTRL_ENABLE
 	&minictrl,
 #endif /* QP_MINICTRL_ENABLE */
@@ -51,93 +72,101 @@ static QP_Module *modules[] = {
 	&brightness_ctrl,
 #endif /* QP_BRIGHTNESS_ENABLE */
 	&noti,
-	&ticker,
-	&ticker_status,
-	&idletxt,
+	&activenoti,
 #ifdef QP_ANIMATED_IMAGE_ENABLE
-	&animated_image
+	&animated_image,
 #endif
 };
 
-HAPI int init_modules(void *data)
+HAPI int quickpanel_modules_init(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->init)
+		if (modules[i]->init) {
 			modules[i]->init(data);
+		}
+
+		if (modules[i]->init_job_cb) {
+			ecore_job_add(modules[i]->init_job_cb, data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int fini_modules(void *data)
+HAPI int quickpanel_modules_fini(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->fini)
+		if (modules[i]->fini) {
 			modules[i]->fini(data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int suspend_modules(void *data)
+HAPI int quickpanel_modules_suspend(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->suspend)
+		if (modules[i]->suspend) {
 			modules[i]->suspend(data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int resume_modules(void *data)
+HAPI int quickpanel_modules_resume(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->resume)
+		if (modules[i]->resume) {
 			modules[i]->resume(data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int hib_enter_modules(void *data)
+HAPI int quickpanel_modules_hib_enter(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->hib_enter)
+		if (modules[i]->hib_enter) {
 			modules[i]->hib_enter(data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int hib_leave_modules(void *data)
+HAPI int quickpanel_modules_hib_leave(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->hib_leave)
+		if (modules[i]->hib_leave) {
 			modules[i]->hib_leave(data);
+		}
 	}
 
 	return QP_OK;
@@ -149,25 +178,27 @@ HAPI int hib_leave_modules(void *data)
   *
   ****************************************************************/
 
-HAPI void lang_change_modules(void *data)
+HAPI void quickpanel_modules_lang_change(void *data)
 {
 	int i;
 	retif(data == NULL, , "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->lang_changed)
+		if (modules[i]->lang_changed) {
 			modules[i]->lang_changed(data);
+		}
 	}
 }
 
-HAPI void refresh_modules(void *data)
+HAPI void quickpanel_modules_refresh(void *data)
 {
 	int i;
 	retif(data == NULL, , "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->refresh)
+		if (modules[i]->refresh) {
 			modules[i]->refresh(data);
+		}
 	}
 }
 
@@ -176,29 +207,31 @@ HAPI void refresh_modules(void *data)
   * Quickpanel open/close Events
   *
   ****************************************************************/
-HAPI int qp_opened_modules(void *data)
+HAPI int quickpanel_modules_opened(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->qp_opened)
+		if (modules[i]->qp_opened) {
 			modules[i]->qp_opened(data);
+		}
 	}
 
 	return QP_OK;
 }
 
-HAPI int qp_closed_modules(void *data)
+HAPI int quickpanel_modules_closed(void *data)
 {
 	int i;
 
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 	for (i = 0; i < sizeof(modules) / sizeof(modules[0]); i++) {
-		if (modules[i]->qp_closed)
+		if (modules[i]->qp_closed) {
 			modules[i]->qp_closed(data);
+		}
 	}
 
 	return QP_OK;

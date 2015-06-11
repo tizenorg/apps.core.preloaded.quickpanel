@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "إشعارات"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "مكالمات طوارئ فقط"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "تدوير"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "إشعارات (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "الاهتزاز"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "صوت واهتزاز"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "تدوير تلقائي"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "قفل التدوير"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "وضع التخزين كبير السعة"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "تعطيل"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "تفعيل"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "غير مدعوم"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "إيقاف"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "قم بإدخال البطاقة للنفاذ إلى خدمات الشبكة"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "عدم السؤال مرة أخرى"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "إدخال بطاقة SIM وإعادة تشغيل الجهاز لاستخدام التقييد"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "الاتصال من خلال حزم البيانات قد تتطلب تكاليف إضافية. متابعة؟"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "تلقائي"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "توفير الطاقة"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "تقييد"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "بيانات الهاتف المحمول"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "وضع القيادة"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "يتعذر الاتصال بشبكات الهاتف المحمول أثناء تفعيل وضع الطيران. اتصل بشبكة Wi-Fi بدلا من ذلك أو قم بإلغاء تفعيل وضع الطيران، ثم أعد المحاولة"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "يستهلك تقييد Wi-Fi‬ الكثير من طاقة البطارية وتزيد من استخدام البيانات. هل تريد المتابعة؟"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "إلغاء تفعيل التقييد لاستخدام Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "لتفعيل وضع توفير الطاقة، قم بتفعيل وظيفة واحدة ذات صلة"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "إيقاف تشغيل التقييد لاستخدام Wi-Fi"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "لا يمكن تنشيط كل من Wi-Fi وMobile AP في الوقت نفسه. هل تريد إلغاء تنشيط Mobile AP؟"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "مراقبة الشاشة"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "مسح الكل"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "استبدال زر الإعداد السريع"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "انقر هنا لإلغاء تفعيل الوضع الآمن."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "إضافة زر الإعداد السريع"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "يتعذر بدء %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "لن يمكنك استخدام تطبيقات، مثل الإنترنت والبريد الإلكتروني عبر شبكات الهاتف المحمول بعد الآن. هل تريد المتابعة؟"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "مكالمات الطوارئ فقط"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "قيد البحث"
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "الزر"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "لا توجد SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "لا توجد خدمة"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "بطاقة غير صالحة."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "مكالمات طوارئ فقط."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "بالخارج"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "تم تفعيل الوضع الآمن"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "الإشعارات (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "مسح الكل"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "إشعار"
 
-msgid "IDS_COM_BUTTON_AGREE"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "السؤال دائماً"
+
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "اهتزاز"
+
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "توفير فائق\nللطاقة"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "تقييد"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "الصوت"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "صوت"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "الوضع الخاص"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "توفير\nالطاقة"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "كتم"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "بيانات\nالهاتف"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "الموقع"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "وضع\nالطيران"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "البلوتوث"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "تدوير تلقائي"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "الضوء\nالمساعد"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "م"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "إشعارات"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "ص"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "يتعذر إجراء المكالمات الصوتية ومكالمات الفيديو وإرسال الرسائل النصية باستخدام %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "حدد بطاقة SIM للمكالمات الصوتية ومكالمات الفيديو والرسائل النصية الصادرة."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "سيتم إجراء مكالمات صوتية ومكالمات فيديو ورسائل نصية صادرة باستخدام بطاقة SIM‏ %s."
+
+msgid "IDS_ST_SK_OK"
 msgstr "موافق"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "غير موافق"
+msgid "IDS_ST_SK_NO"
+msgstr "لا"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "تتحكم التطبيقات التي تستخدمها في موقع GPS واستخدام بيانات الموقع"
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "لايمكن زيادة الاضاءة بسبب زيادة حرارة الهاتف."
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "موافقة المستخدم"
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "ما من خدمة"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "مكالمات الطوارئ فقط"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "في الخارج"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "تقييد\n‏Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "الكشاف"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "توفير\nالطاقة"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "بيانات\nالهاتف المحمول"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "وضع\nالطيران"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "البلوتوث"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "التدوير\nالتلقائي"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "بطاقة SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "بطاقة SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "جارٍ المسح بحثاً عن شبكة هاتف محمول..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "قم بإدخال البطاقة للنفاذ إلى خدمات الشبكة."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "السؤال دائما"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "يتعذر الاتصال بشبكات المحمول عندما يكون وضع الطيران مُفعّلًا. اتصل بشبكة Wi-Fi بدلاً من ذلك، أو قم بإلغاء تفعيل وضع الطيران وحاول مرة أخرى."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "البحث"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "يتعذر فتح %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "وضع الخارج"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "الوضع\nالخاص"
 

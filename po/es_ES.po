@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Notificación"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Sólo llamadas de emergencia"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotación"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Notificaciones (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibración"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Sonido y vibración"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Rotación autom"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Bloq rotación"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Modo almacenam masivo"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Desactiv"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Habilitar"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "No admitido"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Rechazar"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Inserte la tarjeta SIM para acceder a los servicios de red"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "No preguntar de nuevo"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Introduzca la tarjeta SIM y reinicie el dispositivo para utilizar anclaje a red"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "La conexión mediante paquetes de datos puede suponer gastos adicionales. ¿Continuar?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Automático"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Ahorro de energía"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Módem USB"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Datos móviles"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Modo de conducción"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "No se puede conectar a redes móviles mientras el modo Avión está activado. Conecte a una red Wi-Fi en su lugar o desactive el modo Avión y vuelva a intentarlo"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "El anclaje a red Wi-Fi consume mucha batería y aumenta el uso de datos. ¿Continuar?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Desactive el anclaje a red para usar Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Para habilitar el modo de ahorro de energía, active al menos una función relevante"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Apague la Wi-Fi para usar anclaje a red"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Las conexiones Wi-Fi y Mobile AP no se pueden activar al mismo tiempo. ¿Desactivar Mobile AP?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Borrar todo"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Reemplazar botón de ajuste rápido"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Pulse para desact modo seguro."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Añadir botón de ajuste rápido"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "No se puede iniciar %s"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Ya no podrá utilizar aplicaciones de datos como Internet y el correo electrónico mediante redes móviles. ¿Continuar?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Solo llamadas emergencia"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Compartir\npantalla"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Buscando..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Botón"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "No hay SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Sin servicio"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Tarjeta SIM no válida"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Sólo llamadas de emergencia"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Modo seguro activado"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Notificaciones (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Elim todo"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notificac"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Acepto"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Preg siempre"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "No acepto"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "La ubicación del GPS y el uso de los datos de ubicación los controlan las aplicaciones que utiliza"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrar"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Consentimiento del usuario"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ultra\nahorro"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Anclaje a red"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Sonido"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Sonido"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Modo Privado"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Ahorro\nenergía"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Silencio"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Datos\nmóviles"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Ubicación"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Modo\navión"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Rotación automática"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Luz de\nasisten"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notificación"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "No se pueden hacer llamadas de voz, videollamadas ni enviar mensajes de texto con %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Seleccione una tarjeta SIM para las llamadas de voz, las videollamadas y los mensajes de texto salientes."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Las llamadas de voz salientes, las videollamadas y los mensajes de texto se realizarán con la tarjeta SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "Aceptar"
+
+msgid "IDS_ST_SK_NO"
+msgstr "No"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "No se puede incrementar más el brillo debido a un sobrecalentamiento del teléfono"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Sin servicio"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Solo llamadas de emergencia"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Exterior"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Anclaje\na Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Linterna"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Ahorro\nenergía"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Datos\nmóviles"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Modo\nAvión"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Giro\nauto"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Buscando red móvil..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Inserte la tarjeta SIM para acceder a los servicios de red."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Preguntar siempre"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "No es posible conectar a las redes móviles mientras el modo Avión esté activado. Conéctese a una red Wi-Fi o desactive el modo Avión e inténtelo de nuevo."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Buscando"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "No se puede abrir %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Modo\nPrivado"
 

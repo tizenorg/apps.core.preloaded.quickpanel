@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "通知"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "僅限緊急通話"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "旋轉"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "通知 (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "震動"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "聲音與震動"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "自動旋轉"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "旋轉鎖定"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "大容量儲存裝置模式"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "停用"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "啟用"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "不支援"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "關閉"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "請插入 SIM 卡以存取網路服務"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "不再詢問"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "插入 SIM 卡並重新啟動裝置以使用網路共享"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "透過數據傳輸連線可能會產生額外費用。要繼續嗎？"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "自動"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "省電"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "網路共享"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "行動數據"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "駕駛模式"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "啟用飛航模式時無法連接行動網路。請連接 Wi-Fi 網路或停用飛航模式再重試"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi 網路共享會消耗更多電力並增加您的資料用量。繼續嗎？"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "停用網路共享以使用 Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "若要啟用省電模式，請至少啟用一項相關功能"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "關閉 Wi-Fi 以使用網路共享"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi - Fi和行動AP不能在同一時間被啟動。停用行動AP？"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "全部清除"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "取代快速設定按鈕"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "輕觸此處以停用安全模式。"
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "新增快速設定按鈕"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "無法啟動 %s。"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "您無法再透過行動網路使用如網際網路和電子郵件等的應用程式。繼續嗎？"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "僅可撥打緊急電話"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "正在搜尋..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "按鍵"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "無 SIM 卡"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "無服務"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "SIM 卡無效"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "僅限緊急通話"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "戶外"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "已啟用安全模式"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "通知 (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "全部清除"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "通知"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "同意"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "每次詢問"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "不同意"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "WiFi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS定位和你的位置資料將被你的用應程式使用"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "震動"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "用戶同意"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "超省電"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "網路共享"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "音效"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "聲音"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "私密模式"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "省電\n模式"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "靜音"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "行動\n數據"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "位置"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "飛航\n模式"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "藍牙"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "自動旋轉"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "輔助\n燈光"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "下午"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "通知"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "上午"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "無法使用 %s 撥打語音通話、視訊通話與傳送文字簡訊。"
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "選擇用於撥出語音通話、視訊通話與傳送文字簡訊的 SIM 卡。"
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "將使用 %s SIM 卡撥出語音通話、視訊通話與傳送文字訊息。"
+
+msgid "IDS_ST_SK_OK"
+msgstr "確定"
+
+msgid "IDS_ST_SK_NO"
+msgstr "否"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "無法增加螢幕亮度，因為手機過熱。"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "無服務"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "僅可撥打緊急通話"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "室外"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\n網路共享"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "手電筒"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "省電"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "行動數據"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "飛航模式"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "藍牙"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "自動旋轉"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "正在掃描行動網路..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "請插入 SIM 卡以存取網路服務。"
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "每次詢問"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "啟用飛航模式時無法連接行動網路。請改為連接至 Wi-Fi 或停用飛航模式並重試。"
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "正在搜尋"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "無法開啟 %s。"
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "戶外"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "隱私\n模式"
 

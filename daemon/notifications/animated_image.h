@@ -1,18 +1,21 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the License);
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://www.tizenopensource.org/license
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
+
 
 #ifndef __QUICKPANEL_ANIMATED_IMAGE_H__
 #define __QUICKPANEL_ANIMATED_IMAGE_H__
@@ -20,6 +23,7 @@
 #include "quickpanel-ui.h"
 #include "common.h"
 
-HAPI void quickpanel_animated_image_add(Evas_Object *image);
+void quickpanel_animated_image_add(Evas_Object *image);
+char *quickpanel_animated_image_get_groupname(const char *path);
 
 #endif

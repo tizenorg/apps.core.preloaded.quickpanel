@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "შეტყობინებები"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "მხოლოდ გადაუდებელი ზარები"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "ბრუნვა"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "შეტყობინებები (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "ვიბრაცია"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "ხმა და ვიბრაცია"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "ავტო. მობრუნება"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "ბრუნვის დაბლოკვა"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "მასიური მეხსიერების რეჟ."
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "გამორთვა"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "გააქტიურება"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "გაუთვალისწინებელი"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "უარყოფა"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "ქსელის მომსახურების მისაღებად ჩასვით SIM ბარათი"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "აღარ მკითხო"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "ჩადეთ SIM და გადატვირთეთ აპარატი, რომ გამოიყენოთ მობილური ინტერნეტი კომპიუტერში"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "მონაცემთა პაკეტით კავშირისთვის შეიძლება დამატებითი გადასახადი იყოს. განაგრძობთ?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "ავტომატური"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "ენერგიის დაზოგვა"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "მიბმა"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "მობილური მონაცემები"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "მანქანის მართვის რეჟიმი"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "მობილურ ქსელებს ვერ დაუკავშირდებით, სანამ ჩართულია ფრენის რეჟიმი. სანაცვლოდ, დაუკავშირდით Wi-Fi ქსელს, ან გამორთეთ ფრენის რეჟიმი და ისევ ცადეთ"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi მობილური ინტერნეტი ხარჯავს უფო მეტ ენერგიას და ზრდის მონაცემთა გამოყენებას. განაგრძობთ?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "გამორთეთ მობილური ინტერნეტი კომპიუტერში, რომ ჩართოთ Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "ენერგიის დაზოგვის რეჟიმის გასააქტიურებლად, ჩართეთ მინიმუმ ერთი შესაბამისი ფუნქცია"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "გამორთეთ Wi-Fi, რომ გამოიყენოთ მობილური ინტერნეტი კომპიუტერში"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi და Mobile AP ვერ გააქტიურდება ერთიდაიმავე დროს. გამოირთოს Mobile AP?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "ყველას წაშლა"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "პარამეტრების სწრაფი დაყენების ღილაკის გამოცვლა"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "შეხებით გამორთეთ უსაფრთხო რეჟ."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "პარამეტრების სწრაფი დაყენების ღილაკის დამატება"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "ვერ გაიხსნება %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "მობილური ქსელებით ვეღარ შეძლებთ ისეთი პროგრამების გამოყენებას, როგორიცაა ინტერნეტი და ელ.ფოსტა. განაგრძობთ?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "მხოლოდ საგანგებო ზარები"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "იძებნება..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "ღილაკი"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "SIM არაა"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "მომსახურება არ არის"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "SIM ბარათი უმოქმედოა."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "მხოლოდ გადაუდებელი ზარები."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "გარეთ"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "საგანგებო რეჟიმი ჩართულია"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "შეტყობინებები (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "წაშლა"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "შეტყობინება"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "თანხმობა"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "ყოველთვის მკითხე"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "არ ვეთანხმები"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS ლოკაცია და თქვენი ლოკაციის მონაცემების გამოყენება იმართება თქვენს მიერ გამოყენებული პროგრამების მიერ"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "ვიბრაცია"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "მომხმარებლის თანხმობა"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "ენერგიის\nდაზოგვა"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "მობილური ინტერნეტი"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "ხმა"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "ხმა"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "პერსონალური რეჟ."
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "დაზოგეთ\nენერგია"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "უხმო"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "მობილ.\nმონაცემ."
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "ლოკაცია"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "ფრენის\nრეჟიმი"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "ავტომატური ბრუნვა"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "დამხმარე\nფანარი"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "შეტყობინებები"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "%s–ის საშუალებით ვერ გაგზავნით ხმოვან ზარებს, ვიდეო ზარებს და.ტექსტურ წერილებს."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "აირჩიეთ SIM ბარათი გამავალი ხმოვანი ზარებისთვის, ვიდეო ზარებისთვის და ტექსტური წერილებისთის."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "გამავალი ხმოვანი ზარები, ვიდეო ზარები და ტექსტური შეტყობინებები განხორციელდება %s SIM ბარათით."
+
+msgid "IDS_ST_SK_OK"
+msgstr "კი"
+
+msgid "IDS_ST_SK_NO"
+msgstr "არა"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "განათებულობას ვეღარ გაზრდით, ტელეფონის გადახურების საშიშროების გამო."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "სერვისი არ არის"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "მხოლოდ გადაუდებელი ზარები"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "გარეთ"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nწერტილი"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "ფანარი"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "ენერგიის\nდაზოგვა"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "მობილური\nმონაცემ."
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "ფრენის\nრეჟიმი"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "ავტო\nბრუნვა"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "იძებნება მობილური ქსელი..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "ქსელის მომსახურების მისაღებად ჩასვით SIM ბარათი."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "ნებართვით"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "მობილურ ქსელებთან დაკავშირება შეუძლებელია, სანამ აქტიურია ფრენის რეჟიმი. სანაცვლოდ, დაუკავშირდით Wi-Fi ქსელს, ან გამორთეთ ფრენის რეჟიმი და ისევ სცადეთ."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "იძებნება"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "%s ვერ იხსნება."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "გარეთ"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "პირადი\nრეჟიმი"
 

@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Notificacions"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Només trucades d'emergència"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotació"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Notificacions (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibració"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "So i vibració"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Rotació auto."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Bloq de rotació"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Mode emmagatzemat massiu"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Desactiv"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Activar"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "No s'admet"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Descartar"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Insereixi la targeta SIM per a accedir als serveis de xarxa"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "No ho tornis a preguntar"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Insereixi una targeta SIM i reiniciï el dispositiu per utilitzar tethering"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "La connexió mitjançant paquet de dades pot suposar un cost addicional. Vol continuar?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Auto"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Estalvi d'energia"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Tethering"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Dades mòbils"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Mode de conducció"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "No es pot connectar a xarxes mòbils mentre el mode Vol està habilitat. Connecti a una xarxa Wi-Fi en el seu lloc, o deshabiliti el mode Vol i torni-ho a intentar"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "El tethering Wi-Fi consumeix més bateria i augmenta el consum de dades. Continuar?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Deshabilitar tethering per utilitzar Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Per habilitar el mode d'estalvi d'energia, habiliti almenys una funció pertinent"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Desactivar el Wi-Fi per utilitzar tethering"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "No es poden activar els punt d'accés Wi-Fi i mòbil al mateix temps. Desactivar al punt d'accés mòbil?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Simetria de pantalla"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Esbor tot"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Substituir botó d'ajustament ràpid"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Toqui per sortir de mode Segur."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Afegir botó d'ajustament ràpid"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "No es pot iniciar %s"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Ja no podrà utilitzar aplicacions com ara Internet i el correu electrònic mitjançant xarxes de mòbil. Continuar?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Només trucades emergència"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Cercant..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Botó"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Sense SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Sense servei"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Targeta SIM no vàlida"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Només trucades d'emergència"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Mode Segur activat"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Notificacions (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Esbor tot"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notificac"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Aceptar"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Preguntar sempre"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "No acceptar"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "La ubicació GPS i l'ús de les dades de la ubicació les controlen les aplicacions que utilitza"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrar"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Consentiment d'usuari"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Estalvi\nultra"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Ancoratge a xarxa"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "So"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "So"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Mode Privat"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Estalvi\nenergia"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Silenci"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Dades\nmòbils"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Ubicació"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Mode\nVol"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Rotació auto"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Llum \nassist"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notificacions"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "No es poden fer trucades de veu ni videotrucades, ni enviar missatges de text amb %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Seleccioni una targeta SIM per a trucades de veu de sortida, videotrucades i missatges de text."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Les trucades de veu de sortida, les videotrucades i els missatges de text es realitzaran amb la targeta SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "Acceptar"
+
+msgid "IDS_ST_SK_NO"
+msgstr "No"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "No es pot incrementar més la brillantor a causa d'un sobreescalfament del telèfon"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Sense servei"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Només trucades d'emergència"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "A l'aire lliure"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Ancorat\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Llan-\nterna"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Estalvi\nenergia"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Dades\nmòbils"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Mode\nVol"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Rotació\nauto"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Cercant xarxa mòbil..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Insereixi la targeta SIM per a accedir als serveis de xarxa"
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Preguntar sempre"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "No es pot connectar a xarxes mòbils mentre el mode Vol està habilitat. Connecti's a una xarxa Wi-Fi en el seu lloc, o deshabiliti el mode Vol i torni-ho a intentar."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "S'està cercant"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "No es pot obrir %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Mode\nPrivat"
 

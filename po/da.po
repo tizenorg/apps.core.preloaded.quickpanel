@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Meddelelser"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Kun nødopkald"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotation"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Meddelelser (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibration"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Lyd og vibration"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Auto rotation"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Lås rotation"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Masselager-tilstand"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Deaktivér"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Aktivér"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Understøttes ikke"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Afvis"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Indsæt SIM-kortet for at få adgang til netværkstjenesterne"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Spørg ikke igen"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Isæt SIM-kort, og genstart enhed for at bruge deling"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Tilslutning via pakkedata kan medføre ekstra gebyrer. Fortsæt?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Auto"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Strøm\n-besparelse"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Internetdeling"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobildata"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Køretilstand"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Kan ikke oprette forbindelse til mobile netværk, da Flytilstand er aktiveret. Opret forbindelse til Wi-Fi-netværk i stedet, eller deaktivér Flytilstand og prøv igen"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi-deling bruger mere batteri og forøger dit dataforbrug. Fortsæt?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Deaktivér deling for at bruge Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Aktivér mindst én relevant funktion for at aktivere Strømsparetilstand"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Sluk for Wi-Fi for at bruge deling"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Både Wi-Fi og mobilt adgangspunkt kan ikke være aktiveret på samme tid. Deaktivér mobilt adgangspunkt?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Skærmspejling"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Slet alle"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Erstat hurtig indstillingsknap"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Tryk for at deakt. sik. tilst."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Tilføj hurtig indstillingsknap"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Kunne ikke starte %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Du kan ikke længere bruge programmer, såsom internettet og e-mail via mobile netværk. Fortsæt?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Kun nødopkald"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Søger ..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Tast"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Intet SIM-kort"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Ingen dækning"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Ugyldigt SIM-kort."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Kun nødopkald."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Udendørs"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Sikker tilstand aktiveret"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Meddelelser (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Ryd alle"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Besked"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Acceptér"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Spørg altid"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Uenig"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS-placering og brug af dine placeringsdata styres af det program, du anvender"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrer"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Brugersamtykke"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "U.strøm\nbespar."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Internetdeling"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Lyd"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Lyd"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Privat tilstand"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Strøm-\nbespar."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Lydløs"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobile\ndata"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Placer."
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Fly-\ntilstand"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Roter automatisk"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Hjælpe-\nlys"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Meddelelser"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Kan ikke foretage stemmeopkald, videoopkald og sende sms-beskeder med %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Vælg et SIM-kort til udgående stemmeopkald, videoopkald og sms-beskeder."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Udgående stemmeopkald, videoopkald og sms-beskeder vil blive foretaget med %s-SIM-kortet."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nej"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Det er ikke muligt at øge lysstyrken yderligere, fordi telefonen kan overophedes."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Ingen dækning"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Kun nødopkald"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Udendørs"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi-\ndeling"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Lommelygte"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Strøm-\nbespar."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobile\ndata"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Fly-\ntilstand"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Auto-\nroter"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Søger efter mobilt netværk ..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Indsæt SIM-kortet for at få adgang til netværkstjenesterne."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Spørg altid"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Kan ikke oprette forbindelse til mobile netværk, da Flytilstand er aktiveret. Opret forbindelse til et Wi-Fi-netværk i stedet, eller deaktiver Flytilstand, og prøv igen."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Søger"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Kunne ikke åbne: %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Udendørs"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Privat\ntilstand"
 

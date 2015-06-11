@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "通知"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "緊急通報のみ発信可能です。"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "回転"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "通知（%d）"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "バイブ"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "サウンドとバイブ"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "画面回転"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "回転ロック"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "マスストレージモード"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "無効"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "有効"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "未対応です"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "無効"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "ネットワークサービスを利用するにはSIMカードを挿入してください。"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "今後表示しない"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "テザリングを使用するには、SIMカードを挿入し、端末を再起動してください。"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "モバイルデータ接続では、高額の料金が発生する場合があります。続行しますか？"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "自動"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "省電力"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "テザリング"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "モバイル​データ"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "クルマモード"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "機内モードが有効な間は、モバイルネットワークに接続できません。代わりにWi-Fiネットワークに接続するか、機内モードを無効にして、再度実行してください。"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fiテザリングはバッテリーをより多く消費し、データ使用量が増加します。続行しますか？"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Wi-Fiを使用するには、テザリングを無効にしてください。"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "省電力モードを有効にするには、少なくとも1つの関連機能を選択してください。"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "テザリングを使用するには、Wi-FiをOFFにしてください。"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-FiとWi-Fiテザリング両方は同時起動できません。Wi-Fiテザリングを無効にしますか？"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "全て消去"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "クイック設定ボタンを置き換え"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "ｾｰﾌﾓｰﾄﾞを無効にするには、ここをﾀｯﾌﾟ"
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "クイック設定ボタンを追加"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "%sを起動できません。"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "モバイルネットワークで、ブラウザやEメールなどのアプリケーションが使用できなくなります。続行しますか？"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "緊急通報のみ発信可能"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "検索中..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "ボタン"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "SIM未挿入"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "サービスが利用できません。"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "無効なSIMカードです。"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "緊急通報のみ​発信可能です。"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "ｱｳﾄﾄﾞｱ"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "セーフモードが有効"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "通知(%d件)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "全て消去"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "通知"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "同意"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "毎回確認"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "同意しない"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPSからの位置情報取得は、使用するアプリケーションによって管理されます。"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "バイブ"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "ユーザー同意"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "ｳﾙﾄﾗ\n省電力ﾓｰﾄﾞ"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "テザリング"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "サウンド"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "サウンド"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "ﾌﾟﾗｲﾍﾞｰﾄﾓｰﾄﾞ"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "省電力\nモード"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "消音"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "モバイル​データ"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "位置情報"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "機内モード"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "自動回転"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "補助\nライト"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "通知"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "%sを使用して音声通話やビデオコールを発信、およびテキストメッセージを送信することはできません。"
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "音声通話とビデオコールの発信、およびテキストメッセージの送信に使用するSIMカードを選択してください。"
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "%s SIMカードを使用して、音声電話やビデオコールの発信、およびテキストメッセージの送信を行います。"
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "いいえ"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "端末が過熱しているため、これ以上明るさを上げることができません。"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "サービスが利用できません"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "緊急通報のみ発信可能です"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "アウトドアモード"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nﾃｻﾞﾘﾝｸﾞ"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "トーチ"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "省電力\nモード"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "モバイル\nデータ"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "機内\nモード"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "自動\n回転"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "モバイルネットワークをスキャン中..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "ネットワークサービスを利用するにはSIMカードを挿入してください。"
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "毎回確認"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "機内モードが有効な間は、モバイルネットワークに接続できません。Wi-Fiネットワークに接続するか、機内モードを無効にし、再度実行してください。"
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "検索しています。"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "%sを起動できません。"
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "ｱｳﾄﾄﾞｱ"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "ﾌﾟﾗｲﾍﾞｰﾄ\nﾓｰﾄﾞ"
 

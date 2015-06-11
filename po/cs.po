@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Oznámení"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Pouze tísňová volání"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Otočení"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Oznámení (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibrace"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Zvuk a vibrace"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Automat. otočení"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Zámek otočení"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Režim velkokap. pam. zař."
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Vypnout"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Povolit"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Není podporováno"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Konec"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Chcete-li používat síťové služby, vložte SIM kartu"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Příště se neptat"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Chcete-li použít sdílení připojení, vložte SIM kartu a restartujte zařízení"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Připojení prostřednictvím datových paketů může zahrnovat další poplatky. Chcete pokračovat?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Automaticky"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Úsporný režim"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Sdílení internetového připojení"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobilní data"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Režim Vozidlo"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "V režimu Letadlo není možné se připojit k mobilním sítím. Připojte se pomocí sítě Wi-Fi, nebo vypněte režim Letadlo a opakujte akci"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Sdílení připojení Wi-Fi spotřebovává více energie z baterie a zvyšuje využívání dat. Pokračovat?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Chcete-li použít Wi-Fi, vypněte sdílení připojení k Intern."
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Chcete-li zapnout Úsporný režim, zapněte alespoň jednu související funkci"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Chcete použít sdílení připojení k Internetu, vypněte Wi-Fi"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi a mobilní přístupový bod nelze aktivovat současně. Chcete deaktivovat mobilní přístupový bod?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Zrcadlení obrazovky"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Smazat vše"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Vyměnit tlačítko rychlého nastavení"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Klepnutím vypnete Bezp. režim."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Přidat tlačítko rychlého nastavení"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Nelze spustit %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Nebudete moci dále používat aplikace jako je Internet a E-mail prostřednictvím mobilních sítí. Chcete pokračovat?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Pouze tísňová volání"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Hledání..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Tlačítko"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Žádná SIM karta"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Žádné služby"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Chybná SIM karta."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Pouze tísňová volání."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Venku"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Bezpečný režim zapnut"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Oznámení (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Smazat vše"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Oznámení"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Souhlasím"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Vždy se dotázat"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Nesouhlasím"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Poloha GPS a použití údajů o poloze je řízeno používanými aplikacemi"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrace"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Souhlas uživatele"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ultra ús.\nrežim"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Sdílení připojení"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Zvuk"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Zvuk"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Soukromý režim"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Úsporný\nrežim"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Ztlumit"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobilní\ndata"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Umístění"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Režim\nLetadlo"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Automat. otočení"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Pomocné\nosvětl."
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "od"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Oznámení"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "do"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Pomocí %s nelze uskutečňovat hlasové hovory, videohovory a odesílat textové zprávy."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Vyberte SIM kartu pro odchozí hlasové hovory, videohovory a textové zprávy."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Odchozí hlasové hovory, videohovory a textové zprávy budou uskutečňovány pomocí SIM karty %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ne"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Nelze více zvýšit jas z důvodu přehřívání telefonu."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Žádné služby"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Pouze tísňová volání"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Venku"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Sd. př.\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Baterka"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Úsporný\nrežim"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobilní\ndata"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Režim\nLetadlo"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Autom.\notočení"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Hledání mobilní sítě..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Chcete-li používat síťové služby, vložte SIM kartu."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Vždy se dotázat"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "V režimu Letadlo není možné se připojit k mobilním sítím. Připojte se pomocí sítě Wi-Fi, nebo vypněte režim Letadlo a opakujte akci."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Vyhledávání"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "%s nelze spustit."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Venku"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Soukromý\nrežim"
 

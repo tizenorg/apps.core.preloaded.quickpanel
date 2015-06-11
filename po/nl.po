@@ -1,0 +1,186 @@
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Wi-Fi en mobiel access point kunnen niet tegelijkertijd zijn geactiveerd. Mobiel access point uitschakelen?"
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Wis alles"
+
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Tik voor Veilige modus uit."
+
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Kan %s niet starten."
+
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Alleen noodoproepen"
+
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Zoeken..."
+
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Geen SIM"
+
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Geen netwerk"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Ongeldige SIM-kaart."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Alleen noodoproepen."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Buiten"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Veilige modus aan"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Meldingen (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Alles wissen"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Melding"
+
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Altijd vragen"
+
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Trillen"
+
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ext spaar\n-stand"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Geluid"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Melodie"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Privé-\nstand"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Spaar-\nstand"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Dempen"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobiele\ngegevens"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Locatie"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Vliegtuig-\nstand"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Automatisch draaien"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Hulp-\nlamp"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Meldingen"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Kan geen uitgaande spraakoproepen en video-oproepen doen en geen SMS-berichten verzenden met %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Selecteer SIM-kaart voor uitgaande spraakoproepen, video-oproepen en SMS-berichten."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Uitgaande spraakoproepen, video-oproepen en SMS-berichten worden gemaakt met de SIM-kaart voor %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nee"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Kan de helderheid niet verder verhogen, omdat de telefoon dan te warm wordt."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Geen netwerk"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Alleen noodoproepen"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Buiten"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\ntethering"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Zaklamp"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Spaar-\nstand"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobiele\ngegevens"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Vliegt.-\nstand"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Autom.\ndraaien"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Zoeken naar mobiel netwerk..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Plaats de SIM-kaart voor netwerkdiensten."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Altijd vragen"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Kan niet verbinden met mobiele netwerken als Vliegtuigstand is ingeschakeld. Maak in plaats daarvan verbinding via een Wi-Fi-netwerk of schakel Vliegtuigstand uit en probeer het opnieuw."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Zoeken"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Kan %s niet openen."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Buiten"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Privé-\nstand"
+

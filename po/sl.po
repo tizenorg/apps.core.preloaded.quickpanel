@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Obvestila"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Samo klici v sili"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Zasuk"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Obvestila (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibr."
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Zvok in vibrir."
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Samodej. vrtenje"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Zaklep. sukanja"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Način shranjevanja"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Onemogoči"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Omogoči"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Ni podprto"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Opusti"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Za dostop do omrežnih storitev vstavite kartico SIM"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Ne vprašaj znova"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Vstavite kartico SIM in znova zaženite napravo, če želite uporabljati telefon kot modem"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Povezovanje preko paketnega prenosa podatkov lahko povzroči dodatne stroške. Nadaljujem?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Samodejno"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Varčevanje z energijo"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Tethering"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobilni podatki"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Način vožnje"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Ko je omogočen način letenja, povezava z mobilnimi omrežji ni mogoča. Povežite se z omrežjem Wi-Fi ali onemogočite način letenja in poskusite znova"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Uporaba telefona kot modema prek omrežja Wi-Fi porabi več baterije in poveča uporabo podatkov. Želite nadaljevati?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Za uporabo Wi-Fi onemogočite uporabo telefona kot modema"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Če želite omogočiti Način za varčevanje z energijo, morate omogočiti vsaj eno ustrezno funkcijo"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Izklopite Wi-Fi, če želite uporabljati telefon kot modem"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi in mobilna DT ne moreta biti vklopljeni hkrati. Izklopim mobilno DT?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Zrcaljenje zaslona"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Počisti vse"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Spremenite gumb za hitre nastavitve"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Prit. tu, da onem. varni način."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Dodaj gumb za hitre nastavitve"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Ni mogoče zagnati %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Programov, kot so internet in e-pošta ne boste mogli več uporabljati prek mobilnih omrežij. Želite nadaljevati?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Samo klici v sili"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Iščem"
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Gumb"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Ni SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Ni storitve"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Neveljavna kartica SIM."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Samo klici v sili."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Zunaj"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Varni način je omogočen"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Obvestila (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Počis. vse"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Obvestilo"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Sprejmem"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Vedno vprašaj"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Se ne strinjam"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Lokacijo GPS in uporabo vaših podatkov o lokaciji nadzorujejo programi, ki jih uporabljate"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrir-\nanje"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Uporabniško soglasje"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Izr. var.\nz ener."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Skup. raba interneta"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Zvok"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Zvok"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Zasebni način"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Varč.\nz energ."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Izklop zvoka"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobilni\npodatki"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Lokacija"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Način\nletenja"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Samodejno zavrti"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Pomožna\nlučka"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "po"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Obvestila"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "do"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Kartice %s ni mogoče uporabljati za glasovne klice, video klice in pošiljanje besedilnih sporočil."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Izberite kartico SIM za odhodne glasovne klice, video klice in besedilna sporočila."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Za odhodne glasovne klice, video klice in besedilna sporočila bo uporabljena kartica SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "V redu"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ne"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Svetlosti ni mogoče povečati zaradi morebitnega pregrevanja telefona."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Ni signala"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Samo klici v sili"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Na prostem"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Privez.\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Svetilka"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Varč.\nz energ."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobilni\npodatki"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Način\nletenja"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Samodej.\nzavrti"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "Kartica SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "Kartica SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Iskanje mobilnih omrežij ..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Za dostop do omrežnih storitev vstavite kartico SIM."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Vedno vprašaj"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Ko je omogočen način letenja, povezava z mobilnimi omrežji ni mogoča. Povežite se z omrežjem Wi-Fi ali onemogočite način letenja in poskusite znova."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Iščem"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Aplikacije %s ni mogoče odpreti."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Zunaj"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Zasebni\nnačin"
 

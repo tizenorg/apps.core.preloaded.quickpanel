@@ -1,21 +1,23 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the License);
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
+
 #include <string.h>
-#include <Ecore_X.h>
+#include <notification.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
@@ -25,401 +27,129 @@
 #include "noti_node.h"
 #include "noti.h"
 #include "noti_util.h"
+#ifdef QP_SCREENREADER_ENABLE
+#include "accessibility.h"
+#endif
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
+#include "animated_icon.h"
 
-#define QP_DEFAULT_ICON	ICONDIR"/quickpanel_icon_default.png"
+extern Noti_View_H noti_view_h;
+extern Noti_View_H ongoing_noti_view_h;
 
+#define THRESHOLD_DRAGGING_TIME_LIMIT 1.0
+#define LIMIT_ZOOM_RATIO 0.57
+#define LIMIT_FADEOUT_RATIO 0.1
+#define THRESHOLD_DELETE_START 80
+#define THRESHOLD_DELETE_START_Y_LIMIT 60
+#define THRESHOLD_DISTANCE (300)
 
-static Evas_Object *_check_duplicated_progress_loading(Evas_Object *obj, const char *part, const char *style_name) {
-	Evas_Object *old_content = NULL;
-	const char *old_style_name = NULL;
+static struct _info {
+	int item_debug_step;
+	Noti_View_H *view_handlers[NOTIFICATION_LY_MAX + 1];
+} s_info = {
+	.item_debug_step = 0,
+	.view_handlers = {
+		NULL,
+		&noti_view_h,
+		&noti_view_h,
+		&noti_view_h,
+		&ongoing_noti_view_h,
+		&ongoing_noti_view_h,
+		NULL,
+	},
+};
 
-	retif(obj == NULL, NULL, "Invalid parameter!");
-	retif(part == NULL, NULL, "Invalid parameter!");
-	retif(style_name == NULL, NULL, "Invalid parameter!");
-
-	DBG("");
-
-	old_content = elm_object_part_content_get(obj, part);
-	if (old_content != NULL) {
-		old_style_name = elm_object_style_get(old_content);
-		if (old_style_name != NULL) {
-			DBG("%s", old_style_name);
-			if (strcmp(old_style_name, style_name) == 0)
-				return old_content;
-
-			elm_object_part_content_unset(obj, part);
-			evas_object_del(old_content);
-		}
-	}
-
-	return NULL;
-}
-
-static Evas_Object *_check_duplicated_image_loading(Evas_Object *obj, const char *part, const char *file_path) {
-	Evas_Object *old_ic = NULL;
-	const char *old_ic_path = NULL;
-
-	retif(obj == NULL, NULL, "Invalid parameter!");
-	retif(part == NULL, NULL, "Invalid parameter!");
-	retif(file_path == NULL, NULL, "Invalid parameter!");
-
-	old_ic = elm_object_part_content_get(obj, part);
-	if (old_ic != NULL) {
-		elm_image_file_get(old_ic, &old_ic_path, NULL);
-		if (old_ic_path != NULL) {
-			DBG("%s:%s", old_ic_path, file_path);
-			if (strcmp(old_ic_path, file_path) == 0)
-				return old_ic;
-		}
-
-		elm_object_part_content_unset(obj, part);
-		evas_object_del(old_ic);
-	}
-
-	return NULL;
-}
-
-static void _set_text_to_part(Evas_Object *obj, const char *part, const char *text) {
-	const char *old_text = NULL;
-
-	retif(obj == NULL, , "Invalid parameter!");
-	retif(part == NULL, , "Invalid parameter!");
-	retif(text == NULL, , "Invalid parameter!");
-
-	old_text = elm_object_part_text_get(obj, part);
-	if (old_text != NULL) {
-		if (strcmp(old_text, text) == 0) {
-			return ;
-		}
-	}
-
-	elm_object_part_text_set(obj, part, text);
-}
-
-static char *_noti_get_progress(notification_h noti, char *buf,
-					   int buf_len)
+static int _is_item_deletable_by_gesture(noti_list_item_h *handler)
 {
-	double size = 0.0;
-	double percentage = 0.0;
-
-	retif(noti == NULL, NULL, "Invalid parameter!");
-	retif(buf == NULL, NULL, "Invalid parameter!");
-
-	notification_get_size(noti, &size);
-	notification_get_progress(noti, &percentage);
-
-	if (percentage > 0) {
-		if (percentage < 1.0 ) {
-			if (snprintf(buf, buf_len, "%d%%", (int)(percentage * 100)) <= 0) {
-				return NULL;
-			}
-		}
-		if (percentage >= 1.0) {
-			snprintf(buf, buf_len, "%d%%", 100);
-		}
-
-		return buf;
-	} else if (size > 0 && percentage == 0) {
-		if (size > (1 << 30)) {
-			if (snprintf(buf, buf_len, "%.1lfGB",
-				size / 1000000000.0) <= 0)
-				return NULL;
-
-			return buf;
-		} else if (size > (1 << 20)) {
-			if (snprintf(buf, buf_len, "%.1lfMB",
-				size / 1000000.0) <= 0)
-				return NULL;
-
-			return buf;
-		} else if (size > (1 << 10)) {
-			if (snprintf(buf, buf_len, "%.1lfKB",
-				size / 1000.0) <= 0)
-				return NULL;
-
-			return buf;
-		} else {
-			if (snprintf(buf, buf_len, "%lfB", size) <= 0)
-				return NULL;
-
-			return buf;
-		}
-	}
-
-	return NULL;
-}
-
-static void _noti_list_item_ongoing_set_progressbar(Evas_Object *noti_list_item)
-{
-	notification_h noti = NULL;
-	Evas_Object *ic = NULL;
-	Evas_Object *old_ic = NULL;
-	double size = 0.0;
-	double percentage = 0.0;
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
-	notification_ly_type_e layout = NOTIFICATION_LY_NONE ;
+	retif(handler == NULL, 0, "Invalid parameter!");
+	retif(handler->noti_node == NULL, 0, "Invalid parameter!");
+	retif(handler->noti_node->noti == NULL, 0, "Invalid parameter!");
 
-	retif(noti_list_item == NULL, , "Invalid parameter!");
-
-	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-	retif(noti_list_item == NULL, , "data is NULL");
-
-	noti_node_item *item = noti_list_item_data->data;
-	retif(item == NULL, , "data is NULL");
-
-	noti = item->noti;
-	retif(noti == NULL, , "noti is NULL");
-
+	notification_h noti = handler->noti_node->noti;
 	notification_get_type(noti, &type);
-	if (type == NOTIFICATION_TYPE_ONGOING) {
-		notification_get_size(noti, &size);
-		notification_get_progress(noti, &percentage);
-		notification_get_layout(noti, &layout);
 
-		if (layout != NOTIFICATION_LY_ONGOING_EVENT) {
-			if (percentage > 0 && percentage <= 1) {
-				old_ic = _check_duplicated_progress_loading(noti_list_item,
-						"elm.swallow.progress", "quickpanel/list_progress");
-				if (old_ic == NULL) {
-					ic = elm_progressbar_add(noti_list_item);
-					if (ic == NULL)
-						return ;
-					elm_object_style_set(ic, "quickpanel/list_progress");
-				} else {
-					ic = old_ic;
-				}
-
-				elm_progressbar_value_set(ic, percentage);
-				elm_progressbar_horizontal_set(ic, EINA_TRUE);
-				elm_progressbar_pulse(ic, EINA_FALSE);
-			} else if (size >= 0 && percentage == 0) {
-				old_ic = _check_duplicated_progress_loading(noti_list_item,
-						"elm.swallow.progress", "quickpanel/pending_list");
-				if (old_ic == NULL) {
-					ic = elm_progressbar_add(noti_list_item);
-					if (ic == NULL)
-						return ;
-					elm_object_style_set(ic, "quickpanel/pending_list");
-				} else {
-					ic = old_ic;
-				}
-
-				elm_progressbar_horizontal_set(ic, EINA_TRUE);
-				elm_progressbar_pulse(ic, EINA_TRUE);
-			}
-		}
+	if (type == NOTIFICATION_TYPE_NOTI) {
+		return 1;
 	}
 
-	if (ic != NULL) {
-		elm_object_part_content_set(noti_list_item, "elm.swallow.progress", ic);
-	}
+	return 0;
 }
 
-static void _noti_list_item_ongoing_set_icon(Evas_Object *noti_list_item)
+static void _item_handler_set(Evas_Object *item, noti_list_item_h *handler)
 {
-	notification_h noti = NULL;
-	Evas_Object *ic = NULL;
-	Evas_Object *old_ic = NULL;
-	char *icon_path = NULL;
-	char *thumbnail_path = NULL;
-	char *main_icon_path = NULL;
-	char *sub_icon_path = NULL;
+	retif(item == NULL, , "Invalid parameter!");
+	retif(handler == NULL, , "Invalid parameter!");
 
-	retif(noti_list_item == NULL, , "Invalid parameter!");
-
-	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-	retif(noti_list_item == NULL, , "data is NULL");
-
-	noti_node_item *item = noti_list_item_data->data;
-	retif(item == NULL, , "data is NULL");
-
-	noti = item->noti;
-	retif(noti == NULL, , "noti is NULL");
-
-	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-			       &thumbnail_path);
-	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_ICON, &icon_path);
-
-	if (thumbnail_path != NULL && icon_path != NULL) {
-		main_icon_path = thumbnail_path;
-		sub_icon_path = icon_path;
-	} else if (icon_path != NULL && thumbnail_path == NULL) {
-		main_icon_path = icon_path;
-		sub_icon_path = NULL;
-	} else if (icon_path == NULL && thumbnail_path != NULL) {
-		main_icon_path = thumbnail_path;
-		sub_icon_path = NULL;
-	} else {
-		main_icon_path = NULL;
-		sub_icon_path = NULL;
-	}
-
-	if (main_icon_path != NULL) {
-		old_ic = _check_duplicated_image_loading(noti_list_item,
-				"elm.swallow.thumbnail", main_icon_path);
-
-		if (old_ic == NULL) {
-			ic = elm_image_add(noti_list_item);
-			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, main_icon_path, main_icon_path);
-			elm_object_part_content_set(noti_list_item, "elm.swallow.thumbnail", ic);
-#ifdef QP_ANIMATED_IMAGE_ENABLE
-			quickpanel_animated_image_add(ic);
-#endif
-		}
-	}
-
-	if (sub_icon_path != NULL) {
-		old_ic = _check_duplicated_image_loading(noti_list_item,
-				"elm.swallow.icon", sub_icon_path);
-
-		if (old_ic == NULL) {
-			ic = elm_image_add(noti_list_item);
-			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, sub_icon_path, sub_icon_path);
-			elm_object_part_content_set(noti_list_item, "elm.swallow.icon", ic);
-		}
-	}
-
-	if (main_icon_path == NULL && sub_icon_path == NULL) {
-		old_ic = _check_duplicated_image_loading(noti_list_item,
-				"elm.swallow.thumbnail", QP_DEFAULT_ICON);
-
-		if (old_ic == NULL) {
-			ic = elm_image_add(noti_list_item);
-			elm_image_resizable_set(ic, EINA_FALSE, EINA_TRUE);
-			elm_image_file_set(ic, QP_DEFAULT_ICON, QP_DEFAULT_ICON);
-			elm_object_part_content_set(noti_list_item, "elm.swallow.thumbnail", ic);
-#ifdef QP_ANIMATED_IMAGE_ENABLE
-			quickpanel_animated_image_add(ic);
-#endif
-		}
-	}
+	evas_object_data_set(item, E_DATA_NOTI_LIST_ITEM_H, handler);
 }
 
-static void _noti_list_item_ongoing_set_text(Evas_Object *noti_list_item)
+static noti_list_item_h *_item_handler_get(Evas_Object *item)
 {
-	notification_h noti = NULL;
-	notification_error_e noti_err = NOTIFICATION_ERROR_NONE;
-	char *text = NULL;
-	char *text_utf8 = NULL;
-	char *domain = NULL;
-	char *dir = NULL;
-	char *pkgname = NULL;
-	char *caller_pkgname = NULL;
-	int group_id = 0, priv_id = 0;
-	char buf[128] = { 0, };
-	notification_type_e type = NOTIFICATION_TYPE_NONE;
-	double size = 0.0;
-	double percentage = 0.0;
-	int isProgressBarEnabled = 1;
-	notification_ly_type_e layout = NOTIFICATION_LY_NONE ;
+	retif(item == NULL, NULL, "Invalid parameter!");
 
-	retif(noti_list_item == NULL, , "Invalid parameter!");
-
-	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-	retif(noti_list_item == NULL, , "data is NULL");
-
-	noti_node_item *item = noti_list_item_data->data;
-	retif(item == NULL, , "data is NULL");
-
-	noti = item->noti;
-	retif(noti == NULL, , "noti is NULL");
-
-	/* Set text domain */
-	notification_get_text_domain(noti, &domain, &dir);
-	if (domain != NULL && dir != NULL)
-		bindtextdomain(domain, dir);
-
-	/* Get pkgname & id */
-	notification_get_pkgname(noti, &pkgname);
-	notification_get_application(noti, &caller_pkgname);
-	notification_get_id(noti, &group_id, &priv_id);
-	notification_get_type(noti, &type);
-	notification_get_size(noti, &size);
-	notification_get_progress(noti, &percentage);
-	notification_get_layout(noti, &layout);
-
-	DBG("percentage:%f size:%f", percentage, size);
-
-	if (percentage <= 0.0 && size <= 0.0) {
-		isProgressBarEnabled = 0;
-	}
-
-	noti_err = notification_get_text(noti,
-							NOTIFICATION_TEXT_TYPE_TITLE,
-							&text);
-
-	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
-		quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
-		_set_text_to_part(noti_list_item, "elm.text.title", text);
-	}
-
-	noti_err = notification_get_text(noti,
-			NOTIFICATION_TEXT_TYPE_CONTENT,
-							&text);
-	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
-		if (layout == NOTIFICATION_LY_ONGOING_EVENT) {
-			text_utf8 = elm_entry_utf8_to_markup(text);
-			if (text_utf8 != NULL) {
-				_set_text_to_part(noti_list_item, "elm.text.content.multiline", text_utf8);
-				free(text_utf8);
-			} else {
-				_set_text_to_part(noti_list_item, "elm.text.content.multiline", text);
-			}
-
-			elm_object_signal_emit(noti_list_item, "elm,state,elm.text.content.multiline,active", "elm");
-		} else {
-			quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
-			_set_text_to_part(noti_list_item, "elm.text.content", text);
-			elm_object_signal_emit(noti_list_item, "elm,state,elm.text.content,active", "elm");
-		}
-	}
-
-	if (isProgressBarEnabled != 0
-			&& layout != NOTIFICATION_LY_ONGOING_EVENT) {
-		text = _noti_get_progress(noti, buf,
-									  sizeof(buf));
-		if (text != NULL) {
-			quickpanel_util_char_replace(text, _NEWLINE, _SPACE);
-			_set_text_to_part(noti_list_item, "elm.text.time", text);
-		}
-	}
+	return evas_object_data_get(item, E_DATA_NOTI_LIST_ITEM_H);
 }
 
-static void _noti_list_item_call_item_cb(Evas_Object *noti_list_item, const char *emission) {
-	retif(noti_list_item == NULL, , "invalid parameter");
+static noti_node_item *_get_noti_node(Evas_Object *item)
+{
+	retif(item == NULL, NULL, "invalid parameter");
+
+	noti_list_item_h *handler = _item_handler_get(item);
+	retif(handler == NULL, NULL, "invalid parameter");
+
+	return quickpanel_noti_node_get_by_priv_id(handler->priv_id);
+}
+
+static void _response_callback_call(Evas_Object *item, const char *emission)
+{
+	static double time_called = 0.0;
+	retif(item == NULL, , "invalid parameter");
 	retif(emission == NULL, , "invalid parameter");
 
-	DBG("%s", emission);
-
-	void (*cb)(void *data, Evas_Object *obj) = NULL;
-	noti_list_item_h *data = NULL;
-
-	data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-
-	if (strncmp(emission,"selected", strlen("selected")) == 0) {
-		cb = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_CB_SELECTED_ITEM);
-
-		if (cb != NULL && data != NULL) {
-			cb(data->data, noti_list_item);
+	if (time_called == 0.0) {
+		time_called = ecore_loop_time_get();
+	} else {
+		if ((ecore_loop_time_get() - time_called) < 0.4) {
+			DBG("click rejected");
+			return;
 		}
+		time_called = ecore_loop_time_get();
 	}
-	if (strncmp(emission,"button_1", strlen("button_1")) == 0) {
-		cb = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_CB_BUTTON_1);
 
-		if (cb != NULL && data != NULL) {
-			cb(data->data, noti_list_item);
+	response_cb cb = NULL;
+	noti_list_item_h *handler = _item_handler_get(item);
+	noti_node_item *noti_node = _get_noti_node(item);
+	if (handler != NULL && noti_node != NULL) {
+		if (strncmp(emission,"selected", strlen("selected")) == 0) {
+			if (handler->need_to_cancel_press > 0) {
+				handler->need_to_cancel_press = 0;
+				return;
+			}
+
+			cb = handler->selected_cb;
+			if (cb != NULL) {
+				cb(noti_node, item);
+			}
 		}
-	}
-	if (strncmp(emission,"deleted", strlen("deleted")) == 0) {
-		cb = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_CB_DELETED_ITEM);
+		if (strncmp(emission,"button_1", strlen("button_1")) == 0) {
+			if (handler->need_to_cancel_press > 0) {
+				handler->need_to_cancel_press = 0;
+				return;
+			}
 
-		if (cb != NULL && data != NULL) {
-			cb(data->data, noti_list_item);
+			cb = handler->button_1_cb;
+			if (cb != NULL) {
+				cb(noti_node, item);
+			}
+		}
+		if (strncmp(emission,"deleted", strlen("deleted")) == 0) {
+			cb = handler->deleted_cb;
+			if (cb != NULL) {
+				cb(noti_node, item);
+			}
 		}
 	}
 }
@@ -430,187 +160,463 @@ static void _signal_cb(void *data, Evas_Object *o, const char *emission, const c
 	retif(o == NULL, , "invalid parameter");
 	retif(emission == NULL, , "invalid parameter");
 
-	_noti_list_item_call_item_cb(o, emission);
+	_response_callback_call(o, emission);
 }
 
-HAPI Evas_Object *noti_list_item_create(Evas_Object *parent, notification_ly_type_e layout) {
-	Evas_Object *box = NULL;
+static Eina_Bool _drag_cancel_cb(void *data) {
+	QP_VI *vi = data;
+	noti_list_item_h *handler = NULL;
+	retif(vi == NULL, EINA_FALSE, "invalid parameter");
 
-	retif(parent == NULL, NULL, "Invalid parameter!");
+	if (vi->target != NULL) {
+		DBG("Canceling dragging");
 
-	box = elm_layout_add(parent);
+		handler = _item_handler_get(vi->target);
+		retif(handler == NULL, EINA_FALSE, "handler is NULL");
 
-	DBG("");
-	elm_layout_file_set(box, DEFAULT_EDJ,
-			"quickpanel/listitem/default");
+		handler->state = NOTILISTITEM_STATE_GETSTURE_CANCELED;
+		evas_object_map_enable_set(vi->target, EINA_FALSE);
 
-	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_show(box);
+		handler->vi = NULL;
+	}
 
-	noti_list_item_h *box_h = (noti_list_item_h *) malloc(sizeof(noti_list_item_h));
-	box_h->layout = layout;
-	box_h->status = STATE_NORMAL;
-	box_h->data = NULL;
-	evas_object_data_set(box, E_DATA_NOTI_LIST_ITEM_H, box_h);
-	DBG("created box:%p", box);
-
-	//add event
-	elm_object_signal_callback_add(box,
-			"selected",
-			"edje",
-			_signal_cb,
-			parent
-	);
-
-	//add event
-	elm_object_signal_callback_add(box,
-			"button_1",
-			"edje",
-			_signal_cb,
-			parent
-	);
-
-	//add event
-	elm_object_signal_callback_add(box,
-			"deleted",
-			"edje",
-			_signal_cb,
-			parent
-	);
-
-	return box;
+	return EINA_TRUE;
 }
 
-static void _noti_list_item_set_layout_ongoing_noti(Evas_Object *noti_list_item,
-		notification_h noti) {
-	DBG("");
-	retif(noti_list_item == NULL, , "invalid parameter");
+void static _mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	int w = 0, h = 0;
+	noti_list_item_h *handler = NULL;
+	Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
+	retif(ev == NULL, , "event_info is NULL");
 
-	_noti_list_item_ongoing_set_progressbar(noti_list_item);
-	_noti_list_item_ongoing_set_icon(noti_list_item);
-	_noti_list_item_ongoing_set_text(noti_list_item);
+	handler = _item_handler_get(obj);
+	retif(handler == NULL, , "handler is NULL");
+
+	evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+
+	handler->press_x = ev->canvas.x;
+	handler->press_y = ev->canvas.y;
+	handler->obj_w = w;
+	handler->obj_h = h;
+	handler->state = NOTILISTITEM_STATE_NORMAL;
+
+	s_info.item_debug_step = 1;
+	SDBG("mouse down:%d %d %d", handler->obj_w, handler->obj_h, handler->state);
+
+	if (handler->vi != NULL) {
+		quickpanel_vi_user_event_del(handler->vi);
+		handler->vi = NULL;
+	}
+
+	handler->need_to_cancel_press = 0;
 }
 
-static void _noti_list_item_set_layout(Evas_Object *noti_list_item, notification_h noti,
-		notification_ly_type_e layout) {
+static void _mouse_move_cb(void* data, Evas* e, Evas_Object* obj, void* event_info)
+{
+	int delta_x = 0;
+	static int vi_start_x = 0;
+	static int delta_prev = -1;
+	int x = 0, y = 0;
+	int w = 0, h = 0;
+	noti_list_item_h *handler = NULL;
+	Evas_Map *map = NULL;
+	Evas_Event_Mouse_Move* ev = event_info;
+	QP_VI *vi = NULL;
+	retif(ev == NULL, , "event_info is NULL");
 
-	DBG("layout:%d", layout);
+	handler = _item_handler_get(obj);
+	retif(handler == NULL, , "handler is NULL");
 
-	switch (layout) {
-		case NOTIFICATION_LY_NOTI_EVENT_SINGLE:
-			break;
-		case NOTIFICATION_LY_NOTI_EVENT_MULTIPLE:
-			break;
-		case NOTIFICATION_LY_NOTI_THUMBNAIL:
-			break;
-		case NOTIFICATION_LY_NONE:
-			break;
-		case NOTIFICATION_LY_ONGOING_EVENT:
-		case NOTIFICATION_LY_ONGOING_PROGRESS:
-			_noti_list_item_set_layout_ongoing_noti(noti_list_item, noti);
-			break;
-		case NOTIFICATION_LY_MAX:
-			DBG("not supported layout type:%d", layout);
-			break;
+	if (handler->state == NOTILISTITEM_STATE_GETSTURE_CANCELED) {
+		DBG("deletion has been canceled");
+		return;
+	}
+
+	evas_object_geometry_get(obj, &x, &y, &w, &h);
+	delta_x = ev->cur.output.x - handler->press_x;
+
+	if (s_info.item_debug_step == 1) {
+		SDBG("mouse move:%d %d %d", delta_x, vi_start_x, handler->state);
+		s_info.item_debug_step = 2;
+	}
+
+	if (handler->state == NOTILISTITEM_STATE_NORMAL && _is_item_deletable_by_gesture(handler) == 1) {
+		if (abs(delta_x) >= THRESHOLD_DELETE_START) {
+			DBG("start a deletion");
+			handler->state = NOTILISTITEM_STATE_GETSTURE_WAIT;
+
+			vi_start_x = delta_x;
+
+			vi = quickpanel_vi_new_with_data(
+					VI_OP_DELETE,
+					QP_ITEM_TYPE_NOTI,
+					NULL,
+					obj,
+					NULL,
+					NULL,
+					NULL,
+					NULL, //_drag_cancel_cb,
+					vi,
+					NULL,
+					0,
+					0);
+			handler->vi = vi;
+			handler->need_to_cancel_press = 1;
+			quickpanel_vi_user_event_add(vi);
+		}
+	} else if (handler->state == NOTILISTITEM_STATE_GETSTURE_WAIT) {
+		if (delta_prev != delta_x) {
+			map = evas_map_new(4);
+			if (map != NULL) {
+				evas_map_util_points_populate_from_object(map, obj);
+				evas_map_util_points_populate_from_geometry(map, x + delta_x - vi_start_x, y, w, h, 0);
+				evas_object_map_enable_set(obj, EINA_TRUE);
+				evas_object_map_set(obj, map);
+				evas_map_free(map);
+				quickpanel_list_util_scroll_freeze_set(EINA_TRUE);
+			}
+			delta_prev = delta_x;
+		}
+	}
+
+	handler->distance = delta_x;
+}
+
+static void _mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	int x = 0;
+	noti_list_item_h *handler = NULL;
+	Elm_Transit *transit_flick = NULL;
+	//double scale = elm_config_scale_get();
+	handler = _item_handler_get(obj);
+	retif(handler == NULL, , "handler is NULL");
+
+	quickpanel_list_util_scroll_freeze_set(EINA_FALSE);
+
+	if (s_info.item_debug_step == 2) {
+		SDBG("mouse up:%d", handler->state);
+		s_info.item_debug_step = 3;
+	}
+
+	if (handler->state == NOTILISTITEM_STATE_GETSTURE_WAIT) {
+		if (abs(handler->distance) >= (THRESHOLD_DISTANCE - 10)
+			&& _is_item_deletable_by_gesture(handler) == 1) {
+			x = abs(handler->distance) - THRESHOLD_DELETE_START;
+
+			if (handler->distance > 0) {
+				evas_object_map_set(obj, NULL);
+				transit_flick = elm_transit_add();
+				if (transit_flick != NULL) {
+					elm_transit_effect_translation_add(transit_flick, x, 0, 480, 0);
+					elm_transit_object_add(transit_flick, obj);
+	 				elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) / 480);
+					elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
+					elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
+					elm_transit_go(transit_flick);
+
+					_response_callback_call(obj, "deleted");
+				}
+			} else if (handler->distance < 0) {
+				evas_object_map_set(obj, NULL);
+				transit_flick = elm_transit_add();
+				if (transit_flick != NULL) {
+					elm_transit_effect_translation_add(transit_flick, -x, 0, -480, 0);
+					elm_transit_object_add(transit_flick, obj);
+	 				elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
+					elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
+					elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
+					elm_transit_go(transit_flick);
+
+					_response_callback_call(obj, "deleted");
+				}
+			}
+		} else {
+			evas_object_map_enable_set(obj, EINA_FALSE);
+		}
+
+		if (handler->vi != NULL) {
+			quickpanel_vi_user_event_del(handler->vi);
+			handler->vi = NULL;
+		}
+	} else if (handler->state == NOTILISTITEM_STATE_GETSTURE_CANCELED) {
+		evas_object_map_enable_set(obj, EINA_FALSE);
+
+		if (handler->vi != NULL) {
+			quickpanel_vi_user_event_del(handler->vi);
+			handler->vi = NULL;
+		}
+	}
+
+	handler->state = NOTILISTITEM_STATE_NORMAL;
+}
+
+static Evas_Event_Flags
+_flick_end_cb(void *data, void *event_info)
+{
+	int x = 0;
+	noti_list_item_h *handler = NULL;
+	Evas_Object *view = NULL;
+	Elm_Transit *transit_flick = NULL;
+	Elm_Gesture_Momentum_Info *info = (Elm_Gesture_Momentum_Info *)event_info;
+	//double scale = elm_config_scale_get();
+
+	view = (Evas_Object *)data;
+	handler = _item_handler_get(view);
+
+	if (handler != NULL) {
+		handler->state = NOTILISTITEM_STATE_GETSTURE_CANCELED;
+
+		if (_is_item_deletable_by_gesture(handler) != 1) {
+			return EVAS_EVENT_FLAG_NONE;
+		}
+
+		x = abs(handler->distance) - THRESHOLD_DELETE_START;
+	}
+
+	if (info->x2 - info->x1 > 50) {
+		DBG("Flick event is occurred to right.");
+		evas_object_map_set(view, NULL);
+		transit_flick = elm_transit_add();
+		if (transit_flick != NULL) {
+			elm_transit_effect_translation_add(transit_flick, x, 0, 480, 0);
+			elm_transit_object_add(transit_flick, view);
+	 		elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) /480);
+			elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
+			elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
+			elm_transit_go(transit_flick);
+
+			_response_callback_call(view, "deleted");
+		}
+	} else if (info->x1 - info->x2 > 50) {
+		DBG("Flick event is occurred to left.");
+		evas_object_map_set(view, NULL);
+		transit_flick = elm_transit_add();
+		if (transit_flick != NULL) {
+			elm_transit_effect_translation_add(transit_flick, -x, 0, -480, 0);
+			elm_transit_object_add(transit_flick, view);
+	 		elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
+			elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
+			elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
+			elm_transit_go(transit_flick);
+
+			_response_callback_call(view, "deleted");
+		}
+	}
+
+	return EVAS_EVENT_FLAG_NONE;
+}
+
+HAPI Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notification_h noti)
+{
+	Evas_Object *view = NULL;
+	retif(noti == NULL, NULL, "invalid parameter");
+
+	notification_ly_type_e layout = NOTIFICATION_LY_NOTI_EVENT_SINGLE;
+	notification_get_layout(noti, &layout);
+
+	retif(s_info.view_handlers[layout] == NULL, NULL, "invalid parameter");
+	retif(s_info.view_handlers[layout]->create == NULL, NULL, "invalid parameter");
+
+	view = s_info.view_handlers[layout]->create(noti, parent);
+	if (view != NULL) {
+		noti_list_item_h *handler = (noti_list_item_h *) malloc(sizeof(noti_list_item_h));
+		retif(handler == NULL, NULL, "failed to allocate a memory");
+
+		memset(handler, 0, sizeof(noti_list_item_h));
+
+		handler->layout = layout;
+		handler->status = STATE_NORMAL;
+		handler->noti_node = NULL;
+		handler->state = NOTILISTITEM_STATE_NORMAL;
+
+		_item_handler_set(view, handler);
+
+		Evas_Object *focus = quickpanel_accessibility_ui_get_focus_object(view);
+		elm_object_part_content_set(view, "focus", focus);
+
+		//add event
+		elm_object_signal_callback_add(view,
+				"selected",
+				"edje",
+				_signal_cb,
+				parent
+		);
+
+		//add event
+		elm_object_signal_callback_add(view,
+				"button_1",
+				"edje",
+				_signal_cb,
+				parent
+		);
+
+		//add event
+		elm_object_signal_callback_add(view,
+				"deleted",
+				"edje",
+				_signal_cb,
+				parent
+		);
+
+		DBG("created box:%p", view);
+
+		evas_object_event_callback_add(view, EVAS_CALLBACK_MOUSE_DOWN, _mouse_down_cb, NULL);
+		evas_object_event_callback_add(view, EVAS_CALLBACK_MOUSE_MOVE, _mouse_move_cb, NULL);
+		evas_object_event_callback_add(view, EVAS_CALLBACK_MOUSE_UP, _mouse_up_cb, NULL);
+
+		Evas_Object *gl = elm_gesture_layer_add(parent);
+		elm_gesture_layer_flick_time_limit_ms_set(gl, 300);
+		elm_gesture_layer_attach(gl, view);
+
+		elm_gesture_layer_cb_set(gl, ELM_GESTURE_N_FLICKS, ELM_GESTURE_STATE_END, _flick_end_cb, view);
+	} else {
+		ERR("failed to create notification view(%s)"
+			, s_info.view_handlers[layout]->name);
+	}
+
+	return view;
+}
+
+HAPI void quickpanel_noti_list_item_update(Evas_Object *item)
+{
+	retif(item == NULL, , "invalid parameter");
+
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		retif(s_info.view_handlers[handler->layout] == NULL, , "invalid parameter");
+		retif(s_info.view_handlers[handler->layout]->update == NULL, , "invalid parameter");
+
+		noti_node_item *noti_node = _get_noti_node(item);
+		s_info.view_handlers[handler->layout]->update(noti_node, handler->layout, item);
 	}
 }
 
-HAPI void noti_list_item_remove(Evas_Object *noti_list_item) {
+HAPI void quickpanel_noti_list_item_remove(Evas_Object *item)
+{
+	retif(item == NULL, , "invalid parameter");
 
-	retif(noti_list_item == NULL, , "invalid parameter");
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		retif(s_info.view_handlers[handler->layout] == NULL, , "invalid parameter");
+		
+		if (s_info.view_handlers[handler->layout] != NULL) {
+			if (s_info.view_handlers[handler->layout]->remove != NULL) {
+				noti_node_item *noti_node = _get_noti_node(item);
+				s_info.view_handlers[handler->layout]->remove(noti_node, handler->layout, item);
+			}
+		}
 
-	noti_list_item_h *noti_list_item_h = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
+		free(handler);
+	}
 
-	if (noti_list_item_h != NULL)
-		free(noti_list_item_h);
-
-	evas_object_data_del(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-	evas_object_data_del(noti_list_item, E_DATA_NOTI_LIST_CB_SELECTED_ITEM);
-	evas_object_data_del(noti_list_item, E_DATA_NOTI_LIST_CB_BUTTON_1);
-	evas_object_data_del(noti_list_item, E_DATA_NOTI_LIST_CB_DELETED_ITEM);
-
-	evas_object_del(noti_list_item);
+	evas_object_data_del(item, E_DATA_NOTI_LIST_ITEM_H);
+	evas_object_del(item);
+	item = NULL;
 }
 
-HAPI void noti_list_item_update(Evas_Object *noti_list_item) {
-	retif(noti_list_item == NULL, , "invalid parameter");
+HAPI void quickpanel_noti_list_item_set_status(Evas_Object *item, int status)
+{
+	retif(item == NULL, , "invalid parameter");
 
-	_noti_list_item_ongoing_set_progressbar(noti_list_item);
-	_noti_list_item_ongoing_set_icon(noti_list_item);
-	_noti_list_item_ongoing_set_text(noti_list_item);
-}
-
-HAPI void noti_list_item_set_status(Evas_Object *noti_list_item, int status) {
-	retif(noti_list_item == NULL, , "invalid parameter");
-
-	noti_list_item_h *noti_list_item_h = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-
-	if (noti_list_item_h != NULL) {
-		noti_list_item_h->status = status;
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		handler->status = status;
 	}
 }
 
-HAPI int noti_list_item_get_status(Evas_Object *noti_list_item) {
-	retif(noti_list_item == NULL, STATE_NORMAL, "invalid parameter");
+HAPI int quickpanel_noti_list_item_get_status(Evas_Object *item)
+{
+	retif(item == NULL, STATE_NORMAL, "invalid parameter");
 
-	noti_list_item_h *noti_list_item_h = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-
-	if (noti_list_item_h != NULL) {
-		return noti_list_item_h->status;
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		return handler->status;
 	}
 
 	return STATE_DELETING;
 }
 
-HAPI void noti_list_item_node_set(Evas_Object *noti_list_item, void *data) {
-	retif(noti_list_item == NULL, , "invalid parameter");
-	retif(data == NULL, , "invalid parameter");
+HAPI void quickpanel_noti_list_item_node_set(Evas_Object *item, noti_node_item *noti_node)
+{
+	int priv_id = 0;
+	retif(item == NULL, , "invalid parameter");
+	retif(noti_node == NULL, , "invalid parameter");
 
-	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-
-	if (noti_list_item_data != NULL) {
-		noti_list_item_data->data = data;
-
-		if (data != NULL) {
-			noti_node_item *item = data;
-			_noti_list_item_set_layout(noti_list_item, item->noti, noti_list_item_data->layout);
-		}
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		handler->noti_node = noti_node;
+		notification_get_id(handler->noti_node->noti, NULL, &priv_id);
+		handler->priv_id = priv_id;
+		quickpanel_noti_list_item_update(item);
 	}
 }
 
-HAPI void *noti_list_item_node_get(Evas_Object *noti_list_item) {
-	retif(noti_list_item == NULL, NULL, "invalid parameter");
+HAPI void *quickpanel_noti_list_item_node_get(Evas_Object *item)
+{
+	retif(item == NULL, NULL, "invalid parameter");
 
-	noti_list_item_h *noti_list_item_data = evas_object_data_get(noti_list_item, E_DATA_NOTI_LIST_ITEM_H);
-
-	if (noti_list_item_data != NULL) {
-		return noti_list_item_data->data;
+	noti_node_item *noti_node = _get_noti_node(item);
+	if (noti_node != NULL) {
+		return noti_node;
 	}
 
 	return NULL;
 }
 
-HAPI void noti_list_item_set_item_selected_cb(Evas_Object *noti_list_item,
-		void(*selected_cb)(void *data, Evas_Object *obj)) {
-	retif(noti_list_item == NULL, , "invalid parameter");
-	retif(selected_cb == NULL, , "invalid parameter");
+#ifdef QP_SCREENREADER_ENABLE
+static void _focus_selected_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *item = data;
+	retif(item == NULL, , "invalid parameter");
 
-	evas_object_data_set(noti_list_item, E_DATA_NOTI_LIST_CB_SELECTED_ITEM, selected_cb);
+	_response_callback_call(item, "selected");
+}
+#endif
+
+HAPI void quickpanel_noti_list_item_set_item_selected_cb(Evas_Object *item, response_cb callback)
+{
+	retif(item == NULL, , "invalid parameter");
+	retif(callback == NULL, , "invalid parameter");
+
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		handler->selected_cb = callback;
+	}
+
+#ifdef QP_SCREENREADER_ENABLE
+	Evas_Object *ao = NULL;
+	ao = quickpanel_accessibility_screen_reader_object_get(item,
+			SCREEN_READER_OBJ_TYPE_ELM_OBJECT, "focus", item);
+	if (ao != NULL) {
+		evas_object_smart_callback_add(ao, "clicked", _focus_selected_cb, item);
+	}
+#endif
 }
 
-HAPI void noti_list_item_set_item_button_1_cb(Evas_Object *noti_list_item,
-		void(*button_1_cb)(void *data, Evas_Object *obj)) {
-	retif(noti_list_item == NULL, , "invalid parameter");
-	retif(button_1_cb == NULL, , "invalid parameter");
+HAPI void quickpanel_noti_list_item_set_item_button_1_cb(Evas_Object *item, response_cb callback)
+{
+	retif(item == NULL, , "invalid parameter");
+	retif(callback == NULL, , "invalid parameter");
 
-	evas_object_data_set(noti_list_item, E_DATA_NOTI_LIST_CB_BUTTON_1, button_1_cb);
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		handler->button_1_cb = callback;
+	}
 }
 
-HAPI void noti_list_item_set_item_deleted_cb(Evas_Object *noti_list_item,
-		void(*deleted_cb)(void *data, Evas_Object *obj)) {
-	retif(noti_list_item == NULL, , "invalid parameter");
-	retif(deleted_cb == NULL, , "invalid parameter");
+HAPI void quickpanel_noti_list_item_set_item_deleted_cb(Evas_Object *item, response_cb callback)
+{
+	retif(item == NULL, , "invalid parameter");
+	retif(callback == NULL, , "invalid parameter");
 
-	evas_object_data_set(noti_list_item, E_DATA_NOTI_LIST_CB_DELETED_ITEM, deleted_cb);
+	noti_list_item_h *handler = _item_handler_get(item);
+	if (handler != NULL) {
+		handler->deleted_cb = callback;
+	}
+}
+
+HAPI noti_list_item_h *quickpanel_noti_list_item_handler_get(Evas_Object *item)
+{
+	return _item_handler_get(item);
 }

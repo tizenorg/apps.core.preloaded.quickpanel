@@ -1,74 +1,97 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
 
 #ifndef __QUICKPANEL_UI_H__
 #define __QUICKPANEL_UI_H__
 
 #include <Elementary.h>
+#include <E_DBus.h>
+#ifdef HAVE_X
 #include <Ecore_X.h>
 #include <X11/Xatom.h>
-#include "media.h"
-
-#if !defined(VENDOR)
-#  define VENDOR "org.tizen"
 #endif
+#include "media.h"
+#include "common_uic.h"
+
 #if !defined(PACKAGE)
-#  define PACKAGE			"quickpanel"
+#  define PACKAGE	"quickpanel"
 #endif
 
 #if !defined(LOCALEDIR)
-#  define LOCALEDIR			"/usr/apps/"VENDOR"."PACKAGE"/res/locale"
+#  define LOCALEDIR	"/usr/apps/org.tizen.quickpanel/res/locale"
 #endif
 
 #if !defined(EDJDIR)
-#  define EDJDIR			"/usr/apps/"VENDOR"."PACKAGE"/res/edje"
+#  define EDJDIR	"/usr/apps/org.tizen.quickpanel/res/edje"
+#endif
+
+#if !defined(SHARED_DIR)
+#  define SHARED_DIR	"/usr/apps/org.tizen.quickpanel/shared/res"
 #endif
 
 /* EDJ theme */
 #define DEFAULT_EDJ		EDJDIR"/"PACKAGE".edj"
 #define DEFAULT_THEME_EDJ	EDJDIR"/"PACKAGE"_theme.edj"
+#define SLIDER_THEME_EDJ EDJDIR"/"PACKAGE"_slider_theme.edj"
+#define ACTIVENOTI_EDJ		EDJDIR"/"PACKAGE"_activenoti.edj"
 
 #define _EDJ(o) elm_layout_edje_get(o)
-#define _S(str)	dgettext("sys_string", str)
+
 #undef _
 #define _(str) gettext(str)
 #define _NOT_LOCALIZED(str) (str)
-
-#define QP_SETTING_SOUND_SIP_PATH \
-	"/usr/apps/com.samsung.quickpanel/data/sip.wav"
 
 #define STR_ATOM_WINDOW_INPUT_REGION    "_E_COMP_WINDOW_INPUT_REGION"
 #define STR_ATOM_WINDOW_CONTENTS_REGION "_E_COMP_WINDOW_CONTENTS_REGION"
 
 #define MAX_NAM_LEN 4096
 
-#define INDICATOR_COVER_W 82
+#define INDICATOR_COVER_W 64
 #define INDICATOR_COVER_H 60
 
 #define _NEWLINE '\n'
 #define _SPACE ' '
+
+#define QP_DBUS_NAME "org.tizen.quickpanel"
+#define QP_DBUS_PATH "/Org/Tizen/Quickpanel"
+
+#define QP_DBUS_CLIENT_NAME "org.tizen.quickpanelsetting"
+#define QP_DBUS_CLIENT_PATH "/Org/Tizen/Quickpanelsetting"
+
+#if !defined(VENDOR)
+#define QP_PKG_QUICKPANEL	"org.tizen.quickpanel"
+#define QP_SETTING_PKG_SETTING	"org.tizen.setting"
+#define QP_MINIAPPTRAY_PKG "org.tizen.mini-apps"
+#else
+#define QP_PKG_QUICKPANEL	VENDOR".quickpanel"
 #define QP_SETTING_PKG_SETTING	VENDOR".setting"
-#define QP_SETTING_PKG_SETTING_EMUL	"kto5jikgul.Settings"
+#define QP_MINIAPPTRAY_PKG VENDOR".mini-apps"
+#endif
+#define QP_SEARCH_PKG "org.tizen.sfinder"
 
 struct appdata {
 	Evas_Object *win;
-#ifdef QP_INDICATOR_WIDGET_ENABLE
-	Evas_Object *comformant;
-#endif
-	Evas_Object *ly;
+
+	Evas_Object *background;
+	Evas_Object *view_root;
+	Evas_Object *view_page_zero;
+	Evas_Object *ly; //view_base
+
 	Evas *evas;
 
 	Evas_Object *scroller;
@@ -87,24 +110,21 @@ struct appdata {
 	int is_emul; /* 0 : target, 1 : emul */
 	int is_suspended;
 	int is_opened;
+	int opening_reason;
 
 	Ecore_Event_Handler *hdl_client_message;
-	Ecore_Event_Handler *hdl_hardkey;
+	Ecore_Event_Handler *hdl_hardkey_down;
+	Ecore_Event_Handler *hdl_hardkey_up;
+	Eina_Bool is_hardkey_cancel;
 
 	E_DBus_Connection *dbus_connection;
-	E_DBus_Signal_Handler *dbus_handler_size;
-	E_DBus_Signal_Handler *dbus_handler_progress;
-	E_DBus_Signal_Handler *dbus_handler_content;
-
-	Evas_Object *cover_indicator_right;
-
-	Ecore_X_Atom *E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 };
 
 typedef struct _QP_Module {
 	char *name;
 	/* func */
 	int (*init) (void *);
+	void (*init_job_cb) (void *);
 	int (*fini) (void *);
 	int (*suspend) (void *);
 	int (*resume) (void *);
@@ -115,24 +135,14 @@ typedef struct _QP_Module {
 	unsigned int (*get_height) (void *);
 	void (*qp_opened) (void *);
 	void (*qp_closed) (void *);
+	void (*mw_enabled) (void *);
+	void (*mw_disabled) (void *);
 
 	/* do not modify this area */
 	/* internal data */
 	Eina_Bool state;
 } QP_Module;
 
-int quickpanel_launch_app(char *app_id, void *data);
-void quickpanel_launch_app_inform_result(const char *pkgname, int retcode);
-int quickpanel_is_emul(void);
-void quickpanel_init_size_genlist(void *data);
-void quickpanel_ui_update_height(void *data);
 void *quickpanel_get_app_data(void);
-int quickpanel_is_suspended(void);
-Evas_Object *quickpanel_ui_load_edj(Evas_Object * parent, const char *file,
-					    const char *group, int is_just_load);
-void quickpanel_ui_set_indicator_cover(void *data);
-void quickpanel_close_quickpanel(bool is_check_lock);
-void quickpanel_open_quickpanel(void);
-void quickpanel_toggle_openning_quickpanel(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

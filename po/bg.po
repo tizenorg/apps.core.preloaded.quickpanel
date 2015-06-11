@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Уведомления"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Само спешни повиквания"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Въртене"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Уведомления (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Вибрация"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Звънене и вибрация"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Автом. завърт."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Заключв. завъртане"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Режим запам. устройство"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Забрани"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Разрешаване"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Не се поддържа"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Отхвърляне"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Поставете SIM картата, за да получите достъп до услуги на мрежата"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Не питай повече"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Поставете SIM карта и рестартирайте устройството, за да използвате привързване"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "При свързване за пакетни данни може да се начислят допълнителни такси. Продължаване?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Авто"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Пестене на енергия"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Привързване"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Мобилни данни"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Режим Шофиране"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Не може да се свърже към мобилни мрежи, когато е активиран режим Полет. Вместо това се свържете към Wi-Fi мрежа или деактивирайте режим Полет и опитайте отново"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi привързване изразходва повече енергия от батерията и увеличава потреблението на данни. Продължаване?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Деактивирайте привързване, за да използвате Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "За да активирате режим Пестене на енергия, активирайте поне една релевантна функция"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Изключете Wi-Fi, за да използвате привързване"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi и Mobile AP не могат да бъдат активирани едновременно.. Деактивиране на Mobile AP?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Огледален режим на екрана"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Изтр. всч"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Заместване на бутона за бърза настройка"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Чукн. тук за деакт. Безоп. реж."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Добавяне на бутон за бърза настройка"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Не може да се стартира %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Повече няма да можете да използвате приложения, като Интернет и Имейл, през мобилни мрежи. Продължаване?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Само спешни повиквания"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Търсене..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Бутон"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Няма SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Няма услуга"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Невалидна SIM карта."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Само спешни повиквания."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Навън"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Безоп. режим е активиран"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Уведомления (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Изч.всички"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Уведом."
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Съгласен"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Питай винаги"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Несъгласен"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS местоположението и използването на вашите данни за местоположение се контролират от приложенията, които използвате"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Вибрация"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Съгласие от потребителя"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ултра\nпест. ен."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Привързване"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Звук"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Звук"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Личен режим"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Пест. на\nенерг."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Спиране на звука"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Мобилни\nданни"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Място"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Режим\nполет"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Автомат. завъртане"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Помощна\nсветл."
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Уведомления"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Не може да се извършват гласови повиквания, видеоповиквания и да се изпращат текстови съобщения чрез %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Изберете SIM карта за изходящи гласови повиквания, видеоповиквания и текстови съобщения."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Изходящи гласови повиквания, видеоповиквания и текстови съобщения ще се извършват чрез SIM карта %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Не"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Яркостта не може да се увеличи повече поради прегряване на телефона."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Няма услуга"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Само спешни повиквания"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "На открито"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nтетъринг"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Фенерче"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Пестене\nенергия"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Мобилни\nданни"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Режим\nполет"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Авто\nвъртене"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Сканиране за мобилна мрежа..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Поставете SIM картата, за да получите достъп до услуги на мрежата."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Винаги питай"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Не може да се свърже към мобилни мрежи, когато е активиран режим Полет. Вместо това се свържете към Wi-Fi мрежа или деактивирайте режим Полет и опитайте отново."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Търсене"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Не може да се отвори %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "На откр."
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Личен\nрежим"
 

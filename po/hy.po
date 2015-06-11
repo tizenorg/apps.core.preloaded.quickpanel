@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Ծանուցումներ"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Միայն հրատապ կանչեր"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Պտտում"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Ծանուցումներ (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Թրթռում"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Ձայն և թրթռում"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Ինքնապտտում"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Պտտման կողպում"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Զանգվածային պահոցի ռեժիմ"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Կասեցնել"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Ակտիվացնլ"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Չսատարվող"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Չղրկլ"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Տեղադրեք SIM քարտը՝ ցանցային ծառայություններ մտնելու համար"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Այլևս չհարցնել"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Մտցնել SIM քարտ և վերագործարկել սարքը՝ տեղակապում օգտագործելու համար"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Փաթեթային տվյալների միջոցով միացումը կարող է լրացուցիչ վճար պահանջել: Շարունակե՞լ:"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Ավտոմատ"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Էներգիայի խնայում"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Տեղակապում"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Շարժական տվյալներ"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Վարման ռեժիմ"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Անհնար է միանալ շարժական կապի ցանցերին, երբ Թռիչքային ռեժիմն ընձեռված է: Փոխարենը միացեք Wi-Fi ցանցին կամ կասեցրեք Թռիչքային ռեժիմն ու նորից փորձեք"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi տեղակապումը մարտկոցի ավելի շատ էներգիա է սպառում և ավելացնում է տվյալների օգտագործումը. շարունակե՞լ:"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Կասեցրեք տեղակապումը՝ Wi-Fi-ից օգտվելու համար"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Էներգիայի խնայման ռեժիմն ընձեռելու համար ընձեռեք առնվազն մեկ համապատասխան գործառույթ"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Անջատեք Wi-Fi-ը՝ տեղակապում օգտագործելու համար"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi-ն ու Mobile AP-ն չեն կարող միաժամանակ ակտիվացվել: Ապաակտիվացնե՞լ Mobile AP-ն:"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Մաքրել բոլորը"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Փոխարինել արագ դրվածքների կոճակը"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Թակ. այստեղ՝ Անվտ. ռժմ կսց. հր:"
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Ավելացնել արագ դրվածքների կոճակ"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Հնարավոր չէ գործարկել %s-ը:"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Դուք այլևս չեք կարողանա շարժական կապի ցանցերի միջոցով օգտագործել այնպիսի ծրագրեր, ինչպիսիք են Ինտերնետը և Էլփոստը. շարունակե՞լ:"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Միայն արտ. իրավիճ. զանգեր"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Որոնում է..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Կոճակ"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "SIM չկա"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Ծառայություն չկա"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Անվավեր SIM քարտ:"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Միայն հրատապ կանչեր:"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Դրսում"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Անվտանգ ռեժիմ"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Ծանուցումներ (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Մաքրել բլր"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Ծանուցում"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Հմձայն եմ"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Միշտ հարցնել"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Առարկել"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS-ի տեղն ու Ձեր տեղի տվյալները վերահսկվում են Ձեր օգտագործած ծրագրերով"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Թրթռալ"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Օգտվողի համաձայնություն"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Էներգիայի\nգերխնայ."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Տեղակապում"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Հնչյուն"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Ձայն"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Գաղտնի ռեժիմ"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Էներգ.\nsխնայում"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Խլացնել"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Շարժ.\nտվյալներ"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Տեղը"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Թռիչքային\nռեժիմ"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Ինքնապտտում"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Օժանդակ\nլույս"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "ԿՀ"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Ծանուցումներ"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "ԿԱ"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Անհնար է ձայնականչեր, տեսականչեր կատարել և տեքստային հաղորդագրություններ ուղարկել %s-ով:"
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "SIM քարտ ընտրեք ելից ձայնականչերի, տեսականչերի և տեքստային հաղորդագրությունների համար:"
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Ելից ձայնականչերը, տեսականչերը և տեքստային հաղորդագրությունները կկատարվեն %s SIM քարտով:"
+
+msgid "IDS_ST_SK_OK"
+msgstr "Ընդունել"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ոչ"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Հնարավոր չէ ավելցնել հեռախոսի էկրանի պայծառությունը հեռախոսի գեր տաքանալու պատճառով:"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Ծառայություն չկա"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Միայն արտակարգ իրավիճակի կանչեր"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Դրսում"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nտեղակապ."
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Լապտեր"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Էներգ.\nխնայում"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Շարժական\nտվյալներ"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Թռիչք.\nռեժիմ"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Ինքնա-\nպտտում"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Տեսածրվում է շարժական կապի ցանցի առկայություն..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Տեղադրեք SIM քարտը՝ ցանցային ծառայություններ մտնելու համար:"
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Միշտ հարցնել"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Անհնար է միանալ շարժական կապի ցանցերին, երբ Թռիչքային ռեժիմն ընձեռված է: Փոխարենը միացեք Wi-Fi ցանցին կամ կասեցրեք Թռիչքային ռեժիմն ու նորից փորձեք:"
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Որոնում"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Անհնար է բացել %s-ը:"
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Դրսում"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Գաղտ. կապի\nռեժիմ"
 

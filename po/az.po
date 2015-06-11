@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Bildirişlər"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Yalnız fövqəladə zənglər üçün"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Fırlatma"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Bildirişlər (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibrasiya"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Səs və titrəmə"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Avto fırlatma"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Fırlanma kilidi"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Kütləvi yaddaş rejimi"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Söndür"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Qoş"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Dəstəklənmədi"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Söndürmək"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Şəbəkə xidmətlərinə daxil olmaq üçün SİM kartı daxil edin"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Bir də soruşma"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "SIM kartı daxil edin və bağlanmadan istifadə etmək üçün cihazı yenidən başladın"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Paket məlumatları vasitəsilə qoşulma əlavə qiymət tətbiq edə bilər. Davam edilsin?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Avtomatik"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Enerji qorunması"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Bağlanma"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobil məlumatlar"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Sürücülük rejimi"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Uçuş rejimi aktiv olduqda mobil şəbəkələrə qoşulmaq mümkün deyil. Əvəzinə Wi-Fi şəbəkəsinə qoşulun və ya Uçuş rejimini qeyri-aktiv edin və yenidən cəhd edin"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi bağlanma daha çox batareyadan istifadə edir və verilənlərdən istifadənizi artırır. Davam etsin?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Wi-Fi-dan istifadə etmək üçün bağlanmanı söndür"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Enerji qorunması rejimini aktivləşdirmək üçün ən azı bir müvafiq funksiyanı aktivəşdirin"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Bağlanmadan istifadə etmək üçün Wi-Fi-ı söndür"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi və Mobile AP eyni zamanda aktivləşdirilə bilməz. Mobile AP qeyri-aktiv edilsin?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Hamısını sil"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Çevik parametr düyməsini əvəz et"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Təhl rej q-akt et ü bur vur."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Sürətli parametr düyməsi əlavə et"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "%s-ə başlamaq mümkün deyildir."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Siz artıq mobil şəbəkələr vasitəsilə İnternet və Epoçt kimi proqramlardan istifadə edə bilməyəcəksiniz. Davam edilsin?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Yalnız fövqəladə zənglər"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Axtarır..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Düymə"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "SIM yoxdur"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Servis yoxdur"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Yanlış SIM kart."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Yalnız fövqəladə zənglər üçün."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Açq hava"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Təhlük rej akt edil"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Bildirişlər (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Hamını sil"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Bildiriş"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Razıyam"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Həmişə soruş"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Müvafiq deyil"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS məkanı və məkan məlumatlarınızdan istifadə istifadə etdiyiniz proqramlarla idarə olunur"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Titrəyiş"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "İstifadəçi razılığı"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "U. enerj\nqənaət"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Bağlanma"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Səs"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Səs"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Şəxsi rejim"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Enerji\nqrnmsı"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Səssiz"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobil\nməlumatlr"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Yer"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Uçuş\nrejimi"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Avto-fırlat"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Köməkçi\nişıq"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Bildirişlər"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "%s ilə səsli zənglər, video zənglər etmək və mətn mesajları göndərmək olmadı."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Gedən səsli zənglər, video zənglər və mətni mesajlar üçün SIM kart seçin."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Gedən səs zəngləri, video zənglər və mətn mesajları %s SIM kartı ilə ediləcək."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Xeyr"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Telefon qızdığından parlaqlığı daha da artırmaq mümkün deyil."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Xidmət yoxdur"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Yalnız fövqəladə zənglər"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Açıq havada"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nbağlantı"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Fənər"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Enerjiyə\nqənaət"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobil\nməlumat"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Uçuş\nrejimi"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Avto\nfırlat"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Mobil şəbəkə axtarılır..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Şəbəkə xidmətlərinə daxil olmaq üçün SİM kartı daxil edin."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Həmişə soruş"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Uçuş rejimi aktiv olduqda mobil şəbəkələrə qoşulmaq mümkün deyil. Əvəzinə Wi-Fi şəbəkəsinə qoşulun və ya Uçuş rejimini qeyri-aktiv edin və yenidən cəhd edin."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Axtarılır"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "%s açmaq mümkün deyil."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Açq hava"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Şəxsi\nrejim"
 

@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Fógraí"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Glaonna éigeandála amháin"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rothlú"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Fógraí (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Crith"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Fuaim & crith"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Uathrothlú"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Glas rothl."
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Mód ollstórála"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Díchumasú"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Cumasaigh"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Gan tacú"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Ruaig"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Ionsáigh cárta SIM le seirbhísí líonra a rochtain"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Ná hiarr arís"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Ionsáigh cárta SIM agus atosaigh an gléas le nascaireacht a úsáid"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Is féidir go ngearrfar táillí breise ar nascadh le sonraí pacáiste. Ar aghaidh?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Uath-"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Coigilt chumhachta"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Ag déanamh teaghráin"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Sonraí móibíleacha"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Mód tiomána"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Ní féidir nascadh le líonraí móibíleacha agus mód Eitilte cumasaithe. Nasc le líonra Wi-Fi, nó díchumasaigh mód Eitilte agus triail arís é"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Ídíonn nascaireacht Wi-Fi níos mó cumhacht ceallra agus méadaíonn úsáid do shonraí. Ar aghaidh?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Díchumasaigh nascaireacht le Wi-Fi a úsáid"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Cumasaigh feidhm ábhartha amháin ar a laghad le Mód coigilte cumhachta a chumasú"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Cas as Wi-Fi le nascaireacht a úsáid"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Ní féidir Wi-Fi agus AP Móibíleach a chur i ngníomh ag an am céanna. Díghníomhachtaigh AP Móibíleach?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Scáthánú Scáileáin"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Glan gach"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Ionadaigh cnaipe mear-shocruithe"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Tap. anseo le Mód Sábh. a dhíchumasú"
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Cuir cnaipe mear-shocruithe leis"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Ní féidir %s a lainseáil."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Ní bheidh tú in ann feidhmchláir amhail Idirlíon agus R-phost a úsáid a thuilleadh le líonraí móibíleacha. Ar aghaidh?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Glaonna éigeandála amháin"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Ag cuardach..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Cnaipe"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Níl SIM ann"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Níl seirbhís ann"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Cárta SIM neamhbhailí."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Glaonna éigeandála amháin."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Lasmuigh"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Mód sábháilte cumasaithe"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Fógraí (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Glan gach"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Fógra"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Aontaim"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Iarr i gcónaí"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Ní aontaím"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Tá suíomh GPS agus úsáid sonraí do shuímh á rialú ag na feidhmchláir a úsáideann tú"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Crith"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Toiliú úsáideora"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "U.coigilt\ncumhachta"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Nascaireacht"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Fuaim"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Fuaim"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Mód príobh."
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Coigilt\nchumh."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Balbhaigh"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Sonraí\nmóibíl."
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Suíomh"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Mód\neitilte"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Uathrothlaigh"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Solas\ncúnta"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "IN"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Fógraí"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "RN"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Ní féidir glaonna gutha ná glaonna físe a chur ná teachtaireachtaí téacs a sheoladh le %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Roghnaigh cárta SIM le haghaidh glaonna gutha, glaonna físe agus teachtaireachtaí téacs amach."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Cuirfear glaonna gutha agus físe amach agus seolfar teachtaireachtaí amach le cárta SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ná déan é"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Ní féidir gile a mhéadú tuilleadh de bharr róthéimh."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Níl seirbhís ann"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Glaonna éigeandála amháin"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Lasmuigh"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Nascair.\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Tóirse"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Coigilt\nchumh."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Sonraí\nmóibíl."
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Mód\neitilte"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Uath\nrothlú"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Scanadh le haghaidh líonra móibíleach..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Ionsáigh cárta SIM le seirbhísí líonra a rochtain"
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Fiafraigh i gcónaí"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Ní féidir nascadh le líonraí móibíleacha fad is atá Mód eitilte cumasaithe. Nasc le líonra Wi-Fi ina ionad, nó díchumasaigh an Mód eitilte agus triail arís é."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Ag cuardach"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Ní féidir %s a oscailt."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Amuigh"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Mód\npríobh."
 

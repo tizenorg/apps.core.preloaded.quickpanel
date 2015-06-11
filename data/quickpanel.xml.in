@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.3.38-1" install-location="internal-only">
-	<label>@PROJECT_NAME@</label>
+<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.6.22" install-location="internal-only" api-version="2.3.1">
+	<label>Quickpanel</label>
 	<author email="yjoo93.park@samsung.com" href="www.samsung.com">Youngjoo Park</author>
 	<author email="seungtaek.chung@samsung.com" href="www.samsung.com">seungtaek chung</author>
 	<author email="ys4610.ko@samsung.com" href="www.samsung.com">Youngsub Ko</author>

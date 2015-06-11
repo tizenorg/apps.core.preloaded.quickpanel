@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+
 //#define DEBUG
 //#define DEBUG_TEXT
 
@@ -27,40 +45,31 @@
 		}\
 
 images {
-	image: "quick_icon_bg_01.png" COMP;
-	image: "quick_btn_close_press.png" COMP;
-	image: "quick_btn_close_dim.png" COMP;
-	image: "quick_btn_close_nor.png" COMP;
 	image: "quick_image_dimmed_port.png" COMP;
 	image: "quick_image_dimmed_land.png" COMP;
-	image: "quick_icon_bg_small.png" COMP;
 	image: "icon_press.png" COMP;
 }
 
-#define BOX_FONT_SHADOW_COLOR 0 0 0 191
-#define BOX_FONT_OUTLINE_COLOR 0 0 0 191
-#define BOX_FONT_NO_SHADOW_COLOR 0 0 0 0
-#define BOX_FONT_NO_OUTLINE_COLOR 0 0 0 0
+#define NOTIBOX_FONT_SHADOW_COLOR 0 0 0 191
+#define NOTIBOX_FONT_OUTLINE_COLOR 0 0 0 191
+#define NOTIBOX_FONT_NO_SHADOW_COLOR 0 0 0 0
+#define NOTIBOX_FONT_NO_OUTLINE_COLOR 0 0 0 0
 
-#define BOX_CONTENTS_FONT "Tizen:style=Medium"
-#define BOX_CONTENTS_FONT_SIZE 32
-#define BOX_CONTENTS_FONT_COLOR 248 246 239 255
+#define NOTIBOX_CONTENTS_FONT "Tizen:style=Bold"
+#define NOTIBOX_CONTENTS_FONT_SIZE 20
+#define NOTIBOX_CONTENTS_FONT_COLOR 248 246 239 255
 
-#define BOX_INFO_FONT "Tizen:style=Regular"
-#define BOX_INFO_FONT_SIZE 28
-#define BOX_INFO_FONT_COLOR 248 246 239 127
+#define NOTIBOX_INFO_FONT "Tizen:style=Bold"
+#define NOTIBOX_INFO_FONT_SIZE 18
+#define NOTIBOX_INFO_FONT_COLOR 180 180 180 255
 
-#define BOX_INFO_SHORT_FONT "Tizen:style=Medium"
-#define BOX_INFO_SHORT_FONT_SIZE 28
-#define BOX_INFO_SHORT_FONT_COLOR 248 246 239 127
+#define NOTIBOX_INFO_SHORT_FONT "Tizen:style=Bold"
+#define NOTIBOX_INFO_SHORT_FONT_SIZE 18
+#define NOTIBOX_INFO_SHORT_FONT_COLOR 180 180 180 255
 
-#define BOX_INFO_SUB_FONT "Tizen:style=Regular"
-#define BOX_INFO_SUB_FONT_SIZE 20
-#define BOX_INFO_SUB_FONT_COLOR 248 246 239 127
-
-#define BOX_INFO_COUNT_FONT "Tizen:style=Medium"
-#define BOX_INFO_COUNT_FONT_SIZE 46
-#define BOX_INFO_COUNT_FONT_COLOR 248 246 239 255
+#define NOTIBOX_INFO_SUB_FONT "Tizen:style=Regular"
+#define NOTIBOX_INFO_SUB_FONT_SIZE 16
+#define NOTIBOX_INFO_SUB_FONT_COLOR 180 180 180 255
 
 #define TEXT_CLASS_TIZEN "tizen"
 #define TEXT_EFFECT "OUTLINE_SHADOW"
@@ -68,52 +77,52 @@ images {
 styles {
 	style {
 		name: "notibox_title";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=38 color=#F8F6EF ellipsis=1.0 wrap=mixed";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=22 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed";
 	}
 
 	style {
 		name: "notibox_title_effect";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=38 color=#F8F6EF ellipsis=1.0 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=22 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
 	}
 
 	style {
 		name: "notibox_contents";
-		base: "font=Tizen:style=Medium text_class=tizen font_size=32 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed";
+		base: "font=Tizen:style=Bold text_class=tizen font_size=20 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed";
 	}
 
 	style {
 		name: "notibox_contents_effect";
-		base: "font=Tizen:style=Medium text_class=tizen font_size=32 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
+		base: "font=Tizen:style=Bold text_class=tizen font_size=20 color=#F8F6EF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
 	}
 
 	style {
 		name: "notibox_info";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=28 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed";
+		base: "font=Tizen:style=Bold text_class=tizen font_size=18 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed";
 	}
 
 	style {
 		name: "notibox_info_effect";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=28 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
+		base: "font=Tizen:style=Bold text_class=tizen font_size=18 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
 	}
 
 	style {
 		name: "notibox_info_short";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=28 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed";
+		base: "font=Tizen:style=Bold text_class=tizen font_size=18 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed";
 	}
 
 	style {
 		name: "notibox_info_short_effect";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=28 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=18 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
 	}
 
 	style {
 		name: "notibox_info_sub";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=20 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=12 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed";
 	}
 
 	style {
 		name: "notibox_info_sub_effect";
-		base: "font=Tizen:style=Regular text_class=tizen font_size=20 color=#F8F6EF7F ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
+		base: "font=Tizen:style=Regular text_class=tizen font_size=12 color=#BFBFBFFF ellipsis=1.0 linegap=-6 wrap=mixed style=outline_shadow outline_color=#000000BF shadow_color=#000000BF";
 	}
 }
 
@@ -121,16 +130,26 @@ group {
 	name: "quickpanel/notibox/single_multi";
 
 	script {
-		public g_is_close_button_disabled;
 		public g_is_show_dim_bg;
 
 		public init_variables() {
-			set_int(g_is_close_button_disabled, 0);
 			set_int(g_is_show_dim_bg, 0);
 		}
 	}
 
 	parts {
+		part{
+			name: "clip.background";
+			type:RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				visible:1;
+			}
+		}
 		part {
 			name: "background";
 			type: RECT;
@@ -138,8 +157,8 @@ group {
 			description {
 				state: "default" 0.0;
 				fixed: 0 0;
-				color: BOX_COLOR_BG;
 				align: 0.0 0.0;
+				color_class: BOX_COLOR_BG;
 			}
 			description {
 				state: "portrait" 0.0;
@@ -198,20 +217,20 @@ group {
 			}
 		}
 		part {
-			name: "margin.right.icon";
+			name: "margin.left.icon";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 8 0;
+				min: 10 0;
 				fixed: 1 0;
 				rel1 {
-					relative: 1.0 0.0;
+					relative: 0.0 0.0;
 				}
 				rel2 {
-					relative: 1.0 1.0;
+					relative: 0.0 1.0;
 				}
-				align: 1.0 0.0;
+				align: 0.0 0.0;
 #ifdef DEBUG
 				color: 0 255 255 255;
 #else
@@ -225,7 +244,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 44;
+				min: 0 10;
 				fixed: 0 1;
 				rel1 {
 					relative: 0.0 0.0;
@@ -247,7 +266,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 20;
+				min: 0 10;
 				fixed: 0 1;
 				rel1 {
 					relative: 0.0 0.0;
@@ -269,7 +288,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 14;
+				min: 0 8;
 				fixed: 0 1;
 				rel1 {
 					relative: 0.0 1.0;
@@ -316,20 +335,20 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 				fixed: 1 1;
 				rel1 {
-					to_x:"margin.right.icon";
+					to_x:"margin.left.icon";
 					to_y:"margin.top.icon";
-					relative: 0.0 1.0;
+					relative: 1.0 1.0;
 				}
 				rel2 {
-					to_x:"margin.right.icon";
+					to_x:"margin.left.icon";
 					to_y:"margin.top.icon";
-					relative: 0.0 1.0;
+					relative: 1.0 1.0;
 				}
-				align: 1.0 0.0;
+				align: 0.0 0.0;
 #ifdef DEBUG
 				color: 255 0 0 255;
 #else
@@ -343,9 +362,9 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
 				fixed: 1 1;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 				rel1 {
 					to:"rect.icon.bg";
 					relative: 0.5 0.5;
@@ -368,7 +387,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 15;
+				min: 0 10;
 				fixed: 0 1;
 				rel1 {
 					to:"rect.icon.bg";
@@ -412,31 +431,6 @@ group {
 			}
 		}
 
-		//section layout for close button
-		part {
-			name: "rect.button.close";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 38 38;
-				max: 38 38;
-				fixed: 1 1;
-				rel1 {
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					relative: 1.0 0.0;
-				}
-				align: 1.0 0.0;
-#ifdef DEBUG
-				color: 255 255 255 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-
 		//section layout for texts
 		part {
 			name: "rect.text.title";
@@ -444,20 +438,21 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 190 150;
-				max: 190 150;
+				min: 125 81;
+				max: 9999 81;
 				fixed: 1 1;
 				rel1 {
-					to_x:"margin.left";
-					to_y:"margin.top.text";
-					relative: 1.0 1.0;
+					to_x:"rect.icon.bg";
+					to_y:"rect.icon.bg";
+					relative: 1.0 0.5;
+					offset: +6 0;
 				}
 				rel2 {
-					to_x:"rect.icon.bg";
-					to_y:"margin.top.text";
-					relative: 0.0 1.0;
+					to_x:"margin.right";
+					to_y:"rect.icon";
+					relative: 0.0 0.5;
 				}
-				align: 0.0 0.0;
+				align: 0.0 0.5;
 #ifdef DEBUG
 				color: 100 100 100 255;
 #else
@@ -465,14 +460,26 @@ group {
 #endif
 			}
 			description {
-				state: "portrait" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "landscape" 0.0;
-				inherit: "default" 0.0;
-				min: 260 132;
-				max: 260 132;
+				state: "without_icon" 0.0;
+				min: 125 81;
+				max: 9999 81;
+				fixed: 1 1;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.icon.bg";
+					relative: 1.0 0.5;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.icon.bg";
+					relative: 0.0 0.5;
+				}
+				align: 0.0 0.5;
+#ifdef DEBUG
+				color: 100 100 100 255;
+#else
+				visible:0;
+#endif
 			}
 		}
 
@@ -508,8 +515,8 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
-				max: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				max: 0 BOX_TEXT_INFO_HEIGHT;
 				fixed: 1 1;
 				rel1 {
 					to_x:"margin.right";
@@ -530,30 +537,6 @@ group {
 			}
 		}
 		part {
-			name: "rect.text.info.sub.2.padding";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: BOX_TEXT_SUB_PADDING_WIDTH 0;
-				fixed: 1 0;
-				rel1 {
-					to:"rect.text.info.sub.2";
-					relative: 0.0 0.0;
-				}
-				rel2 {
-					to:"rect.text.info.sub.2";
-					relative: 0.0 1.0;
-				}
-				align: 1.0 1.0;
-#ifdef DEBUG
-				color: 90 90 90 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
 			name: "rect.text.info.2.short";
 			type: RECT;
 			scale: 1;
@@ -565,9 +548,10 @@ group {
 					relative: 1.0 0.0;
 				}
 				rel2 {
-					to_x:"rect.text.info.sub.2.padding";
+					to_x:"object.text.info.sub.2";
 					to_y:"rect.text.info.2";
 					relative: 0.0 1.0;
+					offset: BOX_TEXT_SUB_PADDING_WIDTH 0;
 				}
 				align: 0.0 1.0;
 #ifdef DEBUG
@@ -634,8 +618,8 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
-				max: BOX_TEXT_SUB_WIDTH BOX_TEXT_INFO_HEIGHT;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				max: 0 BOX_TEXT_INFO_HEIGHT;
 				fixed: 1 1;
 				rel1 {
 					to_x:"margin.right";
@@ -656,30 +640,6 @@ group {
 			}
 		}
 		part {
-			name: "rect.text.info.sub.1.padding";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: BOX_TEXT_SUB_PADDING_WIDTH 0;
-				fixed: 1 0;
-				rel1 {
-					to:"rect.text.info.sub.1";
-					relative: 0.0 0.0;
-				}
-				rel2 {
-					to:"rect.text.info.sub.1";
-					relative: 0.0 1.0;
-				}
-				align: 1.0 1.0;
-#ifdef DEBUG
-				color: 90 90 90 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
 			name: "rect.text.info.1.short";
 			type: RECT;
 			scale: 1;
@@ -691,65 +651,14 @@ group {
 					relative: 1.0 0.0;
 				}
 				rel2 {
-					to_x:"rect.text.info.sub.1.padding";
+					to_x:"object.text.info.sub.1";
 					to_y:"rect.text.info.1";
 					relative: 0.0 1.0;
+					offset: BOX_TEXT_SUB_PADDING_WIDTH 0;
 				}
 				align: 0.0 1.0;
 #ifdef DEBUG
 				color: 102 103 104 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
-			name: "rect.text.margin.contents";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 0 14;
-				fixed: 0 1;
-				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.text.info.1";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to_x:"margin.right";
-					to_y:"rect.text.info.1";
-					relative: 0.0 0.0;
-				}
-				align: 0.0 1.0;
-#ifdef DEBUG
-				color: 255 255 255 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
-			name: "rect.text.margin.count";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 0 5;
-				fixed: 0 1;
-				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.text.info.1";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to_x:"margin.right";
-					to_y:"rect.text.info.1";
-					relative: 0.0 0.0;
-				}
-				align: 0.0 1.0;
-#ifdef DEBUG
-				color: 255 255 255 255;
 #else
 				visible:0;
 #endif
@@ -765,12 +674,38 @@ group {
 				fixed: 0 1;
 				rel1 {
 					to_x:"margin.left";
-					to_y:"rect.text.margin.contents";
+					to_y:"rect.text.info.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"object.text.count";
+					to_y:"rect.text.info.1";
+					relative: 0.0 0.0;
+					offset: -8 0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 150 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "rect.text.contents.multiline.short";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 1 1;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.text.contents";
 					relative: 1.0 0.0;
 				}
 				rel2 {
 					to_x:"margin.right";
-					to_y:"rect.text.margin.contents";
+					to_y:"rect.text.info.2";
 					relative: 0.0 0.0;
 				}
 				align: 0.0 1.0;
@@ -806,112 +741,12 @@ group {
 #endif
 			}
 		}
-		part {
-			name: "rect.text.count";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 30 50;
-				max: 30 50;
-				fixed: 1 1;
-				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.text.margin.count";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to_x:"margin.left";
-					to_y:"rect.text.margin.count";
-					relative: 1.0 0.0;
-				}
-				align: 0.0 1.0;
-#ifdef DEBUG
-				color: 190 190 190 255;
-#else
-				visible:0;
-#endif
-			}
-			description {
-				state: "count1" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "count2" 0.0;
-				inherit: "default" 0.0;
-				min: 60 50;
-			}
-			description {
-				state: "count3" 0.0;
-				inherit: "default" 0.0;
-				min: 90 50;
-			}
-			description {
-				state: "count4" 0.0;
-				inherit: "default" 0.0;
-				min: 120 50;
-			}
-			description {
-				state: "count5" 0.0;
-				inherit: "default" 0.0;
-				min: 150 50;
-			}
-		}
-		part {
-			name: "rect.text.count.padding";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 10 58;
-				rel1 {
-					to:"rect.text.count";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to:"rect.text.count";
-					relative: 1.0 1.0;
-				}
-				align: 0.0 0.0;
-#ifdef DEBUG
-				color: 0 0 0 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
-			name: "rect.text.contents.short";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
-				fixed: 0 1;
-				rel1 {
-					to_x:"rect.text.count.padding";
-					to_y:"rect.text.margin.contents";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to_x:"margin.right";
-					to_y:"rect.text.margin.contents";
-					relative: 0.0 0.0;
-				}
-				align: 0.0 1.0;
-#ifdef DEBUG
-				color: 40 255 100 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-
 		//section objects
 		part{
 			name: "object.icon.background";
 			type:SWALLOW;
 			scale: 1;
+			clip_to: "clip.background";
 			description {
 				state: "default" 0.0;
 				fixed: 0 0;
@@ -926,29 +761,28 @@ group {
 			}
 		}
 		part{
-			name: "object.icon.bg";
-			type:IMAGE;
-			scale:1;
+			name: "object.touch.effect";
+			type:RECT;
+			scale: 1;
 			description {
 				state: "default" 0.0;
 				fixed: 0 0;
-				rel1 {to: "rect.icon.bg";}
-				rel2 {to: "rect.icon.bg";}
-				image {
-					normal:"quick_icon_bg_01.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				color: 0 0 0 0;
+				visible:0;
 			}
 			description {
 				state: "show" 0.0;
 				inherit: "default" 0.0;
+				color_class: BOX_COLOR_BG_HIGHLIGHT;
 				visible:1;
 			}
 			description {
-				state: "hide" 0.0;
+				state: "show.dim" 0.0;
 				inherit: "default" 0.0;
-				visible:0;
+				color_class: BOX_COLOR_BG_HIGHLIGHT_DIM;
+				visible:1;
 			}
 		}
 		part{
@@ -995,8 +829,8 @@ group {
 			description {
 				state: "default" 0.0;
 				fixed: 1 1;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 				rel1 {to: "rect.icon";}
 				rel2 {to: "rect.icon";}
 				visible:0;
@@ -1014,39 +848,12 @@ group {
 			description {
 				state: "default" 0.0;
 				fixed: 1 1;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				rel1 {to: "rect.icon";}
-				rel2 {to: "rect.icon";}
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				rel1 {to: "rect.icon.bg";}
+				rel2 {to: "rect.icon.bg";}
 				image {
 					normal:"icon_press.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				visible:0;
-			}
-			description {
-				state: "show" 0.0;
-				inherit: "default" 0.0;
-				visible:1;
-			}
-			description {
-				state: "hide" 0.0;
-				inherit: "default" 0.0;
-				visible:0;
-			}
-		}
-		part{
-			name: "object.icon.sub.bg";
-			type:IMAGE;
-			scale:1;
-			description {
-				state: "default" 0.0;
-				fixed: 0 0;
-				rel1 {to: "rect.icon.sub";}
-				rel2 {to: "rect.icon.sub";}
-				image {
-					normal:"quick_icon_bg_small.png";
 					border: 0 0 0 0;
 					border_scale: 1;
 				}
@@ -1094,7 +901,8 @@ group {
 				rel2 {to: "rect.text.title";}
 				text {
 					style: "notibox_title";
-					align: 0.0 0.0;
+					size: 34;
+					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
 #endif
@@ -1125,11 +933,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.contents";}
 				rel2 {to: "rect.text.contents";}
-				color: BOX_CONTENTS_FONT_COLOR;
+				color: NOTIBOX_CONTENTS_FONT_COLOR;
 				text {
-					font: BOX_CONTENTS_FONT;
+					font: NOTIBOX_CONTENTS_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_CONTENTS_FONT_SIZE;
+					size: NOTIBOX_CONTENTS_FONT_SIZE;
 					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
@@ -1145,26 +953,29 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
 		part {
-			name: "object.text.contents.short";
+			name: "object.text.contents.multiline.short";
 			scale: 1;
-			type: TEXT;
-			effect: TEXT_EFFECT;
+			type: TEXTBLOCK;
+			multiline: 1;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.contents.short";}
-				rel2 {to: "rect.text.contents.short";}
-				color: BOX_CONTENTS_FONT_COLOR;
+				align: 0.0 0.0;
+				fixed: 1 1;
+				rel1 {
+					to: "rect.text.contents.multiline.short";
+				}
+				rel2 {
+					to: "rect.text.contents.multiline.short";
+				}
 				text {
-					font: BOX_CONTENTS_FONT;
-					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_CONTENTS_FONT_SIZE;
-					align: 0.0 0.5;
+						style: "notibox_contents";
+						align: 0.0 0.0;
 				}
 				visible:0;
 			}
@@ -1176,8 +987,9 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				text {
+					style: "notibox_contents_effect";
+				}
 				visible:1;
 			}
 		}
@@ -1199,7 +1011,6 @@ group {
 				text {
 						style: "notibox_contents";
 						align: 0.0 0.0;
-						fit: 0 0;
 				}
 				visible:0;
 			}
@@ -1224,19 +1035,31 @@ group {
 			effect: TEXT_EFFECT;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.count";}
-				rel2 {to: "rect.text.count";}
-				color: BOX_INFO_COUNT_FONT_COLOR;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				max: 79 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.1";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.text.info.1";
+					relative: 0.0 0.0;
+				}
+				color: NOTIBOX_CONTENTS_FONT_COLOR;
 				text {
-					font: BOX_INFO_COUNT_FONT;
+					font: NOTIBOX_CONTENTS_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_COUNT_FONT_SIZE;
-					align: 0.0 1.0;
+					size: NOTIBOX_CONTENTS_FONT_SIZE;
+					align: 1.0 0.5;
+					min: 1 0;
 #ifdef DEBUG_TEXT
-					text: "3";
+					text: "some string of text to display";
 #endif
 				}
 				visible:0;
+				align: 1.0 1.0;
 			}
 			description {
 				state: "show" 0.0;
@@ -1246,12 +1069,11 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
-
 		part {
 			name: "object.text.info.1";
 			scale: 1;
@@ -1261,11 +1083,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.info.1";}
 				rel2 {to: "rect.text.info.1";}
-				color: BOX_INFO_FONT_COLOR;
+				color: NOTIBOX_INFO_FONT_COLOR;
 				text {
-					font: BOX_INFO_FONT;
+					font: NOTIBOX_INFO_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_FONT_SIZE;
+					size: NOTIBOX_INFO_FONT_SIZE;
 					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
@@ -1281,8 +1103,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1295,11 +1117,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.info.1.short";}
 				rel2 {to: "rect.text.info.1.short";}
-				color: BOX_INFO_SHORT_FONT_COLOR;
+				color: NOTIBOX_INFO_SHORT_FONT_COLOR;
 				text {
-					font: BOX_INFO_SHORT_FONT;
+					font: NOTIBOX_INFO_SHORT_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_SHORT_FONT_SIZE;
+					size: NOTIBOX_INFO_SHORT_FONT_SIZE;
 					align: 0.0 0.5;
 				}
 				visible:0;
@@ -1312,8 +1134,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1335,7 +1157,6 @@ group {
 				text {
 						style: "notibox_info";
 						align: 0.0 0.0;
-						fit: 0 0;
 				}
 				visible:0;
 			}
@@ -1360,19 +1181,27 @@ group {
 			effect: TEXT_EFFECT;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.info.sub.1";}
-				rel2 {to: "rect.text.info.sub.1";}
-				color: BOX_INFO_SUB_FONT_COLOR;
+				rel1 {
+					to: "rect.text.info.sub.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to: "rect.text.info.sub.1";
+					relative: 1.0 1.0;
+				}
+				color: NOTIBOX_INFO_SUB_FONT_COLOR;
 				text {
-					font: BOX_INFO_SUB_FONT;
+					font: NOTIBOX_INFO_SUB_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_SUB_FONT_SIZE;
+					size: NOTIBOX_INFO_SUB_FONT_SIZE;
 					align: 1.0 0.5;
+					min: 1 0;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
 #endif
 				}
 				visible:0;
+				align:1.0 0.0;
 			}
 			description {
 				state: "show" 0.0;
@@ -1382,8 +1211,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1397,11 +1226,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.info.2";}
 				rel2 {to: "rect.text.info.2";}
-				color: BOX_INFO_FONT_COLOR;
+				color: NOTIBOX_INFO_FONT_COLOR;
 				text {
-					font: BOX_INFO_FONT;
+					font: NOTIBOX_INFO_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_FONT_SIZE;
+					size: NOTIBOX_INFO_FONT_SIZE;
 					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
@@ -1417,8 +1246,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1431,11 +1260,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.info.2.short";}
 				rel2 {to: "rect.text.info.2.short";}
-				color: BOX_INFO_SHORT_FONT_COLOR;
+				color: NOTIBOX_INFO_SHORT_FONT_COLOR;
 				text {
-					font: BOX_INFO_SHORT_FONT;
+					font: NOTIBOX_INFO_SHORT_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_SHORT_FONT_SIZE;
+					size: NOTIBOX_INFO_SHORT_FONT_SIZE;
 					align: 0.0 0.5;
 				}
 				visible:0;
@@ -1448,8 +1277,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1460,19 +1289,27 @@ group {
 			effect: TEXT_EFFECT;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.info.sub.2";}
-				rel2 {to: "rect.text.info.sub.2";}
-				color: BOX_INFO_SUB_FONT_COLOR;
+				rel1 {
+					to: "rect.text.info.sub.2";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to: "rect.text.info.sub.2";
+					relative: 1.0 1.0;
+				}
+				color: NOTIBOX_INFO_SUB_FONT_COLOR;
 				text {
-					font: BOX_INFO_SUB_FONT;
+					font: NOTIBOX_INFO_SUB_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_SUB_FONT_SIZE;
+					size: NOTIBOX_INFO_SUB_FONT_SIZE;
 					align: 1.0 0.5;
+					min: 1 0;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
 #endif
 				}
 				visible:0;
+				align:1.0 0.0;
 			}
 			description {
 				state: "show" 0.0;
@@ -1482,8 +1319,8 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
@@ -1500,6 +1337,7 @@ group {
 				color: 0 0 0 0;
 			}
 		}
+		QUICKPANEL_FOCUS_OBJECT("focus", "background", "background")
 		part {
 			name: "object.layer.touch.button.1";
 			mouse_events: 1;
@@ -1509,9 +1347,7 @@ group {
 			description {
 				state: "default" 0.0;
 				rel1 {
-					to_x: "rect.icon";
-					to_y: "object.button.close";
-					relative: 0.0 1.0;
+					to: "rect.icon";
 				}
 				rel2 {to: "rect.icon";}
 				color: 0 0 0 0;
@@ -1525,102 +1361,6 @@ group {
 				state: "hide" 0.0;
 				inherit: "default" 0.0;
 				visible: 0;
-			}
-		}
-		part{
-			name: "object.button.close";
-			type:RECT;
-			scale:1;
-			description {
-				state: "default" 0.0;
-				min:100 64;
-				rel1 {
-					to: "rect.button.close";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to: "rect.button.close";
-					relative: 1.0 0.0;
-				}
-				color: 0 0 0 0;
-				align: 1.0 0.0;
-			}
-		}
-		part{
-			name: "object.image.button.close";
-			type:IMAGE;
-			scale:1;
-			repeat_events: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {to: "rect.button.close";}
-				rel2 {to: "rect.button.close";}
-				image {
-					normal:"quick_btn_close_nor.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-			description {
-				state: "normal" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "pressed" 0.0;
-				inherit: "default" 0.0;
-				image {
-					normal:"quick_btn_close_press.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-			description {
-				state: "disabled" 0.0;
-				inherit: "default" 0.0;
-				image {
-					normal:"quick_btn_close_dim.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-		}
-		part {
-			name: "accessibility";
-			type: RECT;
-			mouse_events: 1;
-			repeat_events: 1;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {
-					to: "background";
-				}
-				rel2 {
-					to: "background";
-				}
-				color: QP_ACCESSIBILITY_TEST_COLOR;
-				visible: 1;
-			}
-		}
-		part {
-			name: "accessibility.closebutton";
-			type: RECT;
-			mouse_events: 1;
-			repeat_events: 1;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {
-					to: "rect.button.close";
-				}
-				rel2 {
-					to: "rect.button.close";
-				}
-				color: QP_ACCESSIBILITY_TEST_COLOR;
-				visible: 1;
 			}
 		}
 	}
@@ -1657,7 +1397,6 @@ group {
 			source: "box.prog";
 			action: STATE_SET "portrait" 0.0;
 			target: "background";
-			target: "rect.text.title";
 			after: "box.portrait.custom";
 		}
 		program{
@@ -1666,7 +1405,6 @@ group {
 			source: "box.prog";
 			action: STATE_SET "landscape" 0.0;
 			target: "background";
-			target: "rect.text.title";
 			after: "box.landscape.custom";
 		}
 		program{
@@ -1687,11 +1425,33 @@ group {
 				}
 			}
 		}
+#ifdef TBD
 		program{
 			name: "box.touch.down";
 			signal: "mouse,clicked,1";
 			source: "object.layer.touch.background";
 			action: SIGNAL_EMIT "selected" "edje";
+		}
+#endif
+		program{
+			name: "effect,mouse,down";
+			signal: "mouse,down,1";
+			source: "object.layer.touch.background";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.touch.effect", "show.dim", 0.0);
+				} else {
+					set_state(PART:"object.touch.effect", "show", 0.0);
+				}
+			}
+		}
+		program{
+			name: "effect,mouse,up";
+			signal: "mouse,up,1";
+			source: "object.layer.touch.background";
+			action: STATE_SET "default" 0.0;
+			transition: ACCELERATE 0.20;
+			target: "object.touch.effect";
 		}
 		program{
 			name: "box.button.1.touch.clicked";
@@ -1714,49 +1474,10 @@ group {
 			target: "object.icon.press";
 		}
 		program{
-			name: "box.button.close.1";
-			signal: "mouse,down,1";
-			source: "object.button.close";
-			script {
-				if (get_int(g_is_close_button_disabled) == 0) {
-					set_state(PART:"object.image.button.close", "pressed", 0.0);
-				}
-			}
-		}
-		program{
-			name: "box.button.close.2";
-			signal: "mouse,up,1";
-			source: "object.button.close";
-			script {
-				set_state(PART:"object.image.button.close", "normal", 0.0);
-			}
-		}
-		program{
-			name: "box.button.close.3";
-			signal: "mouse,clicked,1";
-			source: "object.button.close";
-			script {
-				if (get_int(g_is_close_button_disabled) == 0) {
-					set_state(PART:"object.image.button.close", "normal", 0.0);
-					emit("deleted", "edje");
-				}
-			}
-		}
-		program{
-			name: "box.button.close.4";
-			signal: "disabled";
-			source: "object.button.close";
-			script {
-				set_state(PART:"object.image.button.close", "disabled", 0.0);
-				set_int(g_is_close_button_disabled, 1);
-			}
-		}
-		program{
 			name: "box.show.icon.bg";
 			signal: "box.show.icon.bg";
 			source: "box.prog";
 			action: STATE_SET "show" 0.0;
-			target: "object.icon.bg";
 			target: "object.layer.touch.button.1";
 		}
 		program{
@@ -1764,64 +1485,28 @@ group {
 			signal: "box.hide.icon.bg";
 			source: "box.prog";
 			action: STATE_SET "hide" 0.0;
-			target: "object.icon.bg";
 			target: "object.layer.touch.button.1";
 		}
 		program{
-			name: "box.show.icon.sub.bg";
-			signal: "box.show.sub.bg";
+			name: "box.title.with.icon";
+			signal: "box.title.with.icon";
 			source: "box.prog";
-			action: STATE_SET "show" 0.0;
-			target: "object.icon.sub.bg";
+			action: STATE_SET "default" 0.0;
+			target: "rect.text.title";
 		}
 		program{
-			name: "box.hide.icon.sub.bg";
-			signal: "box.hide.sub.bg";
+			name: "box.title.without.icon";
+			signal: "box.title.without.icon";
 			source: "box.prog";
-			action: STATE_SET "hide" 0.0;
-			target: "object.icon.sub.bg";
-		}
-		program{
-			name: "box.count.1";
-			signal: "box.count.1";
-			source: "box.prog";
-			action: STATE_SET "count1" 0.0;
-			target: "rect.text.count";
-		}
-		program{
-			name: "box.count.2";
-			signal: "box.count.2";
-			source: "box.prog";
-			action: STATE_SET "count2" 0.0;
-			target: "rect.text.count";
-		}
-		program{
-			name: "box.count.3";
-			signal: "box.count.3";
-			source: "box.prog";
-			action: STATE_SET "count3" 0.0;
-			target: "rect.text.count";
-		}
-		program{
-			name: "box.count.4";
-			signal: "box.count.4";
-			source: "box.prog";
-			action: STATE_SET "count4" 0.0;
-			target: "rect.text.count";
-		}
-		program{
-			name: "box.count.5";
-			signal: "box.count.5";
-			source: "box.prog";
-			action: STATE_SET "count5" 0.0;
-			target: "rect.text.count";
+			action: STATE_SET "without_icon" 0.0;
+			target: "rect.text.title";
 		}
 		MAKE_PART_SHOW_PROGRAM("object.icon.background")
 		MAKE_PART_SHOW_PROGRAM("object.icon")
 		MAKE_PART_SHOW_PROGRAM("object.icon.sub")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.title")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents")
-		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents.short")
+		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents.multiline.short")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents.multiline")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.count")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.info.1")
@@ -1839,24 +1524,34 @@ group {
 	name: "quickpanel/notibox/thumbnail";
 
 	script {
-		public g_is_close_button_disabled;
 		public g_is_show_dim_bg;
 
 		public init_variables() {
-			set_int(g_is_close_button_disabled, 0);
 			set_int(g_is_show_dim_bg, 0);
 		}
 	}
 
 	parts {
+		part{
+			name: "clip.background";
+			type:RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				fixed: 0 0;
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				visible:1;
+			}
+		}
 		part {
 			name: "background";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_WIDTH_P BOX_HEIGHT_P;
-				color: BOX_COLOR_BG;
+				fixed: 0 0;
+				color_class: BOX_COLOR_BG;
 				align: 0.0 0.0;
 			}
 			description {
@@ -1866,7 +1561,6 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				min: BOX_WIDTH_L BOX_HEIGHT_L;
 			}
 		}
 
@@ -1879,6 +1573,7 @@ group {
 			description {
 				state: "default" 0.0;
 				min: BOX_MARGIN_L_TEXT_H 0;
+				fixed: 1 0;
 				rel1 {
 					relative: 0.0 0.0;
 				}
@@ -1900,6 +1595,7 @@ group {
 			description {
 				state: "default" 0.0;
 				min: BOX_MARGIN_R_TEXT_H 0;
+				fixed: 1 0;
 				rel1 {
 					relative: 1.0 0.0;
 				}
@@ -1915,12 +1611,13 @@ group {
 			}
 		}
 		part {
-			name: "margin.left.thumnail";
+			name: "margin.left.icon";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 12 0;
+				min: 10 0;
+				fixed: 1 0;
 				rel1 {
 					relative: 0.0 0.0;
 				}
@@ -1928,66 +1625,6 @@ group {
 					relative: 0.0 1.0;
 				}
 				align: 0.0 0.0;
-#ifdef DEBUG
-				color: 25 0 60 255;
-#else
-				visible:0;
-#endif
-			}
-			description {
-				state: "portrait" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "landscape" 0.0;
-				inherit: "default" 0.0;
-				min: 14 0;
-			}
-		}
-		part {
-			name: "margin.right.thumnail";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 12 0;
-				rel1 {
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					relative: 1.0 1.0;
-				}
-				align: 1.0 0.0;
-#ifdef DEBUG
-				color: 25 0 60 255;
-#else
-				visible:0;
-#endif
-			}
-			description {
-				state: "portrait" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "landscape" 0.0;
-				inherit: "default" 0.0;
-				min: 14 0;
-			}
-		}
-		part {
-			name: "margin.right.icon";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 8 0;
-				rel1 {
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					relative: 1.0 1.0;
-				}
-				align: 1.0 0.0;
 #ifdef DEBUG
 				color: 0 255 255 255;
 #else
@@ -2001,7 +1638,8 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 44;
+				min: 0 10;
+				fixed: 0 1;
 				rel1 {
 					relative: 0.0 0.0;
 				}
@@ -2022,7 +1660,8 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 20;
+				min: 0 10;
+				fixed: 0 1;
 				rel1 {
 					relative: 0.0 0.0;
 				}
@@ -2043,7 +1682,30 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 14;
+				min: 0 8;
+				fixed: 0 1;
+				rel1 {
+					relative: 0.0 1.0;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 0 0 255 255;
+#else
+				visible:0;
+#endif
+			}
+		}
+		part {
+			name: "margin.bottom.thin";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 2;
+				fixed: 0 1;
 				rel1 {
 					relative: 0.0 1.0;
 				}
@@ -2067,19 +1729,20 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				fixed: 1 1;
 				rel1 {
-					to_x:"margin.right.icon";
+					to_x:"margin.left.icon";
 					to_y:"margin.top.icon";
-					relative: 0.0 1.0;
+					relative: 1.0 1.0;
 				}
 				rel2 {
-					to_x:"margin.right.icon";
+					to_x:"margin.left.icon";
 					to_y:"margin.top.icon";
-					relative: 0.0 1.0;
+					relative: 1.0 1.0;
 				}
-				align: 1.0 0.0;
+				align: 0.0 0.0;
 #ifdef DEBUG
 				color: 255 0 0 255;
 #else
@@ -2093,8 +1756,9 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+				fixed: 1 1;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 				rel1 {
 					to:"rect.icon.bg";
 					relative: 0.5 0.5;
@@ -2117,7 +1781,8 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 15;
+				min: 0 9;
+				fixed: 0 1;
 				rel1 {
 					to:"rect.icon.bg";
 					relative: 0.0 1.0;
@@ -2142,6 +1807,7 @@ group {
 				state: "default" 0.0;
 				min: BOX_ICON_SUB_SIZE_W BOX_ICON_SUB_SIZE_H;
 				max: BOX_ICON_SUB_SIZE_W BOX_ICON_SUB_SIZE_H;
+				fixed: 1 1;
 				rel1 {
 					to:"rect.icon.sub.padding";
 					relative: 1.0 1.0;
@@ -2159,29 +1825,6 @@ group {
 			}
 		}
 
-		//section layout for close button
-		part {
-			name: "rect.button.close";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 38 38;
-				rel1 {
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					relative: 1.0 0.0;
-				}
-				align: 1.0 0.0;
-#ifdef DEBUG
-				color: 255 255 255 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-
 		//section layout for texts
 		part {
 			name: "rect.text.title";
@@ -2189,20 +1832,21 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 190 150;
-				max: 190 150;
+				min: 125 81;
+				max: 9999 81;
 				fixed: 1 1;
 				rel1 {
-					to_x:"margin.left";
-					to_y:"margin.top.text";
-					relative: 1.0 1.0;
+					to_x:"rect.icon.bg";
+					to_y:"rect.icon.bg";
+					relative: 1.0 0.5;
+					offset: +10 0;
 				}
 				rel2 {
-					to_x:"rect.icon.bg";
-					to_y:"margin.top.text";
-					relative: 0.0 1.0;
+					to_x:"margin.right";
+					to_y:"rect.icon.bg";
+					relative: 0.0 0.5;
 				}
-				align: 0.0 0.0;
+				align: 0.0 0.5;
 #ifdef DEBUG
 				color: 100 100 100 255;
 #else
@@ -2210,58 +1854,71 @@ group {
 #endif
 			}
 			description {
-				state: "portrait" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "landscape" 0.0;
-				inherit: "default" 0.0;
-				min: 260 189;
-				max: 260 189;
+				state: "without_icon" 0.0;
+				min: 125 81;
+				max: 9999 81;
+				fixed: 1 1;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.icon.bg";
+					relative: 1.0 0.5;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.icon.bg";
+					relative: 0.0 0.5;
+				}
+				align: 0.0 0.5;
+#ifdef DEBUG
+				color: 100 100 100 255;
+#else
+				visible:0;
+#endif
 			}
 		}
 
-
 		part {
-			name: "rect.text.margin.contents";
+			name: "rect.text.info.2";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 14;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				fixed: 0 1;
 				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.thumbnail.list.1";
+					to_x:"rect.thumbnail.list.1.padding";
+					to_y:"margin.bottom";
 					relative: 1.0 0.0;
 				}
 				rel2 {
 					to_x:"margin.right";
-					to_y:"rect.thumbnail.list.1";
+					to_y:"margin.bottom";
 					relative: 0.0 0.0;
 				}
 				align: 0.0 1.0;
 #ifdef DEBUG
-				color: 255 255 255 255;
+				color: 100 100 100 255;
 #else
 				visible:0;
 #endif
 			}
 		}
 		part {
-			name: "rect.text.contents";
+			name: "rect.text.info.1";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				min: 0 BOX_TEXT_INFO_HEIGHT;
+				fixed: 0 1;
 				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.text.margin.contents";
+					to_x:"rect.thumbnail.list.1.padding";
+					to_y:"rect.text.info.2";
 					relative: 1.0 0.0;
 				}
 				rel2 {
 					to_x:"margin.right";
-					to_y:"rect.text.margin.contents";
+					to_y:"rect.text.info.2";
 					relative: 0.0 0.0;
 				}
 				align: 0.0 1.0;
@@ -2273,79 +1930,57 @@ group {
 			}
 		}
 		part {
-			name: "rect.text.count";
+			name: "rect.text.info.1.multiline";
 			type: RECT;
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 58 58;
+				fixed: 1 1;
 				rel1 {
-					to_x:"margin.left";
-					to_y:"rect.text.margin.contents";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to_x:"margin.left";
-					to_y:"rect.text.margin.contents";
-					relative: 1.0 0.0;
-				}
-				align: 0.0 1.0;
-#ifdef DEBUG
-				color: 190 190 190 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
-			name: "rect.text.count.padding";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 10 58;
-				rel1 {
-					to:"rect.text.count";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to:"rect.text.count";
-					relative: 1.0 1.0;
-				}
-				align: 0.0 0.0;
-#ifdef DEBUG
-				color: 0 0 0 255;
-#else
-				visible:0;
-#endif
-			}
-		}
-		part {
-			name: "rect.text.contents.short";
-			type: RECT;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
-				rel1 {
-					to_x:"rect.text.count.padding";
-					to_y:"rect.text.margin.contents";
+					to_x:"rect.thumbnail.list.1.padding";
+					to_y:"rect.text.info.1";
 					relative: 1.0 0.0;
 				}
 				rel2 {
 					to_x:"margin.right";
-					to_y:"rect.text.margin.contents";
+					to_y:"margin.bottom.thin";
 					relative: 0.0 0.0;
 				}
-				align: 0.0 1.0;
+				align: 0.0 0.0;
 #ifdef DEBUG
-				color: 40 255 100 255;
+				color: 255 150 100 255;
 #else
 				visible:0;
 #endif
 			}
 		}
 
+		part {
+			name: "rect.text.contents";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"margin.left";
+					to_y:"rect.thumbnail.list.1";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to_x:"object.text.count";
+					to_y:"rect.thumbnail.list.1";
+					relative: 0.0 0.0;
+					offset: -8 0;
+				}
+				align: 0.0 1.0;
+#ifdef DEBUG
+				color: 100 150 100 255;
+#else
+				visible:0;
+#endif
+			}
+		}
 		//section layout for thumbnail
 		part {
 			name: "rect.thumbnail.list.1";
@@ -2353,14 +1988,14 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 70 70;
+				min: 50 50;
 				rel1 {
-					to_x:"margin.left.thumnail";
+					to_x:"margin.left.icon";
 					to_y:"margin.bottom";
 					relative: 1.0 0.0;
 				}
 				rel2 {
-					to_x:"margin.left.thumnail";
+					to_x:"margin.left.icon";
 					to_y:"margin.bottom";
 					relative: 1.0 0.0;
 				}
@@ -2378,7 +2013,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 12 0;
+				min: 3 0;
 				rel1 {
 					to:"rect.thumbnail.list.1";
 					relative: 1.0 0.0;
@@ -2401,7 +2036,7 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				min: 8 0;
+				min: 0 0;
 			}
 		}
 		part {
@@ -2410,7 +2045,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 70 70;
+				min: 50 50;
 				rel1 {
 					to_x:"rect.thumbnail.list.1.padding";
 					to_y:"margin.bottom";
@@ -2435,7 +2070,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 12 0;
+				min: 2 0;
 				rel1 {
 					to:"rect.thumbnail.list.2";
 					relative: 1.0 0.0;
@@ -2458,7 +2093,7 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				min: 8 0;
+				min: 0 0;
 			}
 		}
 		part {
@@ -2467,7 +2102,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 70 70;
+				min: 50 50;
 				rel1 {
 					to_x:"rect.thumbnail.list.2.padding";
 					to_y:"margin.bottom";
@@ -2492,7 +2127,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 12 0;
+				min: 2 0;
 				rel1 {
 					to:"rect.thumbnail.list.3";
 					relative: 1.0 0.0;
@@ -2515,7 +2150,7 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				min: 8 0;
+				min: 0 0;
 			}
 		}
 		part {
@@ -2524,7 +2159,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 70 70;
+				min: 50 50;
 				rel1 {
 					to_x:"rect.thumbnail.list.3.padding";
 					to_y:"margin.bottom";
@@ -2549,7 +2184,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 12 0;
+				min: 2 0;
 				rel1 {
 					to:"rect.thumbnail.list.4";
 					relative: 1.0 0.0;
@@ -2572,7 +2207,7 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				min: 8 0;
+				min: 0 0;
 			}
 		}
 		part {
@@ -2581,7 +2216,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 70 70;
+				min: 50 50;
 				rel1 {
 					to_x:"rect.thumbnail.list.4.padding";
 					to_y:"margin.bottom";
@@ -2607,7 +2242,6 @@ group {
 			description {
 				state: "landscape" 0.0;
 				inherit: "default" 0.0;
-				visible:1;
 			}
 		}
 
@@ -2615,6 +2249,7 @@ group {
 			name: "object.icon.background";
 			type:SWALLOW;
 			scale: 1;
+			clip_to: "clip.background";
 			description {
 				state: "default" 0.0;
 				fixed: 0 0;
@@ -2629,29 +2264,28 @@ group {
 			}
 		}
 		part{
-			name: "object.icon.bg";
-			type:IMAGE;
-			scale:1;
+			name: "object.touch.effect";
+			type:RECT;
+			scale: 1;
 			description {
 				state: "default" 0.0;
 				fixed: 0 0;
-				rel1 {to: "rect.icon.bg";}
-				rel2 {to: "rect.icon.bg";}
-				image {
-					normal:"quick_icon_bg_01.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
+				rel1 {to: "background";}
+				rel2 {to: "background";}
+				color: 0 0 0 0;
+				visible:0;
 			}
 			description {
 				state: "show" 0.0;
 				inherit: "default" 0.0;
+				color_class: BOX_COLOR_BG_HIGHLIGHT;
 				visible:1;
 			}
 			description {
-				state: "hide" 0.0;
+				state: "show.dim" 0.0;
 				inherit: "default" 0.0;
-				visible:0;
+				color_class: BOX_COLOR_BG_HIGHLIGHT_DIM;
+				visible:1;
 			}
 		}
 		part{
@@ -2697,9 +2331,9 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				fixed: 0 0;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+				fixed: 1 1;
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 				rel1 {to: "rect.icon";}
 				rel2 {to: "rect.icon";}
 				visible:0;
@@ -2717,39 +2351,12 @@ group {
 			description {
 				state: "default" 0.0;
 				fixed: 1 1;
-				min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				max: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
-				rel1 {to: "rect.icon";}
-				rel2 {to: "rect.icon";}
+				min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+				rel1 {to: "rect.icon.bg";}
+				rel2 {to: "rect.icon.bg";}
 				image {
 					normal:"icon_press.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				visible:0;
-			}
-			description {
-				state: "show" 0.0;
-				inherit: "default" 0.0;
-				visible:1;
-			}
-			description {
-				state: "hide" 0.0;
-				inherit: "default" 0.0;
-				visible:0;
-			}
-		}
-		part{
-			name: "object.icon.sub.bg";
-			type:IMAGE;
-			scale:1;
-			description {
-				state: "default" 0.0;
-				fixed: 0 0;
-				rel1 {to: "rect.icon.sub";}
-				rel2 {to: "rect.icon.sub";}
-				image {
-					normal:"quick_icon_bg_small.png";
 					border: 0 0 0 0;
 					border_scale: 1;
 				}
@@ -2772,7 +2379,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				fixed: 0 0;
+				fixed: 1 1;
 				min: BOX_ICON_SUB_SIZE_W BOX_ICON_SUB_SIZE_H;
 				max: BOX_ICON_SUB_SIZE_W BOX_ICON_SUB_SIZE_H;
 				rel1 {to: "rect.icon.sub";}
@@ -2888,7 +2495,8 @@ group {
 				rel2 {to: "rect.text.title";}
 				text {
 					style: "notibox_title";
-					align: 0.0 0.0;
+					size: 34;
+					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
 #endif
@@ -2919,11 +2527,11 @@ group {
 				state: "default" 0.0;
 				rel1 {to: "rect.text.contents";}
 				rel2 {to: "rect.text.contents";}
-				color: BOX_CONTENTS_FONT_COLOR;
+				color: NOTIBOX_CONTENTS_FONT_COLOR;
 				text {
-					font: BOX_CONTENTS_FONT;
+					font: NOTIBOX_CONTENTS_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_CONTENTS_FONT_SIZE;
+					size: NOTIBOX_CONTENTS_FONT_SIZE;
 					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
 					text: "some string of text to display";
@@ -2939,28 +2547,43 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
 		part {
-			name: "object.text.contents.short";
+			name: "object.text.count";
 			scale: 1;
 			type: TEXT;
 			effect: TEXT_EFFECT;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.contents.short";}
-				rel2 {to: "rect.text.contents.short";}
-				color: BOX_CONTENTS_FONT_COLOR;
+				min: 0 BOX_TEXT_CONTENTS_HEIGHT;
+				max: 790 BOX_TEXT_CONTENTS_HEIGHT;
+				rel1 {
+					to_x:"margin.right";
+					to_y:"rect.thumbnail.list.1";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to_x:"margin.right";
+					to_y:"rect.thumbnail.list.1";
+					relative: 0.0 0.0;
+				}
+				color: NOTIBOX_CONTENTS_FONT_COLOR;
 				text {
-					font: BOX_CONTENTS_FONT;
+					font: NOTIBOX_CONTENTS_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_CONTENTS_FONT_SIZE;
-					align: 0.0 0.5;
+					size: NOTIBOX_CONTENTS_FONT_SIZE;
+					align: 1.0 0.5;
+					min: 1 0;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
 				}
 				visible:0;
+				align: 1.0 1.0;
 			}
 			description {
 				state: "show" 0.0;
@@ -2970,29 +2593,28 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
-
 		part {
-			name: "object.text.count";
+			name: "object.text.info.1";
 			scale: 1;
 			type: TEXT;
 			effect: TEXT_EFFECT;
 			description {
 				state: "default" 0.0;
-				rel1 {to: "rect.text.count";}
-				rel2 {to: "rect.text.count";}
-				color: BOX_INFO_COUNT_FONT_COLOR;
+				rel1 {to: "rect.text.info.1";}
+				rel2 {to: "rect.text.info.1";}
+				color: NOTIBOX_INFO_FONT_COLOR;
 				text {
-					font: BOX_INFO_COUNT_FONT;
+					font: NOTIBOX_INFO_FONT;
 					text_class: TEXT_CLASS_TIZEN;
-					size: BOX_INFO_COUNT_FONT_SIZE;
+					size: NOTIBOX_INFO_FONT_SIZE;
 					align: 0.0 0.5;
 #ifdef DEBUG_TEXT
-					text: "3";
+					text: "some string of text to display";
 #endif
 				}
 				visible:0;
@@ -3005,11 +2627,83 @@ group {
 			description {
 				state: "show.effect" 0.0;
 				inherit: "default" 0.0;
-				color2: BOX_FONT_SHADOW_COLOR;
-				color3: BOX_FONT_OUTLINE_COLOR;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
 				visible:1;
 			}
 		}
+
+		part {
+			name: "object.text.info.1.multiline";
+			scale: 1;
+			type: TEXTBLOCK;
+			multiline: 1;
+			description {
+				state: "default" 0.0;
+				align: 0.0 0.0;
+				fixed: 1 1;
+				rel1 {
+					to: "rect.text.info.1.multiline";
+				}
+				rel2 {
+					to: "rect.text.info.1.multiline";
+				}
+				text {
+						style: "notibox_info";
+						align: 0.0 0.0;
+				}
+				visible:0;
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "show.effect" 0.0;
+				inherit: "default" 0.0;
+				text {
+					style: "notibox_info_effect";
+				}
+				visible:1;
+			}
+		}
+
+		part {
+			name: "object.text.info.2";
+			scale: 1;
+			type: TEXT;
+			effect: TEXT_EFFECT;
+			description {
+				state: "default" 0.0;
+				rel1 {to: "rect.text.info.2";}
+				rel2 {to: "rect.text.info.2";}
+				color: NOTIBOX_INFO_FONT_COLOR;
+				text {
+					font: NOTIBOX_INFO_FONT;
+					text_class: TEXT_CLASS_TIZEN;
+					size: NOTIBOX_INFO_FONT_SIZE;
+					align: 0.0 0.5;
+#ifdef DEBUG_TEXT
+					text: "some string of text to display";
+#endif
+				}
+				visible:0;
+			}
+			description {
+				state: "show" 0.0;
+				inherit: "default" 0.0;
+				visible:1;
+			}
+			description {
+				state: "show.effect" 0.0;
+				inherit: "default" 0.0;
+				color2: NOTIBOX_FONT_SHADOW_COLOR;
+				color3: NOTIBOX_FONT_OUTLINE_COLOR;
+				visible:1;
+			}
+		}
+
 		part {
 			name: "object.layer.touch.background";
 			mouse_events: 1;
@@ -3023,6 +2717,7 @@ group {
 				color: 0 0 0 0;
 			}
 		}
+		QUICKPANEL_FOCUS_OBJECT("focus", "background", "background")
 		part {
 			name: "object.layer.touch.button.1";
 			mouse_events: 1;
@@ -3032,9 +2727,7 @@ group {
 			description {
 				state: "default" 0.0;
 				rel1 {
-					to_x: "rect.icon";
-					to_y: "object.button.close";
-					relative: 0.0 1.0;
+					to: "rect.icon";
 				}
 				rel2 {to: "rect.icon";}
 				color: 0 0 0 0;
@@ -3048,102 +2741,6 @@ group {
 				state: "hide" 0.0;
 				inherit: "default" 0.0;
 				visible: 0;
-			}
-		}
-		part{
-			name: "object.button.close";
-			type:RECT;
-			scale:1;
-			description {
-				state: "default" 0.0;
-				min:100 64;
-				rel1 {
-					to: "rect.button.close";
-					relative: 1.0 0.0;
-				}
-				rel2 {
-					to: "rect.button.close";
-					relative: 1.0 0.0;
-				}
-				align: 1.0 0.0;
-				color: 0 0 0 0;
-			}
-		}
-		part{
-			name: "object.image.button.close";
-			type:IMAGE;
-			scale:1;
-			repeat_events: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {to: "rect.button.close";}
-				rel2 {to: "rect.button.close";}
-				image {
-					normal:"quick_btn_close_nor.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-			description {
-				state: "normal" 0.0;
-				inherit: "default" 0.0;
-			}
-			description {
-				state: "pressed" 0.0;
-				inherit: "default" 0.0;
-				image {
-					normal:"quick_btn_close_press.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-			description {
-				state: "disabled" 0.0;
-				inherit: "default" 0.0;
-				image {
-					normal:"quick_btn_close_dim.png";
-					border: 0 0 0 0;
-					border_scale: 1;
-				}
-				align: 0.0 1.0;
-			}
-		}
-		part {
-			name: "accessibility";
-			type: RECT;
-			mouse_events: 1;
-			repeat_events: 1;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {
-					to: "background";
-				}
-				rel2 {
-					to: "background";
-				}
-				color: QP_ACCESSIBILITY_TEST_COLOR;
-				visible: 1;
-			}
-		}
-		part {
-			name: "accessibility.closebutton";
-			type: RECT;
-			mouse_events: 1;
-			repeat_events: 1;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				rel1 {
-					to: "rect.button.close";
-				}
-				rel2 {
-					to: "rect.button.close";
-				}
-				color: QP_ACCESSIBILITY_TEST_COLOR;
-				visible: 1;
 			}
 		}
 	}
@@ -3180,14 +2777,13 @@ group {
 			source: "box.prog";
 			action: STATE_SET "portrait" 0.0;
 			target: "background";
-			target: "margin.left.thumnail";
-			target: "margin.right.thumnail";
-			target: "rect.text.title";
+
 			target: "rect.thumbnail.list.1.padding";
 			target: "rect.thumbnail.list.2.padding";
 			target: "rect.thumbnail.list.3.padding";
 			target: "rect.thumbnail.list.4.padding";
 			target: "rect.thumbnail.list.5";
+
 			target: "object.thumbnail.list.5";
 			after: "box.portrait.custom";
 		}
@@ -3197,9 +2793,7 @@ group {
 			source: "box.prog";
 			action: STATE_SET "landscape" 0.0;
 			target: "background";
-			target: "margin.left.thumnail";
-			target: "margin.right.thumnail";
-			target: "rect.text.title";
+
 			target: "rect.thumbnail.list.1.padding";
 			target: "rect.thumbnail.list.2.padding";
 			target: "rect.thumbnail.list.3.padding";
@@ -3226,11 +2820,33 @@ group {
 				}
 			}
 		}
+#ifdef TBD
 		program{
 			name: "box.touch.down";
 			signal: "mouse,clicked,1";
 			source: "object.layer.touch.background";
 			action: SIGNAL_EMIT "selected" "edje";
+		}
+#endif
+		program{
+			name: "effect,mouse,down";
+			signal: "mouse,down,1";
+			source: "object.layer.touch.background";
+			script {
+				if (get_int(g_is_show_dim_bg) == 1) {
+					set_state(PART:"object.touch.effect", "show.dim", 0.0);
+				} else {
+					set_state(PART:"object.touch.effect", "show", 0.0);
+				}
+			}
+		}
+		program{
+			name: "effect,mouse,up";
+			signal: "mouse,up,1";
+			source: "object.layer.touch.background";
+			action: STATE_SET "default" 0.0;
+			transition: ACCELERATE 0.20;
+			target: "object.touch.effect";
 		}
 		program{
 			name: "box.button.1.touch.clicked";
@@ -3253,80 +2869,44 @@ group {
 			target: "object.icon.press";
 		}
 		program{
-			name: "box.button.close.1";
-			signal: "mouse,down,1";
-			source: "object.button.close";
-			script {
-				if (get_int(g_is_close_button_disabled) == 0) {
-					set_state(PART:"object.image.button.close", "pressed", 0.0);
-				}
-			}
-		}
-		program{
-			name: "box.button.close.2";
-			signal: "mouse,up,1";
-			source: "object.button.close";
-			script {
-				set_state(PART:"object.image.button.close", "normal", 0.0);
-			}
-		}
-		program{
-			name: "box.button.close.3";
-			signal: "mouse,clicked,1";
-			source: "object.button.close";
-			script {
-				if (get_int(g_is_close_button_disabled) == 0) {
-					set_state(PART:"object.image.button.close", "normal", 0.0);
-					emit("deleted", "edje");
-				}
-			}
-		}
-		program{
-			name: "box.button.close.4";
-			signal: "disabled";
-			source: "object.button.close";
-			script {
-				set_state(PART:"object.image.button.close", "disabled", 0.0);
-				set_int(g_is_close_button_disabled, 1);
-			}
-		}
-		program{
 			name: "box.show.icon.bg";
 			signal: "box.show.icon.bg";
 			source: "box.prog";
 			action: STATE_SET "show" 0.0;
-			target: "object.icon.bg";
+
 			target: "object.layer.touch.button.1";
 		}
 		program{
 			name: "box.hide.icon.bg";
 			signal: "box.hide.icon.bg";
-			source: "box.prog";
+	 		source: "box.prog";
 			action: STATE_SET "hide" 0.0;
-			target: "object.icon.bg";
+
 			target: "object.layer.touch.button.1";
 		}
 		program{
-			name: "box.show.icon.sub.bg";
-			signal: "box.show.sub.bg";
+			name: "box.title.with.icon";
+			signal: "box.title.with.icon";
 			source: "box.prog";
-			action: STATE_SET "show" 0.0;
-			target: "object.icon.sub.bg";
+			action: STATE_SET "default" 0.0;
+			target: "rect.text.title";
 		}
 		program{
-			name: "box.hide.icon.sub.bg";
-			signal: "box.hide.sub.bg";
+			name: "box.title.without.icon";
+			signal: "box.title.without.icon";
 			source: "box.prog";
-			action: STATE_SET "hide" 0.0;
-			target: "object.icon.sub.bg";
+			action: STATE_SET "without_icon" 0.0;
+			target: "rect.text.title";
 		}
 		MAKE_PART_SHOW_PROGRAM("object.icon.background")
 		MAKE_PART_SHOW_PROGRAM("object.icon")
 		MAKE_PART_SHOW_PROGRAM("object.icon.sub")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.title")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents")
-		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.contents.short")
 		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.count")
+		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.info.1")
+		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.info.1.multiline")
+		MAKE_PART_SHOW_TEXT_PROGRAM("object.text.info.2")
 		MAKE_PART_SHOW_PROGRAM("object.thumbnail.list.1")
 		MAKE_PART_SHOW_PROGRAM("object.thumbnail.list.2")
 		MAKE_PART_SHOW_PROGRAM("object.thumbnail.list.3")

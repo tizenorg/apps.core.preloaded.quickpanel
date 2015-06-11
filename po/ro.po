@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Notificări"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Numai apeluri de urgenţă"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotire"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Notificări (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibraţie"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Sunet şi vibraţie"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Rotire auto."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Blocare rotire"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Mod de stocare în masă"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Dezactiv."
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Activare"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Neacceptat"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Oprire"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Introduceţi cartela SIM pentru a accesa serviciile de reţea"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Nu întreba din nou"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Introduceţi cartela SIM şi reporniţi dispozitivul pentru a utiliza furnizarea accesului la Internet"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Conectarea folosind pachetele de date poate genera costuri suplimentare. Continuaţi?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Automat"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Economisire energie"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Tethering"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Date mobile"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Mod la volan"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Imposibil de conectat la reţelele mobile când modul Avion este activat. Conectaţi-vă utilizând reţeaua Wi-Fi sau dezactivaţi modul Avion şi încercaţi din nou"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Furnizarea accesului la Internet prin Wi-Fi consumă mai mult din energia bateriei şi creşte volumul de date utilizat. Continuaţi?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Dezact. furnizarea accesului la internet pt. a utiliza Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Pentru activarea modului Economisire energie, activaţi cel puţin o funcţie relevantă"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Opriţi Wi-Fi pentru a utiliza furnizarea accesului la internet"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Wi-Fi şi PA mobil nu pot fi activate simultan. Dezactivaţi PA mobil?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Oglindire ecran"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Şterg. totală"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Înlocuiţi butonul pentru setare rapidă"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "At. aici pt. dez. Mod. sigur."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Adăugaţi un buton pentru setare rapidă"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Imposibil de lansat %s"
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Nu veţi mai putea utiliza aplicaţii precum Internetul şi E-mailul prin intermediul reţelelor mobile. Continuaţi?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Numai apeluri de urgenţă"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Duplicare\nEcran"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Căutare..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Buton"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Fără SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Nici un serviciu"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Cartelă SIM incorectă"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Numai apeluri de urgenţă"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "S-a activ. Mod. siguranţă"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Notificări (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Şter. tot"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Notificare"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "De acord"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Întreabă mereu"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Refuzare"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Locaţia GPS şi utilizarea datelor locaţiei dvs. sunt controlate de aplicaţiile pe care le utilizaţi"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibraţii"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Consimţământ utilizator"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ec. max.\nenergie"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Furn. acces internet"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Sunet"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Sunet"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Modul Privat"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Econom.\nenergie"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Silenţ."
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Date\nmobile"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Locaţie"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Mod\nAvion"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Rotire automată"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Lumină\najutor"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "pm"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notificări"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "am"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Nu se pot efectua apeluri vocale şi video şi nu se pot trimite mesaje text utilizând %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Selectaţi o cartelă SIM pentru apelurile vocale şi video efectuate şi pentru mesajele text."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Se va utiliza cartela SIM %s pentru apelurile vocale şi video de ieşire şi mesajele text trimise."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nu"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Imposibil de mărit luminozitatea deoarece telefonul este supraîncălzit"
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "În afara ariei de acoperire"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Numai apeluri de urgenţă"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Exterior"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Tethering\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Lanternă"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Econom.\nenergie"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Date\nmobile"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Modul\nAvion"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Rotire\nautomată"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Se caută reţeaua mobilă..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Introduceţi cartela SIM pentru a accesa serviciile de reţea."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Solicită întotdeauna"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Imposibil de conectat la reţelele mobile când modul Avion este activat. Conectaţi-vă la reţeaua Wi-Fi sau dezactivaţi modul Avion şi încercaţi din nou."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Se caută"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "%s nu se poate deschide."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Exterior"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Mod\nPrivat"
 

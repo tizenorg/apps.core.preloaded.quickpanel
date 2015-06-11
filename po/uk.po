@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Сповіщення"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Лише екстрені виклики"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Обертан."
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Сповіщення (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Вібрація"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Звук і вібрація"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Автооберт."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Блок. обертання"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Режим накопичувача"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Вимкнути"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Увімкнути"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Не підтримується"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Відхилити"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Щоб отримати доступ до послуг мережі, вставте SIM-картку"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Надалі не запитувати"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Вставте SIM-картку та перезавантажте пристрій, щоб скористатися прив'язкою"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Підключення з використанням пакетних даних може потребувати додаткової оплати. Продовжити?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Авто"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Енергозбереження"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Прив’язка"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Мобільні дані"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Режим За кермом"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Неможливо підключитися до мобільної мережі у разі ввімкненого режиму без зв'язку. Підключіться до мережі Wi-Fi або вимкніть режим без зв'язку та спробуйте ще раз"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Прив'язка Wi-Fi використовує більше заряду акумулятора та збільшує використання даних. Продовжити?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Вимкніть прив'язку, щоб скористатися Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Щоб ввімкнути режим енергозбереження, увімкніть принаймні одну відповідну функцію"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Вимкніть Wi-Fi, щоб скористатися прив'язкою"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Мережі Wi-Fi та Mobile AP не можна активувати одночасно. Вимкнути Mobile AP?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Дублювання екрану"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Очистити все"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Замінити кнопку установок панелі швидкого доступу"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Натис.тут, щоб вимк.безпеч.реж."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Додати кнопку швидкого доступу до установок"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Неможливо запустити %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Більше не можна буде використовувати такі послуги, як доступ до Інтернету та обмін повідомленнями Email через мобільні мережі. Продовжити?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Лише екстрені виклики"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Дублюв.\nекрана"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Пошук..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Кнопка"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Відсутня SIM-карта"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Немає мережі"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Збій SIM-картки."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Лише екстрені виклики."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "На вул."
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Безпечний режим увімкнено"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Сповіщення (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Очист. всі"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Сповіщення"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Згоден"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Завжд.запитувати"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Не погодитися"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Керування GPS-розташуванням і використанням даних про розташування здійснюється за допомогою програми, яка використовується вами"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Вібрація"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Згода користувача"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Реж.макс.\nенерг."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Прив’язка"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Звук"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Звук"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Особист. режим"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Енерго\nзбереження"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Вимкнути\nзвук"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Мобільні\nдані"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Геодані"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Без\nзв’язку"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Автообертання"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Допом.\nпідсвіч."
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Сповіщення"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Неможливо здійснювати голосові виклики, відеовиклики та надсилати SMS-повідомлення за допомогою %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Виберіть SIM-карту для здійснення вихідних голосових викликів, відеовикликів і надсилання SMS-повідомлень."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "За допомогою SIM-карти %s буде здійснено вихідні голосові виклики, відеовиклики та надіслано SMS-повідомлення."
+
+msgid "IDS_ST_SK_OK"
+msgstr "ОК"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ні"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Неможливо збільшувати яскравість далі через перегрів телефону."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Немає служби"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Лише екстрені виклики"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "На вулиці"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Прив’яз.\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Ліхтар"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Енерго-\nзбереж."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Мобільні\nдані"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Реж. без\nзв’язку"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Автообе-\nртання"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Пошук мобільної мережі..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Щоб отримати доступ до послуг мережі, вставте SIM-карту."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Завжди запитувати"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Неможливо підключитися до мобільних мереж, якщо ввімкнено режим без зв’язку. Підключіться натомість до мережі Wi-Fi або вимкніть режим без зв’язку та спробуйте ще раз."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Пошук"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Неможливо запустити програму %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "На вул."
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Особист.\nрежим"
 

@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Pranešimai"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Tik pagalbos skambučiai"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Rotacija"
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Pranešimai (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibracija"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Garsas ir vibrac."
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Aut. suk."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Sukamasis užraktas"
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Duomenų saugyklos režimas"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Išjungti"
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Įjungti"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Nepalaikoma"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Nutraukti"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Įdėkite SIM kortelę, kad galėtumėte  naudotis tinklo paslaugomis"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Neklauskite dar kartą"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Norėdami naudoti siejimą, įdėkite SIM kortelę ir paleiskite įrenginį iš naujo"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Jungiantis paketinių duomenų perdavimo ryšiu gali būti taikomi papildomi mokesčiai. Tęsti?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Automatinis"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Energijos taupymas"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Siejama"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobilieji duomenys"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Vairavimo režimas"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Neįmanoma prisijungti prie mobiliųjų tinklų, kol įjungtas skrydžio režimas. Vietoj to prisijunkite prie „Wi-Fi“ tinklo arba išjunkite skrydžio režimą ir pabandykite dar kartą"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Esant įjungtam „Wi-Fi“ siejimui, suvartojama daugiau akumuliatoriaus energijos ir padidėja duomenų naudojimas. Tęsti?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Išjunkite siejimą, kad galėtumėte naudoti „Wi-Fi“"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Jei norite įjungti energijos taupymo režimą, suaktyvinkite bent vieną atitinkamą funkciją"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Išjunkite „Wi-Fi“, kad galėtumėte naudoti siejimą"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Tuo pat metu negalima suaktyvinti ir „Wi-Fi“, ir „Mobile AP“. Išjungti „Mobile AP“?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Valyti viską"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Pakeisti greitojo nustatymo mygtuką"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Bakst. čia išj. saugųjį režimą."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Pridėti greitojo nustatymo mygtuką"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Negalima paleisti %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Daugiau nebegalėsite per mobiliuosius tinklus naudotis tokiomis programomis kaip internetas ir el. paštas. Tęsti?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Tik pagalbos skambučiai"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Ieškoma..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Mygtukas"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Nėra SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Paslauga neteikiama"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Netinkama SIM kortelė."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Tik pagalbos skambučiai."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Lauke"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Įjungtas saugus režimas"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Pranešimai (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Viską išv."
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Pranešimas"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Sutikti"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Visada klausti"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Nesutikti"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "„Wi-Fi“"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Vietos nustatymą naudojant GPS ir jūsų vietos duomenis kontroliuoja jūsų naudojamos programos"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibruoti"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Naudotojo sutikimas"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ypat.en.\ntaupymas"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Siejama"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Garsas"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Garsas"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Asmeninis režim."
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Energ.\ntaupymas"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Tildyti"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mob.\nduomenys"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Vieta"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Skrydžio\nrežim."
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "„Bluetooth“"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Automatinis sukimas"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Pagalb.\nlemputė"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Pranešimai"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Neįmanoma atlikti balso ir vaizdo skambučių bei siųsti teksto žinučių naudojant %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Pasirinkite SIM kortelę išeinantiems balso ir vaizdo skambučiams bei teksto žinutėms."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Išeinantys balso skambučiai, vaizdo skambučiai ir teksto žinutės bus atliekami naudojant %s SIM kortelę."
+
+msgid "IDS_ST_SK_OK"
+msgstr "Gerai"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ne"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Neįmanoma padidinti šviesumo dėl telefono perkaitimo."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Paslauga neteikiama"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Tik pagalbos skambučiai"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Laukas"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\nsiejimas"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Žibintu-\nvėlis"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Energij.\ntaup."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobil.\nduom."
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Skryd.\nrežimas"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Autom.\npasukim."
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Ieškoma mobiliojo tinklo..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Įdėkite SIM kortelę, kad galėtumėte  naudotis tinklo paslaugomis."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Visada klausti"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Neįmanoma prisijungti prie mobiliųjų tinklų, kol įjungtas skrydžio režimas. Prisijunkite prie „Wi-Fi“ tinklo arba išjunkite skrydžio režimą ir bandykite dar kartą."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Ieškoma"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Neįmanoma atidaryti %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Lauke"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Asmen.\nrežimas"
 

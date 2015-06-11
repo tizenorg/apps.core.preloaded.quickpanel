@@ -1,18 +1,20 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
 
 #ifndef _QP_LIST_UTIL_DEF_
 #define _QP_LIST_UTIL_DEF_
@@ -23,11 +25,16 @@ typedef enum {
 	QP_ITEM_TYPE_NONE = -1,
 	QP_ITEM_TYPE_SETTING = 0,
 	QP_ITEM_TYPE_BRIGHTNESS,
-	QP_ITEM_TYPE_ONGOING_NOTI,
+	QP_ITEM_TYPE_DUAL_SIM,
+	QP_ITEM_TYPE_FACTORY,
+	QP_ITEM_TYPE_MULTIWINDOW,
+	QP_ITEM_TYPE_EARJACK,
 	QP_ITEM_TYPE_MINICTRL_ONGOING,
 	QP_ITEM_TYPE_MINICTRL_TOP,
 	QP_ITEM_TYPE_MINICTRL_MIDDLE,
 	QP_ITEM_TYPE_MINICTRL_LOW,
+	QP_ITEM_TYPE_ONGOING_NOTI_GROUP,
+	QP_ITEM_TYPE_ONGOING_NOTI,
 	QP_ITEM_TYPE_NOTI_GROUP,
 	QP_ITEM_TYPE_NOTI,
 	QP_ITEM_TYPE_BAR,
@@ -50,14 +57,17 @@ void quickpanel_list_util_item_del_tag(Evas_Object *item);
 void *quickpanel_list_util_item_get_data(qp_item_data *qid);
 void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data);
 int quickpanel_list_util_item_compare(const void *data1, const void *data2);
+qp_item_type_e quickpanel_list_util_item_type_get(Evas_Object *item);
 
-void quickpanel_list_util_item_unpack_by_type(Evas_Object *list
-		, qp_item_type_e type);
 void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
-		, Evas_Object *item);
+		, Evas_Object *item, int is_unpack_only, int is_hide);
 
 void quickpanel_list_util_sort_insert(Evas_Object *list,
 					Evas_Object *new_obj);
+
+Elm_Transit *quickpanel_list_util_get_reorder_transit(Evas_Object *item,
+		Elm_Transit *transit, int distance);
+void quickpanel_list_util_scroll_freeze_set(Eina_Bool is_freeze);
 
 #endif /* _QP_LIST_UTIL_DEF_ */
 

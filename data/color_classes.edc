@@ -1,0 +1,379 @@
+/*
+* Samsung API
+* Copyright (c) 2009-2015 Samsung Electronics Co., Ltd.
+*
+* Licensed under the Apache License, Version 2.0 (the License);
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/license/
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an AS IS BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+color_classes {
+	color_class {
+		name: "AO007L1";
+		color: 18 75 107 255;
+	}
+	color_class {
+		name: "AO007L2";
+		color: 255 255 255 51;
+	}
+	color_class {
+		name: "AO021P";
+		color: 20 107 147 76;
+	}
+	color_class {
+		name: "AO025";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO027";
+		color: 255 255 255 76;
+	}
+	color_class {
+		name: "AO033";
+		color: 0 0 0 12;
+	}
+	color_class {
+		name: "AO001L1";
+		color: 18 75 107 255;
+	}
+	color_class {
+		name: "AO001L1D";
+		color: 18 75 107 127;
+	}
+	color_class {
+		name: "AO001L1P";
+		color: 15 60 89 255;
+	}
+	color_class {
+		name: "AO002";
+		color: 159 239 0 255;
+	}
+	color_class {
+		name: "AO003";
+		color: 255 255 255 127;
+	}
+	color_class {
+		name: "AO003D";
+		color: 255 255 255 76;
+	}
+	color_class {
+		name: "AO003E1";
+		color: 255 255 255 165;
+	}
+	color_class {
+		name: "AO004";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO004D";
+		color: 88 144 170 255;
+	}
+	color_class {
+		name: "AO005L2";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO005L1";
+		color: 16 81 112 255;
+	}
+	color_class {
+		name: "AO005L1D";
+		color: 178 178 178 76;
+	}
+	color_class {
+		name: "AO005L3";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO005L4";
+		color: 255 255 255 51;
+	}
+	color_class {
+		name: "AO008";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO010";
+		color: 224 33 33 255;
+	}
+	color_class {
+		name: "AO031";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "AO032";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO011L1";
+		color: 20 107 147 153;
+	}
+	color_class {
+		name: "AO011L1P";
+		color: 66 162 206 255;
+	}
+	color_class {
+		name: "AO011L1D";
+		color: 20 107 147 153;
+	}
+	color_class {
+		name: "AO011L1E01";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "AO011i";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO011iD";
+		color: 255 255 255 127;
+	}
+	color_class {
+		name: "AO011L3";
+		color: 48 48 48 255;
+	}
+	color_class {
+		name: "AO011L3P";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "AO011L3D";
+		color: 48 48 48 76;
+	}
+	color_class {
+		name: "AO0111i";
+		color: 224 33 33 255;
+	}
+	color_class {
+		name: "AO0111";
+		color: 20 107 147 153;
+	}
+	color_class {
+		name: "AO012L1";
+		color: 82 196 11 255;
+	}
+	color_class {
+		name: "AO012L1P";
+		color: 66 158 9 255;
+	}
+	color_class {
+		name: "AO012L1D";
+		color: 106 196 51 255;
+	}
+	color_class {
+		name: "AO013L1";
+		color: 249 56 22 255;
+	}
+	color_class {
+		name: "AO013L1P";
+		color: 211 47 19 255;
+	}
+	color_class {
+		name: "AO013L1D";
+		color: 249 56 22 58;
+	}
+	color_class {
+		name: "AO014L1";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "AO014L1P";
+		color: 11 61 84 255;
+	}
+	color_class {
+		name: "AO014L1D";
+		color: 50 116 147 255;
+	}
+	color_class {
+		name: "AO014";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO014P";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO014D";
+		color: 255 255 255 102;
+	}
+	color_class {
+		name: "AO015";
+		color: 159 239 0 255;
+	}
+	color_class {
+		name: "AO015P";
+		color: 159 239 0 255;
+	}
+	color_class {
+		name: "AO015D";
+		color: 159 239 0 102;
+	}
+	color_class {
+		name: "AO016";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO016P";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "AO016D";
+		color: 255 255 255 102;
+	}
+	color_class {
+		name: "AO019";
+		color: 66 162 206 255;
+	}
+	color_class {
+		name: "AO020";
+		color: 170 172 175 255;
+	}
+	color_class {
+		name: "AO029";
+		color: 24 126 173 204;
+	}
+	color_class {
+		name: "AO029P";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "AO029D";
+		color: 0 0 0 76;
+	}
+	color_class {
+		name: "AO030E1";
+		color: 0 126 181 255;
+	}
+	color_class {
+		name: "AO030E2";
+		color: 148 39 170 255;
+	}
+	color_class {
+		name: "AO030E3";
+		color: 58 66 71 255;
+	}
+	color_class {
+		name: "AO030E4";
+		color: 247 187 7 255;
+	}
+	color_class {
+		name: "AO030E5";
+		color: 242 98 2 255;
+	}
+	color_class {
+		name: "AO030E6";
+		color: 26 49 124 255;
+	}
+	color_class {
+		name: "AO030E7";
+		color: 0 150 100 255;
+	}
+	color_class {
+		name: "AO030E8";
+		color: 232 69 156 255;
+	}
+	color_class {
+		name: "AO030E9";
+		color: 83 175 26 255;
+	}
+	color_class {
+		name: "AO030D";
+		color: 0 0 0 76;
+	}
+	color_class {
+		name: "AO010S";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "ATO008";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO0081";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO009";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO016";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO019";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO017";
+		color: 255 255 255 255;
+	}
+	color_class {
+		name: "ATO006P";
+		color: 20 107 147 255;
+	}
+	color_class {
+		name: "ATO006D";
+		color: 20 107 147 127;
+	}
+	color_class {
+		name: "ATO005";
+		color: 0 0 0 255;
+	}
+	color_class {
+		name: "ATO006";
+		color: 76 76 76 255;
+	}
+	color_class {
+		name: "ATO007E1";
+		color: 0 126 181 255;
+	}
+	color_class {
+		name: "ATO007E2";
+		color: 148 39 170 255;
+	}
+	color_class {
+		name: "ATO007E3";
+		color: 58 66 71 255;
+	}
+	color_class {
+		name: "ATO007E4";
+		color: 247 187 7 255;
+	}
+	color_class {
+		name: "ATO007E5";
+		color: 242 98 2 255;
+	}
+	color_class {
+		name: "ATO007E6";
+		color: 26 49 124 255;
+	}
+	color_class {
+		name: "ATO007E7";
+		color: 0 150 100 255;
+	}
+	color_class {
+		name: "ATO007E8";
+		color: 232 69 156 255;
+	}
+	color_class {
+		name: "ATO007E9";
+		color: 83 175 26 255;
+	}
+	color_class {
+		name: "ATO007D";
+		color: 76 76 76 255;
+	}
+	color_class {
+		name: "AO008_STATUS";
+		color: 18 75 107 255;
+	}
+}

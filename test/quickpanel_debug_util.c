@@ -1,18 +1,21 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
+
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -29,7 +32,8 @@
 #define MAXFILELEN	1048576	/* 32000 */
 #define LOGFILE "/tmp/quickpanel.log"
 
-void debug_printf(char *fmt, ...) {
+void debug_printf(char *fmt, ...)
+{
 	va_list ap;
 	FILE *fd = 0;
 	char buf[LINEMAX] = { 0, };
@@ -86,8 +90,9 @@ void debug_printf(char *fmt, ...) {
 					execl("/bin/rm", "rm", "-f", LOGFILE, (char *) 0);
 				}
 				/* system("rm -rf "LOGFILE); */
-			} else
+			} else {
 				fclose(fd);
+			}
 		}
 	}
 }

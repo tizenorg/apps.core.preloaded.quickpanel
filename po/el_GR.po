@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Ειδοποιήσεις"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Μόνο επείγουσες κλήσεις"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Περιστρ."
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Ειδοποιήσεις (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Δόνηση"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Ήχος & δόνηση"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Αυτόμ. περιστρ."
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Κλείδ. περιστρ."
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Λειτ. μαζικής αποθήκευσης"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Απενεργ."
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Ενεργό"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Δεν υποστηρίζεται"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Ματαίωση"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Εισάγετε την κάρτα SIM για παροχή πρόσβασης στις υπηρεσίες δικτύου"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Να μην ερωτηθώ ξανά"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Εισαγάγετε την κάρτα SIM και επανεκκινήστε τη συσκευή για να χρησιμοποιήσετε τη λειτουργία tethering"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Ενδέχεται να υπάρχουν επιπλέον χρεώσεις για τη σύνδεση μέσω πακέτου δεδομένων. Συνέχεια;"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Αυτόματο"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Εξοικονόμηση ενέργειας"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Tethering"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Δεδομ. κινητής συσκ."
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Λειτουργία οδήγησης"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Δεν είναι δυνατή η σύνδεση σε δίκτυα κινητής τηλεφωνίας όσο είναι ενεργοποιημένη η λειτουργία πτήσης. Συνδεθείτε σε δίκτυο Wi-Fi ή απενεργοποιήστε τη λειτουργία πτήσης και δοκιμάστε ξανά"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Το tethering μέσω Wi-Fi καταναλώνει περισσότερη ισχύ μπαταρίας και αυξάνει τη χρήση δεδομένων. Συνέχεια;"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Απενεργοποιήστε τη λειτουργία tethering για χρήση του Wi-Fi"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Για την ενεργοποίηση της λειτουργίας εξοικονόμησης ενέργειας, ενεργοποιήστε τουλάχιστον μία σχετική λειτουργία"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Απενεργοποιήστε το Wi-Fi για χρήση της λειτουργίας tethering"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Τόσο το Wi-Fi όσο και το AP για κινητά δεν μπορούν να ενεργοποιηθούν ταυτόχρονα. Απενεργοποίηση AP για κινητά;"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Κατοπτρισμός οθόνης"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Διαγραφή όλων"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Αντικατάσταση κουμπιού γρήγορης ρύθμισης"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Πατ. εδώ για απεν. ασφαλ. λειτ."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Κουμπί προσθήκης γρήγορης ρύθμισης"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Αδύνατη η εκκίνηση του %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Δεν θα μπορείτε πλέον να χρησιμοποιείτε εφαρμογές όπως το Internet και το Email μέσω δικτύων κινητής τηλεφωνίας. Συνέχεια;"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Μόνο κλήσεις έκτ. ανάγκης"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Αναζήτηση..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Κουμπί"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Δεν βρέθηκε SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Μη διαθέσιμη υπηρεσία"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Μη έγκυρη κάρτα SIM."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Μόνο επείγουσες κλήσεις."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Υπαίθρια"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Ασφ. λειτουργία ενεργή"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Ειδοποιήσεις (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Διαγ. όλων"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Ειδοποίηση"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Αποδοχή"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Ερώτηση πάντα"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Δεν συμφωνώ"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "Η τοποθεσία GPS και η χρήση των δεδομένων τοποθεσίας σας ελέγχονται από τις εφαρμογές τις οποίες χρησιμοποιείτε"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Δόνηση"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Συγκατάθεση χρήστη"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Εξ.ενέργ.\nUltra"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Ήχος"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Ήχος"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Απόρρητη λειτ."
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Εξοικ.\nενέργ."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Σίγαση"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Δεδομ.\nκινητού"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Τοποθεσία"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Λειτ.\nπτήσης"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Αυτόματη περιστροφή"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Βοηθητ.\nφως"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "ΜΜ"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Ειδοποιήσεις"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "ΠΜ"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Δεν είναι δυνατή η πραγματοποίηση φωνητικών κλήσεων, κλήσεων βίντεο και η αποστολή μηνυμάτων κειμένου χρησιμοποιώντας το %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Επιλέξτε μια κάρτα SIM για εξερχόμενες φωνητικές κλήσεις, κλήσεις βίντεο και μηνυμάτων κειμένου."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Οι εξερχόμενες φωνητικές κλήσεις, κλήσεις βίντεο και τα μηνύματα κειμένου θα πραγματοποιούνται με την κάρτα SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Όχι"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Αδυναμία περαιτέρω αύξησης της φωτεινότητας λόγω υπερθέρμανσης της συσκευής."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Εκτός δικτύου"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Μόνο κλήσεις έκτακτης ανάγκης"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Εξωτερικοί χώροι"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\ntethering"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Φακός"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Εξοικ.\nενέργ."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Δεδομ.\nκιν.τηλ."
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Λειτουρ.\nπτήσης"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Αυτόμ.\nπεριστρ."
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Σάρωση για δίκτυα κινητής τηλεφωνίας..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Εισάγετε την κάρτα SIM για παροχή πρόσβασης στις υπηρεσίες δικτύου."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Ερώτηση πάντα"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Δεν είναι δυνατή η σύνδεση σε δίκτυα κινητής τηλεφωνίας όσο είναι ενεργοποιημένη η λειτουργία πτήσης. Συνδεθείτε σε ένα δίκτυο Wi-Fi ή απενεργοποιήστε τη λειτουργία πτήσης και δοκιμάστε ξανά."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Αναζήτηση"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Δεν είναι δυνατό το άνοιγμα του %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Υπαίθρια"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Απόρρητη\nλειτ."
 

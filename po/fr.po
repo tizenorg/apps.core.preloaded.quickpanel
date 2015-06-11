@@ -1,0 +1,186 @@
+msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
+msgstr "Activation simultanée du Wi-Fi et du point d'accès mobile impossible. Désactiver le point d'accès mobile ?"
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Effacer tout"
+
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "App. pr désact. mode Sécurisé."
+
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Impossible de lancer %s."
+
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Appels urgence uniquement"
+
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Recherche..."
+
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Pas de carte SIM"
+
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Aucun service"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Carte SIM non valide"
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Appels d'urgence uniquement"
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Extér."
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Mode Sécurisé activé"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Notifications (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Eff. tout"
+
+msgid "IDS_QP_BUTTON_NOTIFICATION"
+msgstr "Notific."
+
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Tjrs demander"
+
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibreur"
+
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Ultra éco\nénergie"
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Modem"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Son"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Son"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Mode Privé"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Éco.\nénergie"
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Muet"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Données\nmobiles"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Position"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Mode\nHors-ligne"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Rotation auto"
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Lampe\nde poche"
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Notifications"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Impossible d'effectuer des appels vocaux ou visio, ni d'envoyer des SMS via %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Sélectionnez la carte SIM pour les appels vocaux et visio sortants, ainsi que les SMS."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Les appels vocaux et visio, ainsi que les SMS sortants seront effectués avec la carte SIM %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Non"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Impossible d'augmenter la luminosité en raison d'une surchauffe de l'appareil."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Aucun service"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Appels d'urgence uniquement"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Extérieur"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Modem\nWi-Fi"
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Lampe"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Économ.\nénergie"
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Données\nmobiles"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Mode\nHs ligne"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Rotation\nauto"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Recherche de réseau mobile..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Insérez une carte SIM pour accéder aux services réseau."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Toujours demander"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Impossible de se connecter aux réseaux mobiles lorsque le mode Hors-ligne est activé. Connectez-vous plutôt à un réseau Wi-Fi ou désactivez le mode Hors-ligne, puis réessayez."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Recherche"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Impossible d'ouvrir %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Extér."
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Mode\nPrivé"
+

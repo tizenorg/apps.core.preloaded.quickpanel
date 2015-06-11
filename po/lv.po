@@ -1,123 +1,186 @@
-msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
-msgstr "Paziņojumi"
-
-msgid "IDS_WIFI_BODY_ALLSHARE_CAST"
-msgstr "AllShare Cast"
-
-msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
-msgstr "Tikai ārkārtas zvani"
-
-msgid "IDS_QP_BUTTON_ROTATION"
-msgstr "Pagrieš."
-
-msgid "IDS_QP_BODY_NOTIFICATIONS_HPD"
-msgstr "Paziņojumi (%d)"
-
-msgid "IDS_QP_BUTTON_VIBRATION"
-msgstr "Vibrācija"
-
-msgid "IDS_QP_BUTTON2_SOUND_N_VIBRATION"
-msgstr "Skaņa un vibrācija"
-
-msgid "IDS_QP_TAB4_AUTO_ROTATION"
-msgstr "Autom. pagriezt"
-
-msgid "IDS_QP_BUTTON2_ROTATION_LOCK"
-msgstr "Pagr. bloķ."
-
-msgid "IDS_QP_BODY_MASS_STORAGE_MODE"
-msgstr "Lielapjoma atmiņas režīms"
-
-msgid "IDS_QP_BUTTON_DISABLE"
-msgstr "Deaktiviz."
-
-msgid "IDS_QP_BUTTON_ENABLE"
-msgstr "Aktivizēt"
-
-msgid "IDS_COM_POP_UNSUPPORTED"
-msgstr "Neatbalstīts"
-
-msgid "IDS_COM_SK_DISMISS"
-msgstr "Noraidīt"
-
-msgid "IDS_COM_POP_PELASE_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
-msgstr "Lai piekļūtu tīkla pakalpojumiem, ievietojiet SIM karti"
-
-msgid "IDS_COM_BODY_DO_NOT_ASK_AGAIN"
-msgstr "Vairs nevaicāt"
-
-msgid "IDS_QP_POP_INSERT_SIM_CARD_AND_RESTART_DEVICE_TO_USE_TETHERING"
-msgstr "Lai lietotu piesaisti, Ievietojiet SIM karti un restartējiet tālruni"
-
-msgid "IDS_QP_POP_CONNECTING_VIA_PACKET_DATA_MAY_INCUR_ADDITIONAL_CHARGES_CONTINUE_Q"
-msgstr "Par savienojuma izveidi, izmantojot pakešu datus, var tikt piemērota papildu maksa. Vai turpināt?"
-
-msgid "IDS_QP_BODY_AUTO"
-msgstr "Automātiski"
-
-msgid "IDS_QP_TAB_POWER_SAVING"
-msgstr "Enerģijas taupīšana"
-
-msgid "IDS_QP_TAB_TETHERING"
-msgstr "Ierīces piesaiste tālrunim"
-
-msgid "IDS_QP_TAB_MOBILE_DATA"
-msgstr "Mobilie dati"
-
-msgid "IDS_QP_TAB_DRIVING_MODE"
-msgstr "Braukšanas režīms"
-
-msgid "IDS_COM_POP_UNABLE_TO_CONNECT_TO_MOBILE_NETWORK_WHILE_FLIGHT_MODE_IS_ENABLED_MSG"
-msgstr "Nevar izveidot savienojumu ar mobilajiem tīkliem, kamēr ir aktivizēts lidojuma režīms. Tā vietā izveidojiet savienojumu ar Wi-Fi tīklu vai deaktivizējiet lidojuma režīmu un mēģiniet vēlreiz"
-
-msgid "IDS_QP_POP_WI_FI_TETHERING_CONSUMES_MORE_BATTERY_POWER_AND_INCREASES_YOUR_DATA_USAGE_CONTINUE_Q"
-msgstr "Wi-Fi piesaiste patērē daudz akumulatora enerģijas un palielina datu lietošanas apjomu. Vai turpināt?"
-
-msgid "IDS_QP_POP_DISABLE_TETHERING_TO_USE_WI_FI"
-msgstr "Lai izmantotu Wi-Fi, deaktivizējiet piesaisti"
-
-msgid "IDS_QP_POP_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
-msgstr "Lai aktivizētu enerģijas taupīšanas režīmu, aktivizējiet vismaz vienu atbilstošu funkciju"
-
-msgid "IDS_QP_POP_TURN_OFF_WI_FI_TO_USE_TETHERING"
-msgstr "Lai izmantotu piesaisti, izslēdziet Wi-Fi"
-
 msgid "IDS_WIFI_POP_BOTH_WI_FI_AND_MOBILE_AP_CANNOT_BE_ACTIVATED_AT_THE_SAME_TIME_DEACTIVATE_MOBILE_AP_Q"
 msgstr "Vienlaikus nevar aktivizēt Wi-Fi un Mobile AP. Vai deaktivizēt Mobile AP?"
 
-msgid "IDS_ASCAST_HEADER_SCREEN_MIRRORING"
-msgstr "Screen Mirroring"
+msgid "IDS_TASKMGR_BUTTON_CLEAR_ALL"
+msgstr "Notīrīt visu"
 
-msgid "IDS_QP_HEADER_REPLACE_QUICK_SETTING_BUTTON"
-msgstr "Aizstāt ātro iestatījumu pogu"
+msgid "IDS_IDLE_SBODY_TAP_HERE_TO_DISABLE_SAFE_MODE_ABB"
+msgstr "Piesk.šeit, lai izsl.drošo rež."
 
-msgid "IDS_QP_HEADER_ADD_QUICK_SETTING_BUTTON"
-msgstr "Pievienot ātro iestatījumu pogu"
+msgid "IDS_IDLE_POP_UNABLE_TO_LAUNCH_PS"
+msgstr "Nevar palaist %s."
 
-msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_SUCH_AS_INTERNET_NOTI_MSG"
-msgstr "Jūs vairs nevarēsit lietot atsevišķas programmas, piemēram, interneta pārlūkprogrammas un e-pastu, izmantojot mobilos tīklus. Vai turpināt?"
+msgid "IDS_IDLE_MBODY_EMERGENCY_CALLS_ONLY"
+msgstr "Tikai ārkārtas zvani"
 
-msgid "IDS_QP_BUTTON2_SCREEN_N_MIRRORING"
-msgstr "Screen\nMirroring"
+msgid "IDS_IDLE_BODY_SEARCHING_ING"
+msgstr "Meklē..."
 
-msgid "IDS_COM_BODY_BUTTON_T_TTS"
-msgstr "Poga"
+msgid "IDS_IDLE_BODY_NO_SIM"
+msgstr "Nav SIM"
 
-msgid "IDS_QP_BUTTON2_GPS"
-msgstr "GPS"
+msgid "IDS_IDLE_BODY_NO_SERVICE"
+msgstr "Nav pakalpojuma"
+
+msgid "IDS_IDLE_BODY_INVALID_SIM_CARD"
+msgstr "Nederīga SIM karte."
+
+msgid "IDS_IDLE_BODY_EMERGENCY_CALLS_ONLY"
+msgstr "Tikai ārkārtas zvani."
+
+msgid "IDS_QP_OPT_OUTDOORS_ABB"
+msgstr "Ārā"
+
+msgid "IDS_QP_MBODY_SAFE_MODE_ENABLED"
+msgstr "Aktivizēts drošais režīms"
+
+msgid "IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB"
+msgstr "Paziņojumi (%d)"
+
+msgid "IDS_QP_HEADER_CLEAR_ALL_ABB"
+msgstr "Not. visu"
 
 msgid "IDS_QP_BUTTON_NOTIFICATION"
 msgstr "Paziņojums"
 
-msgid "IDS_COM_BUTTON_AGREE"
-msgstr "Piekrist"
+msgid "IDS_QP_BUTTON_ALWAYS_ASK_ABB"
+msgstr "Vienmēr jautāt"
 
-msgid "IDS_COM_BUTTON_DISAGREE"
-msgstr "Nepiekrītu"
+msgid "IDS_QP_BUTTON2_WI_FI"
+msgstr "Wi-Fi"
 
-msgid "IDS_ST_BODY_GPS_LOCATION_USE_CONTROLLED_BY_APPLICATIONS_MSG"
-msgstr "GPS atrašanās vietu un jūsu atrašanās vietas datu izmantošanu pārvalda jūsu lietotās programmas"
+msgid "IDS_QP_BUTTON2_VIBRATE"
+msgstr "Vibrēt"
 
-msgid "IDS_ST_HEADER_USER_CONSENT"
-msgstr "Lietotāja piekrišana"
+msgid "IDS_QP_BUTTON2_U_POWER_NSAVING_ABB"
+msgstr "Īp.\nenerģ. taup."
+
+msgid "IDS_QP_BUTTON2_TETHERING"
+msgstr "Piesaiste"
+
+msgid "IDS_QP_BUTTON2_SOUND_ABB"
+msgstr "Skaņa"
+
+msgid "IDS_QP_BUTTON2_SOUND"
+msgstr "Skaņa"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_MODE"
+msgstr "Privātais režīms"
+
+msgid "IDS_QP_BUTTON2_POWER_N_SAVING"
+msgstr "Enerģijas\ntaup."
+
+msgid "IDS_QP_BUTTON2_MUTE_ABB"
+msgstr "Izslēgt skaņu"
+
+msgid "IDS_QP_BUTTON2_MOBILE_DATA"
+msgstr "Mobilie\ndati"
+
+msgid "IDS_QP_BUTTON2_LOCATION_ABB"
+msgstr "Lokācija"
+
+msgid "IDS_QP_BUTTON2_FLIGHT_N_MODE"
+msgstr "Lidojuma\nrežīms"
+
+msgid "IDS_QP_BUTTON2_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_QP_BUTTON2_AUTO_ROTATE"
+msgstr "Automātiskā pagrieš."
+
+msgid "IDS_QP_BUTTON2_ASSISTIVE_NLIGHT"
+msgstr "Pap.\napgaism."
+
+msgid "IDS_QP_BODY_PM_ABB"
+msgstr "PM"
+
+msgid "IDS_QP_BODY_NOTIFICATIONS_ABB2"
+msgstr "Paziņojumi"
+
+msgid "IDS_QP_BODY_AM_ABB"
+msgstr "AM"
+
+msgid "IDS_ST_TPOP_UNABLE_TO_MAKE_VOICE_CALLS_VIDEO_CALLS_AND_SEND_TEXT_MESSAGES_USING_PS"
+msgstr "Balss zvanus, videozvanus un īsziņu nosūtīšanu nevar veikt, izmantojot %s."
+
+msgid "IDS_ST_TPOP_SELECT_SIM_CARD_FOR_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES"
+msgstr "Izvēlieties SIM karti izejošajiem balss zvaniem, videozvaniem un īsziņām."
+
+msgid "IDS_ST_TPOP_OUTGOING_VOICE_CALLS_VIDEO_CALLS_AND_TEXT_MESSAGES_WILL_BE_MADE_USING_THE_PS_SIM_CARD"
+msgstr "Izejošie balss zvani un videozvani, kā arī īsziņu sūtīšana tiks veikta, izmantojot SIM karti %s."
+
+msgid "IDS_ST_SK_OK"
+msgstr "Labi"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nē"
+
+msgid "IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"
+msgstr "Nav iespējams vairāk palielināt spilgtumu dēļ tālruņa pārkaršanas."
+
+msgid "IDS_ST_NPBODY_NO_SERVICE"
+msgstr "Nav pakalpojuma"
+
+msgid "IDS_ST_NPBODY_EMERGENCY_CALLS_ONLY_ABB"
+msgstr "Tikai ārkārtas zvani"
+
+msgid "IDS_ST_HEADER_OUTDOOR"
+msgstr "Ārā"
+
+msgid "IDS_ST_BUTTON2_WI_FI_NTETHERING"
+msgstr "Wi-Fi\npies."
+
+msgid "IDS_ST_BUTTON2_WI_FI_ABB"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BUTTON2_TORCH_ABB"
+msgstr "Lukturis"
+
+msgid "IDS_ST_BUTTON2_POWER_NSAVING"
+msgstr "Enerģ.\ntaup."
+
+msgid "IDS_ST_BUTTON2_MOBILE_NDATA"
+msgstr "Mobilie\ndati"
+
+msgid "IDS_ST_BUTTON2_GPS_ABB"
+msgstr "GPS"
+
+msgid "IDS_ST_BUTTON2_FLIGHT_NMODE"
+msgstr "Lidojuma\nrežīms"
+
+msgid "IDS_ST_BUTTON2_BLUETOOTH_ABB"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BUTTON2_AUTO_NROTATE"
+msgstr "Autom.\npagriezt"
+
+msgid "IDS_ST_BODY_SIM_2"
+msgstr "SIM 2"
+
+msgid "IDS_ST_BODY_SIM_1"
+msgstr "SIM 1"
+
+msgid "IDS_ST_BODY_SCANNING_FOR_MOBILE_NETWORK_ING_ABB"
+msgstr "Meklē mobilo tīklu..."
+
+msgid "IDS_ST_BODY_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Lai piekļūtu tīkla pakalpojumiem, ievietojiet SIM karti."
+
+msgid "IDS_ST_BODY_ALWAYS_ASK_ABB"
+msgstr "Vienmēr jautāt"
+
+msgid "IDS_SCP_BODY_UNABLE_TO_CONNECT_TO_MOBILE_NETWORKS_WHILE_FLIGHT_MODE_IS_ENABLED_CONNECT_TO_A_WI_FI_NETWORK_INSTEAD_OR_DISABLE_FLIGHT_MODE_AND_TRY_AGAIN"
+msgstr "Nevar izveidot savienojumu ar mobilajiem tīkliem, kamēr ir aktivizēts lidojuma režīms. Tā vietā izveidojiet savienojumu ar Wi-Fi tīklu vai deaktivizējiet lidojuma režīmu un mēģiniet vēlreiz."
+
+msgid "IDS_COM_BODY_SEARCHING"
+msgstr "Meklē"
+
+msgid "IDS_QP_TPOP_UNABLE_TO_OPEN_PS"
+msgstr "Nevar atvērt programmu %s."
+
+msgid "IDS_QP_OPT_OUTDOORS_M_OUTDOOR_MODE_ABB"
+msgstr "Ārā"
+
+msgid "IDS_QP_BUTTON2_PRIVATE_NMODE_ABB"
+msgstr "Priv.\nrežīms"
 

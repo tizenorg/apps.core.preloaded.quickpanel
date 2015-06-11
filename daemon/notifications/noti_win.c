@@ -1,23 +1,29 @@
 /*
- * Copyright 2012  Samsung Electronics Co., Ltd
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Licensed under the Flora License, Version 1.1 (the License);
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://floralicense.org/license/
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 #include <Elementary.h>
+#ifdef HAVE_X
 #include <utilX.h>
+#endif
+#include <efl_util.h>
 
-#define NOTI_HEIGHT 50
+#define NOTI_HEIGHT 200
+#define NOTI_BTN_HEIGHT 80
+
 #ifndef __UNUSED__
 #define __UNUSED__ __attribute__((unused))
 #endif
@@ -30,6 +36,7 @@ rotation handling are implemented for X based platform
 #endif
 #include "common.h"
 #include "noti_win.h"
+#include "dbus_utility.h"
 
 struct Internal_Data {
 	Evas_Object *content;
@@ -42,49 +49,28 @@ struct Internal_Data {
 
 static const char *data_key = "_data";
 
-static void _set_win_type_notification_level(Evas_Object *win)
-{
-	retif(win == NULL, , "invalid parameter");
-
-	Ecore_X_Window w = elm_win_xwindow_get(win);
-
-	if (w > 0) {
-		ecore_x_icccm_hints_set(w, 0, ECORE_X_WINDOW_STATE_HINT_NONE, 0, 0,
-			0, 0, 0);
-		ecore_x_netwm_opacity_set(w, 0);
-
-		ecore_x_netwm_window_type_set(w,
-				ECORE_X_WINDOW_TYPE_NOTIFICATION);
-		utilx_set_system_notification_level(ecore_x_display_get(), w,
-				UTILX_NOTIFICATION_LEVEL_HIGH);
-	}
-}
-
 static void _show(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj,
 	void *event_info __UNUSED__)
 {
 	struct Internal_Data *wd = evas_object_data_get(obj, data_key);
 
-	if (!wd)
+	if (!wd) {
 		return;
-	if (wd->content)
+	}
+	if (wd->content) {
 		evas_object_show(wd->content);
-}
-
-static void _content_hide(void *data, Evas *e __UNUSED__,
-	Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
-{
-	evas_object_hide(data);
+	}
 }
 
 static void _content_changed_size_hints(void *data, Evas *e __UNUSED__,
 	Evas_Object *obj, void *event_info __UNUSED__)
 {
-	Evas_Coord h;
+	Evas_Coord h = 0;
 	struct Internal_Data *wd = evas_object_data_get(data, data_key);
 
-	if (!wd)
+	if (!wd) {
 		return;
+	}
 
 	evas_object_size_hint_min_get(obj, NULL, &h);
 	if ((h > 0)) {
@@ -100,11 +86,10 @@ static void _sub_del(void *data __UNUSED__, Evas_Object *obj, void *event_info)
 	struct Internal_Data *wd = evas_object_data_get(obj, data_key);
 	Evas_Object *sub = event_info;
 
-	if (!wd)
+	if (!wd) {
 		return;
+	}
 	if (sub == wd->content) {
-		evas_object_event_callback_del(wd->content, EVAS_CALLBACK_HIDE,
-			_content_hide);
 		evas_object_event_callback_del(wd->content,
 			EVAS_CALLBACK_CHANGED_SIZE_HINTS,
 			_content_changed_size_hints);
@@ -112,17 +97,27 @@ static void _sub_del(void *data __UNUSED__, Evas_Object *obj, void *event_info)
 	}
 }
 
+static void _resized(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj,
+	void *event_info __UNUSED__)
+{
+	evas_object_show(obj);
+}
+
 static void _del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj,
 	void *event_info __UNUSED__)
 {
+
 	struct Internal_Data *wd = evas_object_data_get(obj, data_key);
 
-	if (!wd)
-		return;
-	if (wd->rotation_event_handler)
-		ecore_event_handler_del(wd->rotation_event_handler);
+	if (wd) {
+		if (wd->rotation_event_handler) {
+			ecore_event_handler_del(wd->rotation_event_handler);
+		}
+		free(wd);
+	}
+
 	evas_object_data_set(data, data_key, NULL);
-	free(wd);
+
 }
 
 #ifdef HAVE_X
@@ -132,37 +127,41 @@ static void _update_geometry_on_rotation(Evas_Object *obj, int angle,
 	Evas_Coord root_w, root_h;
 	struct Internal_Data *wd = evas_object_data_get(obj, data_key);
 
-	if (!wd)
+	if (!wd) {
 		return;
+	}
 
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &root_w,
-		&root_h);
+	ecore_x_window_size_get(ecore_x_window_root_first_get(), &root_w, &root_h);
 
-	/* rotate window */
 	switch (angle) {
 	case 90:
 		*w = root_h;
-		if (wd->orient == NOTI_ORIENT_BOTTOM)
+		if (wd->orient == NOTI_ORIENT_BOTTOM) {
 			*x = root_w - wd->h;
+		}
 		break;
 	case 270:
 		*w = root_h;
-		if (!(wd->orient == NOTI_ORIENT_BOTTOM))
+		if (!(wd->orient == NOTI_ORIENT_BOTTOM)) {
 			*x = root_w - wd->h;
+		}
 		break;
 	case 180:
 		*w = root_w;
-		if (!wd->orient == NOTI_ORIENT_BOTTOM)
+		if (!wd->orient == NOTI_ORIENT_BOTTOM) {
 			*y = root_h - wd->h;
+		}
 		break;
 	case 0:
 	default:
 		*w = root_w;
-		if (wd->orient == NOTI_ORIENT_BOTTOM)
+		if (wd->orient == NOTI_ORIENT_BOTTOM) {
 			*y = root_h - wd->h;
+		}
 		break;
 	}
 }
+#endif
 
 static void _win_rotated(Evas_Object *obj)
 {
@@ -172,141 +171,152 @@ static void _win_rotated(Evas_Object *obj)
 	int angle = 0;
 	struct Internal_Data *wd =  evas_object_data_get(obj, data_key);
 
-	if (!wd)
+	if (!wd) {
 		return;
+	}
 	angle = elm_win_rotation_get(obj);
-	if (angle % 90)
+	if (angle % 90) {
 		return;
+	}
 	angle %= 360;
 	if (angle < 0)
 		angle += 360;
 	wd->angle = angle;
 
+#ifdef HAVE_X
 	_update_geometry_on_rotation(obj, wd->angle, &x, &y, &w);
+#endif
 
 	evas_object_move(obj, x, y);
 	wd->w = w;
 	evas_object_resize(obj, wd->w, wd->h);
 }
 
-static Eina_Bool _prop_change(void *data, int type __UNUSED__, void *event)
+static void _ui_rotation_wm_cb(void *data, Evas_Object *obj, void *event)
 {
-	Ecore_X_Event_Window_Property *ev;
-	struct Internal_Data *wd = evas_object_data_get(data, data_key);
+	int angle = 0;
+	angle = elm_win_rotation_get((Evas_Object *)obj);
 
-	if (!wd)
-		return ECORE_CALLBACK_PASS_ON;
-	ev = event;
-	if (ev->atom == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE)
-		if (ev->win == elm_win_xwindow_get(data))
-			_win_rotated(data);
-	return ECORE_CALLBACK_PASS_ON;
+	DBG("ACTIVENOTI ROTATE:%d", angle);
+
+	_win_rotated(obj);
 }
-#endif
 
-HAPI Evas_Object *noti_win_add(Evas_Object *parent)
+HAPI Evas_Object *quickpanel_noti_win_add(Evas_Object *parent)
 {
 	Evas_Object *win;
 	Evas_Object *bg;
 	struct Internal_Data *wd;
-	Evas_Coord w = 0;
+	Evas_Coord w = 0, h = 0;
 
 	win = elm_win_add(parent, "noti_win", ELM_WIN_NOTIFICATION);
-	elm_win_alpha_set(win, EINA_TRUE);
-
-	if (!win)
+	if (!win) {
 		return NULL;
+	}
+
+	elm_win_indicator_mode_set(win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_alpha_set(win, EINA_FALSE);
+#ifdef HAVE_X
+	elm_win_indicator_type_set(win,ELM_WIN_INDICATOR_TYPE_1);
+#endif
 	elm_win_title_set(win, "noti_win");
 	elm_win_borderless_set(win, EINA_TRUE);
 	elm_win_autodel_set(win, EINA_TRUE);
-	evas_object_size_hint_weight_set(win, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(win, EVAS_HINT_EXPAND,	EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(win, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+#ifdef HAVE_X
+	efl_util_set_notification_window_level(win, EFL_UTIL_NOTIFICATION_LEVEL_DEFAULT); 
+	elm_win_aux_hint_add(win, "wm.policy.win.user.geometry", "1");
+#endif
+	elm_win_prop_focus_skip_set(win, EINA_TRUE);
+
 	bg = elm_bg_add(win);
-	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(win, bg);
 
-	_set_win_type_notification_level(win);
+	if (elm_win_wm_rotation_supported_get(win)) {
+		int rots[4] = { 0, 90, 180, 270 };
+		elm_win_wm_rotation_available_rotations_set(win, rots, 4);
+	}
+	evas_object_smart_callback_add(win, "wm,rotation,changed", _ui_rotation_wm_cb, NULL);
 
 	wd = (struct Internal_Data *) calloc(1, sizeof(struct Internal_Data));
-	if (!wd)
+	if (!wd) {
+		if (win) {
+			evas_object_del(win);
+		}
 		return NULL;
+	}
 	evas_object_data_set(win, data_key, wd);
 	wd->angle = 0;
 	wd->orient = NOTI_ORIENT_TOP;
 	evas_object_move(win, 0, 0);
-#ifdef HAVE_X
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, NULL);
-	evas_object_resize(win, w, NOTI_HEIGHT);
-	wd->rotation_event_handler = ecore_event_handler_add(
-		ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, win);
-#endif
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+
 	wd->w = w;
 	wd->h = NOTI_HEIGHT;
-	evas_object_smart_callback_add(win, "sub-object-del", _sub_del, NULL);
+
+	evas_object_resize(win, w, wd->h);
 	evas_object_event_callback_add(win, EVAS_CALLBACK_SHOW, _show, NULL);
 	evas_object_event_callback_add(win, EVAS_CALLBACK_DEL, _del, NULL);
+	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, _resized, NULL);
+
 	return win;
 }
 
-HAPI void noti_win_content_set(Evas_Object *obj, Evas_Object *content)
+HAPI void quickpanel_noti_win_content_set(Evas_Object *obj, Evas_Object *content, int btn_cnt)
 {
 	Evas_Coord h;
 	struct Internal_Data *wd;
 
-	if (!obj)
+	if (!obj) {
 		return;
+	}
 	wd = evas_object_data_get(obj, data_key);
-	if (!wd)
+	if (!wd) {
 		return;
-	if (wd->content)
+	}
+	if (wd->content && content != NULL) {
 		evas_object_del(content);
+		content = NULL;
+	}
 	wd->content = content;
+
+	if (btn_cnt > 0) {
+		wd->h += NOTI_BTN_HEIGHT;
+	}
 	if (content) {
-		evas_object_size_hint_weight_set(wd->content, EVAS_HINT_EXPAND,
-			EVAS_HINT_EXPAND);
+		evas_object_size_hint_weight_set(wd->content, EVAS_HINT_EXPAND,	EVAS_HINT_EXPAND);
 		elm_win_resize_object_add(obj, wd->content);
-		evas_object_size_hint_min_get(wd->content, NULL, &h);
-		if (h)
-			wd->h = h;
 		evas_object_size_hint_min_set(wd->content, wd->w, wd->h);
 		evas_object_resize(obj, wd->w, wd->h);
-		evas_object_event_callback_add(wd->content, EVAS_CALLBACK_HIDE,
-				_content_hide, obj);
-		evas_object_event_callback_add(wd->content,
-				EVAS_CALLBACK_CHANGED_SIZE_HINTS,
-				_content_changed_size_hints, obj);
+		evas_object_event_callback_add(wd->content,	EVAS_CALLBACK_CHANGED_SIZE_HINTS, _content_changed_size_hints, obj);
 	}
 }
 
-HAPI void noti_win_orient_set(Evas_Object *obj, enum Noti_Orient orient)
+HAPI void quickpanel_noti_win_orient_set(Evas_Object *obj, enum Noti_Orient orient)
 {
-#ifdef HAVE_X
 	Evas_Coord root_w, root_h;
-#endif
 	struct Internal_Data *wd = evas_object_data_get(obj, data_key);
 
-	if (!wd)
+	if (!wd) {
 		return;
-	if (orient >= NOTI_ORIENT_LAST)
+	}
+	if (orient >= NOTI_ORIENT_LAST) {
 		return;
+	}
 #ifdef HAVE_X
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &root_w,
-		&root_h);
+	ecore_x_window_size_get(ecore_x_window_root_first_get(), &root_w, &root_h);
 #endif
 	switch (orient) {
 	case NOTI_ORIENT_BOTTOM:
-#ifdef HAVE_X
 		evas_object_move(obj, 0, root_h - wd->h);
-#endif
 		wd->orient = NOTI_ORIENT_BOTTOM;
 		break;
 	case NOTI_ORIENT_TOP:
 	default:
-#ifdef HAVE_X
 		evas_object_move(obj, 0, 0);
-#endif
 		wd->orient = NOTI_ORIENT_TOP;
 		break;
 	}

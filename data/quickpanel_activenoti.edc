@@ -1,0 +1,630 @@
+/*
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "color_classes.edc"
+
+#define ACTIVENOTI_BG_COLOR "AO003"
+#define ACTIVENOTI_MAIN_TEXT_HEIGHT_INC 1
+
+images
+{
+	image: "handler_btn_02.png" COMP;
+	image: "core_theme_bg_01.png" COMP;
+	image: "core_list_button_bg.#.png" COMP;
+}
+
+#define NOTI_HEIGHT_NO_BUTTON 200
+#define NOTI_HEIGHT_WITH_BUTTON 300
+
+#define WIDTH_MIN 480
+#define WIDTH_MAX 960
+
+collections
+{
+	base_scale: 1.8;
+
+	group {
+		name: "headsup/base";
+
+		styles {
+			style {
+				name: "style_title_text";
+				base: "font=Tizen:style=Bold font_size="42" color=#FFFFFFFF  text_class=tizen wrap=mixed";
+			}
+		}
+
+		styles {
+			style {
+				name: "style_main_text";
+				base: "font=Tizen:style=Regular font_size="38" color=#FFFFFFFF  text_class=tizen wrap=mixed";
+			}
+		}
+
+		parts {
+			part {
+				name: "background";
+				type: SWALLOW;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					min: WIDTH_MIN NOTI_HEIGHT_WITH_BUTTON;
+					max: WIDTH_MAX NOTI_HEIGHT_WITH_BUTTON;
+				}
+				description {
+					state: "btn_hide" 0.0;
+					inherit: "default" 0.0;
+					min: WIDTH_MIN NOTI_HEIGHT_NO_BUTTON;
+					max: WIDTH_MAX NOTI_HEIGHT_NO_BUTTON;
+				}
+				description {
+					state: "btn_show" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part {
+				name: "bg";
+				type: IMAGE;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						to: "background";
+					}
+					rel2 {
+						to: "background";
+					}
+					image {
+						normal: "core_theme_bg_01.png";
+					}
+				}
+			}
+
+
+			part {
+				name: "bg_img";
+				type: SWALLOW;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						to: "bg";
+					}
+					rel2 {
+						to: "bg";
+					}
+				}
+			}
+
+
+			part {
+				name: "rect_main";
+				type: RECT;
+ 				description {
+					state: "default" 0.0;
+					rel1
+					{
+						relative: 0.0 0.1;
+						to: "bg";
+					}
+					rel2 {
+						relative: 1.0 0.6;
+						to: "bg";
+					}
+					align: 0.0 0.0;
+					visible: 0;
+				}
+				description {
+					state: "btn_hide" 0.0;
+					inherit: "default" 0.0;
+					rel1 {
+						relative: 0.0 0.1;
+						to: "bg";
+					}
+					rel2 {
+						relative: 1.0 0.9;
+						to: "bg";
+					}
+				}
+				description {
+					state: "btn_show" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part{
+				name: "button.space";
+				type:SPACER;
+				scale: 1;
+ 				description {
+					state: "default" 0.0;
+					rel1 {
+						relative: 0.0 0.6;
+						to: "bg";
+					}
+					rel2 {
+						relative: 1.0 0.9;
+						to: "bg";
+					}
+				}
+				description {
+					state: "btn_hide" 0.0;
+					inherit: "default" 0.0;
+					fixed: 0 1;
+					rel1 {
+						relative: 0.0 1.0;
+						to: "bg";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "bg";
+					}
+				}
+				description {
+					state: "btn_show" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part{
+				name: "button.swallow";
+				type:SWALLOW;
+ 				description {
+					state: "default" 0.0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "button.space";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "button.space";
+					}
+				}
+			}
+
+
+			part {
+				name: "rect_handle";
+				type: RECT;
+				mouse_events: 1;
+ 				description {
+					state: "default" 0.0;
+					align: 0.0 1.0;
+					fixed: 0 1;
+					min: 0 40;
+					rel1 {
+						relative: 0.0 0.9;
+						to: "bg";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "bg";
+					}
+					visible: 1;
+					color : 0 0 0 0;
+				}
+			}
+
+			part {
+				name: "handle_img";
+				type: IMAGE;
+ 				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					max: 40 40;
+					align: 0.5 0.5;
+					rel1 {
+						to: "rect_handle";
+					}
+					rel2 {
+						to: "rect_handle";
+					}
+					image {
+						normal: "handler_btn_02.png";
+					}
+				}
+			}
+
+
+			// Icon
+			part {
+				name: "icon_space";
+				mouse_events: 1;
+				type: RECT;
+				scale: 1;
+ 				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "rect_main";
+					}
+					rel2 {
+						relative: 0.2 0.5;
+						to: "rect_main";
+					}
+					visible: 0;
+				}
+			}
+
+			part {
+				name: "icon_big";
+				type: SWALLOW;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "icon_space";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "icon_space";
+					}
+				}
+			}
+
+			part {
+				name: "icon_badge";
+				type: SWALLOW;
+				description {
+					state: "default" 0.0;
+					align: 1.0 1.0;
+					rel1 {
+						relative: 0.5 0.5;
+						to: "icon_big";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "icon_big";
+					}
+				}
+			}
+
+
+			/*text*/
+			part {
+				name: "text_space";
+				type: RECT;
+ 				description {
+					state: "default" 0.0;
+					align: 0.0 0.5;
+					rel1 {
+						relative: 0.2 0.0;
+						to: "rect_main";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "rect_main";
+					}
+					visible: 0;
+				}
+			}
+
+			part {
+				name: "subtitle_text";
+				type: TEXTBLOCK;
+ 				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					fixed: 1 1;
+					text {
+						style : "style_main_text";
+						align: 0.0 0.0;
+					}
+					rel1 {
+						relative: 0.0 0.0;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 0.0 0.0;
+						to: "text_space";
+					}
+				}
+				description {
+					state: "sub_show" 0.0;
+					inherit: "default" 0.0;
+					fixed: 0 0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 0.25;
+						to: "text_space";
+					}
+				}
+				description {
+					state: "sub_hide" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part {
+				name: "title_text";
+				type: TEXTBLOCK;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					text {
+						style : "style_title_text";
+						align: 0.0 0.0;
+					}
+					rel1 {
+						relative: 0.0 0.0;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 0.3;
+						to: "text_space";
+					}
+				}
+				description {
+					state: "sub_show" 0.0;
+					inherit: "default" 0.0;
+					rel1 {
+						relative: 0.0 0.25;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 0.55;
+						to: "text_space";
+					}
+
+				}
+				description {
+					state: "sub_hide" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part {
+				name: "content_text";
+				type: TEXTBLOCK;
+				multiline: 1;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					text {
+						style: "style_main_text";
+						align: 0.0 0.5;
+					}
+					rel1 {
+						relative: 0.0 0.35;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "text_space";
+					}
+				}
+				description {
+					state: "sub_show" 0.0;
+					inherit: "default" 0.0;
+					rel1 {
+						relative: 0.0 0.55;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "text_space";
+					}
+				}
+				description {
+					state: "sub_hide" 0.0;
+					inherit: "default" 0.0;
+				}
+			}
+
+			part {
+				name: "touch";
+				mouse_events: 1;
+				type: RECT;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "text_space";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "text_space";
+					}
+					color : 0 0 0 0;
+				}
+			}
+		}
+
+
+		programs {
+			program {
+				name: "pressed_noti";
+				signal: "mouse,clicked,1";
+				source: "touch";
+				action: SIGNAL_EMIT "noti_press" "";
+			}
+
+			program {
+				name: "pressed_image";
+				signal: "mouse,clicked,1";
+				source: "icon_big";
+				action: SIGNAL_EMIT "image_press" "";
+			}
+
+			program {
+				name: "pressed_handle";
+				signal: "mouse,clicked,1";
+				source: "rect_handle";
+				source: "handle_img";
+				action: SIGNAL_EMIT "del" "";
+			}
+
+			program {
+				name: "subtext_show";
+				signal: "sub_show";
+				source: "subtitle_text";
+				action: STATE_SET "sub_show" 0.0;
+				target: "subtitle_text";
+				target: "title_text";
+				target: "content_text";
+			}
+
+			program {
+				name: "subtext_hide";
+				signal: "sub_hide";
+				source: "subtitle_text";
+				action: STATE_SET "sub_hide" 0.0;
+				target: "subtitle_text";
+				target: "title_text";
+				target: "content_text";
+			}
+
+			program {
+				name: "btn_hide";
+				signal: "btn_hide";
+				source: "button.space";
+				action: STATE_SET "btn_hide" 0.0;
+				target: "button.space";
+				target: "rect_main";
+				target: "background";
+			}
+
+			program {
+				name: "btn_show";
+				signal: "btn_show";
+				source: "button.space";
+				action: STATE_SET "btn_show" 0.0;
+				target: "button.space";
+				target: "rect_main";
+				target: "background";
+			}
+		}
+	}
+
+
+	group {
+		name: "button_layout";
+
+		parts {
+			part {
+				name: "rect.button";
+				type: RECT;
+				description {
+					state: "default" 0.0;
+					color_class: "ATO006P";
+					align: 0.0 0.0;
+					visible: 0;
+				}
+			}
+
+			part {
+				name: "button.bg.img";
+				type:IMAGE;
+				description {
+					state: "default" 0.0;
+					rel1 {
+						relative: 0.1 0.1;
+						to: "rect.button";
+					}
+					rel2 {
+						relative: 0.9 0.9;
+						to: "rect.button";
+					}
+					color_class: "AO001L1";
+					image {
+						normal: "core_list_button_bg.#.png";
+					}
+					align: 0.5 0.5;
+				}
+				description {
+					state: "pressed" 0.0;
+					inherit: "default" 0.0;
+					color_class: "AO001L1P";
+				}
+			}
+
+			part {
+				name: "content.button.image";
+				type: SWALLOW;
+ 				description {
+					state: "default" 0.0;
+					align: 0.5 0.5;
+					rel1 {
+						to: "button.bg.img";
+					}
+					rel2 {
+						to: "button.bg.img";
+					}
+				}
+			}
+
+			part {
+				name: "content.button.text";
+				type: TEXT;
+				description {
+					state: "default" 0.0;
+					align: 0.5 0.5;
+					rel1 {
+						to: "button.bg.img";
+					}
+					rel2 {
+						to: "button.bg.img";
+					}
+					text {
+						font: "Tizen:style=Regular";
+						size: 30;
+						text_class: "tizen";
+						align: 0.5 0.5;
+					}
+				}
+			}
+
+			part {
+				name: "touch";
+				mouse_events: 1;
+				type: RECT;
+				description {
+					state: "default" 0.0;
+					align: 0.0 0.0;
+					rel1 {
+						relative: 0.0 0.0;
+						to: "rect.button";
+					}
+					rel2 {
+						relative: 1.0 1.0;
+						to: "rect.button";
+					}
+					color : 0 0 0 0;
+				}
+			}
+
+			programs {
+				program {
+					name: "pressed_button";
+					signal: "mouse,clicked,1";
+					source: "touch";
+					action: SIGNAL_EMIT "button_clicked" "";
+				}
+
+			}
+
+		}
+	}
+}
