@@ -76,7 +76,6 @@ BuildRequires: pkgconfig(inputproto)
 %endif
 
 Requires(post): /usr/bin/vconftool
-Requires: e17
 %description
 Quick Panel
 
