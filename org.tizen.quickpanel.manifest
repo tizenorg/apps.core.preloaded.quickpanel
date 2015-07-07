@@ -1,11 +1,5 @@
 <manifest>
-	<define>
-	    <domain name="org.tizen.quickpanel"/>
-	</define>
-	<assign>
-		<filesystem path="/etc/init.d/quickpanel" label="_" exec_label="none"/>
-	</assign>
 	<request>
-	    <domain name="org.tizen.quickpanel"/>
+	    <domain name="_"/>
 	</request>
 </manifest>

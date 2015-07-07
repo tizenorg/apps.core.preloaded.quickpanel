@@ -138,6 +138,5 @@ cp -f LICENSE %{buildroot}/usr/share/license/%{PKGNAME}
 %{_libdir}/systemd/system/quickpanel.service
 %{_libdir}/systemd/system/multi-user.target.wants/quickpanel.service
 /usr/share/license/%{PKGNAME}
-/etc/smack/accesses.d/%{PKGNAME}.efl
 /usr/apps/%{PKGNAME}/shared/res/icons/*
 /usr/apps/%{PKGNAME}/shared/res/noti_icons/*
