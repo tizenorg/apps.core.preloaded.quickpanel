@@ -113,9 +113,9 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
-mkdir -p %{buildroot}%{_libdir}/systemd/system/multi-user.target.wants
-install -m 0644 %SOURCE102 %{buildroot}%{_libdir}/systemd/system/quickpanel.service
-ln -s ../quickpanel.service %{buildroot}%{_libdir}/systemd/system/multi-user.target.wants/quickpanel.service
+mkdir -p %{buildroot}%{_unitdir}/systemd/system/multi-user.target.wants
+install -m 0644 %SOURCE102 %{buildroot}%{_unitdir}/systemd/system/quickpanel.service
+ln -s ../quickpanel.service %{buildroot}%{_unitdir}/systemd/system/multi-user.target.wants/quickpanel.service
 
 mkdir -p %{buildroot}/usr/share/license
 cp -f LICENSE %{buildroot}/usr/share/license/%{PKGNAME}
@@ -135,8 +135,8 @@ cp -f LICENSE %{buildroot}/usr/share/license/%{PKGNAME}
 %{RESDIR}/*
 /usr/share/packages/%{PKGNAME}.xml
 %{_sysconfdir}/init.d/quickpanel
-%{_libdir}/systemd/system/quickpanel.service
-%{_libdir}/systemd/system/multi-user.target.wants/quickpanel.service
+%{_unitdir}/systemd/system/quickpanel.service
+%{_unitdir}/systemd/system/multi-user.target.wants/quickpanel.service
 /usr/share/license/%{PKGNAME}
 /usr/apps/%{PKGNAME}/shared/res/icons/*
 /usr/apps/%{PKGNAME}/shared/res/noti_icons/*
