@@ -65,7 +65,7 @@ static void _long_press_cb(void *data)
 static void _play_snd_job_cb(void *data)
 {
 #ifdef HAVE_X
-	if (feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SOUND_ON) != FEEDBACK_ERROR_NONE) {
+	if (feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SILENT_OFF) != FEEDBACK_ERROR_NONE) {
 		ERR("failed to play a sound");
 	}
 #endif

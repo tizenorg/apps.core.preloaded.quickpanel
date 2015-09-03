@@ -412,9 +412,9 @@ HAPI void quickpanel_media_play_feedback(void)
 	quickpanel_media_init();
 
 	if (snd_enabled == 1) {
-		feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TOUCH_TAP);
+		feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TAP);
 	} else  if (vib_enabled == 1) {
-		feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_TOUCH_TAP);
+		feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_TAP);
 	}
 }
 
