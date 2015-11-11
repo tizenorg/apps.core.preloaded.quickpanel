@@ -15,20 +15,33 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
 
 #include <time.h>
+
 #include <vconf.h>
 #include <appcore-common.h>
 #include <app_control.h>
 #include <notification.h>
+#include <notification_internal.h>
+#include <notification_list.h>
+#include <notification_ongoing_flag.h>
 #include <system_settings.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <sound_manager.h>
+#include <E_DBus.h>
 
+#include "media.h"
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
+#include "common_uic.h"
 #include "common.h"
 #include "list_util.h"
 #include "noti_node.h"
 #include "noti_gridbox.h"
+#include "vi_manager.h"
 #include "noti_box.h"
 #include "noti_listbox.h"
 #include "noti_list_item.h"
@@ -36,19 +49,22 @@
 #include "noti_view.h"
 #include "noti.h"
 #include "list_util.h"
+
 #ifdef QP_SMART_ALERT_ENABLE
 #include "smart_alert.h"
 #endif
+
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 #include "noti_led.h"
 #endif
+
 #ifdef QP_REMINDER_ENABLE
 #include "reminder.h"
 #endif
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "vi_manager.h"
 
 #define QP_NOTI_ONGOING_DBUS_PATH	"/dbus/signal"
 #define QP_NOTI_ONGOING_DBUS_INTERFACE	"notification.ongoing"
@@ -83,37 +99,9 @@ static struct _info {
 	.last_time.tm_year = 0,
 };
 
-static int _init(void *data);
-static int _fini(void *data);
-static int _suspend(void *data);
-static int _resume(void *data);
-static void _lang_changed(void *data);
-static void _refresh(void *data);
+static void _ongoing_noti_section_deleted_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static void _ongoing_noti_section_add(void);
-static void _opened(void *data);
-//static void _quickpanel_ongoing_noti_section_remove(void);
-
-static void _noti_time_init(void *data);
-static void _noti_time_fini(void *data);
-
-QP_Module noti = {
-	.name = "noti",
-	.init = _init,
-	.fini = _fini,
-	.suspend = _suspend,
-	.resume = _resume,
-	.lang_changed = _lang_changed,
-	.hib_enter = NULL,
-	.hib_leave = NULL,
-	.refresh = _refresh,
-	.get_height = NULL,
-	.qp_opened = _opened,
-};
-
-static notification_h _update_item_progress(const char *pkgname,
-							    int priv_id,
-							    double progress)
+static notification_h _update_item_progress(const char *pkgname, int priv_id, double progress)
 {
 	char *noti_pkgname = NULL;
 	int noti_priv_id = 0;
@@ -128,8 +116,7 @@ static notification_h _update_item_progress(const char *pkgname,
 			return NULL;
 		}
 
-		if (!strcmp(noti_pkgname, pkgname)
-		    && priv_id == noti_priv_id) {
+		if (!strcmp(noti_pkgname, pkgname) && priv_id == noti_priv_id) {
 
 			if (notification_set_progress(node->noti, progress) != NOTIFICATION_ERROR_NONE) {
 				ERR("fail to set progress");
@@ -141,9 +128,7 @@ static notification_h _update_item_progress(const char *pkgname,
 	return NULL;
 }
 
-static notification_h _update_item_size(const char *pkgname,
-							int priv_id,
-							double size)
+static notification_h _update_item_size(const char *pkgname, int priv_id, double size)
 {
 	char *noti_pkgname = NULL;
 	int noti_priv_id = 0;
@@ -159,7 +144,7 @@ static notification_h _update_item_size(const char *pkgname,
 		}
 
 		if (!strcmp(noti_pkgname, pkgname)
-		    && priv_id == noti_priv_id) {
+				&& priv_id == noti_priv_id) {
 			notification_set_size(node->noti, size);
 			return node->noti;
 		}
@@ -168,9 +153,7 @@ static notification_h _update_item_size(const char *pkgname,
 	return NULL;
 }
 
-static notification_h _update_item_content(const char *pkgname,
-							int priv_id,
-							char *content)
+static notification_h _update_item_content(const char *pkgname, int priv_id, char *content)
 {
 	char *noti_pkgname = NULL;
 	int noti_priv_id = 0;
@@ -199,8 +182,7 @@ static notification_h _update_item_content(const char *pkgname,
 	return NULL;
 }
 
-static void _update_progressbar(void *data,
-						notification_h update_noti)
+static void _update_progressbar(void *data, notification_h update_noti)
 {
 	int priv_id = 0;
 	struct appdata *ad = data;
@@ -217,8 +199,7 @@ static void _update_progressbar(void *data,
 	quickpanel_noti_listbox_update_item(ad->list, node->view);
 }
 
-static void _item_progress_update_cb(void *data,
-						DBusMessage *msg)
+static void _item_progress_update_cb(void *data, DBusMessage *msg)
 {
 	DBusError err;
 	char *pkgname = 0;
@@ -247,12 +228,10 @@ static void _item_progress_update_cb(void *data,
 	}
 
 	/* check item on the list */
-	noti = _update_item_progress(pkgname,
-						priv_id, progress);
+	noti = _update_item_progress(pkgname, priv_id, progress);
 	retif(noti == NULL, , "Can not found noti data.");
 
-	SDBG("pkgname[%s], priv_id[%d], progress[%lf]",
-				pkgname, priv_id, progress);
+	SDBG("pkgname[%s], priv_id[%d], progress[%lf]",	pkgname, priv_id, progress);
 	_update_progressbar(data, noti);
 }
 
@@ -287,13 +266,12 @@ static void _item_size_update_cb(void *data, DBusMessage * msg)
 	retif(noti == NULL, , "Can not found noti data.");
 
 	SDBG("pkgname[%s], priv_id[%d], progress[%lf]",
-				pkgname, priv_id, size);
+			pkgname, priv_id, size);
 
 	_update_progressbar(data, noti);
 }
 
-static void _item_content_update_cb(void *data,
-						DBusMessage *msg)
+static void _item_content_update_cb(void *data, DBusMessage *msg)
 {
 	DBusError err;
 	char *pkgname = NULL;
@@ -325,13 +303,31 @@ static void _item_content_update_cb(void *data,
 	}
 
 	SDBG("pkgname[%s], priv_id[%d], content[%s]",
-				pkgname, priv_id, content);
+			pkgname, priv_id, content);
 
 	/* check item on the list */
 	noti = _update_item_content(pkgname, priv_id, content);
 	retif(noti == NULL, , "Can not found noti data.");
 
 	_update_progressbar(data, noti);
+}
+
+static int _is_item_deletable(notification_h noti)
+{
+	notification_type_e type = NOTIFICATION_TYPE_NONE;
+	notification_ly_type_e ly_type = NOTIFICATION_LY_NONE;
+	bool ongoing_flag = false;
+
+	notification_get_type(noti, &type);
+	notification_get_layout(noti, &ly_type);
+	notification_get_ongoing_flag(noti, &ongoing_flag);
+
+	if( (type == NOTIFICATION_TYPE_ONGOING && ongoing_flag) ||
+			(type == NOTIFICATION_TYPE_ONGOING && ly_type == NOTIFICATION_LY_ONGOING_PROGRESS)) {
+		return 0;
+	}
+
+	return 1;
 }
 
 static int _do_noti_delete(notification_h noti)
@@ -347,7 +343,7 @@ static int _do_noti_delete(notification_h noti)
 	retif(noti == NULL, NOTIFICATION_ERROR_INVALID_PARAMETER, "Invalid parameter!");
 
 	notification_get_pkgname(noti, &caller_pkgname);
-//	notification_get_application(noti, &pkgname);
+	//	notification_get_application(noti, &pkgname);
 	if (pkgname == NULL) {
 		pkgname = caller_pkgname;
 	}
@@ -362,7 +358,7 @@ static int _do_noti_delete(notification_h noti)
 		flag_delete = 1;
 	}
 
-	if (flag_delete == 1 && type == NOTIFICATION_TYPE_NOTI) {
+	if (flag_delete == 1 && ( type == NOTIFICATION_TYPE_NOTI || _is_item_deletable(noti)) ) {
 		ret = notification_delete_by_priv_id(caller_pkgname, NOTIFICATION_TYPE_NOTI,
 				priv_id);
 	}
@@ -381,7 +377,7 @@ static void _do_noti_press(notification_h noti, int pressed_area)
 	bundle *single_service_handle = NULL;
 	bundle *multi_service_handle = NULL;
 	int flags = 0, group_id = 0, priv_id = 0, count = 0, flag_launch = 0,
-			flag_delete = 0;
+		flag_delete = 0;
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
 
 	quickpanel_media_play_feedback();
@@ -389,7 +385,7 @@ static void _do_noti_press(notification_h noti, int pressed_area)
 	retif(noti == NULL, , "Invalid parameter!");
 
 	notification_get_pkgname(noti, &caller_pkgname);
-//	notification_get_application(noti, &pkgname);
+	//	notification_get_application(noti, &pkgname);
 	if (pkgname == NULL) {
 		pkgname = caller_pkgname;
 	}
@@ -412,13 +408,13 @@ static void _do_noti_press(notification_h noti, int pressed_area)
 
 	notification_get_execute_option(noti,
 			NOTIFICATION_EXECUTE_TYPE_RESPONDING,
-				NULL, &responding_service_handle);
+			NULL, &responding_service_handle);
 	notification_get_execute_option(noti,
-				NOTIFICATION_EXECUTE_TYPE_SINGLE_LAUNCH,
-				NULL, &single_service_handle);
+			NOTIFICATION_EXECUTE_TYPE_SINGLE_LAUNCH,
+			NULL, &single_service_handle);
 	notification_get_execute_option(noti,
-				NOTIFICATION_EXECUTE_TYPE_MULTI_LAUNCH,
-				NULL, &multi_service_handle);
+			NOTIFICATION_EXECUTE_TYPE_MULTI_LAUNCH,
+			NULL, &multi_service_handle);
 
 	if (pressed_area == NOTI_PRESS_BUTTON_1 && responding_service_handle != NULL) {
 		DBG("");
@@ -554,8 +550,7 @@ static inline void _ongoing_comp_n_copy(notification_h old, notification_h new)
 
 		if (insert_time == new_insert_time) {
 			char *content = NULL;
-			notification_get_text(old,
-				NOTIFICATION_TEXT_TYPE_CONTENT,	&content);
+			notification_get_text(old, NOTIFICATION_TEXT_TYPE_CONTENT,	&content);
 			ret = notification_set_text(new, NOTIFICATION_TEXT_TYPE_CONTENT, content, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
 			if (ret != NOTIFICATION_ERROR_NONE) {
 				ERR("Failed to set text[%d]", ret);
@@ -589,13 +584,56 @@ static void _noti_clear_list_all(void)
 	}
 }
 
-static void _ongoing_noti_section_icon_state_set(int is_closed) {
+static void _ongoing_noti_section_icon_state_set(int is_closed)
+{
 	if (s_info.ongoing_noti_section_view != NULL) {
 		if (is_closed == 1) {
 			elm_object_signal_emit(s_info.ongoing_noti_section_view, "button,opened", "prog");
 		} else {
 			elm_object_signal_emit(s_info.ongoing_noti_section_view, "button,closed", "prog");
 		}
+	}
+}
+
+static void _ongoing_noti_section_add(void)
+{
+	int noti_count;
+	struct appdata *ad;
+
+	ad = quickpanel_get_app_data();
+	if (!ad) {
+		ERR("Invalid parameter");
+		return;
+	}
+
+	if (!ad->list) {
+		ERR("Invalid list");
+		return;
+	}
+
+	if (s_info.noti_node) {
+		noti_count = quickpanel_noti_node_get_item_count(s_info.noti_node, NOTIFICATION_TYPE_NONE);
+	} else {
+		noti_count = 0;
+	}
+
+	DBG("[%d] ", noti_count);
+
+	if (!s_info.ongoing_noti_section_view) {
+		s_info.ongoing_noti_section_view = quickpanel_noti_section_create(ad->list, QP_ITEM_TYPE_ONGOING_NOTI_GROUP);
+		if (s_info.ongoing_noti_section_view) {
+			quickpanel_noti_section_set_deleted_cb(s_info.ongoing_noti_section_view, _ongoing_noti_section_deleted_cb, ad);
+			quickpanel_noti_section_update(s_info.ongoing_noti_section_view, noti_count);
+
+			if (s_info.is_ongoing_hided == 1) {
+				DBG("Hide NOTI.SECTION");
+				_ongoing_noti_section_icon_state_set(0);
+			}
+		}
+	}
+	else {
+		DBG("noti section update %d ", noti_count);
+		quickpanel_noti_section_update(s_info.ongoing_noti_section_view, noti_count);
 	}
 }
 
@@ -614,36 +652,6 @@ static void _ongoing_noti_section_deleted_cb(void *data, Evas *e, Evas_Object *o
 	s_info.noti_section_view = NULL;
 }
 
-static void _ongoing_noti_section_add(void)
-{
-	int noti_count = 0;
-	struct appdata *ad = quickpanel_get_app_data();
-	retif(ad == NULL, , "Invalid parameter!");
-	retif(ad->list == NULL, , "Invalid parameter!");
-
-	if (s_info.noti_node) {
-		noti_count = quickpanel_noti_node_get_item_count(s_info.noti_node, NOTIFICATION_TYPE_NONE);
-	}
-
-	DBG("[%d] ", noti_count);
-
-	if (s_info.ongoing_noti_section_view == NULL) {
-		s_info.ongoing_noti_section_view = quickpanel_noti_section_create(ad->list, QP_ITEM_TYPE_ONGOING_NOTI_GROUP);
-		if (s_info.ongoing_noti_section_view != NULL) {
-			quickpanel_noti_section_set_deleted_cb(s_info.ongoing_noti_section_view, _ongoing_noti_section_deleted_cb, ad);
-			quickpanel_noti_section_update(s_info.ongoing_noti_section_view, noti_count);
-
-			if (s_info.is_ongoing_hided == 1) {
-				_ongoing_noti_section_icon_state_set(0);
-			}
-		}
-	}
-	else {
-		DBG("noti section update %d ", noti_count);
-		quickpanel_noti_section_update(s_info.ongoing_noti_section_view, noti_count);
-	}
-}
-
 static void _noti_ongoing_add(Evas_Object *list, void *data, int is_prepend)
 {
 	Evas_Object *noti_list_item = NULL;
@@ -658,6 +666,7 @@ static void _noti_ongoing_add(Evas_Object *list, void *data, int is_prepend)
 			if (item != NULL) {
 				quickpanel_noti_list_item_node_set(noti_list_item, item);
 				quickpanel_noti_list_item_set_item_selected_cb(noti_list_item, _noti_listitem_select_cb);
+				quickpanel_noti_list_item_set_item_deleted_cb(noti_list_item, _notibox_delete_cb);
 
 				if (s_info.ongoing_noti_section_view == NULL) {
 					_ongoing_noti_section_add();
@@ -730,7 +739,7 @@ static void _update_notilist(struct appdata *ad)
 		notification_get_display_applist(noti, &applist);
 
 		if (applist &
-		    NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
+				NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
 			notification_clone(noti, &noti_save);
 			_noti_ongoing_add(list, noti_save, LISTBOX_APPEND);
 		}
@@ -748,7 +757,7 @@ static void _update_notilist(struct appdata *ad)
 		notification_get_display_applist(noti, &applist);
 
 		if (applist &
-		    NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
+				NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY) {
 			notification_clone(noti, &noti_save);
 			_noti_add(list, noti_save, LISTBOX_APPEND);
 		}
@@ -764,7 +773,8 @@ static void _update_notilist(struct appdata *ad)
 	}
 }
 
-inline static void _print_debuginfo_from_noti(notification_h noti) {
+static inline void _print_debuginfo_from_noti(notification_h noti)
+{
 	retif(noti == NULL, , "Invalid parameter!");
 
 	char *noti_pkgname = NULL;
@@ -808,6 +818,7 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 
 		switch(op_type)	{
 		case NOTIFICATION_OP_INSERT: 
+			DBG("NOTIFICATION_OP_INSERT");
 			if (noti_from_master == NULL) {
 				ERR("failed to get a notification from master");
 				continue;
@@ -863,6 +874,7 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 
 		case NOTIFICATION_OP_DELETE:
 			{
+				DBG("NOTIFICATION_OP_DELETE");
 				noti_node_item *node = quickpanel_noti_node_get(s_info.noti_node, priv_id);
 
 				if (node != NULL && node->noti != NULL) {
@@ -901,6 +913,7 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 
 		case NOTIFICATION_OP_UPDATE:
 			{
+				DBG("NOTIFICATION_OP_UPDATE");
 				noti_node_item *node = quickpanel_noti_node_get(s_info.noti_node, priv_id);
 				notification_h old_noti = NULL;
 
@@ -1046,38 +1059,36 @@ static int _register_event_handler(struct appdata *ad)
 
 	s_info.dbus_handler_size =
 		e_dbus_signal_handler_add(ad->dbus_connection, NULL,
-			QP_NOTI_ONGOING_DBUS_PATH,
-			QP_NOTI_ONGOING_DBUS_INTERFACE, "update_progress",
-			_item_progress_update_cb,
-			ad);
+				QP_NOTI_ONGOING_DBUS_PATH,
+				QP_NOTI_ONGOING_DBUS_INTERFACE, "update_progress",
+				_item_progress_update_cb,
+				ad);
 	if (s_info.dbus_handler_size == NULL) {
 		ERR("fail to add size signal");
 	}
 
 	s_info.dbus_handler_progress =
 		e_dbus_signal_handler_add(ad->dbus_connection, NULL,
-			QP_NOTI_ONGOING_DBUS_PATH,
-			QP_NOTI_ONGOING_DBUS_INTERFACE, "update_size",
-			_item_size_update_cb,
-			ad);
+				QP_NOTI_ONGOING_DBUS_PATH,
+				QP_NOTI_ONGOING_DBUS_INTERFACE, "update_size",
+				_item_size_update_cb,
+				ad);
 	if (s_info.dbus_handler_progress == NULL) {
 		ERR("fail to add progress signal");
 	}
 
 	s_info.dbus_handler_content =
 		e_dbus_signal_handler_add(ad->dbus_connection, NULL,
-			QP_NOTI_ONGOING_DBUS_PATH,
-			QP_NOTI_ONGOING_DBUS_INTERFACE, "update_content",
-			_item_content_update_cb,
-			ad);
+				QP_NOTI_ONGOING_DBUS_PATH,
+				QP_NOTI_ONGOING_DBUS_INTERFACE, "update_content",
+				_item_content_update_cb,
+				ad);
 	if (s_info.dbus_handler_content == NULL) {
 		ERR("fail to add content signal");
 	}
 
 	/* Notify vconf key */
-	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT,
-				       _update_sim_status_cb,
-				       (void *)ad);
+	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT, _update_sim_status_cb, (void *)ad);
 	if (ret != 0) {
 		ERR("Failed to register SIM_SLOT change callback!");
 	}
@@ -1097,26 +1108,22 @@ static int _unregister_event_handler(struct appdata *ad)
 	/* Unregister notification changed cb */
 	notification_unregister_detailed_changed_cb(_detailed_changed_cb, (void *)ad);
 
-	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT,
-				_update_sim_status_cb);
+	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT, _update_sim_status_cb);
 	if (ret != 0) {
 		ERR("Failed to ignore SIM_SLOT change callback!");
 	}
 
 	/* Delete dbus signal */
 	if (s_info.dbus_handler_size != NULL) {
-		e_dbus_signal_handler_del(ad->dbus_connection,
-				s_info.dbus_handler_size);
+		e_dbus_signal_handler_del(ad->dbus_connection, s_info.dbus_handler_size);
 		s_info.dbus_handler_size = NULL;
 	}
 	if (s_info.dbus_handler_progress != NULL) {
-		e_dbus_signal_handler_del(ad->dbus_connection,
-				s_info.dbus_handler_progress);
+		e_dbus_signal_handler_del(ad->dbus_connection, s_info.dbus_handler_progress);
 		s_info.dbus_handler_progress = NULL;
 	}
 	if (s_info.dbus_handler_content != NULL) {
-		e_dbus_signal_handler_del(ad->dbus_connection,
-				s_info.dbus_handler_content);
+		e_dbus_signal_handler_del(ad->dbus_connection, s_info.dbus_handler_content);
 		s_info.dbus_handler_content = NULL;
 	}
 
@@ -1124,35 +1131,76 @@ static int _unregister_event_handler(struct appdata *ad)
 }
 
 /*static void _quickpanel_noti_init(void *data)
+  {
+  struct appdata *ad = NULL;
+
+  retif(data == NULL, , "Invalid parameter!");
+  ad = data;
+
+  retif(ad->list == NULL, , "Invalid parameter!");
+
+  DBG("wr");
+
+  if (s_info.noti_box == NULL) {
+  s_info.noti_box = quickpanel_noti_listbox_create(ad->list
+  , quickpanel_get_app_data(), QP_ITEM_TYPE_ONGOING_NOTI);
+  quickpanel_noti_listbox_set_item_deleted_cb(s_info.noti_box, _quickpanel_list_box_deleted_cb);
+  quickpanel_list_util_sort_insert(ad->list, s_info.noti_box);
+  }
+  }
+
+  static void _quickpanel_noti_fini(void *data)
+  {
+  struct appdata *ad = NULL;
+
+  retif(data == NULL, , "Invalid parameter!");
+  ad = data;
+
+  retif(ad->list == NULL, , "Invalid parameter!");
+
+  DBG("dr");
+  }*/
+
+static void _on_time_changed(keynode_t *key, void *data)
 {
-	struct appdata *ad = NULL;
+	struct appdata *ad = data;
+	time_t current_time;
+	struct tm loc_time;
 
-	retif(data == NULL, , "Invalid parameter!");
-	ad = data;
-
-	retif(ad->list == NULL, , "Invalid parameter!");
-
-	DBG("wr");
-
-	if (s_info.noti_box == NULL) {
-		s_info.noti_box = quickpanel_noti_listbox_create(ad->list
-			, quickpanel_get_app_data(), QP_ITEM_TYPE_ONGOING_NOTI);
-		quickpanel_noti_listbox_set_item_deleted_cb(s_info.noti_box, _quickpanel_list_box_deleted_cb);
-		quickpanel_list_util_sort_insert(ad->list, s_info.noti_box);
+	if (!key) {
+		/**
+		 * @todo
+		 * Todo something for this case.
+		 */
 	}
+
+	current_time = time(NULL);
+	localtime_r(&current_time, &loc_time);
+
+	if (loc_time.tm_yday != s_info.last_time.tm_yday || loc_time.tm_year != s_info.last_time.tm_year) {
+		_update_notilist(ad);
+	}
+
+	s_info.last_time = loc_time;
 }
 
-static void _quickpanel_noti_fini(void *data)
+static void _noti_time_init(void *data)
 {
-	struct appdata *ad = NULL;
+	int ret = 0;
+	struct appdata *ad = data;
+	retif_nomsg(ad == NULL, );
+	time_t current_time;
 
-	retif(data == NULL, , "Invalid parameter!");
-	ad = data;
+	current_time = time(NULL);
+	localtime_r(&current_time, &s_info.last_time);
 
-	retif(ad->list == NULL, , "Invalid parameter!");
-
-	DBG("dr");
-}*/
+	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_TIMEZONE_INT, _on_time_changed, data);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_INT, ret);
+	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _on_time_changed, data);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
+	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_TIMEZONE_ID, _on_time_changed, data);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
+}
 
 static int _init(void *data)
 {
@@ -1169,6 +1217,20 @@ static int _init(void *data)
 	_noti_time_init(data);
 
 	return QP_OK;
+}
+
+static void _noti_time_fini(void *data)
+{
+	int ret = 0;
+	struct appdata *ad = data;
+	retif_nomsg(ad == NULL, );
+
+	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_TIMEZONE_INT, _on_time_changed);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_INT, ret);
+	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_TIMEZONE_ID, _on_time_changed);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
+	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _on_time_changed);
+	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
 }
 
 static int _fini(void *data)
@@ -1288,8 +1350,7 @@ HAPI int quickpanel_noti_get_geometry(int *limit_h, int *limit_partial_h, int *l
 	retif(limit_partial_w == NULL, 0, "invalid parameter");
 	struct appdata *ad = quickpanel_get_app_data();
 
-	return quickpanel_noti_listbox_get_geometry(ad->list,
-					limit_h, limit_partial_h, limit_partial_w);
+	return quickpanel_noti_listbox_get_geometry(ad->list, limit_h, limit_partial_h, limit_partial_w);
 }
 
 HAPI noti_node_item *quickpanel_noti_node_get_by_priv_id(int priv_id)
@@ -1352,19 +1413,39 @@ static void _opened(void *data)
 
 HAPI void quickpanel_noti_set_clear_all_status()
 {
-	struct appdata *ad = quickpanel_get_app_data();
-	if ((quickpanel_noti_listbox_get_item_count(ad->list) >= 0
-			|| quickpanel_noti_node_get_item_count(s_info.noti_node, NOTIFICATION_TYPE_ONGOING) >= 0)
-			&& quickpanel_noti_node_get_item_count(s_info.noti_node, NOTIFICATION_TYPE_NOTI) <= 0) 	{
-		INFO("NOTI SECTION CLEAR ALL HIDE");
-		elm_object_signal_emit(s_info.ongoing_noti_section_view ,
-				"notifaction,section,clear_all,hide", "base");
-	} else {
-		INFO("NOTI SECTION CLEAR ALL SHOW");
-		elm_object_signal_emit(s_info.ongoing_noti_section_view,
-				"notifaction,section,clear_all,show", "base");
+	notification_h noti;
+	notification_list_h list_head;
+	notification_list_h list_traverse;
+	bool ongoing_cnt = false;
+	int ret;
+
+	list_head = NULL;
+	ret = notification_get_list(NOTIFICATION_TYPE_ONGOING, -1, &list_head);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get the list of notification");
+		return;
 	}
 
+	list_traverse = list_head;
+	while (list_traverse != NULL) {
+		noti = notification_list_get_data(list_traverse);
+		if (_is_item_deletable(noti)) {
+			ongoing_cnt++;
+		}
+		list_traverse = notification_list_get_next(list_traverse);
+	}
+
+	if (list_head != NULL) {
+		notification_free_list(list_head);
+	}
+
+	if (ongoing_cnt == 0 && quickpanel_noti_node_get_item_count(s_info.noti_node, NOTIFICATION_TYPE_NOTI) <= 0) {
+		INFO("NOTI SECTION CLEAR ALL HIDE");
+		elm_object_signal_emit(s_info.ongoing_noti_section_view, "notifaction,section,clear_all,hide", "base");
+	} else {
+		INFO("NOTI SECTION CLEAR ALL SHOW");
+		elm_object_signal_emit(s_info.ongoing_noti_section_view, "notifaction,section,clear_all,show", "base");
+	}
 }
 
 HAPI void quickpanel_noti_on_clear_all_clicked(void *data, Evas_Object *obj, void *info)
@@ -1373,37 +1454,52 @@ HAPI void quickpanel_noti_on_clear_all_clicked(void *data, Evas_Object *obj, voi
 	LOGI("NOTI CLEAR ALL CLICKED");
 
 	DBG("");
-	struct appdata *ad = quickpanel_get_app_data();
-	retif(ad == NULL, , "Invalid parameter!");
-	retif(ad->list == NULL, , "Invalid parameter!");
+	notification_h noti;
+	notification_list_h list_head;
+	notification_list_h list_traverse;
+	int ret;
 
 	quickpanel_noti_closing_trigger_set();
-#ifdef HAVE_X
 	notification_clear(NOTIFICATION_TYPE_NOTI);
-#endif
-	quickpanel_uic_close_quickpanel(EINA_FALSE, EINA_FALSE);
 
-	/*if (s_info.noti_node->n_ongoing == 0)
-	{
-		_ongoing_noti_section_remove();
-	}*/
-}
-
-// TIME REACTION
-
-static void _on_time_changed(keynode_t *key, void *data)
-{
-	struct appdata *ad = data;
-
-	time_t current_time = time(NULL);
-	struct tm loc_time;
-	localtime_r(&current_time, &loc_time);
-
-	if (loc_time.tm_yday != s_info.last_time.tm_yday || loc_time.tm_year != s_info.last_time.tm_year) {
-		_update_notilist(ad);
+	list_head = NULL;
+	ret = notification_get_list(NOTIFICATION_TYPE_ONGOING, -1, &list_head);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get the list of notifications");
+		return;
 	}
 
-	s_info.last_time = loc_time;
+	list_traverse = list_head;
+	while (list_traverse != NULL) {
+		noti = notification_list_get_data(list_traverse);
+		if (_is_item_deletable(noti)) {
+			char *caller_pkgname;
+			int priv_id;
+
+			ret = notification_get_id(noti, NULL, &priv_id);
+			if (ret != NOTIFICATION_ERROR_NONE) {
+				ERR("Unable to get ID from noti object: %p", noti);
+				priv_id = 0;
+			}
+			ret = notification_get_pkgname(noti, &caller_pkgname);
+			if (ret != NOTIFICATION_ERROR_NONE) {
+				ERR("Unable to get caller package name: %p", noti);
+				caller_pkgname = NULL;
+			}
+
+			notification_delete_by_priv_id(caller_pkgname, NOTIFICATION_TYPE_NOTI, priv_id);
+		}
+
+		list_traverse = notification_list_get_next(list_traverse);
+	}
+
+	if (list_head != NULL) {
+		notification_free_list(list_head);
+		list_head = NULL;
+	}
+
+	quickpanel_uic_close_quickpanel(EINA_FALSE, EINA_FALSE);
+
 }
 
 static Eina_Bool _notification_time_format_changed_cb(void *data)
@@ -1415,52 +1511,20 @@ static Eina_Bool _notification_time_format_changed_cb(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void _noti_time_init(void *data)
+HAPI void quickpanel_noti_update_by_system_time_changed_setting_cb(system_settings_key_e key, void *data)
 {
-	int ret = 0;
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, );
-
-	time_t current_time = time(NULL);
-	localtime_r(&current_time, &s_info.last_time);
-
-	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_TIMEZONE_INT, _on_time_changed, data);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_INT, ret);
-	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _on_time_changed, data);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
-	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_TIMEZONE_ID, _on_time_changed, data);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
-}
-
-static void _noti_time_fini(void *data)
-{
-	int ret = 0;
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, );
-
-	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_TIMEZONE_INT, _on_time_changed);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_INT, ret);
-	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_TIMEZONE_ID, _on_time_changed);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
-	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _on_time_changed);
-	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
-}
-
-HAPI void quickpanel_noti_update_by_system_time_changed_cb(system_settings_key_e  *key, void *data)
-{
-	struct appdata *ad = data;
-
-#ifdef HAVE_X
-	if (key == SYSTEM_SETTINGS_KEY_TIME_CHANGED
-		||key == SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY ){
-		_on_time_changed(key,data);
-	} else
-#endif
-	{ //key == SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR
+	// struct appdata *ad = data;
+	if (key == SYSTEM_SETTINGS_KEY_TIME_CHANGED || key == SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY) {
+		_on_time_changed(NULL, data);
+	} else { //key == SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR
 		_notification_time_format_changed_cb(data);
 	}
 }
 
+HAPI void quickpanel_noti_update_by_system_time_changed_vconf_cb(keynode_t *key, void *data)
+{
+	_notification_time_format_changed_cb(data);
+}
 
 HAPI void quickpanel_noti_init_noti_section(void)
 {
@@ -1468,3 +1532,19 @@ HAPI void quickpanel_noti_init_noti_section(void)
 		_ongoing_noti_section_add();
 	}
 }
+
+QP_Module noti = {
+	.name = "noti",
+	.init = _init,
+	.fini = _fini,
+	.suspend = _suspend,
+	.resume = _resume,
+	.lang_changed = _lang_changed,
+	.hib_enter = NULL,
+	.hib_leave = NULL,
+	.refresh = _refresh,
+	.get_height = NULL,
+	.qp_opened = _opened,
+};
+
+/* End of a file */

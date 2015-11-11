@@ -19,9 +19,18 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+
 #include <iniparser.h>
+#include <Elementary.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "preference.h"
 #include "common.h"
+
+
 #include "quickpanel-ui.h"
 
 #define FILE_PREFERENCE DATADIR_RW"/preference.ini"
@@ -93,7 +102,7 @@ static void _default_file_create(void)
 			, PREF_QUICKSETTING_FEATURED_NUM_KEY, _default_preference_get(PREF_QUICKSETTING_FEATURED_NUM)
 			, PREF_SHORTCUT_ENABLE_KEY, _default_preference_get(PREF_SHORTCUT_ENABLE)
 			, PREF_SHORTCUT_EARPHONE_ORDER_KEY, _default_preference_get(PREF_SHORTCUT_EARPHONE_ORDER)
-	);
+		   );
 
 	fclose(fp);
 }
@@ -114,9 +123,8 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 		goto END;
 	}
 
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 	value_r = iniparser_getstr(ini, key);
-#endif
 	if (value_r == NULL) {
 		value_r = _default_preference_get(key);
 		if (_key_validation_check(key) == 1) {
@@ -126,6 +134,7 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 	} else {
 		DBG("get:[%s]", value_r);
 	}
+#endif
 
 END:
 	if (value_r != NULL) {
@@ -134,9 +143,7 @@ END:
 	}
 
 	if (ini != NULL) {
-#ifdef HAVE_X
 		iniparser_freedict(ini);
-#endif
 	}
 
 	return ret;
@@ -163,7 +170,8 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 
 	ini = iniparser_load(FILE_PREFERENCE);
 	retif(ini == NULL, QP_FAIL, "failed to load ini file");
-#ifdef HAVE_X
+	
+#if defined(WINSYS_X11)
 	if (iniparser_setstr(ini, (char *)key, value) == 0) {
 		ret = QP_OK;
 	} else {

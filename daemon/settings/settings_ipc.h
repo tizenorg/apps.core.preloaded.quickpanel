@@ -19,7 +19,7 @@
 #ifndef __SETTING_IPC_H__
 #define __SETTING_IPC_H__
 
-int quickpanel_settings_ipc_init(void *data);
-int quickpanel_settings_ipc_fini(void *data);
+extern int quickpanel_settings_ipc_init(void *data);
+extern int quickpanel_settings_ipc_fini(void *data);
 
 #endif /* __SETTING_IPC_H__ */

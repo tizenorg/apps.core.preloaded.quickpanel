@@ -19,9 +19,6 @@
 #ifndef __QUICKPANEL_NOTI_NODE_H__
 #define __QUICKPANEL_NOTI_NODE_H__
 
-#include <glib.h>
-#include <notification.h>
-
 typedef struct _noti_node {
 	GHashTable *table;
 	int n_ongoing;
@@ -33,12 +30,13 @@ typedef struct _noti_node_item {
 	void *view;
 } noti_node_item;
 
-void quickpanel_quickpanel_noti_node_create(noti_node **handle);
-void quickpanel_noti_node_destroy(noti_node **handle);
-noti_node_item *quickpanel_noti_node_add(noti_node *handle, notification_h noti, void *view);
-void quickpanel_noti_node_remove(noti_node *handle, int priv_id);
-void quickpanel_noti_node_remove_all(noti_node *handle);
-noti_node_item *quickpanel_noti_node_get(noti_node *handle, int priv_id);
-int quickpanel_noti_node_get_item_count(noti_node *handle, notification_type_e noti_type);
+extern void quickpanel_quickpanel_noti_node_create(noti_node **handle);
+extern void quickpanel_noti_node_destroy(noti_node **handle);
+extern noti_node_item *quickpanel_noti_node_add(noti_node *handle, notification_h noti, void *view);
+extern void quickpanel_noti_node_remove(noti_node *handle, int priv_id);
+extern void quickpanel_noti_node_remove_all(noti_node *handle);
+extern noti_node_item *quickpanel_noti_node_get(noti_node *handle, int priv_id);
+extern int quickpanel_noti_node_get_item_count(noti_node *handle, notification_type_e noti_type);
+extern void quickpanel_noti_node_create(noti_node **handle);
 
 #endif

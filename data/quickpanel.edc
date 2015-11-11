@@ -25,6 +25,8 @@
 #define QP_HANDLER_COLOR "AO010"
 #define QP_HANDLER_PRESS_COLOR "AO010S"
 
+
+
 #define QUICKPANEL_FOCUS_OBJECT(NAME, TO_1, TO_2)\
 			part {\
 				name: NAME;\
@@ -440,6 +442,15 @@ collections {
 					}
 					align: 0.0 0.0;
 				}
+				description {
+					state: "enable_voice_icon" 0.0;
+					inherit: "default";
+					rel1 {
+						to_y:"qp.base.setting.swallow";
+						relative: 0.0 1.0;
+						offset : 0 110;
+					}
+				}
 			}
 			part {
 				name: "qp.base.list.swallow";
@@ -492,6 +503,20 @@ collections {
 				source: "quickpanel.prog";
 				target: "qp.base.rect.setting";
 				target: "qp.base.setting.swallow";
+			}
+			program {
+				name: "voice_icon.show";
+				action: STATE_SET "enable_voice_icon" 0.0;
+				signal: "voice_icon.show";
+				source: "quickpanel.prog";
+				target: "background.touch";
+			}
+			program {
+				name: "voice_icon.hide";
+				action: STATE_SET "default" 0.0;
+				signal: "voice_icon.hide";
+				source: "quickpanel.prog";
+				target: "background.touch";
 			}
 			program {
 				name: "background.touch";

@@ -15,18 +15,17 @@
  *
  */
 
-#include <notification.h>
 
 #ifndef _QP_EMERGENCY_MODE_DEF_
 #define _QP_EMERGENCY_MODE_DEF_
 
 #define PACKAGE_EMERGENCY_MODE_SETTING "setting-emergency-efl"
 
-void quickpanel_emergency_mode_init(void *data);
-void quickpanel_emergency_mode_fini(void *data);
-int quickpanel_emergency_mode_is_permitted_app(const char *appid);
-int quickpanel_emergency_mode_is_on(void);
-int quickpanel_emergency_mode_notification_filter(notification_h noti, int is_delete);
-int quickpanel_emergency_mode_syspopup_launch(void);
+extern void quickpanel_emergency_mode_init(void *data);
+extern void quickpanel_emergency_mode_fini(void *data);
+extern int quickpanel_emergency_mode_is_permitted_app(const char *appid);
+extern int quickpanel_emergency_mode_is_on(void);
+extern int quickpanel_emergency_mode_notification_filter(notification_h noti, int is_delete);
+extern int quickpanel_emergency_mode_syspopup_launch(void);
 
 #endif

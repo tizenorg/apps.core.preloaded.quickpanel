@@ -18,11 +18,6 @@
 #ifndef __SETTING_H__
 #define __SETTING_H__
 
-#include <Elementary.h>
-#include "quickpanel_def.h"
-#include "quickpanel-ui.h"
-#include "settings_icon_common.h"
-
 #define MODULE_BLANK "blank"
 #define FILE_QP_BUTTON_ORDER_INI DATADIR_RW"/qp_setting_order.ini"
 #define E_DATA_MODULE_INFO "module_info"
@@ -102,12 +97,12 @@ struct _QP_Setting_Loaded_Item {
 	void *extra_handler_1;
 };
 
-void quickpanel_setting_save_list_to_file(Eina_List *list, int num_featured);
-int quickpanel_settings_featured_list_validation_check(char *order);
-void quickpanel_settings_featured_list_get(Eina_List **list);
-void quickpanel_settings_all_list_get(Eina_List **list);
+extern void quickpanel_setting_save_list_to_file(Eina_List *list, int num_featured);
+extern int quickpanel_settings_featured_list_validation_check(char *order);
+extern void quickpanel_settings_featured_list_get(Eina_List **list);
+extern void quickpanel_settings_all_list_get(Eina_List **list);
 
-QP_Module_Setting *quickpanel_settings_module_get_by_name(const char *name);
-int quickpanel_settings_module_count_get(void);
+extern QP_Module_Setting *quickpanel_settings_module_get_by_name(const char *name);
+extern int quickpanel_settings_module_count_get(void);
 
 #endif

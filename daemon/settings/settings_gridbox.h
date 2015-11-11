@@ -24,13 +24,14 @@
 #define SETTINGS_GRIDBOX_ITEM_ICON "item_icon"
 #define SETTINGS_GRIDBOX_ITEM_DIVIDER "item_divider"
 
-Evas_Object *quickpanel_settings_gridbox_create(Evas_Object *parent, void *data);
-void quickpanel_settings_gridbox_remove(Evas_Object *gridbox);
-void quickpanel_settings_gridbox_item_add(Evas_Object *gridbox, Evas_Object *item, const char *item_type, int is_prepend);
-void quickpanel_settings_gridbox_item_remove(Evas_Object *gridbox, Evas_Object *item);
-void quickpanel_settings_gridbox_item_remove_all(Evas_Object *gridbox);
-void quickpanel_settings_gridbox_rotation(Evas_Object *gridbox, int angle);
-int quickpanel_settings_gridbox_item_count_get(Evas_Object *gridbox);
-int quickpanel_settings_gridbox_item_index_get(Evas_Object *gridbox, int touch_x, int touch_y);
-void quickpanel_settings_gridbox_unpack_all(Evas_Object *gridbox);
+extern Evas_Object *quickpanel_settings_gridbox_create(Evas_Object *parent, void *data);
+extern void quickpanel_settings_gridbox_remove(Evas_Object *gridbox);
+extern void quickpanel_settings_gridbox_item_add(Evas_Object *gridbox, Evas_Object *item, const char *item_type, int is_prepend);
+extern void quickpanel_settings_gridbox_item_remove(Evas_Object *gridbox, Evas_Object *item);
+extern void quickpanel_settings_gridbox_item_remove_all(Evas_Object *gridbox);
+extern void quickpanel_settings_gridbox_rotation(Evas_Object *gridbox, int angle);
+extern int quickpanel_settings_gridbox_item_count_get(Evas_Object *gridbox);
+extern int quickpanel_settings_gridbox_item_index_get(Evas_Object *gridbox, int touch_x, int touch_y);
+extern void quickpanel_settings_gridbox_unpack_all(Evas_Object *gridbox);
+
 #endif

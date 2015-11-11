@@ -19,9 +19,6 @@
 #ifndef __SETTING_MODULE_API_H__
 #define __SETTING_MODULE_API_H__
 
-#include <Elementary.h>
-#include "settings.h"
-
 #define FLAG_VALUE_VOID 0xDEADDEAD
 
 #define FLAG_ENABLE 1
@@ -36,22 +33,21 @@ typedef enum _qp_setting_icon_container_type {
 	QP_SETTING_ICON_CONTAINER_ALL_LIST,
 } qp_setting_icon_container_type;
 
-Evas_Object *quickpanel_setting_module_icon_create(QP_Module_Setting *module, Evas_Object *parent);
-void quickpanel_setting_module_icon_add(QP_Module_Setting *module, Evas_Object *icon, qp_setting_icon_container_type container_type);
-void quickpanel_setting_module_icon_remove(QP_Module_Setting *module, Evas_Object *icon);
-void quickpanel_setting_module_icon_state_set(QP_Module_Setting *module, int state);
-int quickpanel_setting_module_icon_state_get(QP_Module_Setting *module);
-Evas_Object *quickpanel_setting_module_icon_get(QP_Module_Setting *module,
-		qp_setting_icon_container_type container_type);
-void quickpanel_setting_module_icon_view_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2);
-void quickpanel_setting_module_icon_view_update_text(QP_Module_Setting *module);
-void quickpanel_setting_module_icon_status_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2);
-int quickpanel_setting_module_is_icon_clickable(QP_Module_Setting *module);
-void quickpanel_setting_module_icon_timer_add(QP_Module_Setting *module);
-void quickpanel_setting_module_icon_timer_del(QP_Module_Setting *module);
-void quickpanel_setting_module_progress_mode_set(QP_Module_Setting *module, int is_enable, int is_request_on);
-void quickpanel_setting_module_icon_destroy(QP_Module_Setting *module, Evas_Object *icon);
+extern Evas_Object *quickpanel_setting_module_icon_create(QP_Module_Setting *module, Evas_Object *parent);
+extern void quickpanel_setting_module_icon_add(QP_Module_Setting *module, Evas_Object *icon, qp_setting_icon_container_type container_type);
+extern void quickpanel_setting_module_icon_remove(QP_Module_Setting *module, Evas_Object *icon);
+extern void quickpanel_setting_module_icon_state_set(QP_Module_Setting *module, int state);
+extern int quickpanel_setting_module_icon_state_get(QP_Module_Setting *module);
+extern Evas_Object *quickpanel_setting_module_icon_get(QP_Module_Setting *module, qp_setting_icon_container_type container_type);
+extern void quickpanel_setting_module_icon_view_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2);
+extern void quickpanel_setting_module_icon_view_update_text(QP_Module_Setting *module);
+extern void quickpanel_setting_module_icon_status_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2);
+extern int quickpanel_setting_module_is_icon_clickable(QP_Module_Setting *module);
+extern void quickpanel_setting_module_icon_timer_add(QP_Module_Setting *module);
+extern void quickpanel_setting_module_icon_timer_del(QP_Module_Setting *module);
+extern void quickpanel_setting_module_progress_mode_set(QP_Module_Setting *module, int is_enable, int is_request_on);
+extern void quickpanel_setting_module_icon_destroy(QP_Module_Setting *module, Evas_Object *icon);
 
-QP_Module_Setting *quickpanel_setting_module_get_from_icon(Evas_Object *icon);
+extern QP_Module_Setting *quickpanel_setting_module_get_from_icon(Evas_Object *icon);
 
 #endif /* __SETTING_MODULE_API_H__ */

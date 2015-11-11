@@ -15,8 +15,13 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
 
 #include <vconf.h>
+#include <notification.h>
+#include <notification_internal.h>
+
 #include "common.h"
 #include "noti_util.h"
 #include "noti_led.h"
@@ -66,8 +71,7 @@ static void _led_entry_del(QP_LED_T *led_entry)
 	free(led_entry);
 }
 
-static int
-_led_list_sort_cb(const void *data1, const void *data2)
+static int _led_list_sort_cb(const void *data1, const void *data2)
 {
 	QP_LED_T *entry_1 = (QP_LED_T *)data1;
 	QP_LED_T *entry_2 = (QP_LED_T *)data2;
@@ -148,9 +152,8 @@ static inline int _is_led_enabled(void)
 	int ret = -1;
 	int status = 1;
 
-#ifdef HAVE_x
 	ret = vconf_get_bool(VCONFKEY_SETAPPL_LED_INDICATOR_NOTIFICATIONS, &status);
-#endif
+
 	if (ret == 0) {
 		if (status == 0) {
 			ERR("LED notification turned off");
@@ -345,12 +348,11 @@ HAPI void quickpanel_noti_led_init(void *data, void *nodes)
 	struct appdata *ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
-#ifdef HAVE_X
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LED_INDICATOR_NOTIFICATIONS,_led_option_vconf_cb, ad);
-#endif				
+
 	if (ret != 0) {
 		ERR("failed to notify key[%s] : %d",
-			VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, ret);
+				VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, ret);
 	}
 
 	if (nodes != NULL) {
@@ -363,12 +365,11 @@ HAPI void quickpanel_noti_led_fini(void *data)
 	int ret = 0;
 	struct appdata *ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
-#ifdef HAVE_X
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LED_INDICATOR_NOTIFICATIONS,_led_option_vconf_cb);
 	if (ret != 0) {
 		ERR("failed to ignore key[%s] : %d", VCONFKEY_SETAPPL_LED_INDICATOR_NOTIFICATIONS, ret);
 	}
-#endif
 
 	_led_list_clean_up();
 }

@@ -20,18 +20,17 @@
 #define ACTIVENOTI_BG_COLOR "AO003"
 #define ACTIVENOTI_MAIN_TEXT_HEIGHT_INC 1
 
+#define BOX_ICON_SIZE_W 96
+#define BOX_ICON_SIZE_H 96
+#define BOX_ICON_BG_SIZE_W 96
+#define BOX_ICON_BG_SIZE_H 96
+
 images
 {
 	image: "handler_btn_02.png" COMP;
 	image: "core_theme_bg_01.png" COMP;
 	image: "core_list_button_bg.#.png" COMP;
 }
-
-#define NOTI_HEIGHT_NO_BUTTON 200
-#define NOTI_HEIGHT_WITH_BUTTON 300
-
-#define WIDTH_MIN 480
-#define WIDTH_MAX 960
 
 collections
 {
@@ -43,15 +42,19 @@ collections
 		styles {
 			style {
 				name: "style_title_text";
-				base: "font=Tizen:style=Bold font_size="42" color=#FFFFFFFF  text_class=tizen wrap=mixed";
+				base: "font=Tizen:style=Bold font_size="33" color=#FFFFFFFF  text_class=tizen wrap=mixed ellipsis=1.0";
 			}
 		}
 
 		styles {
 			style {
 				name: "style_main_text";
-				base: "font=Tizen:style=Regular font_size="38" color=#FFFFFFFF  text_class=tizen wrap=mixed";
+				base: "font=Tizen:style=Regular font_size="29" color=#FFFFFFFF  text_class=tizen wrap=mixed ellipsis=1.0";
 			}
+		}
+
+		images {
+			image: "quick_button_icon_bg.png" COMP;
 		}
 
 		parts {
@@ -62,18 +65,6 @@ collections
 				description {
 					state: "default" 0.0;
 					align: 0.0 0.0;
-					min: WIDTH_MIN NOTI_HEIGHT_WITH_BUTTON;
-					max: WIDTH_MAX NOTI_HEIGHT_WITH_BUTTON;
-				}
-				description {
-					state: "btn_hide" 0.0;
-					inherit: "default" 0.0;
-					min: WIDTH_MIN NOTI_HEIGHT_NO_BUTTON;
-					max: WIDTH_MAX NOTI_HEIGHT_NO_BUTTON;
-				}
-				description {
-					state: "btn_show" 0.0;
-					inherit: "default" 0.0;
 				}
 			}
 
@@ -119,7 +110,7 @@ collections
 					state: "default" 0.0;
 					rel1
 					{
-						relative: 0.0 0.1;
+						relative: 0.0 0.05;
 						to: "bg";
 					}
 					rel2 {
@@ -128,22 +119,6 @@ collections
 					}
 					align: 0.0 0.0;
 					visible: 0;
-				}
-				description {
-					state: "btn_hide" 0.0;
-					inherit: "default" 0.0;
-					rel1 {
-						relative: 0.0 0.1;
-						to: "bg";
-					}
-					rel2 {
-						relative: 1.0 0.9;
-						to: "bg";
-					}
-				}
-				description {
-					state: "btn_show" 0.0;
-					inherit: "default" 0.0;
 				}
 			}
 
@@ -162,23 +137,6 @@ collections
 						to: "bg";
 					}
 				}
-				description {
-					state: "btn_hide" 0.0;
-					inherit: "default" 0.0;
-					fixed: 0 1;
-					rel1 {
-						relative: 0.0 1.0;
-						to: "bg";
-					}
-					rel2 {
-						relative: 1.0 1.0;
-						to: "bg";
-					}
-				}
-				description {
-					state: "btn_show" 0.0;
-					inherit: "default" 0.0;
-				}
 			}
 
 			part{
@@ -194,6 +152,16 @@ collections
 						relative: 1.0 1.0;
 						to: "button.space";
 					}
+					visible: 1;
+				}
+				description {
+					state: "btn_hide" 0.0;
+					inherit: "default" 0.0;
+					visible: 0;
+				}
+				description {
+					state: "btn_show" 0.0;
+					inherit: "default" 0.0;
 				}
 			}
 
@@ -241,6 +209,23 @@ collections
 			}
 
 
+			part {
+				name: "elm.padding.image";
+				type: SPACER;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 32 0;
+					fixed: 1 0;
+					rel1.to:"rect_main";
+					rel2.to:"rect_main";
+					rel1.relative: 1.0 0.0;
+					rel2.relative: 1.0 1.0;
+					align: 1.0 0.0;
+				}
+			}
+
+
 			// Icon
 			part {
 				name: "icon_space";
@@ -251,11 +236,11 @@ collections
 					state: "default" 0.0;
 					align: 0.0 0.0;
 					rel1 {
-						relative: 0.0 0.0;
+						relative: 0.03 0.1;
 						to: "rect_main";
 					}
 					rel2 {
-						relative: 0.2 0.5;
+						relative: 0.2 0.7;
 						to: "rect_main";
 					}
 					visible: 0;
@@ -263,18 +248,42 @@ collections
 			}
 
 			part {
-				name: "icon_big";
-				type: SWALLOW;
-				scale: 1;
+				name: "masking";
+				type: IMAGE;
+				precise_is_inside: 1;
 				description {
 					state: "default" 0.0;
-					align: 0.0 0.0;
+					min : BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
+					fixed : 1 1;
 					rel1 {
-						relative: 0.0 0.0;
+						relative: 0.5 0.5;
 						to: "icon_space";
 					}
 					rel2 {
-						relative: 1.0 1.0;
+						relative: 0.5 0.5;
+						to: "icon_space";
+					}
+					image.normal: "quick_button_icon_bg.png";
+				}
+			}
+
+			part {
+				name: "icon_big";
+				type: SWALLOW;
+				clip_to : "masking";
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					align: 0.5 0.5;
+					min : BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
+					max : BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_W;
+					fixed : 1 1;
+					rel1 {
+						relative: 0.5 0.5;
+						to: "icon_space";
+					}
+					rel2 {
+						relative: 0.5 0.5;
 						to: "icon_space";
 					}
 				}
@@ -285,9 +294,11 @@ collections
 				type: SWALLOW;
 				description {
 					state: "default" 0.0;
-					align: 1.0 1.0;
+					align: 0.0 1.0;
+					fixed : 1 1;
+					min : 45 45;
 					rel1 {
-						relative: 0.5 0.5;
+						relative: 0.6 0.6;
 						to: "icon_big";
 					}
 					rel2 {
@@ -306,11 +317,11 @@ collections
 					state: "default" 0.0;
 					align: 0.0 0.5;
 					rel1 {
-						relative: 0.2 0.0;
+						relative: 0.22 0.0;
 						to: "rect_main";
 					}
 					rel2 {
-						relative: 1.0 1.0;
+						relative: 0.98 0.89;
 						to: "rect_main";
 					}
 					visible: 0;
@@ -320,6 +331,7 @@ collections
 			part {
 				name: "subtitle_text";
 				type: TEXTBLOCK;
+				scale: 1;
  				description {
 					state: "default" 0.0;
 					align: 0.0 0.0;
@@ -359,6 +371,7 @@ collections
 			part {
 				name: "title_text";
 				type: TEXTBLOCK;
+				scale: 1;
 				description {
 					state: "default" 0.0;
 					align: 0.0 0.0;
@@ -379,11 +392,11 @@ collections
 					state: "sub_show" 0.0;
 					inherit: "default" 0.0;
 					rel1 {
-						relative: 0.0 0.25;
+						relative: 0.0 0.3;
 						to: "text_space";
 					}
 					rel2 {
-						relative: 1.0 0.55;
+						relative: 1.0 0.6;
 						to: "text_space";
 					}
 
@@ -397,6 +410,7 @@ collections
 			part {
 				name: "content_text";
 				type: TEXTBLOCK;
+				scale: 1;
 				multiline: 1;
 				description {
 					state: "default" 0.0;
@@ -406,11 +420,11 @@ collections
 						align: 0.0 0.5;
 					}
 					rel1 {
-						relative: 0.0 0.35;
+						relative: 0.0 0.3;
 						to: "text_space";
 					}
 					rel2 {
-						relative: 1.0 1.0;
+						relative: 1.0 0.9;
 						to: "text_space";
 					}
 				}
@@ -418,7 +432,7 @@ collections
 					state: "sub_show" 0.0;
 					inherit: "default" 0.0;
 					rel1 {
-						relative: 0.0 0.55;
+						relative: 0.0 0.6;
 						to: "text_space";
 					}
 					rel2 {
@@ -501,9 +515,7 @@ collections
 				signal: "btn_hide";
 				source: "button.space";
 				action: STATE_SET "btn_hide" 0.0;
-				target: "button.space";
-				target: "rect_main";
-				target: "background";
+				target: "button.swallow";
 			}
 
 			program {
@@ -511,9 +523,7 @@ collections
 				signal: "btn_show";
 				source: "button.space";
 				action: STATE_SET "btn_show" 0.0;
-				target: "button.space";
-				target: "rect_main";
-				target: "background";
+				target: "button.swallow";
 			}
 		}
 	}
@@ -578,6 +588,7 @@ collections
 			part {
 				name: "content.button.text";
 				type: TEXT;
+				scale: 1;
 				description {
 					state: "default" 0.0;
 					align: 0.5 0.5;

@@ -15,6 +15,18 @@
  *
  */
 
+#include <Elementary.h>
+
+#if defined(WINSYS_X11)
+#include <Ecore_X.h>
+#endif
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
+#include "common.h"
 #include "pager.h"
 #include "datetime.h"
 
@@ -117,9 +129,8 @@ HAPI void quickpanel_page_get_recoordinated_pos(int local_x, int local_y, int *x
 	struct appdata *ad = quickpanel_get_app_data();
 	retif(ad == NULL, , "invalid parameter");
 
-	//ecore_x_window_size_get(ecore_x_window_root_first_get(), &width, &height);
 	elm_win_screen_size_get(ad->win, NULL, NULL, &width, &height);
-	
+
 	switch (ad->angle) {
 	case 0:
 		rot_x = local_x;
@@ -160,9 +171,11 @@ HAPI void quickpanel_page_get_touched_pos(int *x, int *y)
 
 	struct appdata *ad = quickpanel_get_app_data();
 	retif(ad == NULL, , "invalid parameter");
-#ifdef HAVE_X
+
+#if defined(WINSYS_X11)
 	ecore_x_pointer_last_xy_get(&local_x, &local_y);
 #endif
+
 	quickpanel_page_get_recoordinated_pos(local_x, local_y, &rot_x, &rot_y);
 
 	if (x != NULL) {
@@ -177,7 +190,9 @@ HAPI void quickpanel_page_get_touched_pos(int *x, int *y)
 HAPI void quickpanel_page_editing_icon_visible_status_update(void)
 {
 	int is_visible = 0;
-	struct appdata *ad = quickpanel_get_app_data();
+	struct appdata *ad;
+
+	ad = quickpanel_get_app_data();
 	retif(ad == NULL, , "invalid parameter");
 
 	if (quickpanel_pager_current_page_get() == PAGE_IDX_EDITING) {

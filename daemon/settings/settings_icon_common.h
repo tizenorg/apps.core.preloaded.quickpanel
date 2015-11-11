@@ -19,11 +19,9 @@
 #ifndef __SETTING_ICON_COMMON_H__
 #define __SETTING_ICON_COMMON_H__
 
-int quickpanel_setting_icon_click_cb_add(Evas_Object *icon,
-			Edje_Signal_Cb func, void *data);
-int quickpanel_setting_icon_click_cb_without_feedback_add(Evas_Object *icon,
-			Edje_Signal_Cb func, void *data);
-int quickpanel_setting_icon_click_cb_del(Evas_Object *icon, Edje_Signal_Cb func);
-void quickpanel_setting_icon_handler_longpress(const char *pkgname, void *data);
+extern int quickpanel_setting_icon_click_cb_add(Evas_Object *icon, Edje_Signal_Cb func, void *data);
+extern int quickpanel_setting_icon_click_cb_without_feedback_add(Evas_Object *icon, Edje_Signal_Cb func, void *data);
+extern int quickpanel_setting_icon_click_cb_del(Evas_Object *icon, Edje_Signal_Cb func);
+extern void quickpanel_setting_icon_handler_longpress(const char *pkgname, void *data);
 
 #endif /* __SETTING_ICON_COMMON_H__ */

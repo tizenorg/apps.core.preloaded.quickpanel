@@ -16,24 +16,37 @@
  */
 
 
+#include <Elementary.h>
 #include <string.h>
-#include <efl_assist.h>
+#include <glib.h>
+
+#include <notification.h>
+#include <notification_text_domain.h>
+#include <system_settings.h>
+#include <vconf.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
+#include "common_uic.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
-#include "noti_list_item.h"
+#include "vi_manager.h"
 #include "noti_node.h"
+#include "noti_list_item.h"
 #include "noti.h"
 #include "noti_util.h"
+#include "animated_icon.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
+
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
-#include "animated_icon.h"
 
 #define LEN_UNIT_TEXTBLOCK 560
 #define QP_DEFAULT_ICON	RESDIR"/quickpanel_icon_default.png"
@@ -125,7 +138,7 @@ static void _set_icon(Evas_Object *item, notification_h noti)
 
 	notification_get_pkgname(noti, &pkgname);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-			       &thumbnail_path);
+			&thumbnail_path);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_ICON, &icon_path);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB, &icon_sub_path);
 
@@ -160,7 +173,9 @@ static void _set_icon(Evas_Object *item, notification_h noti)
 
 				if (!strncmp(main_icon_path, QP_PRELOAD_NOTI_ICON_PATH, strlen(QP_PRELOAD_NOTI_ICON_PATH))) 	{
 					DBG("Apply color theme [%s]", main_icon_path);
-					evas_object_color_set(ic, 0,0,0,255);
+					evas_object_color_set(ic, 155, 216, 226, 255);
+				} else {
+					elm_image_aspect_fixed_set(ic, EINA_TRUE);
 				}
 			}
 			elm_object_part_content_set(item, "elm.swallow.thumbnail", ic);
@@ -235,8 +250,8 @@ static void _set_text(Evas_Object *item, notification_h noti)
 
 	/* Get pkgname & id */
 	noti_err = notification_get_text(noti,
-							NOTIFICATION_TEXT_TYPE_TITLE,
-							&text);
+			NOTIFICATION_TEXT_TYPE_TITLE,
+			&text);
 
 	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
 		quickpanel_common_util_char_replace(text, _NEWLINE, _SPACE);
@@ -247,8 +262,9 @@ static void _set_text(Evas_Object *item, notification_h noti)
 	}
 
 	noti_err = notification_get_text(noti,
-							NOTIFICATION_TEXT_TYPE_EVENT_COUNT,
-							&text);
+			NOTIFICATION_TEXT_TYPE_EVENT_COUNT,
+			&text);
+
 	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
 		quickpanel_common_util_char_replace(text, _NEWLINE, _SPACE);
 		int count = atoi(text);
@@ -264,7 +280,7 @@ static void _set_text(Evas_Object *item, notification_h noti)
 
 	noti_err = notification_get_text(noti,
 			NOTIFICATION_TEXT_TYPE_CONTENT,
-							&text);
+			&text);
 	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
 		quickpanel_common_util_char_replace(text, _NEWLINE, _SPACE);
 		_set_text_to_part(item, "elm.text.content", text);
@@ -286,11 +302,11 @@ static void _set_text(Evas_Object *item, notification_h noti)
 	}
 
 	if (elm_object_part_text_get(item, "elm.text.count") != NULL) {
-		elm_object_signal_emit(item, "title.short", "prog");
+		elm_object_signal_emit(item, "content.short", "prog");
 		elm_object_signal_emit(item, "count.show", "prog");
 	}
 	if (elm_object_part_text_get(item, "elm.text.time") != NULL) {
-		elm_object_signal_emit(item, "content.short", "prog");
+		elm_object_signal_emit(item, "title.short", "prog");
 	}
 
 	const char *get_content = elm_object_part_text_get(item, "elm.text.content");
@@ -299,10 +315,12 @@ static void _set_text(Evas_Object *item, notification_h noti)
 		elm_object_signal_emit(item, "title.move.center", "prog");
 		if (elm_object_part_text_get(item, "elm.text.time") != NULL) {
 			elm_object_signal_emit(item, "title.short.center", "prog");
+			elm_object_signal_emit(item, "time.move.center", "prog");
 		}
 	} else {
 		elm_object_signal_emit(item, "title.move.default", "prog");
-		if (elm_object_part_text_get(item, "elm.text.count") != NULL) {
+		if (elm_object_part_text_get(item, "elm.text.time") != NULL) {
+			elm_object_signal_emit(item, "time.move.default", "prog");
 			elm_object_signal_emit(item, "title.short", "prog");
 		} else {
 			elm_object_signal_emit(item, "title.text.default", "prog");
@@ -355,7 +373,6 @@ static void _update(noti_node_item *noti_node, notification_ly_type_e layout, Ev
 
 Noti_View_H noti_view_listtype_h = {
 	.name 			= "noti_view_listtype",
-
 	.create			= _create,
 	.update			= _update,
 	.remove			= NULL,

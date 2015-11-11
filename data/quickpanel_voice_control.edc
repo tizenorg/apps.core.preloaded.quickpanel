@@ -1,0 +1,151 @@
+/*
+ * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "color_classes.edc"
+#include "quickpanel_def.h"
+
+#define QP_THEME_VOICE_CONTOL_BG_COLOR "B0211"
+#define QP_VOICE_CONTOL_HEIGHT	80
+
+images
+{
+	image: "voice_control_icon_mic.png" COMP;
+	image: "core_list_button_bg.#.png" COMP;
+}
+
+collections
+{
+	base_scale: 1.8;
+
+	group {
+		name: "quickpanel/voice_control/default";
+		data.item: "bgcolor" QP_THEME_VOICE_CONTOL_BG_COLOR;
+
+		parts {
+			part {
+				name: "base";
+				type: SPACER;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 0 QP_VOICE_CONTOL_HEIGHT;
+					max: -1 QP_VOICE_CONTOL_HEIGHT;
+				}
+			}
+			part {
+				name: "bgcolor";
+				type: RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					rel1 {
+						to: "base";
+						relative: 0.0 0.0;
+					}
+					rel2 {
+						to: "base";
+						relative: 1.0 1.0;
+					}
+					color_class: QP_THEME_VOICE_CONTOL_BG_COLOR;
+					visible: 0;
+				}
+			}
+			part {
+				name: "button_bg";
+				type: IMAGE;
+				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					align: 0.5 0.5;
+					rel1 {
+						to: "base";
+						relative: 0.2 0.1;
+					}
+					rel2 {
+						to: "base";
+						relative: 0.8 0.9;
+					}
+					image {
+						normal: "core_list_button_bg.#.png";
+					}
+					color: 52 123 135 255;
+				}
+				description
+				{
+					state: "pressed" 0.0;
+					inherit: "default" 0.0;
+					color_class: "AO001L1P";
+				}
+			}
+			part {
+				name: "button_img";
+				type: IMAGE;
+				mouse_events: 1;
+				description {
+					state: "default" 0.0;
+					max: 50 50;
+					align: 0.5 0.5;
+					rel1 {
+						to: "button_bg";
+					}
+					rel2 {
+						to: "button_bg";
+					}
+					image {
+						normal: "voice_control_icon_mic.png";
+					}
+				}
+			}
+		}
+
+		programs {
+
+			program {
+				name: "pressed_button";
+				signal: "mouse,clicked,1";
+				source: "button_bg";
+				action: SIGNAL_EMIT "button_clicked" "";
+			}
+
+			program {
+				name: "pressed_button_img";
+				signal: "mouse,clicked,1";
+				source: "button_img";
+				action: SIGNAL_EMIT "button_clicked" "";
+			}
+
+			program {
+				name: "pressed_button_bg";
+				signal: "mouse,down,1";
+				source: "button_bg";
+				action: STATE_SET "pressed" 0.0;
+				target: "button_bg";
+			}
+
+			program {
+				name: "released_button_bg";
+				signal: "mouse,up,1";
+				source: "button_bg";
+				action: STATE_SET "default" 0.0;
+				target: "button_bg";
+			}
+		}
+	}
+}
+
+
+

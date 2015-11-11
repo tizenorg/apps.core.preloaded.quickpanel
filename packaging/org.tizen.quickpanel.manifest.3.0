@@ -1,0 +1,8 @@
+<manifest>
+	<request>
+		<domain name="_" />
+	</request>
+	<assign>
+		<filesystem path="/usr/apps/org.tizen.quickpanel/bin/quickpanel" exec_label="User::App::org.tizen.quickpanel" />
+	</assign>
+</manifest>

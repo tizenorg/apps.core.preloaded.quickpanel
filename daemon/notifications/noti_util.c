@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
+/* * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +14,26 @@
  *
  */
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include <Elementary.h>
+#include <E_DBus.h>
 
 #include <unicode/uloc.h>
 #include <unicode/udat.h>
 #include <unicode/udatpg.h>
 #include <unicode/ustring.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
 #include <runtime_info.h>
 #include <vconf.h>
 #include <system_settings.h>
+#include <notification_list.h>
+#include <E_DBus.h>
+
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "noti_util.h"
@@ -70,10 +81,9 @@ static char* _get_locale(void)
 	char *locale = NULL;
 	int ret = 0;
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &locale);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "ailed to set key(%s) : %d", SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, ret);
-#endif
+
 
 	if (locale == NULL) {
 		ERR("vconf_get_str() failed : region format");
@@ -167,9 +177,8 @@ HAPI char *quickpanel_noti_util_get_time(time_t t, char *buf, int buf_len)
 		skeletonLength = strlen(UDAT_ABBR_MONTH_DAY);
 		is_show_time = 0;
 	} else {
-#ifdef HAVE_X
 		ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, &is_24hour_enabled);
-#endif
+
 		if (ret == SYSTEM_SETTINGS_ERROR_NONE && is_24hour_enabled == true) {
 			/* ascii to unicode for input skeleton */
 			u_uastrcpy(skeleton, "HHmm");
@@ -227,12 +236,12 @@ HAPI char *quickpanel_noti_util_get_time(time_t t, char *buf, int buf_len)
 	/* get best pattern using skeleton */
 	patternLength =
 		udatpg_getBestPattern(generator, skeleton, skeletonLength,
-				  pattern, patternCapacity, &status);
+				pattern, patternCapacity, &status);
 
 	/* open datetime formatter using best pattern */
 	formatter =
 		udat_open(UDAT_IGNORE, UDAT_IGNORE, locale, NULL, -1,
-			  pattern, patternLength, &status);
+				pattern, patternLength, &status);
 	if (formatter == NULL) {
 		ret = 0;
 		goto err;
@@ -264,26 +273,26 @@ HAPI char *quickpanel_noti_util_get_time(time_t t, char *buf, int buf_len)
 		}
 	}
 
-	err:
-		if (timezone) {
-			free(timezone);
-			timezone = NULL;
-		}
+err:
+	if (timezone) {
+		free(timezone);
+		timezone = NULL;
+	}
 
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
+	if (locale) {
+		free(locale);
+		locale = NULL;
+	}
 
-		if (generator) {
-			udatpg_close(generator);
-			generator = NULL;
-		}
+	if (generator) {
+		udatpg_close(generator);
+		generator = NULL;
+	}
 
-		if (formatter) {
-			udat_close(formatter);
-			formatter = NULL;
-		}
+	if (formatter) {
+		udat_close(formatter);
+		formatter = NULL;
+	}
 
 	return ret <= 0 ? NULL : buf;
 }

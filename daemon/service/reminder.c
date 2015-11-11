@@ -15,15 +15,26 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
 
 #include <alarm.h>
 #include <time.h>
 #include <unistd.h>
 #include <vconf.h>
 #include <system_settings.h>
+#include <notification.h>
+#include <notification_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <feedback.h>
+#include <player.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
+#include "common_uic.h"
 #include "common.h"
+#include "noti_node.h"
 #include "media.h"
 #include "noti.h"
 
@@ -84,11 +95,10 @@ static void _feedback_sound_play(void)
 	if (is_play_default) {
 		char *default_msg_tone = NULL;
 
-#ifdef HAVE_X
 		ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_SOUND_NOTIFICATION, &default_msg_tone);
 		msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "ailed to set key(%s) : %d", SYSTEM_SETTINGS_KEY_SOUND_NOTIFICATION, ret);
 		SDBG("Reminded setting sound[%s]", default_msg_tone);
-#endif
+
 		if (default_msg_tone != NULL) {
 			ret = quickpanel_media_player_play(SOUND_TYPE_NOTIFICATION, default_msg_tone);
 			free(default_msg_tone);
@@ -114,15 +124,15 @@ static int _reminder_interval_get(void)
 	retif(ret != 0, 0, "failed to get vconf VCONFKEY_SETAPPL_NOTI_MSG_ALERT_REP_TYPE_INT");
 
 	switch (key) {
-	case 1:
-		min = 2;
-		break;
-	case 2:
-		min = 5;
-		break;
-	case 3:
-		min = 10;
-		break;
+		case 1:
+			min = 2;
+			break;
+		case 2:
+			min = 5;
+			break;
+		case 3:
+			min = 10;
+			break;
 	}
 
 	DBG("interval:%d", min);

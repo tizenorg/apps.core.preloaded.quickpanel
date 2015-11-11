@@ -15,15 +15,21 @@
  *
  */
 
+#include <Elementary.h>
+
 #include <bluetooth.h>
 #include <vconf.h>
 #include <bluetooth_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_BLUETOOTH_ABB")
 #define BUTTON_ICON_NORMAL "quick_icon_bluetooth.png"
@@ -110,8 +116,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 			FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret;
 	int is_on = 0;
@@ -142,9 +147,7 @@ static void _mouse_clicked_cb(void *data,
 	quickpanel_setting_module_icon_timer_add(module);
 }
 
-static void _bluetooth_status_changed_cb(int result,
-			bt_adapter_state_e adapter_state,
-			void *user_data)
+static void _bluetooth_status_changed_cb(int result, bt_adapter_state_e adapter_state, void *user_data)
 {
 	QP_Module_Setting *module = (QP_Module_Setting *)user_data;
 	retif(module == NULL, , "Invalid parameter!");

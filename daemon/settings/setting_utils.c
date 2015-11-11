@@ -15,11 +15,19 @@
  *
  */
 
-
+#include <Elementary.h>
 #include <glib.h>
-#include <efl_assist.h>
-#include <notification.h>
 
+#if defined(WINSYS_X11)
+#include <Ecore_X.h>
+#endif
+
+#include <notification.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "settings.h"
 #include "common.h"
 #include "quickpanel_def.h"
 #include "quickpanel-ui.h"
@@ -36,8 +44,7 @@
 #define DIVIDER_MAGIC 0xCAFECAFE
 #define E_DATA_DIVIDER_MAGIC "divider_magic"
 
-static inline void __escaped_text_set(Evas_Object *obj,
-			const char *part, const char *text)
+static inline void __escaped_text_set(Evas_Object *obj, const char *part, const char *text)
 {
 	char buf[256] = {0,};
 	char *ecaped = NULL;
@@ -239,7 +246,7 @@ HAPI Evas_Object *quickpanel_setting_icon_image_new(Evas_Object *parent, const c
 	return content;
 }
 
-HAPI static Evas_Object *quickpanel_setting_container_get(Evas_Object *base)
+static Evas_Object *quickpanel_setting_container_get(Evas_Object *base)
 {
 	Evas_Object *container = NULL;
 	retif(base == NULL, NULL, "invalid parameter");
@@ -281,7 +288,6 @@ HAPI Evas_Object *quickpanel_setting_box_get_from_scroller(Evas_Object *base)
 	return box;
 }
 
-
 HAPI Evas_Object *quickpanel_setting_box_get(Evas_Object *base)
 {
 	Evas_Object *container = NULL;
@@ -294,7 +300,6 @@ HAPI Evas_Object *quickpanel_setting_box_get(Evas_Object *base)
 
 	return box;
 }
-
 
 HAPI int quickpanel_setting_container_rotation_set(Evas_Object *base, int angle)
 {
@@ -455,12 +460,13 @@ HAPI int quickpanel_setting_set_scroll_page_width(void *data)
 	Evas_Object *scroller = quickpanel_setting_scroller_get(ad->ly);
 
 	int w, h;
-#if HAVE_X
+#if defined(WINSYS_X11)
 	Ecore_X_Screen *screen = ecore_x_default_screen_get();
 	ecore_x_screen_size_get(screen, &w, &h);
 #else
 	elm_win_screen_size_get(ad->win, NULL, NULL, &w, &h);
 #endif
+
 	elm_scroller_page_size_set(scroller, w / QP_SETTING_NUM_PORTRAIT_ICONS, 0);
 
 	return 0;
@@ -544,10 +550,10 @@ HAPI int quickpanel_setting_layout_remove(Evas_Object *base)
 }
 
 HAPI void quickpanel_setting_create_confirm_popup(
-					Evas_Object *parent,
-					char *title,
-					char *text,
-					Evas_Smart_Cb func)
+		Evas_Object *parent,
+		char *title,
+		char *text,
+		Evas_Smart_Cb func)
 {
 	Evas_Object *popup = elm_popup_add(parent);
 	Evas_Object *btn = NULL;
@@ -557,7 +563,7 @@ HAPI void quickpanel_setting_create_confirm_popup(
 	}
 
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
-					 EVAS_HINT_EXPAND);
+			EVAS_HINT_EXPAND);
 
 	if (title) {
 		elm_object_part_text_set(popup, "title,text", title);
@@ -578,13 +584,13 @@ HAPI void quickpanel_setting_create_confirm_popup(
 }
 
 HAPI void quickpanel_setting_create_2button_confirm_popup(
-					Evas_Object *parent,
-					char *title,
-					char *text,
-					char *btn1_text,
-					Evas_Smart_Cb btn1_func,
-					char *btn2_text,
-					Evas_Smart_Cb btn2_func)
+		Evas_Object *parent,
+		char *title,
+		char *text,
+		char *btn1_text,
+		Evas_Smart_Cb btn1_func,
+		char *btn2_text,
+		Evas_Smart_Cb btn2_func)
 {
 	Evas_Object *popup = elm_popup_add(parent);
 	Evas_Object *btn = NULL;
@@ -594,7 +600,7 @@ HAPI void quickpanel_setting_create_2button_confirm_popup(
 	}
 
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
-					 EVAS_HINT_EXPAND);
+			EVAS_HINT_EXPAND);
 
 	if (title) {
 		elm_object_part_text_set(popup, "title,text", title);
@@ -623,8 +629,7 @@ HAPI void quickpanel_setting_create_2button_confirm_popup(
 	quickpanel_common_ui_set_current_popup(popup, btn1_func);
 }
 
-HAPI void
-quickpanel_setting_create_timeout_popup(Evas_Object *parent, char *msg)
+HAPI void quickpanel_setting_create_timeout_popup(Evas_Object *parent, char *msg)
 {
 	retif(msg == NULL, , "invalid parameter");
 

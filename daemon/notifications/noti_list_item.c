@@ -16,24 +16,37 @@
  */
 
 
+#include <Elementary.h>
 #include <string.h>
+#include <glib.h>
+
+#include <vconf.h>
 #include <notification.h>
+#include <notification_internal.h>
+#include <notification_ongoing_flag.h>
+#include <system_settings.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
-#include "noti_list_item.h"
+#include "vi_manager.h"
 #include "noti_node.h"
+#include "noti_list_item.h"
 #include "noti.h"
 #include "noti_util.h"
+#include "animated_icon.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
+
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
-#include "animated_icon.h"
 
 extern Noti_View_H noti_view_h;
 extern Noti_View_H ongoing_noti_view_h;
@@ -64,18 +77,25 @@ static struct _info {
 static int _is_item_deletable_by_gesture(noti_list_item_h *handler)
 {
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
+	notification_ly_type_e ly_type = NOTIFICATION_LY_NONE;
+
 	retif(handler == NULL, 0, "Invalid parameter!");
 	retif(handler->noti_node == NULL, 0, "Invalid parameter!");
 	retif(handler->noti_node->noti == NULL, 0, "Invalid parameter!");
+	bool ongoing_flag = false;
 
 	notification_h noti = handler->noti_node->noti;
-	notification_get_type(noti, &type);
 
-	if (type == NOTIFICATION_TYPE_NOTI) {
-		return 1;
+	notification_get_type(noti, &type);
+	notification_get_layout(noti, &ly_type);
+	notification_get_ongoing_flag(noti, &ongoing_flag);
+
+	if( (type == NOTIFICATION_TYPE_ONGOING && ongoing_flag) ||
+			(type == NOTIFICATION_TYPE_ONGOING && ly_type == NOTIFICATION_LY_ONGOING_PROGRESS)) {
+		return 0;
 	}
 
-	return 0;
+	return 1;
 }
 
 static void _item_handler_set(Evas_Object *item, noti_list_item_h *handler)
@@ -163,26 +183,6 @@ static void _signal_cb(void *data, Evas_Object *o, const char *emission, const c
 	_response_callback_call(o, emission);
 }
 
-static Eina_Bool _drag_cancel_cb(void *data) {
-	QP_VI *vi = data;
-	noti_list_item_h *handler = NULL;
-	retif(vi == NULL, EINA_FALSE, "invalid parameter");
-
-	if (vi->target != NULL) {
-		DBG("Canceling dragging");
-
-		handler = _item_handler_get(vi->target);
-		retif(handler == NULL, EINA_FALSE, "handler is NULL");
-
-		handler->state = NOTILISTITEM_STATE_GETSTURE_CANCELED;
-		evas_object_map_enable_set(vi->target, EINA_FALSE);
-
-		handler->vi = NULL;
-	}
-
-	return EINA_TRUE;
-}
-
 void static _mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	int w = 0, h = 0;
@@ -256,7 +256,7 @@ static void _mouse_move_cb(void* data, Evas* e, Evas_Object* obj, void* event_in
 					NULL,
 					NULL,
 					NULL,
-					NULL, //_drag_cancel_cb,
+					NULL,
 					vi,
 					NULL,
 					0,
@@ -286,9 +286,8 @@ static void _mouse_move_cb(void* data, Evas* e, Evas_Object* obj, void* event_in
 static void _mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	int x = 0;
-	noti_list_item_h *handler = NULL;
-	Elm_Transit *transit_flick = NULL;
-	//double scale = elm_config_scale_get();
+	noti_list_item_h *handler;
+
 	handler = _item_handler_get(obj);
 	retif(handler == NULL, , "handler is NULL");
 
@@ -300,17 +299,18 @@ static void _mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	}
 
 	if (handler->state == NOTILISTITEM_STATE_GETSTURE_WAIT) {
-		if (abs(handler->distance) >= (THRESHOLD_DISTANCE - 10)
-			&& _is_item_deletable_by_gesture(handler) == 1) {
+		if (abs(handler->distance) >= (THRESHOLD_DISTANCE - 10) && _is_item_deletable_by_gesture(handler) == 1) {
 			x = abs(handler->distance) - THRESHOLD_DELETE_START;
 
 			if (handler->distance > 0) {
+				Elm_Transit *transit_flick;
+
 				evas_object_map_set(obj, NULL);
 				transit_flick = elm_transit_add();
 				if (transit_flick != NULL) {
 					elm_transit_effect_translation_add(transit_flick, x, 0, 480, 0);
 					elm_transit_object_add(transit_flick, obj);
-	 				elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) / 480);
+					elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) / 480);
 					elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
 					elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
 					elm_transit_go(transit_flick);
@@ -318,12 +318,14 @@ static void _mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 					_response_callback_call(obj, "deleted");
 				}
 			} else if (handler->distance < 0) {
+				Elm_Transit *transit_flick;
+
 				evas_object_map_set(obj, NULL);
 				transit_flick = elm_transit_add();
 				if (transit_flick != NULL) {
 					elm_transit_effect_translation_add(transit_flick, -x, 0, -480, 0);
 					elm_transit_object_add(transit_flick, obj);
-	 				elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
+					elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
 					elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
 					elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
 					elm_transit_go(transit_flick);
@@ -351,15 +353,13 @@ static void _mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	handler->state = NOTILISTITEM_STATE_NORMAL;
 }
 
-static Evas_Event_Flags
-_flick_end_cb(void *data, void *event_info)
+static Evas_Event_Flags _flick_end_cb(void *data, void *event_info)
 {
 	int x = 0;
 	noti_list_item_h *handler = NULL;
 	Evas_Object *view = NULL;
 	Elm_Transit *transit_flick = NULL;
 	Elm_Gesture_Momentum_Info *info = (Elm_Gesture_Momentum_Info *)event_info;
-	//double scale = elm_config_scale_get();
 
 	view = (Evas_Object *)data;
 	handler = _item_handler_get(view);
@@ -381,7 +381,7 @@ _flick_end_cb(void *data, void *event_info)
 		if (transit_flick != NULL) {
 			elm_transit_effect_translation_add(transit_flick, x, 0, 480, 0);
 			elm_transit_object_add(transit_flick, view);
-	 		elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) /480);
+			elm_transit_duration_set(transit_flick, 0.25 * (480 - x ) /480);
 			elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
 			elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
 			elm_transit_go(transit_flick);
@@ -395,7 +395,7 @@ _flick_end_cb(void *data, void *event_info)
 		if (transit_flick != NULL) {
 			elm_transit_effect_translation_add(transit_flick, -x, 0, -480, 0);
 			elm_transit_object_add(transit_flick, view);
-	 		elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
+			elm_transit_duration_set(transit_flick, 0.25 * ( 480 - x ) / 480);
 			elm_transit_tween_mode_set(transit_flick, ELM_TRANSIT_TWEEN_MODE_LINEAR);
 			elm_transit_objects_final_state_keep_set(transit_flick, EINA_TRUE);
 			elm_transit_go(transit_flick);
@@ -441,7 +441,7 @@ HAPI Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notifica
 				"edje",
 				_signal_cb,
 				parent
-		);
+				);
 
 		//add event
 		elm_object_signal_callback_add(view,
@@ -449,7 +449,7 @@ HAPI Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notifica
 				"edje",
 				_signal_cb,
 				parent
-		);
+				);
 
 		//add event
 		elm_object_signal_callback_add(view,
@@ -457,7 +457,7 @@ HAPI Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notifica
 				"edje",
 				_signal_cb,
 				parent
-		);
+				);
 
 		DBG("created box:%p", view);
 
@@ -472,7 +472,7 @@ HAPI Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notifica
 		elm_gesture_layer_cb_set(gl, ELM_GESTURE_N_FLICKS, ELM_GESTURE_STATE_END, _flick_end_cb, view);
 	} else {
 		ERR("failed to create notification view(%s)"
-			, s_info.view_handlers[layout]->name);
+				, s_info.view_handlers[layout]->name);
 	}
 
 	return view;
@@ -499,7 +499,7 @@ HAPI void quickpanel_noti_list_item_remove(Evas_Object *item)
 	noti_list_item_h *handler = _item_handler_get(item);
 	if (handler != NULL) {
 		retif(s_info.view_handlers[handler->layout] == NULL, , "invalid parameter");
-		
+
 		if (s_info.view_handlers[handler->layout] != NULL) {
 			if (s_info.view_handlers[handler->layout]->remove != NULL) {
 				noti_node_item *noti_node = _get_noti_node(item);

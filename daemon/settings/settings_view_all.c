@@ -15,10 +15,16 @@
  *
  */
 
-
+#include <Elementary.h>
 #include <glib.h>
+
 #include <notification.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
+#include "common_uic.h"
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
 #include "modules.h"
@@ -27,10 +33,12 @@
 #include "setting_utils.h"
 #include "settings_gridbox.h"
 #include "setting_module_api.h"
+#include "settings_view_all.h"
+#include "pager.h"
 #include "pager_common.h"
 #include "page_setting_all.h"
 #include "accessibility.h"
-#include "configuration.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
@@ -125,7 +133,7 @@ static void _icon_pack(Evas_Object *gridbox, Evas_Object *icon, int need_divider
 	}
 }
 
-static void _view_icons_add()
+static void _view_icons_add(void)
 {
 	int index = 0, total = 0;
 	Eina_List *l;
@@ -211,7 +219,7 @@ static int _init(void *data)
 	struct appdata *ad = (struct appdata *)data;
 	retif(ad == NULL, QP_FAIL, "Invalid parameter!");
 
-	 _view_create(data);
+	_view_create(data);
 
 	return QP_OK;
 }
@@ -272,7 +280,7 @@ HAPI void quickpanel_setting_view_all_reload(Eina_List *list_all_module)
 	DBG("total:%d", total);
 	EINA_LIST_FOREACH_SAFE(list_all_module, l, l_next, module) {
 		if ((icon = quickpanel_setting_module_icon_get(module,
-				QP_SETTING_ICON_CONTAINER_ALL_LIST)) == NULL) {
+						QP_SETTING_ICON_CONTAINER_ALL_LIST)) == NULL) {
 			icon = _icon_create(module, gridbox);
 		}
 		if (icon != NULL) {

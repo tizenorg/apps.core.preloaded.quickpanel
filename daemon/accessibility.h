@@ -25,11 +25,10 @@ typedef enum {
 	SCREEN_READER_OBJ_TYPE_EDJ_OBJECT,
 } screen_reader_object_type_e;
 
-Evas_Object *
-quickpanel_accessibility_screen_reader_object_get(void *obj, screen_reader_object_type_e type, const char *part, Evas_Object *parent);
-Evas_Object *quickpanel_accessibility_ui_get_focus_object(Evas_Object *parent);
-char *quickpanel_accessibility_info_cb(void *data, Evas_Object *obj);
-char *quickpanel_accessibility_info_cb_s(void *data, Evas_Object *obj);
-void quickpanel_accessibility_screen_reader_data_set(Evas_Object *view, const char *part, char *type, char *info);
+extern Evas_Object *quickpanel_accessibility_screen_reader_object_get(void *obj, screen_reader_object_type_e type, const char *part, Evas_Object *parent);
+extern Evas_Object *quickpanel_accessibility_ui_get_focus_object(Evas_Object *parent);
+extern char *quickpanel_accessibility_info_cb(void *data, Evas_Object *obj);
+extern char *quickpanel_accessibility_info_cb_s(void *data, Evas_Object *obj);
+extern void quickpanel_accessibility_screen_reader_data_set(Evas_Object *view, const char *part, char *type, char *info);
 
 #endif				/* __ACCESSIBILITY_H__ */

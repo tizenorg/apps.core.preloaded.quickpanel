@@ -19,9 +19,8 @@
 #ifndef _QP_SERVICE_UNINSTALL_DEF_
 #define _QP_SERVICE_UNINSTALL_DEF_
 
-#include "quickpanel-ui.h"
 
-void quickpanel_uninstall_init(void *data);
-void quickpanel_uninstall_fini(void *data);
+extern void quickpanel_uninstall_init(void *data);
+extern void quickpanel_uninstall_fini(void *data);
 
 #endif

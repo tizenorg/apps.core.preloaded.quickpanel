@@ -15,23 +15,34 @@
  *
  */
 
-
-#include <app.h>
 #include <glib.h>
 #include <string.h>
+#include <Elementary.h>
+
+#include <app.h>
 #include <vconf.h>
+#include <notification.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <sound_manager.h>
+#include <E_DBus.h>
+
 #include "common.h"
+#include "common_uic.h"
 #include "quickpanel-ui.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
+#include "modules.h"
+#include "util-time.h"
+#include "media.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
-#include "modules.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "util-time.h"
 
 static int _init(void *data);
 static int _fini(void *data);
@@ -58,7 +69,7 @@ static void _flag_set(Evas_Object *container, const char *key, int value)
 	retif(container == NULL, , "invalid parameter");
 	retif(key == NULL, , "invalid parameter");
 
-	evas_object_data_set(container, key, (void *)value);
+	evas_object_data_set(container, key, (void *)(long)(value));
 }
 
 static int _flag_get(Evas_Object *container, const char *key)
@@ -66,7 +77,7 @@ static int _flag_get(Evas_Object *container, const char *key)
 	retif(container == NULL, 0, "invalid parameter");
 	retif(key == NULL, 0, "invalid parameter");
 
-	return (int)evas_object_data_get(container, key);
+	return (int)(long)evas_object_data_get(container, key);
 }
 
 static void _set_text_to_part(Evas_Object *obj, const char *part, const char *text)
@@ -173,7 +184,7 @@ static Evas_Object *_datetime_view_get(void) {
 	retif(ad->view_root == NULL, NULL, "invalid argument");
 
 	return elm_object_part_content_get(ad->view_root
-		, "qp.base.datetime.swallow");
+			, "qp.base.datetime.swallow");
 }
 
 static void _datetime_view_attach(void *data)
@@ -341,6 +352,6 @@ HAPI void quickpanel_datetime_view_update(char *date, char *time, char *meridiem
 	eina_strbuf_free(strbuf_access);
 
 	quickpanel_accessibility_screen_reader_data_set(view
-		, "focus.setting", "", _NOT_LOCALIZED("Settings"));
+			, "focus.setting", "", _NOT_LOCALIZED("Settings"));
 
 }

@@ -19,10 +19,8 @@
 #ifndef _QP_NOTI_UTIL_DEF_
 #define _QP_NOTI_UTIL_DEF_
 
-#include <notification.h>
-
-HAPI int quickpanel_noti_util_get_event_count_from_noti(notification_h noti);
-int quickpanel_noti_util_get_event_count_by_pkgname(const char *pkgname);
-char *quickpanel_noti_util_get_time(time_t t, char *buf, int buf_len);
+extern int quickpanel_noti_util_get_event_count_from_noti(notification_h noti);
+extern int quickpanel_noti_util_get_event_count_by_pkgname(const char *pkgname);
+extern char *quickpanel_noti_util_get_time(time_t t, char *buf, int buf_len);
 
 #endif

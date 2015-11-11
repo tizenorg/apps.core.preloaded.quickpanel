@@ -18,6 +18,6 @@
 #ifndef __QP_DBUS_UTILITY_H__
 #define __QP_DBUS_UTILITY_H__
 
-void quickpanel_dbus_activenoti_visibility_send(int is_visible);
+extern void quickpanel_dbus_activenoti_visibility_send(int is_visible);
 
 #endif

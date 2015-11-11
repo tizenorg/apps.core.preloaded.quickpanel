@@ -18,23 +18,19 @@
 #ifndef __QUICKPANEL_MEDIA_H__
 #define __QUICKPANEL_MEDIA_H__
 
-#include <player.h>
-#include <sound_manager.h>
-#include <feedback.h>
-
 #define QP_PLAY_DURATION_LIMIT 15
 
-int quickpanel_media_player_play(sound_type_e sound_type, const char *sound_file);
-void quickpanel_media_player_stop(void);
-int quickpanel_media_is_sound_enabled(void);
-int quickpanel_media_is_vib_enabled(void);
-void quickpanel_media_play_feedback(void);
-int quickpanel_media_set_mute_toggle(void);
-void quickpanel_media_player_id_set(int id);
-int quickpanel_media_player_id_get(void);
-Eina_Bool quickpanel_media_playable_check(const char *file_path);
-int quickpanel_media_player_is_drm_error(int error_code);
-void quickpanel_media_init(void);
-void quickpanel_media_fini(void);
+extern int quickpanel_media_player_play(sound_type_e sound_type, const char *sound_file);
+extern void quickpanel_media_player_stop(void);
+extern int quickpanel_media_is_sound_enabled(void);
+extern int quickpanel_media_is_vib_enabled(void);
+extern void quickpanel_media_play_feedback(void);
+extern int quickpanel_media_set_mute_toggle(void);
+extern void quickpanel_media_player_id_set(int id);
+extern int quickpanel_media_player_id_get(void);
+extern Eina_Bool quickpanel_media_playable_check(const char *file_path);
+extern int quickpanel_media_player_is_drm_error(int error_code);
+extern void quickpanel_media_init(void);
+extern void quickpanel_media_fini(void);
 
 #endif

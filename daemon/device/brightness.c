@@ -16,26 +16,35 @@
  */
 
 
+#include <Elementary.h>
 #include <glib.h>
 #include <string.h>
+
+#include <notification.h>
 #include <vconf.h>
 #include <device/display.h>
 #include <app_control.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
+#include "settings_view_featured.h"
+#include "preference.h"
+#include "setting_utils.h"
+#include "page_setting_all.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
-#include "preference.h"
-#include "setting_utils.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "page_setting_all.h"
-#include "settings_view_featured.h"
+
 
 #define BRIGHTNESS_MIN 1
 #define BRIGHTNESS_MAX 100
@@ -146,23 +155,6 @@ static void _set_slider_accessiblity_state(Evas_Object *obj)
 }
 #endif
 
-static void _set_text_to_part(Evas_Object *obj, const char *part, const char *text)
-{
-	const char *old_text = NULL;
-	retif(obj == NULL, , "Invalid parameter!");
-	retif(part == NULL, , "Invalid parameter!");
-	retif(text == NULL, , "Invalid parameter!");
-
-	old_text = elm_object_part_text_get(obj, part);
-	if (old_text != NULL) {
-		if (strcmp(old_text, text) == 0) {
-			return;
-		}
-	}
-
-	elm_object_part_text_set(obj, part, text);
-}
-
 static Evas_Object *_check_duplicated_loading(Evas_Object *obj, const char *part)
 {
 	Evas_Object *old_content = NULL;
@@ -225,7 +217,6 @@ Evas_Object *_slider_get(Evas_Object *view, brightness_ctrl_obj *ctrl_obj) {
 	}
 }
 
-
 static void _slider_changed_job_cb(void *data)
 {
 	int value = 0;
@@ -258,17 +249,13 @@ static void _slider_changed_job_cb(void *data)
 
 }
 
-static void
-_brightness_ctrl_slider_changed_cb(void *data,
-							 Evas_Object *obj,
-							 void *event_info)
+static void _brightness_ctrl_slider_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	int pos_new = (int)event_info;
+	int pos_new = (long)event_info;
 	LOGI("SLIDER_NEW_POS: %d", pos_new);
 
 	_slider_changed_job_cb(data);
 }
-
 
 static void _brightness_ctrl_overheat_check(Evas_Object *slider, void *data, int is_display_popup)
 {
@@ -289,7 +276,7 @@ static void _brightness_ctrl_overheat_check(Evas_Object *slider, void *data, int
 		if (is_display_popup == 1) {
 			if (ad->popup == NULL) {
 				quickpanel_setting_create_timeout_popup(ad->win,
-					_("IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"));
+						_("IDS_ST_POP_UNABLE_TO_INCREASE_BRIGHTNESS_FURTHER_BECAUSE_OF_PHONE_OVERHEATING"));
 			}
 		}
 		elm_slider_value_set(slider, (double)max_brightness);
@@ -317,33 +304,22 @@ static void _slider_delayed_changed_job_cb(void *data)
 	}
 }
 
-static void
-_brightness_ctrl_slider_delayed_changed_cb(void *data,
-							 Evas_Object *obj,
-							 void *event_info)
+static void _brightness_ctrl_slider_delayed_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	LOGI("");
 	ecore_job_add(_slider_delayed_changed_job_cb, data);
 }
 
-static void
-_brightness_slider_drag_start_cb(void *data,
-							 Evas_Object *obj,
-							 void *event_info)
+static void _brightness_slider_drag_start_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	is_sliding = EINA_TRUE;
 	slider_drag_start = _brightness_get_level();
 }
 
-static void
-_brightness_slider_drag_stop_cb(void *data,
-							 Evas_Object *obj,
-							 void *event_info)
+static void _brightness_slider_drag_stop_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	brightness_ctrl_obj *ctrl_obj = data;
 	is_sliding = EINA_FALSE;
 }
-
 
 /*!
  * workaround to avoid focus jump to other pages
@@ -358,19 +334,18 @@ static void _frame_unfocused(void *data, Evas_Object * obj, void *event_info)
 	quickpanel_page_setting_all_focus_allow_set(EINA_TRUE);
 }
 
-
 static void _brightness_view_pos_set()
 {
 	struct appdata *ad = quickpanel_get_app_data();
 
 	Evas_Coord base_y;
-//	Evas_Coord settings_y;
+	//	Evas_Coord settings_y;
 	Evas_Coord brightness_y;
 
 	Eina_Bool ret = EINA_FALSE;
 
 	edje_object_part_geometry_get(_EDJ(ad->view_root), "qp.root.swallow", NULL, &base_y, NULL, NULL);
-//	edje_object_part_geometry_get(ad->ly, QP_SETTING_BASE_PART, NULL, &settings_y, NULL, NULL);
+	//	edje_object_part_geometry_get(ad->ly, QP_SETTING_BASE_PART, NULL, &settings_y, NULL, NULL);
 
 	Evas_Object *settings_swallow = quickpanel_setting_layout_get(ad->ly, QP_SETTING_BASE_PART);
 	ret = edje_object_part_geometry_get(_EDJ(settings_swallow), QP_SETTING_BRIGHTNESS_PART_WVGA, NULL, &brightness_y, NULL, NULL);
@@ -426,16 +401,14 @@ static Evas_Object *_brightness_view_create(Evas_Object *list)
 	return view_wrapper;
 }
 
-
 static void _brightness_set_image(int level)
 {
-	int old_brightness_type = -1;
-	int mapped_level = 0;
-	char buf[128] = {0,};
-	Evas_Object *view = _controller_view_get();
-	brightness_ctrl_obj *ctrl_obj = g_ctrl_obj;
-	retif(ctrl_obj == NULL, , "Invalid parameter!");
-	retif(view == NULL, , "Invalid parameter!");
+	int mapped_level;
+
+	if (!g_ctrl_obj) {
+		ERR("Ctrl Obj is not defined");
+		return;
+	}
 
 	if (level <= 1) {
 		mapped_level = 0;
@@ -447,10 +420,14 @@ static void _brightness_set_image(int level)
 		mapped_level = (level / 10);
 	}
 
-	if (ctrl_obj->level_before != mapped_level ) {
+	if (g_ctrl_obj->level_before != mapped_level ) {
+		char buf[128] = {0,};
+		Evas_Object *view;
+
+		view = _controller_view_get();
 		snprintf(buf, sizeof(buf) - 1, "icon.state.%d", mapped_level);
 		elm_object_signal_emit(view, buf, "prog");
-		ctrl_obj->level_before = mapped_level;
+		g_ctrl_obj->level_before = mapped_level;
 	}
 }
 
@@ -473,18 +450,10 @@ static void _brightness_set_slider(void)
 			evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
 			evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, 0.5);
 			elm_slider_min_max_set(slider, ctrl_obj->min_level, ctrl_obj->max_level);
-			evas_object_smart_callback_add(slider, "changed",
-					_brightness_ctrl_slider_changed_cb, ctrl_obj);
-			evas_object_smart_callback_add(slider, "delay,changed",
-					_brightness_ctrl_slider_delayed_changed_cb, ctrl_obj);
-
-			evas_object_smart_callback_add(slider, "slider,drag,start",
-					_brightness_slider_drag_start_cb, ctrl_obj);
-
-
-			evas_object_smart_callback_add(slider, "slider,drag,stop",
-					_brightness_slider_drag_stop_cb, ctrl_obj);
-
+			evas_object_smart_callback_add(slider, "changed", _brightness_ctrl_slider_changed_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "delay,changed", _brightness_ctrl_slider_delayed_changed_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "slider,drag,start", _brightness_slider_drag_start_cb, ctrl_obj);
+			evas_object_smart_callback_add(slider, "slider,drag,stop", _brightness_slider_drag_stop_cb, ctrl_obj);
 			elm_object_part_content_set(view, "elm.swallow.slider", slider);
 		} else {
 			ERR("failed to create slider");

@@ -15,9 +15,16 @@
  *
  */
 
+#include <Elementary.h>
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "common.h"
 #include "pager.h"
 #include "pager_common.h"
+#include "quickpanel-ui.h"
 #include "quickpanel_def.h"
 
 static int _init(void *data);
@@ -455,7 +462,7 @@ static void _refresh(void *data) {
 }
 
 static void _scroller_resized_cb(void *data, Evas * e,
-	Evas_Object * obj, void *event_info)
+		Evas_Object * obj, void *event_info)
 {
 	_page_show(PAGE_IDX_MAIN);
 	evas_object_event_callback_del(s_info.view_scroller, EVAS_CALLBACK_RESIZE, _scroller_resized_cb);

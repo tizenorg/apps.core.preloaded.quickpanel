@@ -19,9 +19,9 @@
 #ifndef _QP_REMINDER_DEF_
 #define _QP_REMINDER_DEF_
 
-void quickpanel_reminder_init(void *data);
-void quickpanel_reminder_fini(void *data);
-void quickpanel_reminder_start(void *data);
-void quickpanel_reminder_stop(void *data);
+extern void quickpanel_reminder_init(void *data);
+extern void quickpanel_reminder_fini(void *data);
+extern void quickpanel_reminder_start(void *data);
+extern void quickpanel_reminder_stop(void *data);
 
 #endif

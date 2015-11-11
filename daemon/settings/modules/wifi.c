@@ -15,17 +15,23 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <app.h>
 #include <tethering.h>
-
 #include <wifi.h>
 #include <vconf.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
+#include "settings_icon_common.h"
 
 #define E_DATA_POPUP_MODULE_ITEM "mobule_item"
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_WI_FI_ABB")
@@ -135,8 +141,7 @@ static void _status_update(QP_Module_Setting *module, int wifi_status, int flag_
 			FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret = 0;
 	int is_on = 0;
@@ -292,10 +297,6 @@ static bool _tethering_disable(tethering_type_e type, void *data)
 
 	retif(module == NULL, false, "Invalid parameter!");
 
-	if (quickpanel_setting_module_is_icon_clickable(module) == 0) {
-		return false;
-	}
-
 	/* disable wifi tethering */
 	ret = tethering_create(&th);
 	if (ret != TETHERING_ERROR_NONE) {
@@ -304,7 +305,7 @@ static bool _tethering_disable(tethering_type_e type, void *data)
 	}
 
 	ret = tethering_set_disabled_cb(th, type,
-		_tethering_disabled_cb, module);
+			_tethering_disabled_cb, module);
 	if (ret != TETHERING_ERROR_NONE) {
 		/* failed to set disabled callback */
 		tethering_destroy(th);
@@ -386,10 +387,10 @@ static int _wifi_on(void *data, const char *popup_txt)
 	retif(module == NULL, ret, "Invalid parameter!");
 
 	/* Check wifi tethering status */
-	if (tethering_is_enabled(NULL, TETHERING_TYPE_WIFI) == TRUE) {
+	if (tethering_is_enabled(NULL, TETHERING_TYPE_WIFI)) {
 		_tethering_off_popup(ad->win, data, TETHERING_TYPE_WIFI, popup_txt);
 		return -1;
-	} else if (tethering_is_enabled(NULL, TETHERING_TYPE_RESERVED) == TRUE) {
+	} else if (tethering_is_enabled(NULL, TETHERING_TYPE_RESERVED)) {
 		_tethering_off_popup(ad->win, data, TETHERING_TYPE_RESERVED, popup_txt);
 		return -1;
 	}
@@ -430,9 +431,9 @@ static int _wifi_is_on(bool *is_on)
 }
 
 /*
-	Set Wi-Fi status changed callback
-	- needs to update your Wi-Fi status.
-*/
+   Set Wi-Fi status changed callback
+   - needs to update your Wi-Fi status.
+ */
 static void _wifi_state_changed_cb(wifi_device_state_e state, void *user_data)
 {
 	ERR("state:%d", state);

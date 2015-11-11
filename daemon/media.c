@@ -16,11 +16,23 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <glib.h>
+#include <unistd.h>
+
+#include <Elementary.h>
+
 #include <vconf.h>
 #include <metadata_extractor.h>
+#include <feedback.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <player.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
+#include "media.h"
 
 #define NEED_TO_DEBUG_LOCKUP_ISSUE
 
@@ -38,8 +50,7 @@ static struct info {
 
 static void _quickpanel_player_free(player_h *sound_player);
 
-static void
-_quickpanel_player_del_timeout_timer(void)
+static void _quickpanel_player_del_timeout_timer(void)
 {
 	if (s_info.playing_timer) {
 		ecore_timer_del(s_info.playing_timer);
@@ -118,8 +129,7 @@ static void _quickpanel_player_start_job_cb(void *data)
 #endif
 }
 
-static void
-_quickpanel_player_completed_cb(void *user_data)
+static void _quickpanel_player_completed_cb(void *user_data)
 {
 	retif(user_data == NULL, , "invalid parameter");
 	player_h *sound_player = user_data;
@@ -130,8 +140,7 @@ _quickpanel_player_completed_cb(void *user_data)
 	_quickpanel_player_free(sound_player);
 }
 
-static void
-_quickpanel_player_interrupted_cb(player_interrupted_code_e code, void *user_data)
+static void _quickpanel_player_interrupted_cb(player_interrupted_code_e code, void *user_data)
 {
 	retif(user_data == NULL, , "invalid parameter");
 	player_h *sound_player = user_data;
@@ -142,8 +151,7 @@ _quickpanel_player_interrupted_cb(player_interrupted_code_e code, void *user_dat
 	_quickpanel_player_free(sound_player);
 }
 
-static void
-_quickpanel_player_error_cb(int error_code, void *user_data)
+static void _quickpanel_player_error_cb(int error_code, void *user_data)
 {
 	retif(user_data == NULL, , "invalid parameter");
 	player_h *sound_player = user_data;
@@ -157,9 +165,9 @@ _quickpanel_player_error_cb(int error_code, void *user_data)
 HAPI int quickpanel_media_player_is_drm_error(int error_code)
 {
 	if (error_code == PLAYER_ERROR_DRM_EXPIRED
-		|| error_code == PLAYER_ERROR_DRM_NO_LICENSE
-		|| error_code == PLAYER_ERROR_DRM_FUTURE_USE
-		|| error_code == PLAYER_ERROR_DRM_NOT_PERMITTED) {
+			|| error_code == PLAYER_ERROR_DRM_NO_LICENSE
+			|| error_code == PLAYER_ERROR_DRM_FUTURE_USE
+			|| error_code == PLAYER_ERROR_DRM_NOT_PERMITTED) {
 		return 1;
 	}
 
@@ -311,9 +319,8 @@ static Eina_Bool _playable_check(const char *file_path)
 		ret = EINA_TRUE;
 	}
 
-	if (value != NULL) {
-		free(value);
-	}
+	free(value);
+
 	DBG("%s :: playable[%d]", file_path, ret);
 	metadata_extractor_destroy(metadata);
 	return ret;

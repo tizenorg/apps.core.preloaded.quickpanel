@@ -15,15 +15,22 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <syspopup_caller.h>
 #include <app_control.h>
+#include <locations.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
+
 
 #define BUTTON_LABEL _("IDS_QP_BUTTON2_LOCATION_ABB")
 #define BUTTON_ICON_NORMAL "quick_icon_location.png"
@@ -118,18 +125,16 @@ static void _view_update(Evas_Object *view, int state, int flag_extra_1, int fla
 static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2)
 {
 	int ret = 0;
-	int status = 0;
+	bool status = 0;
 	retif(module == NULL, , "Invalid parameter!");
 
 	quickpanel_setting_module_progress_mode_set(module, FLAG_DISABLE, FLAG_TURN_OFF);
 	quickpanel_setting_module_icon_timer_del(module);
 
-#ifdef HAVE_X
-	ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &status);
-	msgif(ret != 0, "fail to get VCONFKEY_LOCATION_USE_MY_LOCATION:%d", ret);
-#endif
+	ret = location_manager_is_enabled_method(LOCATIONS_METHOD_HYBRID, &status);
+	msgif(ret != 0, "fail to get LOCATIONS_METHOD_HYBRID:%d", ret);
 
-	if (status == 1) {
+	if (status == true) {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_ON);
 	} else {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_OFF);
@@ -143,7 +148,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret = 0;
-	int enable = 0;
+	bool enable = 0;
 	QP_Module_Setting *module = (QP_Module_Setting *)data;
 	retif(module == NULL, , "Invalid parameter!");
 
@@ -155,41 +160,45 @@ static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission
 		_syspopup_launch(quickpanel_setting_module_icon_state_get(module));
 	} else {
 		// Use my location off
-#ifdef HAVE_X
-		ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enable);
-#endif
-		if (ret == 0) {
-			if (enable == 1) {
-#ifdef HAVE_X
-				vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 0);
-#endif
+		ret = location_manager_is_enabled_method(LOCATIONS_METHOD_HYBRID, &enable);
+		if (ret == false) {
+			if (enable == true) {
+				ret = location_manager_enable_method(LOCATIONS_METHOD_HYBRID, false);
+				if (ret != 0) {
+					ERR("Failed to set LOCATIONS_METHOD_HYBRID[%d]", ret);
+				}
 			}
 		} else {
 			ERR("Failed to get Use my location[%d]", ret);
 		}
 		// GPS off
-		ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &enable);
-		if (ret == 0) {
-			if (enable == 1) {
-				vconf_set_int(VCONFKEY_LOCATION_ENABLED, 0);
+		ret = location_manager_is_enabled_method(LOCATIONS_METHOD_GPS, &enable);
+		if (ret == false) {
+			if (enable == true) {
+				ret = location_manager_enable_method(LOCATIONS_METHOD_GPS, false);
+				if (ret != 0) {
+					ERR("Failed to set LOCATIONS_METHOD_GPS [%d]", ret);
+				}
 			}
 		} else {
 			ERR("Failed to get GPS[%d]", ret);
 		}
 		// Wireless networks off
-		ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &enable);
-		if (ret == 0) {
-			if (enable == 1) {
-				vconf_set_int(VCONFKEY_LOCATION_NETWORK_ENABLED, 0);
+		ret = location_manager_is_enabled_method(LOCATIONS_METHOD_WPS, &enable);
+		if (ret == false) {
+			if (enable == true) {
+				ret = location_manager_enable_method(LOCATIONS_METHOD_WPS, false);
+				if (ret != 0) {
+					ERR("Failed to set LOCATIONS_METHOD_WPS [%d]", ret);
+				}
 			}
 		} else {
-			ERR("Failed to get GPS[%d]", ret);
+			ERR("Failed to get network[%d]", ret);
 		}
 	}
 }
 
-static void _gps_vconf_cb(keynode_t *node,
-		void *data)
+static void _gps_vconf_cb(keynode_t *node, void *data)
 {
 	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
 }
@@ -198,20 +207,21 @@ static int _register_module_event_handler(void *data)
 {
 	int ret = 0;
 
-#ifdef HAVE_X
-	ret = vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _gps_vconf_cb, data);
+	ret = vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION,
+			_gps_vconf_cb, data);
 	msgif(ret != 0, "failed to notify key(VCONFKEY_LOCATION_USE_MY_LOCATION) : %d", ret);
-#endif
+
 	return QP_OK;
 }
 
 static int _unregister_module_event_handler(void *data)
 {
 	int ret = 0;
-#ifdef HAVE_X
-	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _gps_vconf_cb);
+
+	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION,
+			_gps_vconf_cb);
 	msgif(ret != 0, "failed to ignore key(VCONFKEY_LOCATION_USE_MY_LOCATION) : %d", ret);
-#endif
+
 	return QP_OK;
 }
 

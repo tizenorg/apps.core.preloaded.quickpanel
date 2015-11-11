@@ -22,10 +22,10 @@
 
 #define QP_NOTI_LISTTYPE_TITLE_COLOR "T023"
 #define QP_NOTI_LISTTYPE_TITLE_PRESS_COLOR "T023P"
-#define QP_NOTI_LISTTYPE_CONTENTS_COLOR "T024"
+#define QP_NOTI_LISTTYPE_CONTENTS_COLOR "ATO012"
 #define QP_NOTI_LISTTYPE_COUNT_COLOR "T112"
 #define QP_NOTI_LISTTYPE_COUNT_BG_COLOR "B0517"
-#define QP_NOTI_LISTTYPE_TIME_COLOR "T024"
+#define QP_NOTI_LISTTYPE_TIME_COLOR "ATO012"
 
 #define QP_NOTI_LISTTYPE_TITLE_FONT_SIZE 30
 #define QP_NOTI_LISTTYPE_CONTENTS_FONT_SIZE 24
@@ -41,6 +41,7 @@
 
 	images {
 		image: "core_icon_badge_container.#.png" COMP;
+		image: "quick_button_icon_bg.png" COMP;
 	}
 
 	group {
@@ -98,8 +99,8 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 0 25;
-					fixed: 0 1;
+					//min: 0 BOX_ICON_TOP_PADDING;
+					//fixed: 0 1;
 					rel1.to:"base";
 					rel2.to:"base";
 					rel1.relative: 0.0 0.0;
@@ -128,7 +129,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 0 13;
+					min: 0 BOX_TEXT_TOP_PADDING;
 					fixed: 0 1;
 					rel1.to:"base";
 					rel2.to:"base";
@@ -143,7 +144,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 0 13;
+					min: 0 BOX_TEXT_TOP_PADDING;
 					fixed: 0 1;
 					rel1.to:"base";
 					rel2.to:"base";
@@ -158,7 +159,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: (15 + 46 + 15) 0;
+					min: (15 + BOX_ICON_SIZE_W + 15) 0;
 					fixed: 1 0;
 					rel1.to:"base";
 					rel2.to:"base";
@@ -174,7 +175,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 46 46;
+					min: BOX_ICON_SIZE_W BOX_ICON_SIZE_W;
 					fixed: 1 1;
 					rel1 {
 						relative: 1.0 1.0;
@@ -287,19 +288,41 @@
 				}
 			}
 			part {
+				name: "masking";
+				type: IMAGE;
+				precise_is_inside: 1;
+				description {
+					state: "default" 0.0;
+					min: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_W;
+					fixed : 1 1;
+					rel1 {
+						relative: 0.5 0.5;
+						to: "elm.rect.thumbnail";
+					}
+					rel2 {
+						relative: 0.5 0.5;
+						to: "elm.rect.thumbnail";
+					}
+					image.normal: "quick_button_icon_bg.png";
+				}
+			}
+			part {
 				name: "elm.swallow.thumbnail";
 				type: SWALLOW;
 				mouse_events: 0;
 				scale: 1;
+				clip_to: "masking";
 				description {
 					state: "default" 0.0;
 					min: BOX_ICON_SIZE_W BOX_ICON_SIZE_H;
 					max: BOX_ICON_BG_SIZE_W BOX_ICON_BG_SIZE_H;
 					fixed: 1 1;
 					rel1 {
+						relative: 0.5 0.5;
 						to: "elm.rect.thumbnail";
 					}
 					rel2 {
+						relative: 0.5 0.5;
 						to: "elm.rect.thumbnail";
 					}
 					align: 0.5 0.5;
@@ -360,7 +383,7 @@
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.image.count.bg";
+						to_x: "elm.padding.left.time";
 						to_y: "elm.rect.text.title";
 						offset: -15 0;
 					}
@@ -374,51 +397,15 @@
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.text.time";
+						to_x: "elm.padding.left.time";
 						to_y: "elm.rect.text.title";
 						offset: -15 0;
 					}
 				}
 			}
-			part{
-				name: "elm.image.count.bg";
-				type:IMAGE;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					align: 1.0 0.5;
-					fixed: 1 1;
-					min: 32 32;
-					max: 68 32;
-					rel1 {
-						relative: 0.0 0.5;
-						to_x: "elm.padding.left.count";
-						to_y: "elm.rect.text";
-					}
-					rel2 {
-						relative: 1.0 0.5;
-						to_x: "elm.padding.right.count";
-						to_y: "elm.rect.text";
-					}
-					image {
-						normal:"core_icon_badge_container.#.png";
-					}
-					color_class: QP_NOTI_LISTTYPE_COUNT_BG_COLOR;
-					visible:0;
-				}
-				description {
-					state: "show" 0.0;
-					inherit: "default" 0.0;
-					visible:1;
-				}
-				description {
-					state: "hide" 0.0;
-					inherit: "default" 0.0;
-					visible:0;
-				}
-			}
+
 			part {
-				name: "elm.padding.left.count";
+				name: "elm.padding.left.time";
 				type: SPACER;
 				mouse_events: 0;
 				scale: 1;
@@ -428,19 +415,19 @@
 					min: 10 0;
 					rel1 {
 						relative: 0.0 1.0;
-						to_x: "elm.text.count";
+						to_x: "elm.text.time";
 						to_y: "elm.padding.top.text";
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.text.count";
+						to_x: "elm.text.time";
 						to_y: "elm.padding.top.text";
 					}
 					align: 1.0 0.0;
 				}
 			}
 			part {
-				name: "elm.padding.right.count";
+				name: "elm.padding.right.time";
 				type: SPACER;
 				mouse_events: 0;
 				scale: 1;
@@ -462,7 +449,7 @@
 				}
 			}
 			part {
-				name: "elm.text.count";
+				name: "elm.text.time";
 				type: TEXT;
 				mouse_events: 0;
 				scale: 1;
@@ -473,22 +460,37 @@
 					min: 0 38;
 					rel1 {
 						relative: 0.0 0.5;
-						to_x: "elm.padding.right.count";
+						to_x: "elm.padding.right";
 						to_y: "elm.rect.text";
 					}
 					rel2 {
 						relative: 0.0 0.5;
-						to_x: "elm.padding.right.count";
+						to_x: "elm.padding.right";
 						to_y: "elm.rect.text";
 					}
-					color_class: QP_NOTI_LISTTYPE_COUNT_COLOR;
+					color_class: QP_NOTI_LISTTYPE_TIME_COLOR;
 					text {
 						font: "Tizen:style=Regular";
 						text_class: "tizen";
-						size: QP_NOTI_LISTTYPE_COUNT_FONT_SIZE;
+						size: QP_NOTI_LISTTYPE_TIME_FONT_SIZE;
 						ellipsis: 0.0;
 						align: 0.0 0.5;
 						min: 1 0;
+					}
+
+				}
+				description {
+					state: "center" 0.0;
+					inherit: "default" 0.0;
+					rel1 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right";
+						to_y: "elm.rect.text";
+					}
+					rel2 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right";
+						to_y: "elm.rect.text";
 					}
 				}
 			}
@@ -530,14 +532,95 @@
 					}
 					rel2 {
 						relative: 0.0 1.0;
-						to_x: "elm.text.time";
+						to_x: "elm.image.count.bg";
 						to_y: "elm.rect.text.content";
 						offset: -15 0;
 					}
 				}
 			}
+			part{
+				name: "elm.image.count.bg";
+				type:IMAGE;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					align: 1.0 0.0;
+					fixed: 1 1;
+					min: 32 32;
+					max: 68 32;
+					rel1 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.left.count";
+						to_y: "elm.rect.text";
+					}
+					rel2 {
+						relative: 1.0 0.0;
+						to_x: "elm.padding.right.count";
+						to_y: "elm.padding.bottom.text";
+					}
+					image {
+						normal:"core_icon_badge_container.#.png";
+					}
+					color_class: QP_NOTI_LISTTYPE_COUNT_BG_COLOR;
+					visible:0;
+				}
+				description {
+					state: "show" 0.0;
+					inherit: "default" 0.0;
+					visible:1;
+				}
+				description {
+					state: "hide" 0.0;
+					inherit: "default" 0.0;
+					visible:0;
+				}
+			}
 			part {
-				name: "elm.text.time";
+				name: "elm.padding.left.count";
+				type: SPACER;
+				mouse_events: 0;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 0;
+					min: 10 0;
+					rel1 {
+						relative: 0.0 1.0;
+						to_x: "elm.text.count";
+						to_y: "elm.padding.bottom.text";
+					}
+					rel2 {
+						relative: 0.0 1.0;
+						to_x: "elm.text.count";
+						to_y: "elm.padding.bottom.text";
+					}
+					align: 1.0 0.0;
+				}
+			}
+			part {
+				name: "elm.padding.right.count";
+				type: SPACER;
+				mouse_events: 0;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 0;
+					min: 10 0;
+					rel1 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right";
+						to_y: "elm.padding.bottom.text";
+					}
+					rel2 {
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right";
+						to_y: "elm.padding.bottom.text";
+					}
+					align: 1.0 0.0;
+				}
+			}
+			part {
+				name: "elm.text.count";
 				type: TEXT;
 				mouse_events: 0;
 				scale: 1;
@@ -548,19 +631,19 @@
 					min: 0 32;
 					rel1 {
 						relative: 0.0 1.0;
-						to_x: "elm.padding.right";
+						to_x: "elm.padding.right.count";
 						to_y: "elm.rect.text";
 					}
 					rel2 {
-						relative: 0.0 0.0;
-						to_x: "elm.padding.right";
-						to_y: "elm.padding.bottom.text";
+						relative: 0.0 1.0;
+						to_x: "elm.padding.right.count";
+						to_y: "elm.rect.text";
 					}
-					color_class: QP_NOTI_LISTTYPE_TIME_COLOR;
+					color_class: QP_NOTI_LISTTYPE_COUNT_COLOR;
 					text {
 						font: "Tizen:style=Regular";
 						text_class: "tizen";
-						size: QP_NOTI_LISTTYPE_TIME_FONT_SIZE;
+						size: QP_NOTI_LISTTYPE_COUNT_FONT_SIZE;
 						ellipsis: 0.0;
 						align: 0.0 0.5;
 						min: 1 0;
@@ -675,6 +758,20 @@
 				source: "prog";
 				action: STATE_SET "default" 0.0;
 				target: "elm.rect.text.title";
+			}
+			program {
+				name: "time.move.center";
+				signal: "time.move.center";
+				source: "prog";
+				action: STATE_SET "center" 0.0;
+				target: "elm.text.time";
+			}
+			program {
+				name: "time.move.default";
+				signal: "time.move.default";
+				source: "prog";
+				action: STATE_SET "default" 0.0;
+				target: "elm.text.time";
 			}
 		}
 	}

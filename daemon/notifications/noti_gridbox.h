@@ -22,21 +22,17 @@
 #define GRIDBOX_PREPEND 1
 #define GRIDBOX_APPEND 0
 
-Evas_Object *quickpanel_noti_gridbox_create(Evas_Object *parent, void *data);
-void quickpanel_noti_gridbox_remove(Evas_Object *gridbox);
-void quickpanel_noti_gridbox_add_item(Evas_Object *gridbox, Evas_Object *item, int is_prepend);
-void quickpanel_noti_gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_animation);
-void quickpanel_noti_gridbox_rotation(Evas_Object *gridbox, int angle);
-void quickpanel_noti_gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item
-		,void (*update_cb)(Evas_Object *list, void *data, int is_prepend)
-		,void *container, void *data, int pos);
-void quickpanel_noti_gridbox_remove_all_item(Evas_Object *gridbox, int with_animation);
-void quickpanel_noti_gridbox_set_item_deleted_cb(Evas_Object *gridbox,
-		void(*deleted_cb)(void *data, Evas_Object *obj));
-int quickpanel_noti_gridbox_get_item_count(Evas_Object *gridbox);
-int quickpanel_noti_gridbox_get_geometry(Evas_Object *gridbox,
-		int *limit_h, int *limit_partial_h, int *limit_partial_w);
-void quickpanel_noti_gridbox_update_item(Evas_Object *gridbox, Evas_Object *item);
-void quickpanel_noti_gridbox_closing_trigger_set(Evas_Object *gridbox);
-int quickpanel_noti_gridbox_get_item_exist(Evas_Object *gridbox, Evas_Object *box);
+extern Evas_Object *quickpanel_noti_gridbox_create(Evas_Object *parent, void *data);
+extern void quickpanel_noti_gridbox_remove(Evas_Object *gridbox);
+extern void quickpanel_noti_gridbox_add_item(Evas_Object *gridbox, Evas_Object *item, int is_prepend);
+extern void quickpanel_noti_gridbox_remove_item(Evas_Object *gridbox, Evas_Object *item, int with_animation);
+extern void quickpanel_noti_gridbox_rotation(Evas_Object *gridbox, int angle);
+extern void quickpanel_noti_gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item ,void (*update_cb)(Evas_Object *list, void *data, int is_prepend) ,void *container, void *data, int pos);
+extern void quickpanel_noti_gridbox_remove_all_item(Evas_Object *gridbox, int with_animation);
+extern void quickpanel_noti_gridbox_set_item_deleted_cb(Evas_Object *gridbox, void(*deleted_cb)(void *data, Evas_Object *obj));
+extern int quickpanel_noti_gridbox_get_item_count(Evas_Object *gridbox);
+extern int quickpanel_noti_gridbox_get_geometry(Evas_Object *gridbox, int *limit_h, int *limit_partial_h, int *limit_partial_w);
+extern void quickpanel_noti_gridbox_update_item(Evas_Object *gridbox, Evas_Object *item);
+extern void quickpanel_noti_gridbox_closing_trigger_set(Evas_Object *gridbox);
+extern int quickpanel_noti_gridbox_get_item_exist(Evas_Object *gridbox, Evas_Object *box);
 #endif

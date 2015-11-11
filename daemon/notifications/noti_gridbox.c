@@ -15,14 +15,21 @@
  *
  */
 
+#include <Elementary.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
+#include "common_uic.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
 #include "noti_gridbox.h"
-#include "noti_box.h"
 #include "vi_manager.h"
+#include "noti_box.h"
 
 #define E_DATA_LAYOUT_PORTRAIT "layout_portrait"
 #define E_DATA_LAYOUT_LANDSCAPE "layout_landscape"
@@ -75,10 +82,10 @@ static void _gridbox_layout_get_pos(int order, int *x, int *y, void *data)
 	int column = (order - 1) - (row * n_per_row);
 
 	int row_x = info_layout->padding_left
-			+ ((info_layout->child_w + info_layout->padding_between) * column);
+		+ ((info_layout->child_w + info_layout->padding_between) * column);
 
 	int row_y = info_layout->padding_top
-			+ ((info_layout->child_h + info_layout->padding_between) * row);
+		+ ((info_layout->child_h + info_layout->padding_between) * row);
 
 	if (x != NULL) {
 		*x = row_x;
@@ -89,8 +96,7 @@ static void _gridbox_layout_get_pos(int order, int *x, int *y, void *data)
 	}
 }
 
-static void _gridbox_layout_get_coord(Evas_Object *gridbox, int num_child, int index,
-		void *layout_data, int *coord_x, int *coord_y)
+static void _gridbox_layout_get_coord(Evas_Object *gridbox, int num_child, int index, void *layout_data, int *coord_x, int *coord_y)
 {
 	int x, y, w, h;
 	int off_x = 0, off_y = 0;
@@ -130,8 +136,7 @@ static void _gridbox_layout_get_coord(Evas_Object *gridbox, int num_child, int i
 	}
 }
 
-static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv,
-		void *data)
+static void _gridbox_layout(Evas_Object *o, Evas_Object_Box_Data *priv, void *data)
 {
 	int n_children;
 	int x, y;
@@ -267,8 +272,7 @@ HAPI void quickpanel_noti_gridbox_remove(Evas_Object *gridbox)
 	}
 }
 
-HAPI void quickpanel_noti_gridbox_set_item_deleted_cb(Evas_Object *gridbox,
-		void(*deleted_cb)(void *data, Evas_Object *obj))
+HAPI void quickpanel_noti_gridbox_set_item_deleted_cb(Evas_Object *gridbox, void(*deleted_cb)(void *data, Evas_Object *obj))
 {
 	retif(gridbox == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");
@@ -276,9 +280,8 @@ HAPI void quickpanel_noti_gridbox_set_item_deleted_cb(Evas_Object *gridbox,
 	evas_object_data_set(gridbox, E_DATA_CB_DELETE_ITEM, deleted_cb);
 }
 
-static void _gridbox_call_item_deleted_cb(Evas_Object *gridbox, void *data,
-		Evas_Object *obj)
-	{
+static void _gridbox_call_item_deleted_cb(Evas_Object *gridbox, void *data, Evas_Object *obj)
+{
 	retif(gridbox == NULL, , "invalid parameter");
 
 	void (*deleted_cb)(void *data, Evas_Object *obj) = NULL;
@@ -704,9 +707,7 @@ HAPI void quickpanel_noti_gridbox_update_item(Evas_Object *gridbox, Evas_Object 
 	quickpanel_vi_start(vi);
 }
 
-HAPI void quickpanel_noti_gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item
-		,void (*update_cb)(Evas_Object *list, void *data, int is_prepend)
-		,void *container, void *data, int pos)
+HAPI void quickpanel_noti_gridbox_remove_and_add_item(Evas_Object *gridbox, Evas_Object *item ,void (*update_cb)(Evas_Object *list, void *data, int is_prepend) ,void *container, void *data, int pos)
 {
 	QP_VI *vi = NULL;
 	retif(gridbox == NULL, , "invalid parameter");
@@ -922,8 +923,7 @@ static Eina_Bool _anim_done_cb(void *data)
 	return EINA_TRUE;
 }
 
-HAPI int quickpanel_noti_gridbox_get_geometry(Evas_Object *gridbox,
-		int *limit_h, int *limit_partial_h, int *limit_partial_w)
+HAPI int quickpanel_noti_gridbox_get_geometry(Evas_Object *gridbox, int *limit_h, int *limit_partial_h, int *limit_partial_w)
 {
 
 	int count = 0;

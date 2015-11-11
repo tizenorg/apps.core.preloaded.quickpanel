@@ -15,26 +15,40 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
 
 #include <string.h>
 #include <notification.h>
+#include <notification_text_domain.h>
+#include <notification_internal.h>
+#include <system_settings.h>
+#include <vconf.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
+#include "common_uic.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
+#include "vi_manager.h"
 #include "noti_box.h"
 #include "noti_node.h"
 #include "noti.h"
 #include "noti_util.h"
 #include "noti_list_item.h"
+#include "animated_icon.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
+
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
-#include "animated_icon.h"
 
 #define IMAGE_NO_RESIZE 0
 #define IMAGE_RESIZE 1
@@ -141,8 +155,7 @@ static void _text_clean_all(Evas_Object *noti_box)
 }
 
 #ifdef QP_SCREENREADER_ENABLE
-static inline void _check_and_add_to_buffer(notification_h noti,
-		notification_text_type_e text_type, Eina_Strbuf *str_buf)
+static inline void _check_and_add_to_buffer(notification_h noti, notification_text_type_e text_type, Eina_Strbuf *str_buf)
 {
 	char buf[256] = { 0, };
 	char buf_number[QP_UTIL_PHONE_NUMBER_MAX_LEN * 2] = { 0, };
@@ -174,8 +187,7 @@ static inline void _check_and_add_to_buffer(notification_h noti,
 	}
 }
 
-static void _noti_box_set_rs_layout_single(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_rs_layout_single(Evas_Object *noti_box, notification_h noti)
 {
 	Evas_Object *ao = NULL;
 	Eina_Strbuf *str_buf = NULL;
@@ -220,8 +232,7 @@ static void _noti_box_set_rs_layout_single(Evas_Object *noti_box,
 	}
 }
 
-static void _noti_box_set_rs_layout_multi(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_rs_layout_multi(Evas_Object *noti_box, notification_h noti)
 {
 	DBG("");
 
@@ -268,8 +279,7 @@ static void _noti_box_set_rs_layout_multi(Evas_Object *noti_box,
 	}
 }
 
-static void _noti_box_set_rs_layout_thumbnail(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_rs_layout_thumbnail(Evas_Object *noti_box, notification_h noti)
 {
 	DBG("");
 
@@ -314,8 +324,7 @@ static void _noti_box_set_rs_layout_thumbnail(Evas_Object *noti_box,
 }
 #endif
 
-static Evas_Object *_set_image(Evas_Object *noti_box, notification_h noti, char *image_path,
-		notification_image_type_e image_type, const char *part, int is_stretch, int is_use_buffer)
+static Evas_Object *_set_image(Evas_Object *noti_box, notification_h noti, char *image_path, notification_image_type_e image_type, const char *part, int is_stretch, int is_use_buffer)
 {
 	Evas_Object *content = NULL;
 	char *image = NULL;
@@ -339,7 +348,7 @@ static Evas_Object *_set_image(Evas_Object *noti_box, notification_h noti, char 
 				if (memfile != NULL && memfile_size > 0) {
 					_attach_memfile(noti_box, image_type, memfile);
 					if (elm_image_memfile_set(content, memfile, memfile_size, ext,
-							quickpanel_animated_image_get_groupname(image)) == EINA_FALSE) {
+								quickpanel_animated_image_get_groupname(image)) == EINA_FALSE) {
 						ERR("failed to set memfile set");
 						elm_image_file_set(content, image,
 								quickpanel_animated_image_get_groupname(image));
@@ -385,8 +394,7 @@ static Evas_Object *_set_image(Evas_Object *noti_box, notification_h noti, char 
 	return content;
 }
 
-static int _set_text(Evas_Object *noti_box, notification_h noti,
-		notification_text_type_e text_type, const char *part, char *str, int is_need_effect, int is_support_cr)
+static int _set_text(Evas_Object *noti_box, notification_h noti, notification_text_type_e text_type, const char *part, char *str, int is_need_effect, int is_support_cr)
 {
 	char buf[128] = { 0, };
 
@@ -434,8 +442,7 @@ static int _set_text(Evas_Object *noti_box, notification_h noti,
 	return 0;
 }
 
-static int _check_text_null(notification_h noti,
-		notification_text_type_e text_type)
+static int _check_text_null(notification_h noti, notification_text_type_e text_type)
 {
 	char *text = NULL;
 
@@ -448,8 +455,7 @@ static int _check_text_null(notification_h noti,
 	return 0;
 }
 
-static int _check_image_null(notification_h noti,
-		notification_image_type_e image_type)
+static int _check_image_null(notification_h noti, notification_image_type_e image_type)
 {
 	char *image = NULL;
 
@@ -466,8 +472,7 @@ static int _check_image_null(notification_h noti,
 	return 0;
 }
 
-static void _noti_box_set_layout_single(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_layout_single(Evas_Object *noti_box, notification_h noti)
 {
 	char *dir = NULL;
 	char *domain = NULL;
@@ -484,23 +489,23 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
 		is_contents_only = 1;
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) != 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
 		is_sub_info_1_only = 1;
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) != 1
-		|| _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) != 1)) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) != 1
+				|| _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) != 1)) {
 		is_contents_and_sub_info_2 = 1;
 	}
 
@@ -522,14 +527,11 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 		if (is_contents_and_sub_info_2 == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
 					"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
-		} else {
-			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-					"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
 		}
 
 		if (is_sub_info_1_only == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-										"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
+					"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
 		} else {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
 				if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
@@ -599,8 +601,8 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 			elm_object_signal_emit(noti_box, "box.title.without.icon", "box.prog");
 		}
 		if (((_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON) == 0
-				||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
-				&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
+						||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
+					&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
 			elm_object_signal_emit(noti_box, "box.show.sub.bg", "box.prog");
 		}
 	}
@@ -610,8 +612,7 @@ static void _noti_box_set_layout_single(Evas_Object *noti_box,
 #endif
 }
 
-static void _noti_box_set_layout_multi(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_layout_multi(Evas_Object *noti_box, notification_h noti)
 {
 	char *pkgname = NULL;
 	char *icon_path = NULL;
@@ -628,25 +629,25 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 1
-	    && _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
 		is_contents_only = 1;
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) != 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) == 1) {
 		is_sub_info_1_only = 1;
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
-		&& (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) != 1
-		|| _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) != 1)) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 1
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1
+			&& (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) != 1
+				|| _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_2) != 1)) {
 		is_contents_and_sub_info_2 = 1;
 	}
 
@@ -662,16 +663,16 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 			"object.text.title", NULL, is_need_effect, TEXT_CR);
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 0) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT, "object.text.count", NULL,
-						is_need_effect, TEXT_NO_CR);
+				is_need_effect, TEXT_NO_CR);
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT, "object.text.contents", NULL,
-						is_need_effect, TEXT_NO_CR);
+				is_need_effect, TEXT_NO_CR);
 	} else {
 		if (is_contents_only == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
 					"object.text.contents", NULL, is_need_effect, TEXT_CR);
 		} else if (is_contents_and_sub_info_2 == 1) {
-				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
-						"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
+			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
+					"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
 		} else {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
 					"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
@@ -691,7 +692,7 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 
 	if (is_sub_info_1_only == 1) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-									"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
+				"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
 	} else {
 		if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_SUB_1) == 1) {
@@ -759,8 +760,8 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 			elm_object_signal_emit(noti_box, "box.title.without.icon", "box.prog");
 		}
 		if (((_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON) == 0
-				||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
-				&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
+						||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
+					&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
 			elm_object_signal_emit(noti_box, "box.show.sub.bg", "box.prog");
 		}
 	}
@@ -770,8 +771,7 @@ static void _noti_box_set_layout_multi(Evas_Object *noti_box,
 #endif
 }
 
-static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
-		notification_h noti)
+static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box, notification_h noti)
 {
 	char *pkgname = NULL;
 	char *icon_path = NULL;
@@ -789,15 +789,15 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 	}
 
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) != 1
-		&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1) {
+			&& _check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 1) {
 		is_sub_info_1_only = 1;
 	}
 
 	if (_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_1)!= 1
-		&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_2) == 1
-		&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_3) == 1
-		&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_4) == 1
-		&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_5) == 1) {
+			&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_2) == 1
+			&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_3) == 1
+			&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_4) == 1
+			&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_LIST_5) == 1) {
 		is_show_info = 1;
 	}
 
@@ -811,9 +811,9 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 			"object.text.title", NULL, is_need_effect, TEXT_CR);
 	if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT) == 0) {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT, "object.text.count", NULL,
-						is_need_effect, TEXT_NO_CR);
+				is_need_effect, TEXT_NO_CR);
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT, "object.text.contents", NULL,
-						is_need_effect, TEXT_NO_CR);
+				is_need_effect, TEXT_NO_CR);
 	} else {
 		_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_CONTENT,
 				"object.text.contents", NULL, is_need_effect, TEXT_NO_CR);
@@ -832,15 +832,15 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 	if (is_show_info == 1) {
 		if (is_sub_info_1_only == 1) {
 			_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-										"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
+					"object.text.info.1.multiline", NULL, is_need_effect, TEXT_CR);
 		} else {
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_1) == 0) {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_1,
-										"object.text.info.1", NULL, is_need_effect, TEXT_NO_CR);
+						"object.text.info.1", NULL, is_need_effect, TEXT_NO_CR);
 			}
 			if (_check_text_null(noti, NOTIFICATION_TEXT_TYPE_INFO_2) == 0) {
 				_set_text(noti_box, noti, NOTIFICATION_TEXT_TYPE_INFO_2,
-										"object.text.info.2", NULL, is_need_effect, TEXT_NO_CR);
+						"object.text.info.2", NULL, is_need_effect, TEXT_NO_CR);
 			}
 		}
 	}
@@ -902,8 +902,8 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 			elm_object_signal_emit(noti_box, "box.title.without.icon", "box.prog");
 		}
 		if (((_check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON) == 0
-				||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
-				&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
+						||  _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL) == 0)
+					&& _check_image_null(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB) == 0)) {
 			elm_object_signal_emit(noti_box, "box.show.sub.bg", "box.prog");
 		}
 	}
@@ -913,8 +913,7 @@ static void _noti_box_set_layout_thumbnail(Evas_Object *noti_box,
 #endif
 }
 
-static void _noti_box_set_layout(Evas_Object *noti_box, notification_h noti,
-		notification_ly_type_e layout)
+static void _noti_box_set_layout(Evas_Object *noti_box, notification_h noti, notification_ly_type_e layout)
 {
 	DBG("notification box layout:%d", layout);
 
@@ -967,8 +966,7 @@ static Evas_Object *_create(notification_h noti, Evas_Object *parent)
 
 	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	quickpanel_uic_initial_resize(box, QP_THEME_LIST_ITEM_NOTIFICATION_LEGACY_SINGLE_MULTI_HEIGHT
-							 + QP_THEME_LIST_ITEM_SEPERATOR_HEIGHT);
+	quickpanel_uic_initial_resize(box, QP_THEME_LIST_ITEM_NOTIFICATION_LEGACY_SINGLE_MULTI_HEIGHT + QP_THEME_LIST_ITEM_SEPERATOR_HEIGHT);
 	evas_object_show(box);
 
 	Evas_Object *focus = quickpanel_accessibility_ui_get_focus_object(box);

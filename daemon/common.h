@@ -19,11 +19,6 @@
 #ifndef __QP_COMMON_H_
 #define __QP_COMMON_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <Elementary.h>
-#include "quickpanel_debug_util.h"
 
 #define QP_OK	(0)
 #define QP_FAIL	(-1)
@@ -76,25 +71,25 @@
 #define DBG(fmt , args...) \
 	do { \
 		debug_printf("[D]%s : %d] "fmt"\n", \
-			__func__, __LINE__, ##args); \
+				__func__, __LINE__, ##args); \
 	} while (0)
 
 #define INFO(fmt , args...) \
 	do { \
 		debug_printf("[I][%s : %d] "fmt"\n",\
-			__func__, __LINE__, ##args); \
+				__func__, __LINE__, ##args); \
 	} while (0)
 
 #define WARN(fmt , args...) \
 	do { \
 		debug_printf("[W][%s : %d] "fmt"\n", \
-			__func__, __LINE__, ##args); \
+				__func__, __LINE__, ##args); \
 	} while (0)
 
 #define ERR(fmt , args...) \
 	do { \
 		debug_printf("[E][%s : %d] "fmt"\n", \
-			__func__, __LINE__, ##args); \
+				__func__, __LINE__, ##args); \
 	} while (0)
 
 #else /*_DLOG_USED*/
@@ -145,17 +140,16 @@
 	} \
 } while (0);
 
-
-void quickpanel_common_util_char_trim(char *text);
-void quickpanel_common_util_char_replace(char *text, char s, char t);
-void quickpanel_common_util_add_char_to_each_charactor(char *dst, const char *src, char t);
-int quickpanel_common_util_is_phone_number(const char *address);
-void quickpanel_common_util_phone_number_tts_make(char *dst, const char *src, int size);
-void quickpanel_common_ui_set_current_popup(Evas_Object *popup, Evas_Smart_Cb func_close);
-void quickpanel_common_ui_del_current_popup(void);
-void *quickpanel_common_ui_get_buffer_from_image(const char *file_path, size_t *memfile_size, char *ext, int ext_size);
-char *quickpanel_common_ui_get_pkginfo_icon(const char *pkgid);
-char *quickpanel_common_ui_get_pkginfo_label(const char *pkgid);
-int quickpanel_common_ui_is_package_exist(const char *pkgid);
+extern void quickpanel_common_util_char_trim(char *text);
+extern void quickpanel_common_util_char_replace(char *text, char s, char t);
+extern void quickpanel_common_util_add_char_to_each_charactor(char *dst, const char *src, char t);
+extern int quickpanel_common_util_is_phone_number(const char *address);
+extern void quickpanel_common_util_phone_number_tts_make(char *dst, const char *src, int size);
+extern void quickpanel_common_ui_set_current_popup(Evas_Object *popup, Evas_Smart_Cb func_close);
+extern void quickpanel_common_ui_del_current_popup(void);
+extern void *quickpanel_common_ui_get_buffer_from_image(const char *file_path, size_t *memfile_size, char *ext, int ext_size);
+extern char *quickpanel_common_ui_get_pkginfo_icon(const char *pkgid);
+extern char *quickpanel_common_ui_get_pkginfo_label(const char *pkgid);
+extern int quickpanel_common_ui_is_package_exist(const char *pkgid);
 
 #endif				/* __QP_COMMON_H_ */

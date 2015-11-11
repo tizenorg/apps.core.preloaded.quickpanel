@@ -19,16 +19,12 @@
 #ifndef __QUICKPANEL_PAGER_COMMON_H__
 #define __QUICKPANEL_PAGER_COMMON_H__
 
-#include "quickpanel-ui.h"
-#include "common.h"
-#include "pager.h"
-
-void quickpanel_page_handler_set(Evas_Object *page, QP_Page_Handler *handler);
-QP_Page_Handler *quickpanel_page_handler_get(Evas_Object *page);
-void quickpanel_page_scroll_hold_set(Eina_Bool is_freeze);
-void quickpanel_page_scroll_freeze_set(Eina_Bool is_freeze);
-void quickpanel_page_get_touched_pos(int *x, int *y);
-void quickpanel_page_get_recoordinated_pos(int local_x, int local_y, int *x, int *y);
-void quickpanel_page_editing_icon_visible_status_update(void);
+extern void quickpanel_page_handler_set(Evas_Object *page, QP_Page_Handler *handler);
+extern QP_Page_Handler *quickpanel_page_handler_get(Evas_Object *page);
+extern void quickpanel_page_scroll_hold_set(Eina_Bool is_freeze);
+extern void quickpanel_page_scroll_freeze_set(Eina_Bool is_freeze);
+extern void quickpanel_page_get_touched_pos(int *x, int *y);
+extern void quickpanel_page_get_recoordinated_pos(int local_x, int local_y, int *x, int *y);
+extern void quickpanel_page_editing_icon_visible_status_update(void);
 
 #endif

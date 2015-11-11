@@ -16,14 +16,9 @@
  */
 
 
-#include <appcore-common.h>
-#include <vconf.h>
-#include <vconf-keys.h>
-#include <dlog.h>
-#include <app_control.h>
+#include <Elementary.h>
 #include <ctype.h>
-#include <system_settings.h>
-#include <utils_i18n.h>
+#include <glib.h>
 
 #include <unicode/utypes.h>
 #include <unicode/putil.h>
@@ -32,10 +27,24 @@
 #include <unicode/udatpg.h>
 #include <unicode/ustring.h>
 
+#include <appcore-common.h>
+#include <app_control.h>
+#include <vconf.h>
+#include <vconf-keys.h>
+#include <dlog.h>
+#include <system_settings.h>
+#include <utils_i18n.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <E_DBus.h>
+
 #include "common.h"
+
 #include "quickpanel-ui.h"
 #include "util-time.h"
 #include "datetime.h"
+#include "noti_node.h"
 #include "noti.h"
 
 #define TIME_ZONEINFO_PATH      "/usr/share/zoneinfo/"
@@ -89,12 +98,6 @@ static struct info {
 	.is_pre_meridiem = EINA_FALSE,
 };
 
-static int _get_formatted_time_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, int time_format, void *data);
-static int _get_formatted_ampm_from_utc_time(time_t intime, char *buf, int buf_len, int *ampm_len, const char *timezone, void *data);
-static int _get_formatted_date_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, void *data, const char *format);
-static int _get_simple_formatted_date_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, void *data);
-
-
 static Eina_Bool _timer_cb(void *data);
 
 static UChar *uastrcpy(const char *chars)
@@ -115,13 +118,14 @@ static void ICU_set_timezone(const char *timezone)
 	DBG("ICU_set_timezone = %s ", timezone);
 	UErrorCode ec = U_ZERO_ERROR;
 	UChar *str = uastrcpy(timezone);
+	retif(str == NULL, , "uastrcpy error!");
 
 	ucal_setDefaultTimeZone(str, &ec);
 	if (U_SUCCESS(ec)) {
 		DBG("ucal_setDefaultTimeZone() SUCCESS ");
 	} else {
 		ERR("ucal_setDefaultTimeZone() FAILED : %s ",
-			      u_errorName(ec));
+				u_errorName(ec));
 	}
 	free(str);
 }
@@ -132,10 +136,8 @@ static char *_get_locale(void)
 	char *locale = NULL; //vconf_get_str(VCONFKEY_REGIONFORMAT);
 	int ret = 0;
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &locale);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY) : %d", ret);
-#endif
 
 	if (locale == NULL) {
 		ERR("vconf_get_str() failed : region format");
@@ -162,323 +164,19 @@ static char *_get_locale(void)
 }
 
 /*static char *_get_locale_for_date(void)
-{
-	char *locale = vconf_get_str(VCONFKEY_REGIONFORMAT);
-	if (locale == NULL) {
-		ERR("vconf_get_str() failed : region format");
-		return strdup("en_GB.UTF8");
-	}
+  {
+  char *locale = vconf_get_str(VCONFKEY_REGIONFORMAT);
+  if (locale == NULL) {
+  ERR("vconf_get_str() failed : region format");
+  return strdup("en_GB.UTF8");
+  }
 
-	if (strlen(locale) > 0) {
-		return locale;
-	}
+  if (strlen(locale) > 0) {
+  return locale;
+  }
 
-	return strdup("en_GB.UTF8");
-}*/
-
-static UDateFormat *_get_formatter_time(void *data, int time_format, const char *timezone)
-{
-	UErrorCode status = U_ZERO_ERROR;
-	char buf[BUF_FORMATTER] = {0,};
-	char *locale = NULL;
-	UChar u_pattern[BUF_FORMATTER] = {0,};
-	UChar u_timezone[BUF_FORMATTER] = {0,};
-	UDateFormat *formatter = NULL;
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, NULL);
-
-	UDateTimePatternGenerator *generator = NULL;
-	UChar u_best_pattern[BUF_FORMATTER] = {0,};
-	int32_t u_best_pattern_capacity;
-
-#ifdef HAVE___SECURE_GETENV
-	uloc_setDefault(__secure_getenv("LC_TIME"), &status);
-#elif defined HAVE_SECURE_GETENV
-	uloc_setDefault(secure_getenv("LC_TIME"), &status);
-#else
-	uloc_setDefault(getenv("LC_TIME"), &status);
-#endif
-	if (U_FAILURE(status)) {
-		ERR("uloc_setDefault() is failed.");
-		return NULL;
-	}
-
-	if (time_format == APPCORE_TIME_FORMAT_24) {
-		snprintf(buf, sizeof(buf)-1, "%s", "HH:mm");
-	} else {
-		/* set time format 12 */
-		snprintf(buf, sizeof(buf)-1, "%s", "h:mm");
-	}
-	if (u_uastrncpy(u_pattern, buf, sizeof(u_pattern)) == NULL) {
-		ERR("u_uastrncpy() is failed.");
-		return NULL;
-	}
-
-	locale = _get_locale();
-
-	if (time_format == APPCORE_TIME_FORMAT_12) {
-		generator = udatpg_open(locale, &status);
-		if (U_FAILURE(status)) {
-			ERR("udatpg_open() failed");
-			generator = NULL;
-			if (locale) {
-				free(locale);
-				locale = NULL;
-			}
-			return NULL;
-		}
-
-		u_best_pattern_capacity =
-						(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
-
-		udatpg_getBestPattern(generator, u_pattern, u_strlen(u_pattern),
-								u_best_pattern, u_best_pattern_capacity, &status);
-		if (U_FAILURE(status)) {
-			ERR("udatpg_getBestPattern() failed");
-			if (locale) {
-				free(locale);
-				locale = NULL;
-			}
-		}
-
-		/* remove am/pm of best pattern */
-		char a_best_pattern[BUF_FORMATTER] = {0.};
-		u_austrcpy(a_best_pattern, u_best_pattern);
-		char *a_best_pattern_fixed = strtok(a_best_pattern, "a");
-		a_best_pattern_fixed = strtok(a_best_pattern_fixed, " ");
-		if (a_best_pattern_fixed) {
-			u_uastrcpy(u_best_pattern, a_best_pattern_fixed);
-		}
-		u_strncpy(u_pattern, u_best_pattern, sizeof(u_pattern));
-	}
-
-	if (timezone) {
-		u_uastrncpy(u_timezone, timezone, sizeof(u_timezone));
-		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, locale, u_timezone, -1,
-								u_pattern, -1, &status);
-	} else {
-		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, locale, NULL, -1,
-								u_pattern, -1, &status);
-	}
-	if (U_FAILURE(status)) {
-		ERR("udat_open() is failed.");
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-		return NULL;
-	}
-
-	if (locale) {
-		free(locale);
-		locale = NULL;
-	}
-
-	if (generator) {
-		udat_close(generator);
-		generator = NULL;
-	}
-
-	if (formatter) {
-		return formatter;
-	} else {
-		return NULL;
-	}
-}
-
-static UDateFormat *_get_formatter_ampm(void *data, const char *timezone)
-{
-	UErrorCode status = U_ZERO_ERROR;
-
-	char a_best_pattern[BUF_FORMATTER] = {0.};
-	char *locale = NULL;
-
-	UChar u_timezone[BUF_FORMATTER] = {0,};
-	UChar u_skeleton[BUF_FORMATTER] = {0,};
-	int skeleton_len = 0;
-
-	UDateFormat *formatter = NULL;
-	UDateTimePatternGenerator *generator = NULL;
-
-	UChar u_best_pattern[BUF_FORMATTER] = {0,};
-	int32_t u_best_pattern_capacity;
-
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, NULL);
-
-#ifdef HAVE___SECURE_GETENV
-	uloc_setDefault(__secure_getenv("LC_TIME"), &status);
-#elif defined HAVE_SECURE_GETENV
-	uloc_setDefault(secure_getenv("LC_TIME"), &status);
-#else
-	uloc_setDefault(getenv("LC_TIME"), &status);
-#endif
-	if (U_FAILURE(status)) {
-		ERR("uloc_setDefault() is failed.");
-		return NULL;
-	}
-
-	locale = _get_locale();
-
-	u_uastrncpy(u_skeleton, "hhmm", strlen("hhmm"));
-	skeleton_len = u_strlen(u_skeleton);
-
-	generator = udatpg_open(locale, &status);
-	if (U_FAILURE(status)) {
-		ERR("udatpg_open() failed");
-		generator = NULL;
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-		return NULL;
-	}
-
-	u_best_pattern_capacity =
-					(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
-
-	udatpg_getBestPattern(generator, u_skeleton, skeleton_len,
-							u_best_pattern, u_best_pattern_capacity, &status);
-	if (U_FAILURE(status)) {
-		ERR("udatpg_getBestPattern() failed");
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-	}
-
-	u_austrcpy(a_best_pattern, u_best_pattern);
-	u_uastrcpy(u_best_pattern, "a");
-
-	if (a_best_pattern[0] == 'a') {
-		s_info.is_pre_meridiem = EINA_TRUE;
-	} else {
-		s_info.is_pre_meridiem = EINA_FALSE;
-	}
-
-	if (timezone != NULL) {
-		u_uastrncpy(u_timezone, timezone, sizeof(u_timezone));
-		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, locale, u_timezone, -1,
-								u_best_pattern, -1, &status);
-	} else {
-		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, locale, NULL, -1,
-								u_best_pattern, -1, &status);
-	}
-
-	if (U_FAILURE(status)) {
-		ERR("udat_open() failed");
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-		return NULL;
-	}
-
-	if (locale) {
-		free(locale);
-		locale = NULL;
-	}
-
-	if (generator) {
-		udat_close(generator);
-		generator = NULL;
-	}
-
-	return formatter;
-}
-
-//static int _get_formatter_date(void *data, const char *timezone, Eina_Bool is_info, const char *skeleton)
-static UDateFormat *_get_formatter_date(void *data, const char *timezone, Eina_Bool is_info, const char *skeleton)
-{
-	UErrorCode status = U_ZERO_ERROR;
-	UChar u_timezone[BUF_FORMATTER] = {0,};
-	UChar u_skeleton[BUF_FORMATTER] = {0,};
-	int skeleton_len = 0;
-	char *locale = NULL;
-
-	UDateFormat *formatter = NULL;
-	UDateTimePatternGenerator *generator = NULL;
-
-	UChar u_best_pattern[BUF_FORMATTER] = {0,};
-	int32_t u_best_pattern_capacity;
-
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, NULL);
-
-#ifdef HAVE___SECURE_GETENV
-	uloc_setDefault(__secure_getenv("LC_TIME"), &status);
-#elif defined HAVE_SECURE_GETENV
-	uloc_setDefault(secure_getenv("LC_TIME"), &status);
-#else
-	uloc_setDefault(getenv("LC_TIME"), &status);
-#endif
-	if (U_FAILURE(status)) {
-		ERR("uloc_setDefault() is failed.");
-		return NULL;
-	}
-
-	locale  = _get_locale();
-	if (locale == NULL) {
-		ERR("vconf_get_str() failed : region format");
-		locale = strdup("en_GB.UTF-8");
-	}
-
-	u_uastrncpy(u_skeleton, skeleton, strlen(skeleton));
-	skeleton_len = u_strlen(u_skeleton);
-
-	generator = udatpg_open(locale, &status);
-	if (U_FAILURE(status)) {
-		ERR("udatpg_open() failed");
-		generator = NULL;
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-		return NULL;
-	}
-
-	u_best_pattern_capacity =
-						(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
-
-	(void)udatpg_getBestPattern(generator, u_skeleton, skeleton_len,
-						u_best_pattern, u_best_pattern_capacity, &status);
-	if (U_FAILURE(status)) {
-		ERR("udatpg_getBestPattern() failed");
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-	}
-
-	if (timezone) {
-		u_uastrncpy(u_timezone, timezone, sizeof(u_timezone));
-		formatter = udat_open(UDAT_IGNORE, UDAT_DEFAULT, locale, u_timezone, -1,
-								u_best_pattern, u_strlen(u_best_pattern), &status);
-	} else {
-		formatter = udat_open(UDAT_IGNORE, UDAT_DEFAULT, locale, NULL, -1,
-								u_best_pattern, u_strlen(u_best_pattern), &status);
-	}
-	if (U_FAILURE(status)) {
-		ERR("udat_open() is failed.");
-		if (locale) {
-			free(locale);
-			locale = NULL;
-		}
-		return NULL;
-	}
-
-	if (locale) {
-		free(locale);
-		locale = NULL;
-	}
-
-	if (generator) {
-		udat_close(generator);
-		generator = NULL;
-	}
-
-	return formatter;
-}
+  return strdup("en_GB.UTF8");
+  }*/
 
 static inline char *_extend_heap(char *buffer, int *sz, int incsz)
 {
@@ -559,9 +257,9 @@ static char *_string_replacer(char *src, const char *pattern, const char *replac
 		case STATE_CHECK:
 			if (!pattern[idx]) {
 				/*!
-     * If there is no space for copying the replacement,
-     * Extend size of the return buffer.
-     */
+				 * If there is no space for copying the replacement,
+				 * Extend size of the return buffer.
+				 */
 				if (out_sz - out_idx < strlen(replace) + 1) {
 					tmp = _extend_heap(ret, &out_sz, strlen(replace) + 1);
 					if (!tmp) {
@@ -604,206 +302,6 @@ static char *_string_replacer(char *src, const char *pattern, const char *replac
 
 	ret[out_idx] = '\0';
 	return ret;
-}
-
-static int _get_formatted_time_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, int time_format, void *data)
-{
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, -1);
-
-	UDate u_time = (UDate)intime * 1000;
-	UChar u_formatted_str[BUF_FORMATTER] = {0,};
-	int32_t u_formatted_str_capacity;
-
-	UErrorCode status = U_ZERO_ERROR;
-
-	UDateFormat *formatter = _get_formatter_time(ad, time_format, timezone);
-	if (formatter == NULL) {
-		ERR("_get_formatter_time() failed");
-		return -1;
-	}
-
-	/* calculate formatted string capacity */
-	u_formatted_str_capacity =
-			(int32_t)(sizeof(u_formatted_str) / sizeof((u_formatted_str)[0]));
-
-	/* fomatting date using formatter */
-	(void)udat_format(formatter, u_time, u_formatted_str, u_formatted_str_capacity,
-									NULL, &status);
-	if (U_FAILURE(status)) {
-		ERR("udat_format() failed");
-		if (formatter) {
-			udat_close(formatter);
-			formatter = NULL;
-		}
-		return -1;
-	}
-
-	buf = u_austrncpy(buf, u_formatted_str, buf_len);
-	DBG("time : %s %d", buf, intime);
-	if (formatter) {
-		udat_close(formatter);
-		formatter = NULL;
-	}
-	return 0;
-}
-
-static int _get_formatted_ampm_from_utc_time(time_t intime, char *buf, int buf_len, int *ampm_len, const char *timezone, void *data)
-{
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, -1);
-
-	UDate u_time = (UDate)intime * 1000;
-	UChar u_formatted_str[BUF_FORMATTER] = {0,};
-	int32_t u_formatted_str_capacity;
-
-	UErrorCode status = U_ZERO_ERROR;
-
-	UDateFormat *formatter = _get_formatter_ampm(ad, timezone);
-
-	if (formatter == NULL){
-		ERR("_get_formatter_ampm() failed");
-		return -1;
-	}
-
-	u_formatted_str_capacity =
-			(int32_t)(sizeof(u_formatted_str) / sizeof((u_formatted_str)[0]));
-
-	(void)udat_format(formatter, u_time, u_formatted_str, u_formatted_str_capacity,
-										NULL, &status);
-
-	if (U_FAILURE(status)) {
-		ERR("udat_format() failed");
-		if (formatter) {
-			udat_close(formatter);
-			formatter = NULL;
-		}
-		return -1;
-	}
-
-	(*ampm_len) = u_strlen(u_formatted_str);
-
-	buf = u_austrncpy(buf, u_formatted_str, buf_len);
-	DBG("ampm : %s %d", buf, intime);
-	if (formatter) {
-		udat_close(formatter);
-		formatter = NULL;
-	}
-	return 0;
-}
-
-static int _get_formatted_date_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, void *data, const char *format)
-{
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, -1);
-
-	UDate u_time = (UDate)intime *1000;
-	UChar u_formatted_str[BUF_FORMATTER] = {0,};
-	int32_t u_formatted_str_capacity;
-	UErrorCode status = U_ZERO_ERROR;
-
-	UDateFormat *formatter = NULL;
-
-	if (format) {
-		formatter = _get_formatter_date(ad, timezone, EINA_TRUE, format);
-	} else {
-		formatter = _get_formatter_date(ad, timezone, EINA_TRUE, "MMMEd");
-	}
-	if (formatter == NULL) {
-		ERR("_get_formatter_time() failed");
-		return -1;
-	}
-
-	u_formatted_str_capacity =
-			(int32_t)(sizeof(u_formatted_str) / sizeof((u_formatted_str)[0]));
-
-	(void)udat_format(formatter, u_time, u_formatted_str, u_formatted_str_capacity,
-											NULL, &status);
-	if (U_FAILURE(status)) {
-		ERR("udat_format() failed");
-		if (formatter) {
-			udat_close(formatter);
-			formatter = NULL;
-		}
-		return -1;
-	}
-
-	buf = u_austrncpy(buf, u_formatted_str, buf_len);
-	DBG("time : %s %d", buf, intime);
-	if (formatter) {
-		udat_close(formatter);
-		formatter = NULL;
-	}
-	return 0;
-}
-
-static int _get_simple_formatted_date_from_utc_time(time_t intime, char *buf, int buf_len, const char *timezone, void *data)
-{
-	struct appdata *ad = data;
-	retif_nomsg(ad == NULL, -1);
-
-	time_t today;
-	struct tm loc_time;
-
-	today = time(NULL);
-	localtime_r(&today, &loc_time);
-
-	loc_time.tm_sec = 0;
-	loc_time.tm_min = 0;
-	loc_time.tm_hour = 0;
-	today = mktime(&loc_time);
-
-	localtime_r(&intime, &loc_time);
-
-	char time_buf[BUF_FORMATTER] = {0, };
-	int time_buf_len = sizeof(time_buf);
-	char ampm_buf[BUF_FORMATTER] = {0, };
-	int ampm_buf_len = sizeof(ampm_buf);
-	int ampm_dst_len = 0;
-	int r = 0;
-	enum appcore_time_format timeformat = APPCORE_TIME_FORMAT_UNKNOWN;
-
-	if (intime < today) {
-		/* show only simple date */
-		_get_formatted_date_from_utc_time(intime, buf, buf_len, timezone, ad, UDAT_ABBR_MONTH_DAY);
-	} else {
-
-		/* ampm format */
-		if (s_info.timeformat == APPCORE_TIME_FORMAT_UNKNOWN) {
-			r = appcore_get_timeformat(&timeformat);
-			if (r == 0) {
-				s_info.timeformat = timeformat;
-			} else {
-				s_info.timeformat = APPCORE_TIME_FORMAT_UNKNOWN;
-			}
-		}
-
-		/* show time */
-		if (s_info.timeformat == APPCORE_TIME_FORMAT_24) {
-			_get_formatted_time_from_utc_time(intime, buf, buf_len, timezone, APPCORE_TIME_FORMAT_24, ad);
-		} else {
-			_get_formatted_time_from_utc_time(intime, time_buf, time_buf_len, timezone, APPCORE_TIME_FORMAT_12, ad);
-			_get_formatted_ampm_from_utc_time(intime, ampm_buf, ampm_buf_len, &ampm_dst_len, timezone, ad);
-			if (ampm_dst_len > 4) {
-				if (loc_time.tm_hour > 12) {
-					snprintf(ampm_buf, sizeof(ampm_buf)-1, "%s", "PM");
-				} else {
-					snprintf(ampm_buf, sizeof(ampm_buf)-1, "%s", "AM");
-				}
-			}
-			if (strlen(ampm_buf) + strlen(time_buf) < buf_len - 1) {
-				if (s_info.is_pre_meridiem) {
-					snprintf(buf, buf_len-1, "%s %s", ampm_buf, time_buf);
-				} else {
-					snprintf(buf, buf_len-1, "%s %s", time_buf, ampm_buf);
-				}
-			} else {
-				snprintf(buf, buf_len-1, "%s", time_buf);
-			}
-		}
-	}
-	DBG("%s %d", buf, intime);
-	return 0;
 }
 
 static UDateTimePatternGenerator *__util_time_generator_get(void *data)
@@ -861,10 +359,10 @@ static UDateFormat *__util_time_date_formatter_get(void *data, const char *timez
 	skeleton_len = u_strlen(u_skeleton);
 
 	u_best_pattern_capacity =
-					(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
+		(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
 
 	udatpg_getBestPattern(s_info.date_generator, u_skeleton, skeleton_len,
-							u_best_pattern, u_best_pattern_capacity, &status);
+			u_best_pattern, u_best_pattern_capacity, &status);
 	if (U_FAILURE(status)) {
 		ERR("udatpg_getBestPattern() failed");
 		return NULL;
@@ -874,11 +372,11 @@ static UDateFormat *__util_time_date_formatter_get(void *data, const char *timez
 	if (timezone_id == NULL) {
 		u_uastrncpy(u_timezone_id, s_info.timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.dateregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	} else {
 		u_uastrncpy(u_timezone_id, timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.dateregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	}
 	if (U_FAILURE(status)) {
 		ERR("udat_open() failed");
@@ -907,11 +405,11 @@ static UDateFormat *__util_time_ampm_formatter_get(void *data, const char *timez
 	if (timezone_id == NULL) {
 		u_uastrncpy(u_timezone_id, s_info.timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.timeregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	} else {
 		u_uastrncpy(u_timezone_id, timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.timeregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	}
 	if (U_FAILURE(status)) {
 		ERR("udat_open() failed");
@@ -952,10 +450,10 @@ static UDateFormat *__util_time_time_formatter_get(void *data, int time_format, 
 	}
 
 	u_best_pattern_capacity =
-					(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
+		(int32_t) (sizeof(u_best_pattern) / sizeof((u_best_pattern)[0]));
 
 	udatpg_getBestPattern(s_info.generator, u_pattern, u_strlen(u_pattern),
-							u_best_pattern, u_best_pattern_capacity, &status);
+			u_best_pattern, u_best_pattern_capacity, &status);
 	if (U_FAILURE(status)) {
 		ERR("udatpg_getBestPattern() failed");
 		return NULL;
@@ -969,21 +467,17 @@ static UDateFormat *__util_time_time_formatter_get(void *data, int time_format, 
 		s_info.is_pre_meridiem = EINA_FALSE;
 	}
 
-	char *a_best_pattern_fixed = strtok(a_best_pattern, "a");
-	a_best_pattern_fixed = strtok(a_best_pattern_fixed, " ");
-	if (a_best_pattern_fixed) {
-		u_uastrcpy(u_best_pattern, a_best_pattern_fixed);
-	}
+	u_uastrcpy(u_best_pattern, buf);
 
 	UChar u_timezone_id[BUF_FORMATTER] = {0,};
 	if (timezone_id == NULL) {
 		u_uastrncpy(u_timezone_id, s_info.timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.timeregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	} else {
 		u_uastrncpy(u_timezone_id, timezone_id, sizeof(u_timezone_id));
 		formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, s_info.timeregion_format, u_timezone_id, -1,
-								u_best_pattern, -1, &status);
+				u_best_pattern, -1, &status);
 	}
 	if (U_FAILURE(status)) {
 		ERR("udat_open() failed");
@@ -1090,7 +584,6 @@ static char *_util_time_timezone_id_get(void)
 	return strdup(buf + 20);
 }
 
-
 static int _util_time_formatted_time_get(UDateFormat *formatter, time_t tt, char *buf, int buf_len)
 {
 	i18n_udate u_time = (i18n_udate)(tt) * 1000;
@@ -1100,7 +593,7 @@ static int _util_time_formatted_time_get(UDateFormat *formatter, time_t tt, char
 	int status = I18N_ERROR_INVALID_PARAMETER;
 
 	u_formatted_str_capacity =
-			(int32_t)(sizeof(u_formatted_str) / sizeof((u_formatted_str)[0]));
+		(int32_t)(sizeof(u_formatted_str) / sizeof((u_formatted_str)[0]));
 
 	status = i18n_udate_format_date(formatter, u_time, u_formatted_str, u_formatted_str_capacity, NULL, &formatted_str_len);
 	if (status != I18N_ERROR_NONE) {
@@ -1118,7 +611,6 @@ static int _util_time_formatted_time_get(UDateFormat *formatter, time_t tt, char
 	return (int)u_strlen(u_formatted_str);
 }
 
-
 static void _formatter_create(void *data)
 {
 	int ret = 0;
@@ -1126,10 +618,8 @@ static void _formatter_create(void *data)
 	retif_nomsg(ad == NULL, );
 	bool status = false;
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, &status);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR) : %d", ret);
-#endif
 
 	if (status == true){
 		s_info.timeformat = APPCORE_TIME_FORMAT_24;
@@ -1180,6 +670,19 @@ static void _formatter_destory(void *data)
 	s_info.is_initialized = 0;
 }
 
+static void _util_time_setting_changed_cb(system_settings_key_e key, void *data)
+{
+	struct appdata *ad = data;
+
+	_formatter_destory(ad);
+	_formatter_create(ad);
+
+	_util_time_heartbeat_do();
+
+	//upate noti time information.
+	quickpanel_noti_update_by_system_time_changed_setting_cb(key, ad);
+}
+
 static void _util_time_vconf_changed_cb(keynode_t *key, void *data)
 {
 	struct appdata *ad = data;
@@ -1190,7 +693,7 @@ static void _util_time_vconf_changed_cb(keynode_t *key, void *data)
 	_util_time_heartbeat_do();
 
 	//upate noti time information.
-	quickpanel_noti_update_by_system_time_changed_cb(key,ad);
+	quickpanel_noti_update_by_system_time_changed_vconf_cb(key, ad);
 }
 
 static void _time_event_deattach(void *data)
@@ -1206,14 +709,13 @@ static void _time_event_deattach(void *data)
 	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
 	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _util_time_vconf_changed_cb);
 	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
-#ifdef HAVE_X
+
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_TIME_CHANGED);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_TIME_CHANGED, ret);
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, ret);
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, ret);
-#endif
 }
 
 static void _time_event_attach(void *data)
@@ -1229,14 +731,14 @@ static void _time_event_attach(void *data)
 	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_SETAPPL_TIMEZONE_ID, ret);
 	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SVC_ROAM, _util_time_vconf_changed_cb, data);
 	msgif(ret != 0, "failed to set key(%s) : %d", VCONFKEY_TELEPHONY_SVC_ROAM, ret);
-#ifdef HAVE_X
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_TIME_CHANGED, _util_time_vconf_changed_cb, data);
+
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_TIME_CHANGED, _util_time_setting_changed_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_TIME_CHANGED, ret);
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, _util_time_vconf_changed_cb, data);
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, _util_time_setting_changed_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, ret);
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, _util_time_vconf_changed_cb, data);
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, _util_time_setting_changed_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to set key(%d) : %d", SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, ret);
-#endif
+
 }
 
 static void _util_time_get(int is_current_time, time_t tt_a, char **str_date, char **str_time, char **str_meridiem)
@@ -1274,7 +776,11 @@ static void _util_time_get(int is_current_time, time_t tt_a, char **str_date, ch
 		}
 	}
 
-	convert_formatted_str = _string_replacer(buf_time, colon, ratio);
+	if (strstr(s_info.timeregion_format, "ar_")) {
+		convert_formatted_str = strdup(buf_time);
+	} else {
+		convert_formatted_str = _string_replacer(buf_time, colon, ratio);
+	}
 
 	if (str_date != NULL) {
 		*str_date = strdup(buf_date);

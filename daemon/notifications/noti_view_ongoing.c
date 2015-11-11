@@ -15,25 +15,40 @@
  *
  */
 
-
+#include <stdio.h>
 #include <string.h>
-#include <efl_assist.h>
+#include <glib.h>
+
+#include <Elementary.h>
+
+#include <vconf.h>
+#include <notification.h>
+#include <notification_internal.h>
+#include <notification_text_domain.h>
+#include <system_settings.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
+#include "common_uic.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
-#include "noti_list_item.h"
+#include <vi_manager.h>
 #include "noti_node.h"
+#include "noti_list_item.h"
 #include "noti.h"
 #include "noti_util.h"
+#include "animated_icon.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
+
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
-#include "animated_icon.h"
 
 #define LEN_UNIT_TEXTBLOCK 555
 #define QP_DEFAULT_ICON	RESDIR"/quickpanel_icon_default.png"
@@ -73,8 +88,9 @@ static Evas_Object *_check_duplicated_progress_loading(Evas_Object *obj, const c
 	if (old_content != NULL) {
 		old_style_name = elm_object_style_get(old_content);
 		if (old_style_name != NULL) {
-			if (strcmp(old_style_name, style_name) == 0)
+			if (strcmp(old_style_name, style_name) == 0) {
 				return old_content;
+			}
 
 			elm_object_part_content_unset(obj, part);
 			evas_object_del(old_content);
@@ -117,11 +133,12 @@ static Evas_Object *_check_duplicated_image_loading(Evas_Object *obj, const char
 
 static void _set_text_to_part(Evas_Object *obj, const char *part, const char *text)
 {
-	const char *old_text = NULL;
+	const char *old_text;
 
-	retif(obj == NULL, , "Invalid parameter!");
-	retif(part == NULL, , "Invalid parameter!");
-	retif(text == NULL, , "Invalid parameter!");
+	if (!obj || !part || !text) {
+		ERR("Invalid parameters");
+		return;
+	}
 
 	old_text = elm_object_part_text_get(obj, part);
 	if (old_text != NULL) {
@@ -158,19 +175,19 @@ static char *_noti_get_progress(notification_h noti, char *buf, int buf_len)
 	} else if (size > 0 && percentage == 0) {
 		if (size > (1 << 30)) {
 			if (snprintf(buf, buf_len, "%.1lfGB",
-				size / 1000000000.0) <= 0)
+						size / 1000000000.0) <= 0)
 				return NULL;
 
 			return buf;
 		} else if (size > (1 << 20)) {
 			if (snprintf(buf, buf_len, "%.1lfMB",
-				size / 1000000.0) <= 0)
+						size / 1000000.0) <= 0)
 				return NULL;
 
 			return buf;
 		} else if (size > (1 << 10)) {
 			if (snprintf(buf, buf_len, "%.1lfKB",
-				size / 1000.0) <= 0)
+						size / 1000.0) <= 0)
 				return NULL;
 
 			return buf;
@@ -205,10 +222,10 @@ static void _set_progressbar(Evas_Object *item, notification_h noti)
 
 		if (layout != NOTIFICATION_LY_ONGOING_EVENT) {
 			if (percentage > 0.0 && percentage <= 1.0) {
-				old_ic = _check_duplicated_progress_loading(item,
-						"elm.swallow.progress", "quickpanel/list_progress");
+				old_ic = _check_duplicated_progress_loading(item, "elm.swallow.progress", "list_progress");
 				if (old_ic == NULL) {
 					ic = elm_progressbar_add(item);
+					elm_progressbar_unit_format_set(ic, "%0.0f%%");
 					if (ic == NULL)
 						return;
 					elm_object_style_set(ic, "list_progress");
@@ -220,10 +237,10 @@ static void _set_progressbar(Evas_Object *item, notification_h noti)
 				elm_progressbar_horizontal_set(ic, EINA_TRUE);
 				elm_progressbar_pulse(ic, EINA_FALSE);
 			} else if ((size >= 0.0 && percentage == 0.0) || ((size < 0.0 && percentage == 0.0)|| (size == 0.0 && percentage < 0.0))) {
-				old_ic = _check_duplicated_progress_loading(item,
-						"elm.swallow.progress", "quickpanel/pending_list");
+				old_ic = _check_duplicated_progress_loading(item, "elm.swallow.progress", "pending");
 				if (old_ic == NULL) {
 					ic = elm_progressbar_add(item);
+					elm_progressbar_unit_format_set(ic, "%0.0f%%");
 					if (ic == NULL)
 						return;
 					elm_object_style_set(ic, "pending");
@@ -259,7 +276,7 @@ static void _set_icon(Evas_Object *item, notification_h noti)
 
 	notification_get_pkgname(noti, &pkgname);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_THUMBNAIL,
-			       &thumbnail_path);
+			&thumbnail_path);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_ICON, &icon_path);
 	notification_get_image(noti, NOTIFICATION_IMAGE_TYPE_ICON_SUB, &icon_sub_path);
 
@@ -293,7 +310,9 @@ static void _set_icon(Evas_Object *item, notification_h noti)
 #endif
 				if (!strncmp(main_icon_path, QP_PRELOAD_NOTI_ICON_PATH, strlen(QP_PRELOAD_NOTI_ICON_PATH))) 	{
 					DBG("Apply color theme [%s]", main_icon_path);
-					evas_object_color_set(ic, 0,0,0,255);
+					evas_object_color_set(ic, 155, 216, 226, 255);
+				} else {
+					elm_image_aspect_fixed_set(ic, EINA_TRUE);
 				}
 			}
 			elm_object_part_content_set(item, "elm.swallow.thumbnail", ic);
@@ -335,13 +354,12 @@ static void _set_icon(Evas_Object *item, notification_h noti)
 
 static void _set_text(Evas_Object *item, notification_h noti)
 {
-	int noti_err = NOTIFICATION_ERROR_NONE;
 	char *text = NULL;
 	char *text_utf8 = NULL;
 	char *domain = NULL;
 	char *dir = NULL;
 	char *pkgname = NULL;
-//	char *caller_pkgname = NULL;
+	//	char *caller_pkgname = NULL;
 	int group_id = 0, priv_id = 0;
 	char buf[128] = { 0, };
 	notification_type_e type = NOTIFICATION_TYPE_NONE;
@@ -355,19 +373,22 @@ static void _set_text(Evas_Object *item, notification_h noti)
 	Evas_Object *textblock = NULL;
 	int len_w = 0, num_line = 1, view_height = 0;
 	struct appdata *ad = quickpanel_get_app_data();
+	char *text_count = NULL;
+	int ret;
 
-	retif(ad == NULL, , "Invalid parameter!");
-	retif(item == NULL, , "Invalid parameter!");
-	retif(noti == NULL, , "noti is NULL");
+	if (!ad || !item || !noti) {
+		ERR("Invalid parameters: %p %p %p", ad, item, noti);
+		return;
+	}
 
 	/* Set text domain */
 	notification_get_text_domain(noti, &domain, &dir);
-	if (domain != NULL && dir != NULL)
+	if (domain != NULL && dir != NULL) {
 		bindtextdomain(domain, dir);
+	}
 
 #ifdef QP_SCREENREADER_ENABLE
-	ao = quickpanel_accessibility_screen_reader_object_get(item,
-			SCREEN_READER_OBJ_TYPE_ELM_OBJECT, "focus", item);
+	ao = quickpanel_accessibility_screen_reader_object_get(item, SCREEN_READER_OBJ_TYPE_ELM_OBJECT, "focus", item);
 	if (ao != NULL) {
 		str_buf = eina_strbuf_new();
 		elm_access_info_set(ao, ELM_ACCESS_TYPE, _("IDS_QP_BUTTON_NOTIFICATION"));
@@ -375,21 +396,40 @@ static void _set_text(Evas_Object *item, notification_h noti)
 #endif
 
 	/* Get pkgname & id */
-	notification_get_pkgname(noti, &pkgname);
-//	notification_get_application(noti, &caller_pkgname);
-	notification_get_id(noti, &group_id, &priv_id);
-	notification_get_type(noti, &type);
-	notification_get_size(noti, &size);
-	notification_get_progress(noti, &percentage);
-	notification_get_layout(noti, &layout);
+	ret = notification_get_pkgname(noti, &pkgname);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get the pkgname");
+	}
+	//	notification_get_application(noti, &caller_pkgname);
+	ret = notification_get_id(noti, &group_id, &priv_id);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get id");
+	}
+	ret = notification_get_type(noti, &type);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get type");
+	}
+	ret = notification_get_size(noti, &size);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get size");
+	}
+	ret = notification_get_progress(noti, &percentage);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get progress");
+	}
+	ret = notification_get_layout(noti, &layout);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get layout");
+	}
+	ret = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_EVENT_COUNT, &text_count);
+	if (ret != NOTIFICATION_ERROR_NONE) {
+		ERR("Unable to get event_count");
+	} 
 
 	SDBG("percentage:%f size:%f", percentage, size);
 
-	noti_err = notification_get_text(noti,
-							NOTIFICATION_TEXT_TYPE_TITLE,
-							&text);
-
-	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
+	ret = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_TITLE, &text);
+	if (ret == NOTIFICATION_ERROR_NONE && text != NULL) {
 		quickpanel_common_util_char_replace(text, _NEWLINE, _SPACE);
 		_set_text_to_part(item, "elm.text.title", text);
 #ifdef QP_SCREENREADER_ENABLE
@@ -397,8 +437,8 @@ static void _set_text(Evas_Object *item, notification_h noti)
 #endif
 	}
 
-	noti_err = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT, &text);
-	if (noti_err == NOTIFICATION_ERROR_NONE && text != NULL) {
+	ret = notification_get_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT, &text);
+	if (ret == NOTIFICATION_ERROR_NONE && text != NULL) {
 		if (layout == NOTIFICATION_LY_ONGOING_EVENT) {
 			text_utf8 = elm_entry_utf8_to_markup(text);
 			if (text_utf8 != NULL) {
@@ -420,7 +460,7 @@ static void _set_text(Evas_Object *item, notification_h noti)
 			} /*else {
 				elm_object_signal_emit(item, "line3.set", "prog");
 				view_height = QP_THEME_LIST_ITEM_ONGOING_EVENT_LINE3_HEIGHT + QP_THEME_LIST_ITEM_SEPERATOR_HEIGHT;
-			}*/
+				}*/
 			quickpanel_uic_initial_resize(item, view_height);
 #ifdef QP_SCREENREADER_ENABLE
 			_check_and_add_to_buffer(str_buf, text);
@@ -438,7 +478,6 @@ static void _set_text(Evas_Object *item, notification_h noti)
 		text = _noti_get_progress(noti, buf,  sizeof(buf));
 		if (text != NULL) {
 			quickpanel_common_util_char_replace(text, _NEWLINE, _SPACE);
-			_set_text_to_part(item, "elm.text.time", text);
 #ifdef QP_SCREENREADER_ENABLE
 			_check_and_add_to_buffer(str_buf, text);
 #endif
@@ -446,10 +485,20 @@ static void _set_text(Evas_Object *item, notification_h noti)
 			_set_text_to_part(item, "elm.text.time", "");
 		}
 	} else {
-		const char *get_content = elm_object_part_text_get(item, "elm.text.content");
+		const char *get_content;
+
+		get_content = elm_object_part_text_get(item, "elm.text.content");
 		if (get_content == NULL || strlen(get_content) == 0) {
 			// if there is no content, move title to vertical center.
 			elm_object_signal_emit(item, "title.move.center", "prog");
+		}
+	}
+
+	if (layout == NOTIFICATION_LY_ONGOING_PROGRESS && text_count != NULL) {
+		_set_text_to_part(item, "elm.text.count", text_count);
+		if (elm_object_part_text_get(item, "elm.text.count") != NULL) {
+			elm_object_signal_emit(item, "content.short", "prog");
+			elm_object_signal_emit(item, "count.show", "prog");
 		}
 	}
 
@@ -506,7 +555,6 @@ static void _update(noti_node_item *noti_node, notification_ly_type_e layout, Ev
 
 Noti_View_H ongoing_noti_view_h = {
 	.name 			= "ongoing_noti_view",
-
 	.create			= _create,
 	.update			= _update,
 	.remove			= NULL,

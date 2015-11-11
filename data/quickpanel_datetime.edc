@@ -26,14 +26,14 @@ images {
 styles {
 	style {
 		name: "font_time_am_pm_style";
-		base: "font=Tizen:style=Regular  font_size=26 valign=middle  ellipsis=1.0 wrap=none";
+		base: "font=Tizen:style=Regular  font_size=22 valign=middle  ellipsis=1.0 wrap=none";
 		tag: "time" "+ color=#FFFFFF ";
 		tag: "ampm" "+ color=#FFFFFF ";
 	}
 
 	style {
 		name: "font_date_style";
-		base: "font=Tizen:style=Regular  font_size=22 color=#FFFFFF valign=middle color_class=ATO009  ellipsis=1.0 wrap=none";
+		base: "font=Tizen:style=Regular  font_size=22 color=#FFFFFF valign=middle color_class=tizen  ellipsis=1.0 wrap=none";
 	}
 }
 
@@ -178,7 +178,7 @@ group {
 			scale: 1;
 			description {
 				state: "default" 0.0;
-				min: 30 30;
+				min: 42 42;
 				fixed: 1 1;
 				align: 0.5 0.5;
 				rel1 {
@@ -205,7 +205,7 @@ group {
 				fixed: 1 1;
 				align: 0.5 0.5;
 				rel1 {
-					relative: 0.0 0.5;
+					relative: 0.5 0.5;
 					to: "space.divider";
 				}
 				rel2 {
@@ -215,7 +215,7 @@ group {
 				image {
 					normal: "line_indicator_divider.png";
 				}
-				color_class: "AO027";
+				color_class: "AO003E1";
 			}
 		}
 
@@ -282,6 +282,7 @@ group {
 				}
 			}
 		}
+
 		part {
 			name: "date.top.padding";
 			type: SPACER;
@@ -302,6 +303,25 @@ group {
 			}
 		}
 
+		part { name: "text.time.left.padding";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 15 0;
+				fixed: 1 0;
+				align: 1.0 0.0;
+				rel1 {
+					//relative : 0.0 0.0;
+					to: "text.time";
+				}
+				rel2 {
+					relative : 0.0 1.0;
+					to: "text.time";
+				}
+			}
+		}
+
 		part { name: "text.date";
 			type: TEXTBLOCK;
 			mouse_events: 0;
@@ -318,12 +338,12 @@ group {
 				}
 				rel2 {
 					relative : 0.0 1.0;
-					to_x: "text.time";
+					to_x : "text.time.left.padding";
 					to_y: "space.datetime";
 				}
 				text {
 					style: "font_date_style";
-					min: 1 0;
+					min: 0 0;
 					max: 1 0;
 					align: 0.0 0.5;
 				}

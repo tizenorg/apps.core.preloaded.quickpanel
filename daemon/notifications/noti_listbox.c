@@ -15,14 +15,25 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
+
+#include <vconf.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <system_settings.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
+#include "common_uic.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
 #include "noti_listbox.h"
-#include "noti_list_item.h"
 #include "vi_manager.h"
+#include "noti_node.h"
+#include "noti_list_item.h"
 #include "noti.h"
 
 #define E_DATA_LAYOUT_PORTRAIT "layout_portrait"
@@ -41,7 +52,7 @@ static void _listbox_flag_set(Evas_Object *container, const char *key, int value
 	retif(container == NULL, , "invalid parameter");
 	retif(key == NULL, , "invalid parameter");
 
-	evas_object_data_set(container, key, (void *)value);
+	evas_object_data_set(container, key, (void *)(long)value);
 }
 
 static int _listbox_flag_get(Evas_Object *container, const char *key)
@@ -49,7 +60,7 @@ static int _listbox_flag_get(Evas_Object *container, const char *key)
 	retif(container == NULL, 0, "invalid parameter");
 	retif(key == NULL, 0, "invalid parameter");
 
-	return (int)evas_object_data_get(container, key);
+	return (int)(long)evas_object_data_get(container, key);
 }
 
 static int _listbox_layout_item_valid(Evas_Object *container, Evas_Object *item)
@@ -69,8 +80,7 @@ static int _listbox_layout_item_valid(Evas_Object *container, Evas_Object *item)
 	return ret;
 }
 
-static void _listbox_layout_get_coord(Evas_Object *container, int insert_position,
-	int *coord_x, int *coord_y, Evas_Object *noti_section)
+static void _listbox_layout_get_coord(Evas_Object *container, int insert_position, int *coord_x, int *coord_y, Evas_Object *noti_section)
 {
 	int x, y, h;
 	int off_y = 0;
@@ -211,8 +221,7 @@ HAPI void quickpanel_noti_listbox_remove(Evas_Object *listbox)
 	listbox = NULL;
 }
 
-HAPI void quickpanel_noti_listbox_set_item_deleted_cb(Evas_Object *listbox,
-		void(*deleted_cb)(void *data, Evas_Object *obj))
+HAPI void quickpanel_noti_listbox_set_item_deleted_cb(Evas_Object *listbox, void(*deleted_cb)(void *data, Evas_Object *obj))
 {
 	retif(listbox == NULL, , "invalid parameter");
 	retif(deleted_cb == NULL, , "invalid parameter");
@@ -220,8 +229,7 @@ HAPI void quickpanel_noti_listbox_set_item_deleted_cb(Evas_Object *listbox,
 	evas_object_data_set(listbox, E_DATA_CB_DELETE_ITEM, deleted_cb);
 }
 
-static void _listbox_call_item_deleted_cb(Evas_Object *listbox, void *data,
-		Evas_Object *obj)
+static void _listbox_call_item_deleted_cb(Evas_Object *listbox, void *data, Evas_Object *obj)
 {
 	retif(listbox == NULL, , "invalid parameter");
 
@@ -731,13 +739,13 @@ static void _anim_job_delete(void *data)
 
 	if (transit_layout_parent != NULL) {
 		elm_transit_del_cb_set(transit_layout_parent, quickpanel_vi_done_cb_for_transit,
-						vi);
+				vi);
 	} else if (transit_layout != NULL) {
 		elm_transit_del_cb_set(transit_layout, quickpanel_vi_done_cb_for_transit,
-						vi);
+				vi);
 	} else if (transit_fadeout != NULL) {
 		elm_transit_del_cb_set(transit_fadeout, quickpanel_vi_done_cb_for_transit,
-						vi);
+				vi);
 	} else {
 		ERR("Failed to create all the transit");
 		quickpanel_vi_done(vi);
@@ -869,8 +877,7 @@ static Eina_Bool _anim_done_cb(void *data)
 	return EINA_TRUE;
 }
 
-HAPI int quickpanel_noti_listbox_get_geometry(Evas_Object *listbox,
-		int *limit_h, int *limit_partial_h, int *limit_partial_w)
+HAPI int quickpanel_noti_listbox_get_geometry(Evas_Object *listbox, int *limit_h, int *limit_partial_h, int *limit_partial_w)
 {
 
 	int x = 0, y = 0, w = 0, h = 0;

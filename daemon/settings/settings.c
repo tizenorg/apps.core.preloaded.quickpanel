@@ -18,7 +18,14 @@
 
 #include <stdlib.h>
 #include <glib.h>
+#include <Elementary.h>
+
 #include <vconf.h>
+#include <notification.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
@@ -26,15 +33,17 @@
 #include "settings.h"
 #include "setting_utils.h"
 #include "settings_ipc.h"
+#include "pager.h"
 #include "pager_common.h"
+#include "preference.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
-#include "preference.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "configuration.h"
 
 static int quickpanel_settings_init(void *data);
 static int quickpanel_settings_fini(void *data);
@@ -146,28 +155,6 @@ static char *_preference_get(const char *key)
 	return NULL;
 }
 
-static void _reservied_list_get_with_active_list(Eina_List **list)
-{
-	int i = 0, module_count = 0;
-	Eina_List *list_featured = NULL;
-	retif(list == NULL, , "invalid data.");
-
-	quickpanel_settings_featured_list_get(&list_featured);
-	retif(list_featured == NULL, , "failed to get default active list");
-
-	module_count = _module_count_get();
-
-	for (i = 0; i < module_count; i++) {
-		if (eina_list_data_find(list_featured, s_info.modules[i]) == NULL){
-			if (_module_is_enabled(s_info.modules[i]) == EINA_TRUE) {
-				*list = eina_list_append (*list, s_info.modules[i]);
-			}
-		}
-	}
-
-	eina_list_free(list_featured);
-}
-
 static int quickpanel_settings_init(void *data)
 {
 	int i;
@@ -182,8 +169,8 @@ static int quickpanel_settings_init(void *data)
 		s_info.module_table = NULL;
 	}
 	s_info.module_table = g_hash_table_new_full(g_str_hash, g_str_equal,
-					(GDestroyNotify)g_free,
-					NULL);
+			(GDestroyNotify)g_free,
+			NULL);
 	if (s_info.module_table != NULL) {
 		for (i = 0; i < mod_count; i++) {
 			if (s_info.modules[i]->supported_get != NULL) {

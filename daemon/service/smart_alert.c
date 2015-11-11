@@ -15,8 +15,11 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
+#include <notification_list.h>
+
 #include "common.h"
 #include "noti_util.h"
 #include "smart_alert.h"
@@ -69,17 +72,16 @@ HAPI void quickpanel_smart_alert_update_info(notification_h noti)
 	if (noti == NULL) {
 		event_count_call = quickpanel_noti_util_get_event_count_by_pkgname(SMART_ALARM_CALL_PKGNAME);
 		event_count_vtcall = quickpanel_noti_util_get_event_count_by_pkgname(SMART_ALARM_VTCALL_PKGNAME);
-		ERR("call event set, count:%d", MAX(event_count_call, event_count_vtcall));
+		ERR("call event set, count:%d, %d", event_count_call, event_count_vtcall);
 	} else {
 		notification_get_pkgname(noti, &pkgname);
 		retif(pkgname == NULL, , "Invalid parameter!");
 
-		if (strncmp(pkgname, SMART_ALARM_CALL_PKGNAME, strlen(pkgname)) == 0
-			|| strncmp(pkgname, SMART_ALARM_VTCALL_PKGNAME, strlen(pkgname)) == 0) {
+		if (strncmp(pkgname, SMART_ALARM_CALL_PKGNAME, strlen(pkgname)) == 0 || strncmp(pkgname, SMART_ALARM_VTCALL_PKGNAME, strlen(pkgname)) == 0) {
 			event_count_call = quickpanel_noti_util_get_event_count_by_pkgname(SMART_ALARM_CALL_PKGNAME);
 			event_count_vtcall = quickpanel_noti_util_get_event_count_by_pkgname(SMART_ALARM_VTCALL_PKGNAME);
 
-			ERR("call event set, count:%d", MAX(event_count_call, event_count_vtcall));
+			ERR("call event set, count:%d, %d", event_count_call, event_count_vtcall);
 		}
 	}
 }

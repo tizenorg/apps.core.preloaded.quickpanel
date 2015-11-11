@@ -19,14 +19,12 @@
 #ifndef __QUICKPANEL_PAGE_SETTING_ALL_H__
 #define __QUICKPANEL_PAGE_SETTING_ALL_H__
 
-#include "quickpanel-ui.h"
-#include "common.h"
 
-Evas_Object *quickpanel_page_setting_all_create(Evas_Object *parent, void *data);
-Evas_Object *quickpanel_page_setting_all_view_get(const char *view_name);
-void quickpanel_page_setting_all_view_set(const char *view_name, Evas_Object *view);
-void quickpanel_page_setting_all_freeze_set(Eina_Bool is_freeze);
-Eina_Bool quickpanel_page_setting_all_is_page_showed(void);
-void quickpanel_page_setting_all_focus_allow_set(Eina_Bool is_enable);
+extern Evas_Object *quickpanel_page_setting_all_create(Evas_Object *parent, void *data);
+extern Evas_Object *quickpanel_page_setting_all_view_get(const char *view_name);
+extern void quickpanel_page_setting_all_view_set(const char *view_name, Evas_Object *view);
+extern void quickpanel_page_setting_all_freeze_set(Eina_Bool is_freeze);
+extern Eina_Bool quickpanel_page_setting_all_is_page_showed(void);
+extern void quickpanel_page_setting_all_focus_allow_set(Eina_Bool is_enable);
 
 #endif

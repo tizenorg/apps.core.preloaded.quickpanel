@@ -15,8 +15,16 @@
  *
  */
 
+#include <Elementary.h>
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "common.h"
+#include "common_uic.h"
 #include "animated_image.h"
+#include "quickpanel-ui.h"
 
 static int _init(void *data);
 static int _fini(void *data);
@@ -98,10 +106,10 @@ HAPI char *quickpanel_animated_image_get_groupname(const char *path)
 
 	if (path != NULL) {
 		if (strstr(path, "gif") != NULL || strstr(path, "GIF") != NULL) {
-			 snprintf(g_animated_image_group_name, sizeof(g_animated_image_group_name),
-					 "%d:EVAS", s_image_index++);
+			snprintf(g_animated_image_group_name, sizeof(g_animated_image_group_name),
+					"%d:EVAS", s_image_index++);
 
-			 return g_animated_image_group_name;
+			return g_animated_image_group_name;
 		}
 	}
 

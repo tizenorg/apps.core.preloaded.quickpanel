@@ -18,12 +18,9 @@
 #ifndef __QUICKPANEL_NOTI_SECTION_H__
 #define __QUICKPANEL_NOTI_SECTION_H__
 
-#include "list_util.h"
-
-Evas_Object *quickpanel_noti_section_create(Evas_Object *parent, qp_item_type_e type);
-void quickpanel_noti_section_update(Evas_Object *noti_section, int noti_count);
-void quickpanel_noti_section_remove(Evas_Object *noti_section) ;
-void quickpanel_noti_section_set_deleted_cb(Evas_Object *noti_section,
-		Evas_Object_Event_Cb func, void *data);
+extern Evas_Object *quickpanel_noti_section_create(Evas_Object *parent, qp_item_type_e type);
+extern void quickpanel_noti_section_update(Evas_Object *noti_section, int noti_count);
+extern void quickpanel_noti_section_remove(Evas_Object *noti_section) ;
+extern void quickpanel_noti_section_set_deleted_cb(Evas_Object *noti_section, Evas_Object_Event_Cb func, void *data);
 
 #endif

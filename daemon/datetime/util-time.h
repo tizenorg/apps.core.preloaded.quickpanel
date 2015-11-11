@@ -23,6 +23,6 @@
 #define UTIL_TIME_MERIDIEM_TYPE_PRE 1
 #define UTIL_TIME_MERIDIEM_TYPE_POST 2
 
-void quickpanel_util_time_timer_enable_set(int is_enable);
+extern void quickpanel_util_time_timer_enable_set(int is_enable);
 
 #endif				/* __UTIL_TIME_H__ */

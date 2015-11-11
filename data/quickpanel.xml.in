@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.6.22" install-location="internal-only" api-version="2.3.1">
-	<label>Quickpanel</label>
+<manifest xmlns="http://tizen.org/ns/packages" package="@PKGNAME@" version="0.8.0" install-location="internal-only">
+	<label>@PROJECT_NAME@</label>
 	<author email="yjoo93.park@samsung.com" href="www.samsung.com">Youngjoo Park</author>
-	<author email="seungtaek.chung@samsung.com" href="www.samsung.com">seungtaek chung</author>
-	<author email="ys4610.ko@samsung.com" href="www.samsung.com">Youngsub Ko</author>
+	<author email="jin0.kim@samsung.com" href="www.samsung.com">Jinyoung Kim</author>
 	<description>@PROJECT_NAME@</description>
 	<ui-application appid="@PKGNAME@" exec="@BINDIR@/@PROJECT_NAME@" nodisplay="true" multiple="false" type="capp" taskmanage="false">
 		<label>@PROJECT_NAME@</label>
 	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+	</privileges>
 </manifest>

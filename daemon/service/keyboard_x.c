@@ -15,16 +15,22 @@
  *
  */
 
-
-#include <vconf.h>
-#ifdef HAVE_X
-#include <utilX.h>
+#include <Elementary.h>
+#include <Ecore_X.h>
+#include <Ecore_Input.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/XInput.h>
 #include <X11/extensions/XInput2.h>
-#endif
-#include <Ecore_Input.h>
+
+#include <vconf.h>
+#include <utilX.h>
 #include <feedback.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
 #include "common.h"
 #include "noti_util.h"
 #include "keyboard_x.h"
@@ -50,26 +56,24 @@ typedef struct _key_info {
 } key_info;
 
 key_info key_infos[] = {
-	{TAB, "Tab", "Tab", "\t", "\t"},
-	{RETURN, "Return", "Return", "\n", "\n"},
-	{ARROW_UP, "Up", "Up", NULL, NULL},
-	{ARROW_KP_UP, "Up", "Up", NULL, NULL},
-	{ARROW_DOWN, "Down", "Down", NULL, NULL},
-	{ARROW_KP_DOWN, "Down", "Down", NULL, NULL},
-	{ARROW_LEFT, "Left", "Left", NULL, NULL},
-	{ARROW_KP_LEFT, "Left", "Left", NULL, NULL},
-	{ARROW_RIGHT, "Right", "Right", NULL, NULL},
-	{ARROW_KP_RIGHT, "Right", "Right", NULL, NULL},
-	{SHIFT, "Shift", "Shift", NULL, NULL},
+	{ TAB, "Tab", "Tab", "\t", "\t" },
+	{ RETURN, "Return", "Return", "\n", "\n" },
+	{ ARROW_UP, "Up", "Up", NULL, NULL },
+	{ ARROW_KP_UP, "Up", "Up", NULL, NULL },
+	{ ARROW_DOWN, "Down", "Down", NULL, NULL },
+	{ ARROW_KP_DOWN, "Down", "Down", NULL, NULL },
+	{ ARROW_LEFT, "Left", "Left", NULL, NULL },
+	{ ARROW_KP_LEFT, "Left", "Left", NULL, NULL },
+	{ ARROW_RIGHT, "Right", "Right", NULL, NULL },
+	{ ARROW_KP_RIGHT, "Right", "Right", NULL, NULL },
+	{ SHIFT, "Shift", "Shift", NULL, NULL },
 };
 
 static int _cb_event_generic(void *data, int ev_type, void *event);
 static Eina_Bool _xinput_init(void);
 static void _key_event_select(void);
-#ifdef HAVE_X
 static void _focus_ui_process_press(XIRawEvent *raw_event);
 static void _focus_ui_process_release(XIRawEvent *raw_event);
-#endif
 
 static struct _s_info {
 	int xi2_opcode;
@@ -99,71 +103,70 @@ static int _key_event_validation_check(int keycode)
 static void _key_event_select(void)
 {
 	int rc;
-#ifdef HAVE_X
 	XIEventMask mask;
-	Ecore_X_Display *d = NULL;
+	Ecore_X_Display *d;
 
-    d = ecore_x_display_get();
-    if (d == NULL) {
-    	ERR("failed to get ecore-display");
-    	return;
-    }
+	d = ecore_x_display_get();
+	if (d == NULL) {
+		ERR("failed to get ecore-display");
+		return;
+	}
 
 	mask.mask_len = XIMaskLen(XI_LASTEVENT);
 	mask.deviceid = XIAllDevices;
-    mask.mask = calloc(mask.mask_len, sizeof(char));
-    if (mask.mask == NULL) {
-    	ERR("failed to get ecore-display");
-    	return;
-    }
-    memset(mask.mask, 0, mask.mask_len);
+	mask.mask = calloc(mask.mask_len, sizeof(char));
+	if (mask.mask == NULL) {
+		ERR("failed to get ecore-display");
+		return;
+	}
+	memset(mask.mask, 0, mask.mask_len);
 
-    XISetMask(mask.mask, XI_RawKeyPress);
-    XISetMask(mask.mask, XI_RawKeyRelease);
+	XISetMask(mask.mask, XI_RawKeyPress);
+	XISetMask(mask.mask, XI_RawKeyRelease);
 
-    rc = XISelectEvents(d, ecore_x_window_root_first_get(), &mask, 1);
-    if (Success != rc) {
-    	ERR("Failed to select XInput extension events");
-    }
-    if (mask.mask) {
+	rc = XISelectEvents(d, ecore_x_window_root_first_get(), &mask, 1);
+	if (Success != rc) {
+		ERR("Failed to select XInput extension events");
+	}
+	if (mask.mask) {
 		free( mask.mask);
 	}
-    ecore_x_sync();
-#endif
+	ecore_x_sync();
 }
 
 static Eina_Bool _xinput_init(void)
 {
-#ifdef HAVE_X
-   int event, error;
+	int event, error;
 
-   if (!XQueryExtension(ecore_x_display_get(), "XInputExtension",
-                               &s_info.xi2_opcode, &event, &error)) {
-      s_info.xi2_opcode = -1;
+	if (!XQueryExtension(ecore_x_display_get(), "XInputExtension", &s_info.xi2_opcode, &event, &error)) {
+		s_info.xi2_opcode = -1;
 
-      SERR("failed to initialize key event receiver");
-      return EINA_FALSE;
-   }
-#endif
-   _key_event_select();
+		SERR("failed to initialize key event receiver");
+		return EINA_FALSE;
+	}
 
-   return EINA_TRUE;
+	_key_event_select();
+
+	return EINA_TRUE;
 }
 
 static int _cb_event_generic(void *data, int ev_type, void *event)
 {
-#ifdef HAVE_X
-	Ecore_X_Event_Generic *e = (Ecore_X_Event_Generic *)event;
-	XIDeviceEvent *evData = (XIDeviceEvent *)(e->data);
+	Ecore_X_Event_Generic *e;
+	XIDeviceEvent *evData;
 
-	if ( e->extension != s_info.xi2_opcode ) {
+	e = (Ecore_X_Event_Generic *)event;
+	evData = (XIDeviceEvent *)(e->data);
+
+	if (e->extension != s_info.xi2_opcode) {
 		return ECORE_CALLBACK_PASS_ON;
 	}
-	if ( !evData || evData->send_event ) {
+
+	if (!evData || evData->send_event) {
 		return ECORE_CALLBACK_PASS_ON;
 	}
 
-	switch( e->evtype ) {
+	switch (e->evtype) {
 	case XI_RawKeyPress:
 		if (evData->deviceid == 3) {
 			break;
@@ -179,17 +182,17 @@ static int _cb_event_generic(void *data, int ev_type, void *event)
 	default:
 		break;
 	}
-#endif
 
 	return ECORE_CALLBACK_PASS_ON;
 }
 
-#ifdef HAVE_X
 static void _focus_ui_process_press(XIRawEvent *raw_event)
 {
 	XEvent xev;
+	Ecore_X_Display *d;
+	struct appdata *ad;
 
-	struct appdata *ad = quickpanel_get_app_data();
+	ad = quickpanel_get_app_data();
 	retif(ad == NULL, , "invalid data.");
 	retif(raw_event == NULL, , "invalid data.");
 
@@ -201,11 +204,11 @@ static void _focus_ui_process_press(XIRawEvent *raw_event)
 		return;
 	}
 
-	Ecore_X_Display *d = ecore_x_display_get();
-    if (d == NULL) {
-    	ERR("failed to get ecore-display");
-    	return;
-    }
+	d = ecore_x_display_get();
+	if (d == NULL) {
+		ERR("failed to get ecore-display");
+		return;
+	}
 
 	memset(&xev, 0, sizeof(XEvent));
 	xev.xany.display = ecore_x_display_get();
@@ -221,16 +224,17 @@ static void _focus_ui_process_press(XIRawEvent *raw_event)
 	xev.xkey.subwindow = None;
 	xev.xkey.type = KeyPress;
 	xev.xkey.window = elm_win_xwindow_get(ad->win);
-	XSendEvent(d, elm_win_xwindow_get(ad->win)
-			, False, NoEventMask, &xev);
+	XSendEvent(d, elm_win_xwindow_get(ad->win) , False, NoEventMask, &xev);
 	DBG("keypressed:%d", raw_event->detail);
 }
 
 static void _focus_ui_process_release(XIRawEvent *raw_event)
 {
 	XEvent xev;
+	Ecore_X_Display *d;
+	struct appdata *ad;
 
-	struct appdata *ad = quickpanel_get_app_data();
+	ad = quickpanel_get_app_data();
 	retif(ad == NULL, , "invalid data.");
 	retif(raw_event == NULL, , "invalid data.");
 
@@ -238,15 +242,16 @@ static void _focus_ui_process_release(XIRawEvent *raw_event)
 		s_info.is_shift_pressed = 0;
 		return;
 	}
+
 	if (_key_event_validation_check(raw_event->detail) == 0) {
 		return;
 	}
 
-	Ecore_X_Display *d = ecore_x_display_get();
-    if (d == NULL) {
-    	ERR("failed to get ecore-display");
-    	return;
-    }
+	d = ecore_x_display_get();
+	if (d == NULL) {
+		ERR("failed to get ecore-display");
+		return;
+	}
 
 	memset(&xev, 0, sizeof(XEvent));
 	xev.xany.display = d;
@@ -262,11 +267,9 @@ static void _focus_ui_process_release(XIRawEvent *raw_event)
 	xev.xkey.subwindow = None;
 	xev.xkey.type = KeyRelease;
 	xev.xkey.window = elm_win_xwindow_get(ad->win);
-	XSendEvent(d, elm_win_xwindow_get(ad->win)
-			, False, NoEventMask, &xev);
+	XSendEvent(d, elm_win_xwindow_get(ad->win) , False, NoEventMask, &xev);
 	DBG("keyrelease:%d", raw_event->detail);
 }
-#endif
 
 static void _focus_cleanup(void *data)
 {
@@ -292,7 +295,9 @@ HAPI void quickpanel_keyboard_x_init(void *data)
 
 HAPI void quickpanel_keyboard_x_fini(void *data)
 {
-	struct appdata *ad = data;
+	struct appdata *ad;
+
+	ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
 	if (s_info.hdl_key_event != NULL) {
@@ -305,21 +310,23 @@ HAPI void quickpanel_keyboard_x_fini(void *data)
 
 HAPI void quickpanel_keyboard_x_openning_init(void *data)
 {
-	struct appdata *ad = data;
+	struct appdata *ad;
+
+	ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
 	if (s_info.hdl_key_event != NULL) {
 		ecore_event_handler_del(s_info.hdl_key_event);
 		s_info.hdl_key_event = NULL;
 	}
-#ifdef HAVE_X
 	s_info.hdl_key_event =	ecore_event_handler_add(ECORE_X_EVENT_GENERIC, (Ecore_Event_Handler_Cb)_cb_event_generic, NULL);
-#endif
 }
 
 HAPI void quickpanel_keyboard_x_closing_fini(void *data)
 {
-	struct appdata *ad = data;
+	struct appdata *ad;
+
+	ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
 	if (s_info.hdl_key_event != NULL) {

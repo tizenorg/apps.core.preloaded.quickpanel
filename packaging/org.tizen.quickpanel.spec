@@ -1,19 +1,21 @@
 %bcond_with wayland
+%define __usrdir /usr/lib/systemd/user
 
-%define PKGNAME org.tizen.quickpanel
-%define PREFIX    /usr/apps/%{PKGNAME}
-%define PREFIX_RW    /opt/usr/apps/%{PKGNAME}
-%define RESDIR    %{PREFIX}/res
-%define DATADIR    %{PREFIX}/data
+Name: org.tizen.quickpanel
+Summary: Quick access panel for the notifications and various kinds of services.
+Version: 0.8.0
+Release: 1
+Group: Applications/Core Applications
+License: Apache-2.0
+Source0: %{name}-%{version}.tar.gz
+Source102: quickpanel-system.service
+Source104: quickpanel-system.path
 
-Name:       org.tizen.quickpanel
-Summary:    Quick Panel
-Version:    0.6.23
-Release:    1
-Group:      util
-License:    Apache-2.0
-Source0:    %{name}-%{version}.tar.gz
-Source102:  quickpanel-system.service
+%if %{with wayland}
+Source103: org.tizen.quickpanel.manifest.3.0
+%else
+Source103: org.tizen.quickpanel.manifest.2.4
+%endif
 
 %if "%{?tizen_profile_name}" == "wearable" 
 ExcludeArch: %{arm} %ix86 x86_64
@@ -27,6 +29,7 @@ BuildRequires: pkgconfig(capi-appfw-application)
 BuildRequires: pkgconfig(capi-system-runtime-info)
 BuildRequires: pkgconfig(capi-system-info)
 BuildRequires: pkgconfig(capi-system-device)
+BuildRequires: pkgconfig(capi-location-manager)
 BuildRequires: pkgconfig(capi-network-wifi)
 BuildRequires: pkgconfig(capi-network-bluetooth)
 BuildRequires: pkgconfig(capi-network-tethering)
@@ -53,7 +56,6 @@ BuildRequires: pkgconfig(dlog)
 BuildRequires: pkgconfig(syspopup-caller)
 BuildRequires: pkgconfig(bundle)
 BuildRequires: pkgconfig(elementary)
-BuildRequires: pkgconfig(efl-assist)
 BuildRequires: pkgconfig(syspopup-caller)
 BuildRequires: pkgconfig(minicontrol-viewer)
 BuildRequires: pkgconfig(minicontrol-monitor)
@@ -61,27 +63,28 @@ BuildRequires: pkgconfig(pkgmgr)
 BuildRequires: pkgconfig(pkgmgr-info)
 BuildRequires: pkgconfig(iniparser)
 BuildRequires: pkgconfig(alarm-service)
-BuildRequires: gettext-tools
-BuildRequires: cmake
-BuildRequires: edje-tools
-
 %if %{with wayland}
 BuildRequires: pkgconfig(ecore-wayland)
 %else
-BuildRequires: pkgconfig(ecore-x)
-BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(inputproto)
 BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(utilX)
-BuildRequires: pkgconfig(inputproto)
+BuildRequires: pkgconfig(ecore-x)
 %endif
-
+BuildRequires: pkgconfig(voice-control-setting)
+BuildRequires: pkgconfig(tzsh-quickpanel-service)
+BuildRequires: gettext-tools
+BuildRequires: cmake
+BuildRequires: edje-tools
 Requires(post): /usr/bin/vconftool
+
 %description
 Quick Panel
 
 %prep
 %setup -q
 
+cp %SOURCE103 %{name}.manifest
 
 %build
 %if 0%{?tizen_build_binary_release_type_eng}
@@ -95,17 +98,19 @@ export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 %endif
 
+LDFLAGS+="-Wl,--rpath=%{name}/lib -Wl,--as-needed";
+export LDFLAGS
+
 %if %{with wayland}
+export WINSYS="wayland"
 export WAYLAND_SUPPORT=On
 export X11_SUPPORT=Off
 %else
 export WAYLAND_SUPPORT=Off
 export X11_SUPPORT=On
+export WINSYS="x11"
 %endif
-
-
-LDFLAGS+="-Wl,--rpath=%{PREFIX}/lib -Wl,--as-needed";export LDFLAGS
-LDFLAGS="$LDFLAGS" %cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DPREFIX_RW=%{PREFIX_RW} -DWAYLAND_SUPPORT=${WAYLAND_SUPPORT} -DX11_SUPPORT=${X11_SUPPORT} \
+%cmake . -DPKGNAME=%{name} -DWINSYS=${WINSYS}
 
 make %{?jobs:-j%jobs}
 
@@ -113,30 +118,33 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
-mkdir -p %{buildroot}%{_unitdir}/multi-user.target.wants
-install -m 0644 %SOURCE102 %{buildroot}%{_unitdir}/quickpanel.service
-ln -s ../quickpanel.service %{buildroot}%{_unitdir}/multi-user.target.wants/quickpanel.service
+mkdir -p %{buildroot}%{__usrdir}/default.target.wants
+mkdir -p %{buildroot}%{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
+install -m 0644 %SOURCE102 %{buildroot}%{__usrdir}/quickpanel.service
+ln -s ../quickpanel.service %{buildroot}%{__usrdir}/default.target.wants/quickpanel.service
 
-mkdir -p %{buildroot}/usr/share/license
-cp -f LICENSE %{buildroot}/usr/share/license/%{PKGNAME}
-
-
+install -m 0644 %SOURCE104 %{buildroot}%{__usrdir}/quickpanel.path
+ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/quickpanel.path
 %post
 
 
 %files
-%manifest %{PKGNAME}.manifest
+%manifest %{name}.manifest
 %defattr(-,root,root,-)
 %attr(755,-,-) %{_sysconfdir}/init.d/quickpanel
-%attr(775,app,app) %{DATADIR}
-%attr(775,app,app) %{PREFIX_RW}/data
-%{PREFIX_RW}/data
-%{PREFIX}/bin/*
-%{RESDIR}/*
-/usr/share/packages/%{PKGNAME}.xml
+%attr(775,app,app) /opt/%{_prefix}/apps/%{name}/
+%attr(775,app,app) /opt/%{_prefix}/apps/%{name}/data
+/opt/%{_prefix}/apps/%{name}/data
+%{_prefix}/apps/%{name}
+%{_prefix}/share/packages/%{name}.xml
 %{_sysconfdir}/init.d/quickpanel
-%{_unitdir}/quickpanel.service
-%{_unitdir}/multi-user.target.wants/quickpanel.service
-/usr/share/license/%{PKGNAME}
-/usr/apps/%{PKGNAME}/shared/res/icons/*
-/usr/apps/%{PKGNAME}/shared/res/noti_icons/*
+%{__usrdir}/quickpanel.service
+%{__usrdir}/quickpanel.path
+%{__usrdir}/default.target.wants/quickpanel.service
+%{__usrdir}/default.target.wants/quickpanel.path
+%{_prefix}/share/license/%{name}
+%if %{with wayland}
+# Do not install the SMACK Rule file for Tizen 3.x
+%else
+%{_sysconfdir}/smack/accesses.d/%{name}.efl
+%endif

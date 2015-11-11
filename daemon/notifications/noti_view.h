@@ -19,8 +19,6 @@
 #ifndef _QP_NOTI_VIEW_H_
 #define _QP_NOTI_VIEW_H_
 
-#include <notification.h>
-
-int quickpanel_noti_view_is_view_handler_changed(Evas_Object *item, notification_h noti);
+extern int quickpanel_noti_view_is_view_handler_changed(Evas_Object *item, notification_h noti);
 
 #endif

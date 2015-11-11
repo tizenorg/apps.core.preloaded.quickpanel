@@ -15,15 +15,22 @@
  *
  */
 
-
-#include <vconf.h>
-#include <utilX.h>
+#include <Elementary.h>
+#include <Ecore_X.h>
+#include <Ecore_Input.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/XInput.h>
 #include <X11/extensions/XInput2.h>
 
-#include <Ecore_Input.h>
+#include <vconf.h>
+#include <utilX.h>
 #include <feedback.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
 #include "common.h"
 #include "noti_util.h"
 #include "keyboard_x.h"

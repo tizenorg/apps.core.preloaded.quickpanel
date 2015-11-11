@@ -19,9 +19,6 @@
 #ifndef __QP_MODULES_H__
 #define __QP_MODULES_H__
 
-#include <stdlib.h>
-#include "quickpanel-ui.h"
-
 extern int quickpanel_modules_init(void *data);
 extern int quickpanel_modules_fini(void *data);
 extern int quickpanel_modules_suspend(void *data);

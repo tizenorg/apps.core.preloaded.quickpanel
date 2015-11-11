@@ -16,36 +16,46 @@
  */
 
 
+#include <Elementary.h>
+#include <glib.h>
+
+#include <vconf.h>
 #include <notification.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <system_settings.h>
+#include <E_DBus.h>
+
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
+#include "common_uic.h"
 #include "common.h"
+#include "noti_node.h"
 #include "noti.h"
-#include "noti_section.h"
 #include "list_util.h"
+#include "noti_section.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
 
- #define NOTI_CLEAR_ALL_SECTION "quickpanel/notisection/clear_all"
- #define NOTI_DEFAULT_SECTION "quickpanel/notisection/default"
+#define NOTI_CLEAR_ALL_SECTION "quickpanel/notisection/clear_all"
+#define NOTI_DEFAULT_SECTION "quickpanel/notisection/default"
 
 static void _noti_section_set_text(Evas_Object *noti_section, int count)
 {
-#ifdef QP_SCREENREADER_ENABLE
-	Evas_Object *ao = NULL;
-#endif
+	char text[128] = { 0, };
+	char *format;
+	const char *old_text;
+
+	if (!noti_section) {
+		ERR("Invalid parameter");
+		return;
+	}
 
 	DBG("count is : %d ", count);
-
-	char text[128] = {0,};
-	char *format = NULL;
-	const char *old_text = NULL;
-
-	retif(noti_section == NULL, , "invalid parameter");
-
 	format = _("IDS_QP_HEADER_NOTIFICATIONS_HPD_ABB");
-	snprintf(text, sizeof(text), format, count);
+	snprintf(text, sizeof(text) - 1, format, count);
 
 	old_text = elm_object_part_text_get(noti_section, "elm.text.notifications_number");
 	if (old_text != NULL) {
@@ -55,9 +65,9 @@ static void _noti_section_set_text(Evas_Object *noti_section, int count)
 	}
 
 #ifdef QP_SCREENREADER_ENABLE
-	ao = quickpanel_accessibility_screen_reader_object_get(noti_section,
-			SCREEN_READER_OBJ_TYPE_ELM_OBJECT, "focus.label", noti_section);
+	Evas_Object *ao;
 
+	ao = quickpanel_accessibility_screen_reader_object_get(noti_section, SCREEN_READER_OBJ_TYPE_ELM_OBJECT, "focus.label", noti_section);
 	if (ao != NULL) {
 		elm_access_info_set(ao, ELM_ACCESS_TYPE, "");
 		elm_access_info_set(ao, ELM_ACCESS_INFO, text);
@@ -65,46 +75,55 @@ static void _noti_section_set_text(Evas_Object *noti_section, int count)
 #endif
 
 	DBG("Trying to set text :%s ", text);
-
 	elm_object_part_text_set(noti_section, "elm.text.notifications_number", text);
 	elm_object_part_text_set(noti_section, "text.button.clear_all", _("IDS_QP_HEADER_CLEAR_ALL_ABB"));
 }
 
 HAPI Evas_Object *quickpanel_noti_section_create(Evas_Object *parent, qp_item_type_e type)
 {
-	Eina_Bool ret = EINA_FALSE;
-	Evas_Object *section = NULL;
+	Evas_Object *section;
+	Evas_Object *focus;
+	struct appdata *ad;
+	qp_item_data *qid;
+	Eina_Bool ret;
 
-	struct appdata *ad = quickpanel_get_app_data();
-	retif(ad == NULL, NULL, "invalid parameter");
-	retif(parent == NULL, NULL, "invalid parameter");
+	ad = quickpanel_get_app_data();
+	if (!ad || !parent) {
+		ERR("Invalid parameter");
+		return NULL;
+	}
 
 	section = elm_layout_add(parent);
-	if (type == QP_ITEM_TYPE_ONGOING_NOTI_GROUP) {
-		ret = elm_layout_file_set(section, DEFAULT_EDJ,
-				NOTI_CLEAR_ALL_SECTION);
-	} else { //in higgs there is only one type of notifications
-		ret = elm_layout_file_set(section, DEFAULT_EDJ,
-				NOTI_CLEAR_ALL_SECTION);
+	ret = elm_layout_file_set(section, DEFAULT_EDJ,	NOTI_CLEAR_ALL_SECTION);
+	if (ret == EINA_FALSE) {
+		ERR("Failed to set a file");
+		evas_object_del(section);
+		return NULL;
 	}
-	retif(ret == EINA_FALSE, NULL, "failed to load layout");
 
 	evas_object_size_hint_weight_set(section, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(section, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	quickpanel_uic_initial_resize(section, QP_THEME_LIST_ITEM_NOTI_SECTION_HEIGHT);
 	evas_object_show(section);
 
-	qp_item_data *qid
-		= quickpanel_list_util_item_new(type, NULL);
+	qid = quickpanel_list_util_item_new(type, NULL);
+	if (!qid) {
+		ERR("Unable to create a qid");
+		evas_object_del(section);
+		return NULL;
+	}
 	quickpanel_list_util_item_set_tag(section, qid);
 	quickpanel_list_util_sort_insert(ad->list, section);
 
-	Evas_Object *focus = quickpanel_accessibility_ui_get_focus_object(section);
+	focus = quickpanel_accessibility_ui_get_focus_object(section);
+	if (!focus) {
+		ERR("Unable to get the focus object");
+		quickpanel_list_util_item_del(qid);
+		evas_object_del(section);
+		return NULL;
+	}
 	elm_object_part_content_set(section, "focus", focus);
 	evas_object_smart_callback_add(focus, "clicked", quickpanel_noti_on_clear_all_clicked, NULL);
-
-	focus = quickpanel_accessibility_ui_get_focus_object(section);
-	elm_object_part_content_set(section, "focus.label", focus);
 
 	return section;
 }

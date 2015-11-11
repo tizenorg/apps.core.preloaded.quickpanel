@@ -15,13 +15,22 @@
  *
  */
 
+#include <Elementary.h>
+
 #include <vconf.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <feedback.h>
+#include <sound_manager.h>
+#include <E_DBus.h>
+
+#include "common_uic.h"
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-#include "sound_manager.h"
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_QP_BUTTON2_SOUND_ABB")
 #define BUTTON_ICON_SND_NORMAL "quick_icon_sn_vf.png"
@@ -64,20 +73,16 @@ static void _long_press_cb(void *data)
 
 static void _play_snd_job_cb(void *data)
 {
-#ifdef HAVE_X
 	if (feedback_play_type(FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SILENT_OFF) != FEEDBACK_ERROR_NONE) {
 		ERR("failed to play a sound");
 	}
-#endif
 }
 
 static void _play_vib_job_cb(void *data)
 {
-#ifdef HAVE_X
 	if (feedback_play_type(FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_VIBRATION_ON) != FEEDBACK_ERROR_NONE) {
 		ERR("failed to play a vibration");
 	}
-#endif
 }
 
 static void _view_update(Evas_Object *view, int state, int flag_extra_1, int flag_extra_2)
@@ -157,8 +162,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 			FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret = 0;
 	int sound_status = 1;
@@ -198,8 +202,7 @@ static void _mouse_clicked_cb(void *data,
 	}
 }
 
-static void _soundprofile_vconf_cb(keynode_t *node,
-		void *data)
+static void _soundprofile_vconf_cb(keynode_t *node, void *data)
 {
 	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
 }

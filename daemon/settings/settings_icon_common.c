@@ -15,20 +15,30 @@
  *
  */
 
+#include <Elementary.h>
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <sound_manager.h>
+#include <E_DBus.h>
+
+#include "media.h"
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
+#include "common_uic.h"
 #include "common.h"
 #include "modules.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
 #include "accessibility.h"
-#include "configuration.h"
+#include "pager.h"
 #include "pager_common.h"
 
 #define E_DATA_ICON_CLICKED_CB "clicked_cb"
 #define E_DATA_ICON_ORIGINAL_OBJ "original_obj"
+
+#define TAP_AND_DELAY_LONG 1.000
 
 static struct _info {
 	int down_x;
@@ -71,8 +81,7 @@ static Eina_Bool _icon_handler_longpress(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void _icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj,
-		void *event_info)
+static void _icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	int down_x = 0;
 	retif(obj == NULL, , "invalid argument");
@@ -87,8 +96,7 @@ static void _icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj,
 	}
 }
 
-static void _icon_mouse_up_cb(void *data, Evas_Object *obj,
-		const char *emission, const char *source)
+static void _icon_mouse_up_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	retif(obj == NULL, , "invalid argument");
 
@@ -99,11 +107,10 @@ static void _icon_mouse_up_cb(void *data, Evas_Object *obj,
 	}
 
 	evas_object_event_callback_del(obj, EVAS_CALLBACK_MOUSE_MOVE,
-					_icon_mouse_move_cb);
+			_icon_mouse_move_cb);
 }
 
-static void _icon_mouse_down_cb(void *data, Evas_Object *obj,
-		const char *emission, const char *source)
+static void _icon_mouse_down_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	retif(obj == NULL, , "invalid argument");
 
@@ -115,17 +122,14 @@ static void _icon_mouse_down_cb(void *data, Evas_Object *obj,
 	quickpanel_page_get_touched_pos(&(s_info.down_x), NULL);
 
 	s_info.is_longpressed = EINA_FALSE;
-	s_info.timer_longpress = ecore_timer_add(
-			quickpanel_conf_longpress_time_get(),
-			_icon_handler_longpress, obj);
+	s_info.timer_longpress = ecore_timer_add(TAP_AND_DELAY_LONG,_icon_handler_longpress, obj);
 
 	evas_object_event_callback_add(obj, EVAS_CALLBACK_MOUSE_MOVE,
 			_icon_mouse_move_cb, NULL);
 }
 
 #ifdef QP_SCREENREADER_ENABLE
-static void
-_icon_focus_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+static void _icon_focus_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *icon = NULL;
 	Edje_Signal_Cb func = NULL;
@@ -153,8 +157,7 @@ _icon_focus_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
-static void
-_icon_focus_clicked_cb_without_feedback(void *data, Evas_Object *obj, void *event_info)
+static void _icon_focus_clicked_cb_without_feedback(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *icon = NULL;
 	Edje_Signal_Cb func = NULL;
@@ -177,10 +180,8 @@ _icon_focus_clicked_cb_without_feedback(void *data, Evas_Object *obj, void *even
 		}
 	}
 }
-#endif
 
-HAPI int quickpanel_setting_icon_click_cb_add(Evas_Object *icon,
-			Edje_Signal_Cb func, void *data)
+HAPI int quickpanel_setting_icon_click_cb_add(Evas_Object *icon, Edje_Signal_Cb func, void *data)
 {
 	retif(icon == NULL, QP_FAIL, "invalid parameter");
 	retif(func == NULL, QP_FAIL, "invalid parameter");
@@ -207,8 +208,7 @@ HAPI int quickpanel_setting_icon_click_cb_add(Evas_Object *icon,
 	return 0;
 }
 
-HAPI int quickpanel_setting_icon_click_cb_without_feedback_add(Evas_Object *icon,
-			Edje_Signal_Cb func, void *data)
+HAPI int quickpanel_setting_icon_click_cb_without_feedback_add(Evas_Object *icon, Edje_Signal_Cb func, void *data)
 {
 	retif(icon == NULL, QP_FAIL, "invalid parameter");
 	retif(func == NULL, QP_FAIL, "invalid parameter");
@@ -256,4 +256,5 @@ HAPI void quickpanel_setting_icon_handler_longpress(const char *pkgname, void *d
 	quickpanel_uic_launch_app_inform_result(pkgname, ret);
 	quickpanel_uic_close_quickpanel(true, 1);
 }
+#endif
 

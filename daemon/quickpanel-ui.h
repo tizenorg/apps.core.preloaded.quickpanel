@@ -19,15 +19,6 @@
 #ifndef __QUICKPANEL_UI_H__
 #define __QUICKPANEL_UI_H__
 
-#include <Elementary.h>
-#include <E_DBus.h>
-#ifdef HAVE_X
-#include <Ecore_X.h>
-#include <X11/Xatom.h>
-#endif
-#include "media.h"
-#include "common_uic.h"
-
 #if !defined(PACKAGE)
 #  define PACKAGE	"quickpanel"
 #endif
@@ -86,6 +77,8 @@
 
 struct appdata {
 	Evas_Object *win;
+	tzsh_h tzsh;
+	tzsh_quickpanel_service_h quickpanel_service;
 
 	Evas_Object *background;
 	Evas_Object *view_root;
@@ -143,6 +136,6 @@ typedef struct _QP_Module {
 	Eina_Bool state;
 } QP_Module;
 
-void *quickpanel_get_app_data(void);
+extern void *quickpanel_get_app_data(void);
 
 #endif				/* __QUICKPANEL_UI_H__ */

@@ -15,8 +15,14 @@
  *
  */
 
-
+#include <Elementary.h>
+#include <E_DBus.h>
 #include <glib.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
 #include "common.h"
@@ -126,9 +132,9 @@ static void _handler_editing(void *data, DBusMessage *msg)
 				if (is_error == 0) {
 					if (list_active != NULL) {
 						quickpanel_setting_view_featured_reload(list_active, num_featured);
-						 quickpanel_setting_view_all_reload(list_active);
-						 quickpanel_setting_save_list_to_file(list_active, num_featured);
-						 eina_list_free(list_active);
+						quickpanel_setting_view_all_reload(list_active);
+						quickpanel_setting_save_list_to_file(list_active, num_featured);
+						eina_list_free(list_active);
 					}
 				}
 				g_strfreev(order_split);
@@ -180,7 +186,6 @@ static void _settings_ipc_fini(void *data)
 		s_info.hdl_editing = NULL;
 	}
 }
-
 
 /*****************************************************************************
  *

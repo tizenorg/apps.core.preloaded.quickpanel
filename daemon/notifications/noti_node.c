@@ -15,6 +15,14 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <notification_internal.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
@@ -30,10 +38,7 @@ HAPI void quickpanel_noti_node_create(noti_node **handle)
 	*handle = (noti_node *)malloc(sizeof(noti_node));
 
 	if (*handle != NULL) {
-		(*handle)->table = g_hash_table_new_full(g_direct_hash, g_direct_equal,
-							NULL,
-							(GDestroyNotify)_noti_node_free);
-
+		(*handle)->table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)_noti_node_free);
 		(*handle)->n_ongoing = 0;
 		(*handle)->n_noti = 0;
 	} else {
@@ -135,8 +140,7 @@ HAPI noti_node_item *quickpanel_noti_node_get(noti_node *handle, int priv_id)
 	retif(handle == NULL, NULL, "Invalid parameter!");
 	retif(handle->table == NULL, NULL, "Invalid parameter!");
 
-	return (noti_node_item *)g_hash_table_lookup
-			(handle->table, GINT_TO_POINTER(priv_id));
+	return (noti_node_item *)g_hash_table_lookup(handle->table, GINT_TO_POINTER(priv_id));
 }
 
 HAPI int quickpanel_noti_node_get_item_count(noti_node *handle, notification_type_e noti_type)

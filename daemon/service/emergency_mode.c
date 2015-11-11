@@ -15,17 +15,25 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <syspopup_caller.h>
 #include <pkgmgr-info.h>
-#include <Eina.h>
 #include <bundle_internal.h>
+#include <notification.h>
+#include <notification_internal.h>
+#include <notification_list.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "modules.h"
 #include "datetime.h"
 #include "emergency_mode.h"
-
+#include "quickpanel-ui.h"
 
 #ifdef QP_SETTING_ENABLE
 extern QP_Module settings_view_featured;
@@ -65,7 +73,7 @@ static void _delete_unpermitted_app(void)
 
 		list_traverse = notification_list_get_next(list_traverse);
 	}
-	
+
 	if (noti_list != NULL) {
 		notification_free_list(noti_list);
 		noti_list = NULL;
@@ -172,14 +180,14 @@ static int _register_permitted_apps(void)
 	if (ret != PMINFO_R_OK) {
 		return -1;
 	}
-
-#ifdef HAVE_X
+	
+#if defined(WINSYS_X11)
 	ret = pkgmgrinfo_appinfo_filter_add_int(handle, PMINFO_APPINFO_PROP_APP_SUPPORT_MODE, 1);
-#endif
 	if (ret != PMINFO_R_OK) {
 		pkgmgrinfo_appinfo_filter_destroy(handle);
 		return -1;
 	}
+#endif
 
 	ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _app_list_cb, NULL);
 	if (ret != PMINFO_R_OK) {
@@ -280,9 +288,7 @@ HAPI int quickpanel_emergency_mode_notification_filter(notification_h noti, int 
 	DBG("Emergency mode filter is called: %s", pkgname);
 	if (!quickpanel_emergency_mode_is_permitted_app(pkgname)) {
 		if (is_delete) {
-			notification_delete_by_priv_id(pkgname,
-						NOTIFICATION_TYPE_NONE,
-						priv_id);
+			notification_delete_by_priv_id(pkgname, NOTIFICATION_TYPE_NONE, priv_id);
 		}
 		return 1;
 	}

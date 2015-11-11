@@ -19,9 +19,9 @@
 #ifndef __SETTING_VIEW_FEATURED_H__
 #define __SETTING_VIEW_FEATURED_H__
 
-Eina_Bool quickpanel_settings_is_in_left_edge(void);
-void quickpanel_setting_view_featured_reload(Eina_List *list_all_module, int num_featured);
-void quickpanel_setting_view_featured_initial_focus_set(void);
-void quickpanel_setting_view_featured_brightness_init(Evas_Object *brightness_view);
+extern Eina_Bool quickpanel_settings_is_in_left_edge(void);
+extern void quickpanel_setting_view_featured_reload(Eina_List *list_all_module, int num_featured);
+extern void quickpanel_setting_view_featured_initial_focus_set(void);
+extern void quickpanel_setting_view_featured_brightness_init(Evas_Object *brightness_view);
 
 #endif /* __SETTING_VIEW_FEATURED_H__ */

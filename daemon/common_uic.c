@@ -16,17 +16,28 @@
  */
 
 
-#include <app.h>
+#include <Elementary.h>
 #include <sys/utsname.h>
-#ifdef HAVE_X
-#include <X11/Xlib.h>
-#include <utilX.h>
-#endif
 #include <Ecore_Input.h>
+
+#include <app.h>
 #include <vconf.h>
 #include <notification.h>
 #include <app_control_internal.h>
 #include <bundle_internal.h>
+#include <system_info.h>
+#include <common_uic.h>
+
+#if defined(WINSYS_X11)
+#include <Ecore_X.h>
+#include <X11/Xlib.h>
+#include <utilX.h>
+#endif
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 
@@ -46,8 +57,7 @@ static void _quickpanel_move_data_to_service(const char *key, const char *val, v
 	app_control_add_extra_data(service, key, val);
 }
 
-HAPI Evas_Object *quickpanel_uic_load_edj(Evas_Object * parent, const char *file,
-					    const char *group, int is_just_load)
+HAPI Evas_Object *quickpanel_uic_load_edj(Evas_Object * parent, const char *file, const char *group, int is_just_load)
 {
 	Eina_Bool r;
 	Evas_Object *eo = NULL;
@@ -58,13 +68,10 @@ HAPI Evas_Object *quickpanel_uic_load_edj(Evas_Object * parent, const char *file
 	retif(eo == NULL, NULL, "Failed to add layout object!");
 
 	r = elm_layout_file_set(eo, file, group);
-	retif(r != EINA_TRUE, NULL,
-		"Failed to set edje object file[%s-%s]!", file, group);
+	retif(r != EINA_TRUE, NULL, "Failed to set edje object file[%s-%s]!", file, group);
 
-	evas_object_size_hint_weight_set(eo,
-					 EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(eo,
-					 EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(eo, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(eo, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 	if (is_just_load == 1) {
 		elm_win_resize_object_add(parent, eo);
@@ -94,6 +101,7 @@ HAPI int quickpanel_uic_is_emul(void)
 {
 	int is_emul = 0;
 	char *info = NULL;
+
 	if (system_info_get_platform_string(SYSTEM_INFO_KEY_MODEL, &info) == 0) {
 		if (info == NULL) {
 			return 0;
@@ -103,7 +111,7 @@ HAPI int quickpanel_uic_is_emul(void)
 		}
 	}
 
-	if (info != NULL) free(info);
+	free(info);
 
 	return is_emul;
 }
@@ -237,17 +245,16 @@ HAPI void quickpanel_uic_launch_app_inform_result(const char *pkgname, int retco
 
 HAPI void quickpanel_uic_open_quickpanel(int reason)
 {
-#ifdef HAVE_X
-	Ecore_X_Window xwin;
-	Ecore_X_Window zone;
-#endif
 	struct appdata *ad = quickpanel_get_app_data();
 
 	DBG("reason:%d", reason);
 
 	retif(ad == NULL, , "Invalid parameter!");
 	retif(ad->win == NULL, , "Invalid parameter!");
-#ifdef HAVE_X
+
+#if defined(WINSYS_X11)
+	Ecore_X_Window xwin;
+	Ecore_X_Window zone;
 	xwin = elm_win_xwindow_get(ad->win);
 	if (xwin != 0) {
 		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
@@ -261,6 +268,8 @@ HAPI void quickpanel_uic_open_quickpanel(int reason)
 	} else {
 		ERR("failed to get xwin");
 	}
+#else
+	ERR("Not yet implemented");
 #endif
 }
 
@@ -282,17 +291,18 @@ HAPI int quickpanel_uic_opened_reason_get(void)
 
 static void _quickpanel_close(void)
 {
-#ifdef HAVE_X
-	Ecore_X_Window xwin;
-	Ecore_X_Window zone;
-#endif
 	struct appdata *ad = quickpanel_get_app_data();
 
 	DBG("");
 
-	retif(ad == NULL, , "Invalid parameter!");
-	retif(ad->win == NULL, , "Invalid parameter!");
-#ifdef HAVE_X
+	if (!ad || !ad->win) {
+		ERR("Invalid parameter");
+		return;
+	}
+
+#if defined(WINSYS_X11)
+	Ecore_X_Window xwin;
+	Ecore_X_Window zone;
 	xwin = elm_win_xwindow_get(ad->win);
 	if (xwin != 0) {
 		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
@@ -305,12 +315,14 @@ static void _quickpanel_close(void)
 	} else {
 		ERR("failed to get xwin");
 	}
+#else
+	ERR("Not yet implemented");
 #endif
 }
 
 static Eina_Bool _quickpanel_close_timer_cb(void *data)
 {
-	if( _close_timer != NULL ) {
+	if (_close_timer != NULL) {
 		_close_timer = NULL;
 	}
 	_quickpanel_close();
@@ -346,19 +358,22 @@ HAPI void quickpanel_uic_close_quickpanel(bool is_check_lock, int is_delay_neede
 
 HAPI void quickpanel_uic_toggle_openning_quickpanel(void)
 {
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
+
 	Ecore_X_Window xwin;
 	Ecore_X_Window zone;
-#endif
 	struct appdata *ad = quickpanel_get_app_data();
 
 	DBG("");
 
-	retif(ad == NULL, , "Invalid parameter!");
-	retif(ad->win == NULL, , "Invalid parameter!");
-#ifdef HAVE_X
+	if (!ad || !ad->win) {
+		ERR("Invalid parameters");
+		return;
+	}
+
 	xwin = elm_win_xwindow_get(ad->win);
 	if (xwin != 0) {
+
 		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
 			if (ecore_x_e_illume_quickpanel_state_get(zone) == ECORE_X_ILLUME_QUICKPANEL_STATE_ON) {
 				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
@@ -371,5 +386,6 @@ HAPI void quickpanel_uic_toggle_openning_quickpanel(void)
 	} else {
 		ERR("failed to get xwin");
 	}
+
 #endif
 }

@@ -15,16 +15,21 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <system_settings.h>
 #include <bundle_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_AUTO_NROTATE")
 #define BUTTON_ICON_NORMAL "quick_icon_auto_rotate.png"
@@ -98,13 +103,11 @@ static void _view_update(Evas_Object *view, int state, int flag_extra_1, int fla
 static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2)
 {
 	int ret = 0;
-	int status = false;
+	bool status = false;
 	retif(module == NULL, , "Invalid parameter!");
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO, &status);
 	msgif(ret !=  SYSTEM_SETTINGS_ERROR_NONE , "failed to notify key SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO : %d", ret);
-#endif
 
 	if (status == true) {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_ON);
@@ -115,24 +118,19 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 	quickpanel_setting_module_icon_view_update(module, quickpanel_setting_module_icon_state_get(module),FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret = 0;
 	bool status = false;
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO, &status);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO : %d", ret);
-	
+
 	ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO, !status );
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO : %d", ret);
-#endif
-
 }
 
-static void _autorotation_vconf_cb(keynode_t *node,
-		void *data)
+static void _autorotation_vconf_cb(system_settings_key_e key, void *data)
 {
 	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
 }
@@ -141,10 +139,8 @@ static int _register_module_event_handler(void *data)
 {
 	int ret = 0;
 
-#ifdef HAVE_X
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO,_autorotation_vconf_cb, data);
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO, _autorotation_vconf_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO) : %d", ret);
-#endif
 
 	return QP_OK;
 }
@@ -152,10 +148,9 @@ static int _register_module_event_handler(void *data)
 static int _unregister_module_event_handler(void *data)
 {
 	int ret = 0;
-#ifdef HAVE_X
+
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO) : %d", ret);
-#endif
 
 	return QP_OK;
 }

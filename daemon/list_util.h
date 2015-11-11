@@ -19,20 +19,16 @@
 #ifndef _QP_LIST_UTIL_DEF_
 #define _QP_LIST_UTIL_DEF_
 
-#include <Elementary.h>
-
 typedef enum {
 	QP_ITEM_TYPE_NONE = -1,
 	QP_ITEM_TYPE_SETTING = 0,
 	QP_ITEM_TYPE_BRIGHTNESS,
-	QP_ITEM_TYPE_DUAL_SIM,
+	QP_ITEM_TYPE_VOICE_CONTOL,
 	QP_ITEM_TYPE_FACTORY,
 	QP_ITEM_TYPE_MULTIWINDOW,
 	QP_ITEM_TYPE_EARJACK,
 	QP_ITEM_TYPE_MINICTRL_ONGOING,
-	QP_ITEM_TYPE_MINICTRL_TOP,
 	QP_ITEM_TYPE_MINICTRL_MIDDLE,
-	QP_ITEM_TYPE_MINICTRL_LOW,
 	QP_ITEM_TYPE_ONGOING_NOTI_GROUP,
 	QP_ITEM_TYPE_ONGOING_NOTI,
 	QP_ITEM_TYPE_NOTI_GROUP,
@@ -49,25 +45,21 @@ typedef struct _qp_item_count {
 	int minicontrol;
 } qp_item_count;
 
+extern qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data);
+extern void quickpanel_list_util_item_del(qp_item_data *qid);
+extern void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid);
+extern void quickpanel_list_util_item_del_tag(Evas_Object *item);
 
-qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data);
-void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid);
-void quickpanel_list_util_item_del_tag(Evas_Object *item);
+extern void *quickpanel_list_util_item_get_data(qp_item_data *qid);
+extern void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data);
+extern int quickpanel_list_util_item_compare(const void *data1, const void *data2);
+extern qp_item_type_e quickpanel_list_util_item_type_get(Evas_Object *item);
 
-void *quickpanel_list_util_item_get_data(qp_item_data *qid);
-void quickpanel_list_util_item_set_data(qp_item_data *qid, void *data);
-int quickpanel_list_util_item_compare(const void *data1, const void *data2);
-qp_item_type_e quickpanel_list_util_item_type_get(Evas_Object *item);
+extern void quickpanel_list_util_item_unpack_by_object(Evas_Object *list , Evas_Object *item, int is_unpack_only, int is_hide);
+extern void quickpanel_list_util_sort_insert(Evas_Object *list, Evas_Object *new_obj);
 
-void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
-		, Evas_Object *item, int is_unpack_only, int is_hide);
-
-void quickpanel_list_util_sort_insert(Evas_Object *list,
-					Evas_Object *new_obj);
-
-Elm_Transit *quickpanel_list_util_get_reorder_transit(Evas_Object *item,
-		Elm_Transit *transit, int distance);
-void quickpanel_list_util_scroll_freeze_set(Eina_Bool is_freeze);
+extern Elm_Transit *quickpanel_list_util_get_reorder_transit(Evas_Object *item, Elm_Transit *transit, int distance);
+extern void quickpanel_list_util_scroll_freeze_set(Eina_Bool is_freeze);
 
 #endif /* _QP_LIST_UTIL_DEF_ */
 

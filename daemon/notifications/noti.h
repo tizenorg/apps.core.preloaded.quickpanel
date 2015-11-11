@@ -19,27 +19,24 @@
 #ifndef __NOTI_H__
 #define __NOTI_H__
 
-#include "quickpanel-ui.h"
-#include "noti_node.h"
-#include <system_settings.h>
-
 #define NOTI_PRESS_BG 0
 #define NOTI_PRESS_BUTTON_1 1
 
 #define QP_PRELOAD_NOTI_ICON_PATH "/usr/apps/org.tizen.quickpanel/shared/res/noti_icons"
 
-int quickpanel_noti_get_count(void);
-int quickpanel_noti_get_geometry(int *limit_h, int *limit_partial_h, int *limit_partial_w);
-void quickpanel_noti_closing_trigger_set(void);
+extern int quickpanel_noti_get_count(void);
+extern int quickpanel_noti_get_geometry(int *limit_h, int *limit_partial_h, int *limit_partial_w);
+extern void quickpanel_noti_closing_trigger_set(void);
 
-noti_node_item *quickpanel_noti_node_get_by_priv_id(int priv_id);
-noti_node_item *quickpanel_noti_node_get_first_noti(void);
+extern noti_node_item *quickpanel_noti_node_get_by_priv_id(int priv_id);
+extern noti_node_item *quickpanel_noti_node_get_first_noti(void);
 
-void quickpanel_noti_set_clear_all_status();
+extern void quickpanel_noti_set_clear_all_status();
 
-void quickpanel_noti_on_clear_all_clicked(void *data, Evas_Object *obj, void *info);
-int quickpanel_noti_get_type_count(notification_type_e noti_type);
-void quickpanel_noti_init_noti_section(void);
-void quickpanel_noti_update_by_system_time_changed_cb(system_settings_key_e  *key, void *data);
+extern void quickpanel_noti_on_clear_all_clicked(void *data, Evas_Object *obj, void *info);
+extern int quickpanel_noti_get_type_count(notification_type_e noti_type);
+extern void quickpanel_noti_init_noti_section(void);
+extern void quickpanel_noti_update_by_system_time_changed_setting_cb(system_settings_key_e  key, void *data);
+extern void quickpanel_noti_update_by_system_time_changed_vconf_cb(keynode_t *key, void *data);
 
 #endif

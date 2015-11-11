@@ -15,6 +15,7 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <tethering.h>
@@ -22,11 +23,16 @@
 #include <bundle_internal.h>
 #include <net_connection.h>
 #include <syspopup_caller.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
+#include "settings_icon_common.h"
 
 #define MOBILE_AP_SYSPOPUP_NAME		"mobileap-syspopup"
 #define BUTTON_LABEL 			_("IDS_ST_BUTTON2_WI_FI_NTETHERING")
@@ -204,8 +210,7 @@ static int _tethering_enabled_set(void *data, Eina_Bool state)
 	return QP_OK;
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	int ret = 0;
 	int is_on = 0;

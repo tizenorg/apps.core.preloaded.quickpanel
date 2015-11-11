@@ -25,7 +25,7 @@
 #define QP_THEME_LIST_TITLE_FONT_SIZE			27
 
 #define QP_THEME_LIST_OPTION_FONT_COLOR			"ATO006"
-#define QP_THEME_LIST_OPTION_PRESS_FONT_COLOR			"ATO006P"
+#define QP_THEME_LIST_OPTION_PRESS_FONT_COLOR	"ATO006P"
 #define QP_THEME_LIST_OPTION_FONT_SIZE			27
 #define QP_THEME_LIST_OPTION_ICON_PRESS_COLOR "AO005"
 
@@ -35,18 +35,20 @@
 
 //Properties of "notifications (x) label in clear all notifications item"
 #define QP_CLEAR_ALL_NOTIFICATIONS_LABEL_FONT_NAME 		"Tizen:style=Regular"
-#define QP_CLEAR_ALL_NOTIFICATIONS_LABEL_FONT_COLOR 	"T023"
+//#define QP_CLEAR_ALL_NOTIFICATIONS_LABEL_FONT_COLOR 	"T023"
+#define QP_CLEAR_ALL_NOTIFICATIONS_LABEL_FONT_COLOR 	"A03O003L1"
 #define QP_CLEAR_ALL_NOTIFICATIONS_LABEL_FONT_SIZE 		27
 #define QP_CLEAR_ALL_NOTIFICATIONS_STR_X_OFFSET 17 //x offset of "notifications(x)" string
+#define QP_CLEAR_ALL_BASE_BG_COLOR			"AO021"
 
 //Properties of clear all button
 #define QP_CLEAR_ALL_CLEAR_ALL_BTN_TEXT_FONT_NAME 		"Tizen:style=Regular"
-#define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_COLOR 			"T023"
+#define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_COLOR 			"T112"
 #define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_COLOR_PRESSED		"ATO006P"
 #define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_COLOR_DIM		"ATO006D"
-#define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_SIZE 			27
-#define QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR			"W021L1"
-#define QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR_PRESSED		"AO021P"
+#define QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_SIZE 			20
+#define QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR			"A03O003L1"
+#define QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR_PRESSED		"B0517P"
 
 //Properties of separator betwen notifiactions label and clear all button
 #define QP_NOTIFICATIONS_SEP_X_OFFSET -235 //separator between "notification(x) | Clear all" button
@@ -56,6 +58,7 @@
 	images {
 		image: "icon_arrow_up.png" COMP;
 		image: "icon_arrow_down.png" COMP;
+		image: "core_icon_badge_container.#.png" COMP;
 	}
 
 	group {
@@ -81,7 +84,6 @@
 					visible: QP_THEME_BG_VISIBILITY;
 				}
 			}
-
 			QUICKPANEL_FOCUS_OBJECT("focus.label", "base", "base")
 			part {
 				name: "elm.padding.left";
@@ -398,7 +400,6 @@
 			part {
 				name: "base";
 				type: RECT;
-				repeat_events: 1;
 				scale: 1;
 				description
 				{
@@ -411,13 +412,10 @@
 						relative: 1.0 1.0;
 					}
 					align: 0.0 0.0;
-					color_class: QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR;
+					color_class: QP_CLEAR_ALL_BASE_BG_COLOR;
 					visible: 1;
 				}
 			}
-
-			QUICKPANEL_FOCUS_OBJECT("focus.label", "base", "base")
-
 			part {
 				name: "notisection.padding.left";
 				type: SPACER;
@@ -443,7 +441,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 23 0;
+					min: 17 0;
 					fixed: 1 0;
 					align: 1.0 0.0;
 					rel1 {
@@ -460,7 +458,6 @@
 			part {
 				name: "underline";
 				type: RECT;
-				repeat_events: 1;
 				scale: 1;
 				description {
 					state: "default" 0.0;
@@ -482,7 +479,6 @@
 			part {
 				name: "noti.clear.all.separator";
 				type: RECT;
-				repeat_events: 1;
 				scale: 1;
 				description {
 					state: "default";
@@ -502,7 +498,7 @@
 					}
 
 					align: 1.0 0.5;
-					visible: 1;
+					visible: 0;
 				}
 				description
 				{
@@ -518,7 +514,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 14 0;
+					min: 17 0;
 					fixed: 1 0;
 					align: 1.0 0.0;
 					rel1 {
@@ -563,24 +559,27 @@
 			}
 			part {
 				name: "rect.button.clear_all";
-				type: RECT;
+				type: IMAGE;
 				scale: 1;
-				mouse_events: 1;
 				description {
 					state: "default" 0.0;
+					min: 75 36;
+					max: 130 36;
+					fixed: 1 1;
 					rel1 {
-						to: "clear_all.padding.left";
 						relative: 0.0 0.0;
 					}
 					rel2 {
 						to_x: "notisection.padding.right";
 						to_y: "underline";
-						relative: 1.0 0.0;
+						relative: 0.0 0.0;
 					}
 
+					image {
+						normal:"core_icon_badge_container.#.png";
+					}
 					color_class: QP_CLEAR_ALL_CLEAR_ALL_BTN_BG_COLOR;
-
-					align: 0.5 0.5;
+					align: 1.0 0.5;
 					visible: 1;
 				}
 				description
@@ -597,26 +596,25 @@
 					visible: 0;
 				}
 			}
+
 			part {
 				name: "text.button.clear_all";
 				type: TEXT;
-				repeat_events: 1;
 				scale: 1;
 				description
 				{
 					state: "default" 0.0;
-					min: 98 36;
-					max: 160 36;
+					min: 75 36;
+					max: 130 36;
 					fixed: 0 1;
-					align: 1.0 0.5;
+					align: 0.5 0.0;
 					rel1 {
-						to_x: "base";
-						to_y: "notisection.padding.right";
-						relative: 0.5 0.5;
+						to: "rect.button.clear_all";
+						relative: 0.0 0.0;
 					}
 					rel2 {
 						to: "notisection.padding.right";
-						relative: 0.0 0.5;
+						relative: 0.0 1.0;
 					}
 					color_class: QP_CLEAR_ALL_CLEAR_ALL_BTN_FONT_COLOR;
 					text {
@@ -654,7 +652,7 @@
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 14 0;
+					min: 17 0;
 					fixed: 1 0;
 					align: 1.0 0.0;
 					rel1 {
@@ -669,7 +667,6 @@
 					}
 				}
 			}
-			
 			QUICKPANEL_FOCUS_OBJECT("focus", "rect.button.clear_all", "rect.button.clear_all")
 		}
 		programs

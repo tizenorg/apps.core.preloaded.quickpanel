@@ -20,10 +20,7 @@
 #ifndef __QUICKPANEL_ANIMATED_IMAGE_H__
 #define __QUICKPANEL_ANIMATED_IMAGE_H__
 
-#include "quickpanel-ui.h"
-#include "common.h"
-
-void quickpanel_animated_image_add(Evas_Object *image);
-char *quickpanel_animated_image_get_groupname(const char *path);
+extern void quickpanel_animated_image_add(Evas_Object *image);
+extern char *quickpanel_animated_image_get_groupname(const char *path);
 
 #endif

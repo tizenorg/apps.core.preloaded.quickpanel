@@ -19,9 +19,6 @@
 #ifndef __QUICKPANEL_VI_MANAGER_H__
 #define __QUICKPANEL_VI_MANAGER_H__
 
-#include "quickpanel-ui.h"
-#include "common.h"
-#include "list_util.h"
 
 typedef Eina_Bool (*vi_cb)(void *data);
 
@@ -74,30 +71,19 @@ typedef  struct _qp_vi_op_table {
 	void (*handler)(void *data);
 } qp_vi_op_table;
 
-QP_VI *quickpanel_vi_new(void);
-QP_VI *quickpanel_vi_new_with_data(	qp_vi_op_type op_type,
-										qp_item_type_e item_type,
-										void *container,
-										void *target,
-										vi_cb init_cb,
-										vi_cb job_cb,
-										vi_cb done_cb,
-										vi_cb interrupt_cb,
-										void *extra_data_1,
-										void *extra_data_2,
-										int extra_flag_1,
-										int extra_flag_2);
-void quickpanel_vi_start(QP_VI *vi);
-void quickpanel_vi_interrupt(QP_VI *vi);
-void quickpanel_vi_done(QP_VI *vi);
-void quickpanel_vim_set_state_ready(void);
-void quickpanel_vim_set_state_suspend(void);
-double quickpanel_vim_get_duration(qp_vi_op_type op_type);
-void quickpanel_vi_done_cb_for_transit(void *data, Elm_Transit *transit);
-Elm_Transit_Tween_Mode quickpanel_vim_get_tweenmode(qp_vi_op_type op_type);
+extern QP_VI *quickpanel_vi_new(void);
+extern QP_VI *quickpanel_vi_new_with_data(qp_vi_op_type op_type, qp_item_type_e item_type, void *container, void *target, vi_cb init_cb, vi_cb job_cb, vi_cb done_cb, vi_cb interrupt_cb, void *extra_data_1, void *extra_data_2, int extra_flag_1, int extra_flag_2);
+extern void quickpanel_vi_start(QP_VI *vi);
+extern void quickpanel_vi_interrupt(QP_VI *vi);
+extern void quickpanel_vi_done(QP_VI *vi);
+extern void quickpanel_vim_set_state_ready(void);
+extern void quickpanel_vim_set_state_suspend(void);
+extern double quickpanel_vim_get_duration(qp_vi_op_type op_type);
+extern void quickpanel_vi_done_cb_for_transit(void *data, Elm_Transit *transit);
+extern Elm_Transit_Tween_Mode quickpanel_vim_get_tweenmode(qp_vi_op_type op_type);
 
-void quickpanel_vi_user_event_add(QP_VI *vi);
-void quickpanel_vi_user_event_del(QP_VI *vi);
-void quickpanel_vi_object_event_freeze_set(Evas_Object *obj, Eina_Bool freeze);
+extern void quickpanel_vi_user_event_add(QP_VI *vi);
+extern void quickpanel_vi_user_event_del(QP_VI *vi);
+extern void quickpanel_vi_object_event_freeze_set(Evas_Object *obj, Eina_Bool freeze);
 
 #endif

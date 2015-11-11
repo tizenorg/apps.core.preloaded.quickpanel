@@ -15,17 +15,20 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <app.h>
 #include <device/led.h>
 #include <vconf.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-
 
 #define E_DATA_POPUP_MODULE_ITEM "mobule_item"
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_TORCH_ABB")
@@ -46,11 +49,9 @@ static void _on_vconf_assetive_light_changed(keynode_t *node, void *user_data)
 		ERR("node == NULL");
 		return;
 	}
-
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 	mode = node->value.b;
 #endif
-
 	quickpanel_setting_module_icon_state_set(user_data, mode);
 	_status_update(user_data, mode, FLAG_VALUE_VOID);
 }

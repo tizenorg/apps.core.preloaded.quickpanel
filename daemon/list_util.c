@@ -19,6 +19,11 @@
 #include <Elementary.h>
 #include <stdlib.h>
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
 #include "common.h"
 #include "list_util.h"
 #include "vi_manager.h"
@@ -60,9 +65,9 @@ static void _viewer_unfreeze(Evas_Object *viewer)
 
 HAPI qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data)
 {
-	qp_item_data *qid = NULL;
+	qp_item_data *qid;
 
-	qid = malloc(sizeof(struct _qp_item_data));
+	qid = malloc(sizeof(*qid));
 	if (!qid) {
 		ERR("fail to alloc qid");
 		return NULL;
@@ -72,6 +77,11 @@ HAPI qp_item_data *quickpanel_list_util_item_new(qp_item_type_e type, void *data
 	qid->data = data;
 
 	return qid;
+}
+
+HAPI void quickpanel_list_util_item_del(qp_item_data *qid)
+{
+	free(qid);
 }
 
 HAPI void quickpanel_list_util_item_set_tag(Evas_Object *item, qp_item_data *qid)
@@ -193,8 +203,7 @@ static int _item_compare(const void *data1, const void *data2)
 	return diff;
 }
 
-static void _list_util_layout_get_coord(Evas_Object *container, Evas_Object *first,
-	int *coord_x, int *coord_y)
+static void _list_util_layout_get_coord(Evas_Object *container, Evas_Object *first, int *coord_x, int *coord_y)
 {
 	int x = 0;
 	int y = 0;
@@ -216,7 +225,7 @@ static void _list_util_layout_get_coord(Evas_Object *container, Evas_Object *fir
 		if (obj != NULL) {
 			item_type = quickpanel_list_util_item_type_get(obj);
 			if (item_type == QP_ITEM_TYPE_ONGOING_NOTI
-				|| item_type == QP_ITEM_TYPE_NOTI) {
+					|| item_type == QP_ITEM_TYPE_NOTI) {
 				list_tmp = elm_box_children_get(obj);
 				if (list_tmp != NULL) {
 					if (eina_list_count(list_tmp) != 0 ) {
@@ -253,8 +262,7 @@ static void _list_util_layout_get_coord(Evas_Object *container, Evas_Object *fir
 	}
 }
 
-Evas_Object *_list_util_get_first(Evas_Object *list,
-					Evas_Object *new_obj)
+Evas_Object *_list_util_get_first(Evas_Object *list, Evas_Object *new_obj)
 {
 	Eina_List *l;
 	Eina_List *l_next;
@@ -300,8 +308,7 @@ HAPI qp_item_type_e quickpanel_list_util_item_type_get(Evas_Object *item)
 	return QP_ITEM_TYPE_NONE;
 }
 
-HAPI void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
-		, Evas_Object *item, int is_unpack_only, int is_hide)
+HAPI void quickpanel_list_util_item_unpack_by_object(Evas_Object *list , Evas_Object *item, int is_unpack_only, int is_hide)
 {
 	QP_VI *vi = NULL;
 	qp_item_data *qid = NULL;
@@ -325,8 +332,7 @@ HAPI void quickpanel_list_util_item_unpack_by_object(Evas_Object *list
 	quickpanel_vi_start(vi);
 }
 
-HAPI void quickpanel_list_util_sort_insert(Evas_Object *list,
-					Evas_Object *new_obj)
+HAPI void quickpanel_list_util_sort_insert(Evas_Object *list, Evas_Object *new_obj)
 {
 
 	QP_VI *vi = NULL;

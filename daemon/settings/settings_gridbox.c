@@ -15,6 +15,11 @@
  *
  */
 
+#include <Elementary.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
@@ -147,10 +152,10 @@ static void _item_pos_get(int order, int *x, int *y, void *data)
 	int column = (order - 1) - (row * n_per_row);
 
 	int row_x = info_layout->padding_left
-			+ ((info_layout->child_w + info_layout->padding_between_h) * column);
+		+ ((info_layout->child_w + info_layout->padding_between_h) * column);
 
 	int row_y = info_layout->padding_top
-			+ ((info_layout->child_h + info_layout->padding_between_v) * row);
+		+ ((info_layout->child_h + info_layout->padding_between_v) * row);
 
 	if (x != NULL) {
 		*x = row_x;
@@ -223,7 +228,7 @@ static void _layout_cb(Evas_Object *o, Evas_Object_Box_Data *priv, void *data)
 					info_layout->child_w, info_layout->child_h);
 			order_children++;
 			list_pos_info =
-					_position_info_add(list_pos_info, 1, order_obj, off_x, off_y, info_layout->child_w, info_layout->child_h);
+				_position_info_add(list_pos_info, 1, order_obj, off_x, off_y, info_layout->child_w, info_layout->child_h);
 			if (btn_previous != NULL && opt->obj != NULL) {
 				elm_object_focus_next_object_set(opt->obj, btn_previous, ELM_FOCUS_LEFT);
 				elm_object_focus_next_object_set(btn_previous, opt->obj, ELM_FOCUS_RIGHT);
@@ -240,8 +245,8 @@ static void _layout_cb(Evas_Object *o, Evas_Object_Box_Data *priv, void *data)
 			}
 			order_divider++;
 			list_pos_info =
-					_position_info_add(list_pos_info, 0, order_obj, off_x + info_layout->child_w, off_y,
-							info_layout->padding_between_h, info_layout->child_h);
+				_position_info_add(list_pos_info, 0, order_obj, off_x + info_layout->child_w, off_y,
+						info_layout->padding_between_h, info_layout->child_h);
 		}
 		order_obj++;
 	}

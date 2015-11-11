@@ -30,7 +30,6 @@
 				description {
 					state: "default" 0.0;
 					min: 480 QP_THEME_LIST_ITEM_MINICONTRL_HEIGHT + QP_THEME_LIST_ITEM_SEPERATOR_HEIGHT;
-					max: 800 QP_THEME_LIST_ITEM_MINICONTRL_HEIGHT + QP_THEME_LIST_ITEM_SEPERATOR_HEIGHT;
 					fixed: 0 1;
 					rel1 {
 						relative: 0.0 0.0;
@@ -145,7 +144,8 @@
 				}
 			}
 			QUICKPANEL_FOCUS_OBJECT("focus", "elm.content.bg", "elm.content.bg")
-			part { name: "elm.padding.left";
+			part {
+				name: "elm.padding.left";
 				type: SPACER;
 				scale: 1;
 				description {
@@ -182,8 +182,7 @@
 				description {
 					state: "default" 0.0;
 					align: 0.0 0.0;
-					min: 480 135;
-					max: 800 135;
+					min: 480 140;
 					rel1 {
 						to: "elm.content.bg";
 					}

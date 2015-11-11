@@ -20,7 +20,6 @@
 #ifndef _QP_SERVICE_ANIMATED_ICON_DEF_
 #define _QP_SERVICE_ANIMATED_ICON_DEF_
 
-#include "quickpanel-ui.h"
 
 typedef enum _qp_animated_icon_type {
 	QP_ANIMATED_ICON_NONE = -1,
@@ -29,7 +28,7 @@ typedef enum _qp_animated_icon_type {
 	QP_ANIMATED_ICON_INSTALL,
 } qp_animated_icon_type;
 
-Evas_Object *quickpanel_animated_icon_get(Evas_Object *parent, const char *path);
-int quickpanel_animated_icon_is_same_icon(Evas_Object *view, const char *path);
+extern Evas_Object *quickpanel_animated_icon_get(Evas_Object *parent, const char *path);
+extern int quickpanel_animated_icon_is_same_icon(Evas_Object *view, const char *path);
 
 #endif

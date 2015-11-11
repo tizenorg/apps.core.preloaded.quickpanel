@@ -16,7 +16,13 @@
  */
 
 
+#include <Elementary.h>
 #include <glib.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 
@@ -40,9 +46,9 @@ HAPI void quickpanel_dbus_activenoti_visibility_send(int is_visible)
 		member = QP_DBUS_ACTIVENOTI_MEMBER_HIDE;
 	}
 	signal =
-	    dbus_message_new_signal(QP_DBUS_ACTIVENOTI_PATH
-	    		, QP_DBUS_ACTIVENOTI_NAME
-	    		, member);
+		dbus_message_new_signal(QP_DBUS_ACTIVENOTI_PATH
+				, QP_DBUS_ACTIVENOTI_NAME
+				, member);
 	if (signal == NULL) {
 		ERR("Fail to dbus_message_new_signal");
 		return;

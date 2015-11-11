@@ -15,15 +15,21 @@
  *
  */
 
+#include <Elementary.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 
 #include "common.h"
+#include "quickpanel-ui.h"
 #include "modules.h"
 
 /*******************************************************************
-  *
-  * MODULES
-  *
-  *****************************************************************/
+ *
+ * MODULES
+ *
+ *****************************************************************/
 
 #ifdef QP_SETTING_ENABLE
 /* setting */
@@ -54,6 +60,11 @@ extern QP_Module activenoti;
 extern QP_Module qp_datetime_controller;
 extern QP_Module qp_datetime_view;
 
+/* voice control */
+#ifdef QP_VOICE_CONTROL_ENABLE
+extern QP_Module voice_control;
+#endif
+
 /* do not change the order of modules, result may be changed up to order */
 static QP_Module *modules[] = {
 	&vi_manager,
@@ -75,6 +86,9 @@ static QP_Module *modules[] = {
 	&activenoti,
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 	&animated_image,
+#endif
+#ifdef QP_VOICE_CONTROL_ENABLE
+	&voice_control,
 #endif
 };
 
@@ -173,10 +187,10 @@ HAPI int quickpanel_modules_hib_leave(void *data)
 }
 
 /******************************************************************
-  *
-  * LANGUAGE
-  *
-  ****************************************************************/
+ *
+ * LANGUAGE
+ *
+ ****************************************************************/
 
 HAPI void quickpanel_modules_lang_change(void *data)
 {
@@ -203,10 +217,10 @@ HAPI void quickpanel_modules_refresh(void *data)
 }
 
 /******************************************************************
-  *
-  * Quickpanel open/close Events
-  *
-  ****************************************************************/
+ *
+ * Quickpanel open/close Events
+ *
+ ****************************************************************/
 HAPI int quickpanel_modules_opened(void *data)
 {
 	int i;

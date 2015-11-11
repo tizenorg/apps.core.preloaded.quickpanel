@@ -19,11 +19,10 @@
 #ifndef _QP_SERVICE_KEYBOARD_DEF_
 #define _QP_SERVICE_KEYBOARD_DEF_
 
-#include "quickpanel-ui.h"
 
-void quickpanel_keyboard_init(void *data);
-void quickpanel_keyboard_fini(void *data);
-void quickpanel_keyboard_openning_init(void *data);
-void quickpanel_keyboard_closing_fini(void *data);
+extern void quickpanel_keyboard_init(void *data);
+extern void quickpanel_keyboard_fini(void *data);
+extern void quickpanel_keyboard_openning_init(void *data);
+extern void quickpanel_keyboard_closing_fini(void *data);
 
 #endif

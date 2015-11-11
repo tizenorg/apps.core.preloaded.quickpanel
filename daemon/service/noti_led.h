@@ -19,11 +19,8 @@
 #ifndef _QP_NOTI_LED_DEF_
 #define _QP_NOTI_LED_DEF_
 
-#include <notification.h>
-#include "quickpanel-ui.h"
-
-void quickpanel_noti_led_init(void *data, void *noti_node);
-void quickpanel_noti_led_fini(void *data);
-void quickpanel_noti_led_proc(notification_h noti, int op_type);
+extern void quickpanel_noti_led_init(void *data, void *noti_node);
+extern void quickpanel_noti_led_fini(void *data);
+extern void quickpanel_noti_led_proc(notification_h noti, int op_type);
 
 #endif

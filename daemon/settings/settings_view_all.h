@@ -19,6 +19,7 @@
 #ifndef __SETTING_VIEW_ALL_H__
 #define __SETTING_VIEW_ALL_H__
 
-void qp_setting_view_all_reload(Eina_List *list_all_module);
+extern void qp_setting_view_all_reload(Eina_List *list_all_module);
+extern void quickpanel_setting_view_all_reload(Eina_List *list_all_module);
 
 #endif /* __SETTING_VIEW_ALL_H__ */

@@ -15,6 +15,7 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <syspopup_caller.h>
@@ -24,12 +25,16 @@
 #include <TapiUtility.h>
 #include <system_settings.h>
 #include <bundle_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_FLIGHT_NMODE")
 #define BUTTON_ICON_NORMAL "quick_icon_flightmode.png"
@@ -114,15 +119,13 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 {
 	LOGD("");
 	int ret = 0;
-	int status = 0;
+	bool status = false;
 	retif(module == NULL, , "Invalid parameter!");
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, &status);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "fail to get VCONFKEY_TELEPHONY_FLIGHT_MODE:%d", ret);
-#endif
 
-	if (status == 1) {
+	if (status == true) {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_ON);
 	} else {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_OFF);
@@ -131,9 +134,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 	quickpanel_setting_module_progress_mode_set(module, FLAG_DISABLE, FLAG_TURN_OFF);
 	quickpanel_setting_module_icon_timer_del(module);
 
-	quickpanel_setting_module_icon_view_update(module,
-			quickpanel_setting_module_icon_state_get(module),
-			FLAG_VALUE_VOID);
+	quickpanel_setting_module_icon_view_update(module, quickpanel_setting_module_icon_state_get(module), FLAG_VALUE_VOID);
 }
 
 static void _tapi_flight_mode_cb(TapiHandle *handle, int result, void *data, void *user_data)
@@ -156,14 +157,14 @@ static int _tapi_flight_mode_set(int on, void *data)
 
 	if (on == 1) {
 		ret_t = tel_set_flight_mode(tapi_handle,
-						TAPI_POWER_FLIGHT_MODE_ENTER, _tapi_flight_mode_cb, data);
+				TAPI_POWER_FLIGHT_MODE_ENTER, _tapi_flight_mode_cb, data);
 		if (ret_t != TAPI_API_SUCCESS) {
 			ret = QP_FAIL;
 			ERR("tel_set_flight_mode enter error:%d", ret_t);
 		}
 	} else {
 		ret_t = tel_set_flight_mode(tapi_handle,
-						TAPI_POWER_FLIGHT_MODE_LEAVE, _tapi_flight_mode_cb, data);
+				TAPI_POWER_FLIGHT_MODE_LEAVE, _tapi_flight_mode_cb, data);
 		if (ret_t != TAPI_API_SUCCESS) {
 			ret = QP_FAIL;
 			ERR("tel_set_flight_mode leave error:%d", ret_t);
@@ -197,8 +198,7 @@ static void _turn_on(int is_on)
 	timer = ecore_timer_add(1.0, _unlock_fly_icon, NULL);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	QP_Module_Setting *module = (QP_Module_Setting *)data;
 	LOGD("");
@@ -223,7 +223,7 @@ static void _mouse_clicked_cb(void *data,
 	}
 }
 
-static void _tapi_flight_mode_vconf_cb(keynode_t *node, void *data)
+static void _tapi_flight_mode_vconf_cb(system_settings_key_e key, void *data)
 {
 	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
 }
@@ -232,10 +232,8 @@ static int _register_module_event_handler(void *data)
 {
 	int ret = 0;
 
-#ifdef HAVE_X
 	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, _tapi_flight_mode_vconf_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE) : %d", ret);
-#endif
 
 	return QP_OK;
 }
@@ -244,10 +242,8 @@ static int _unregister_module_event_handler(void *data)
 {
 	int ret = 0;
 
-#ifdef HAVE_X
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE) : %d", ret);
-#endif
 
 	return QP_OK;
 }

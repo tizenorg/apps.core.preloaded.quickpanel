@@ -15,9 +15,18 @@
  *
  */
 
+#include <Elementary.h>
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
+#include "common_uic.h"
+#include "common.h"
 #include "pager.h"
 #include "pager_common.h"
+#include "list_util.h"
 #include "vi_manager.h"
 #include "settings_gridbox.h"
 #include "quickpanel_def.h"

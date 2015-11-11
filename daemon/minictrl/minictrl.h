@@ -19,6 +19,6 @@
 #ifndef _QP_MINICONTROL_DEF_
 #define _QP_MINICONTROL_DEF_
 
-void quickpanel_minictrl_rotation_report(int angle);
+extern void quickpanel_minictrl_rotation_report(int angle);
 
 #endif

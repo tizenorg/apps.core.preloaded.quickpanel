@@ -25,19 +25,18 @@ typedef enum {
 	OPENED_BY_CMD_SHOW_SETTINGS = 2,
 } qp_open_reason;
 
-Evas_Object *quickpanel_uic_load_edj(Evas_Object * parent, const char *file,
-					    const char *group, int is_just_load);
-int quickpanel_uic_launch_app(char *app_id, void *data);
-int quickpanel_uic_launch_ug_by_appcontrol(const char *package, void *data);
-int quickpanel_uic_is_emul(void);
-int quickpanel_uic_is_suspended(void);
-int quickpanel_uic_is_opened(void);
-void quickpanel_uic_launch_app_inform_result(const char *pkgname, int retcode);
-void quickpanel_uic_initial_resize(Evas_Object *obj, int height);
-void quickpanel_uic_close_quickpanel(bool is_check_lock, int is_delay_needed);
-void quickpanel_uic_open_quickpanel(int reason);
-void quickpanel_uic_toggle_openning_quickpanel(void);
-void quickpanel_uic_opened_reason_set(int reason);
-int quickpanel_uic_opened_reason_get(void);
+extern Evas_Object *quickpanel_uic_load_edj(Evas_Object * parent, const char *file, const char *group, int is_just_load);
+extern int quickpanel_uic_launch_app(char *app_id, void *data);
+extern int quickpanel_uic_launch_ug_by_appcontrol(const char *package, void *data);
+extern int quickpanel_uic_is_emul(void);
+extern int quickpanel_uic_is_suspended(void);
+extern int quickpanel_uic_is_opened(void);
+extern void quickpanel_uic_launch_app_inform_result(const char *pkgname, int retcode);
+extern void quickpanel_uic_initial_resize(Evas_Object *obj, int height);
+extern void quickpanel_uic_close_quickpanel(bool is_check_lock, int is_delay_needed);
+extern void quickpanel_uic_open_quickpanel(int reason);
+extern void quickpanel_uic_toggle_openning_quickpanel(void);
+extern void quickpanel_uic_opened_reason_set(int reason);
+extern int quickpanel_uic_opened_reason_get(void);
 
 #endif				/* __QP_COMMON_UIC_H_ */

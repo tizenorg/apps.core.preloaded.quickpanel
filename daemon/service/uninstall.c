@@ -15,12 +15,16 @@
  *
  */
 
+#include <Elementary.h>
+#include <Eina.h>
 
 #include <vconf.h>
 #include <pkgmgr-info.h>
 #include <package-manager.h>
 #include <notification.h>
+#include <notification_internal.h>
 #include <badge.h>
+
 #include "common.h"
 #include "uninstall.h"
 
@@ -75,42 +79,41 @@ static int _is_item_exist(const char *pkgid, int remove_if_exist)
 	return ret;
 }
 
-static int _pkgmgr_event_cb(int req_id, const char *pkg_type, const char *pkgid,
- const char *key, const char *val, const void *pmsg, void *priv_data)
+static int _pkgmgr_event_cb(int req_id, const char *pkg_type, const char *pkgid, const char *key, const char *val, const void *pmsg, void *priv_data)
 {
- 	if (pkgid == NULL) {
+	if (pkgid == NULL) {
 		return 0;
 	}
 
- 	SDBG("pkg:%s key:%s val:%s", pkgid, key, val);
+	SDBG("pkg:%s key:%s val:%s", pkgid, key, val);
 
- 	if (key != NULL && val != NULL) {
- 		if (strcasecmp(key, QP_PKGMGR_STR_START) == 0 &&
- 			strcasecmp(val, QP_PKGMGR_STR_UNINSTALL) == 0) {
+	if (key != NULL && val != NULL) {
+		if (strcasecmp(key, QP_PKGMGR_STR_START) == 0 &&
+				strcasecmp(val, QP_PKGMGR_STR_UNINSTALL) == 0) {
 
- 			ERR("Pkg:%s is being uninstalled", pkgid);
+			ERR("Pkg:%s is being uninstalled", pkgid);
 
- 			Pkg_Event *event = calloc(1, sizeof(Pkg_Event));
- 			if (event != NULL) {
- 				event->pkgname = strdup(pkgid);
- 				s_info.event_list = eina_list_append(s_info.event_list, event);
- 			} else {
- 				ERR("failed to create event item");
- 			}
+			Pkg_Event *event = calloc(1, sizeof(Pkg_Event));
+			if (event != NULL) {
+				event->pkgname = strdup(pkgid);
+				s_info.event_list = eina_list_append(s_info.event_list, event);
+			} else {
+				ERR("failed to create event item");
+			}
 
- 			return 0;
- 		} else if (strcasecmp(key, QP_PKGMGR_STR_END) == 0 &&
- 			strcasecmp(val, QP_PKGMGR_STR_OK) == 0) {
-		 	if (_is_item_exist(pkgid, 1) == 1) {
-		 		ERR("Pkg:%s is uninstalled, delete related resource", pkgid);
+			return 0;
+		} else if (strcasecmp(key, QP_PKGMGR_STR_END) == 0 &&
+				strcasecmp(val, QP_PKGMGR_STR_OK) == 0) {
+			if (_is_item_exist(pkgid, 1) == 1) {
+				ERR("Pkg:%s is uninstalled, delete related resource", pkgid);
 				notification_delete_all_by_type(pkgid, NOTIFICATION_TYPE_NOTI);
 				notification_delete_all_by_type(pkgid, NOTIFICATION_TYPE_ONGOING);
 				badge_remove(pkgid);
-		 	}
- 		}
- 	}
+			}
+		}
+	}
 
- 	return 0;
+	return 0;
 }
 
 HAPI void quickpanel_uninstall_init(void *data)
@@ -119,7 +122,7 @@ HAPI void quickpanel_uninstall_init(void *data)
 
 	pkgmgr_client *client = pkgmgr_client_new(PC_LISTENING);
 	if (client != NULL) {
-		if ((ret = pkgmgr_client_listen_status(client, _pkgmgr_event_cb, data)) != PKGMGR_R_OK) {
+		if ((ret = pkgmgr_client_listen_status(client, (void*)_pkgmgr_event_cb, data)) != PKGMGR_R_OK) {
 			ERR("Failed to listen pkgmgr event:%d", ret);
 		}
 		s_info.client = client;

@@ -18,24 +18,38 @@
 
 #include <stdio.h>
 #include <signal.h>
-#include <app.h>
 #include <sys/utsname.h>
-#ifdef HAVE_X
-#include <X11/Xlib.h>
-#include <utilX.h>
-#endif
+#include <Elementary.h>
 #include <Ecore_Input.h>
-#include <vconf.h>
 #include <unistd.h>
 #include <malloc.h>
+
+#include <app.h>
+#include <vconf.h>
+#include <E_DBus.h>
+#include <tapi_common.h>
+#include <ITapiSim.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <sound_manager.h>
+#include <media.h>
+#include <system_settings.h>
+
+#if defined(WINSYS_X11)
+#include <X11/Xlib.h>
+#include <utilX.h>
+#include <Ecore_X.h>
+#endif
 #include <privilege-control.h>
 
 /* quickpanel basics */
 #include "common.h"
+#include "common_uic.h"
 #include "quickpanel-ui.h"
 #include "modules.h"
 #include "quickpanel_def.h"
 #include "list_util.h"
+#include "noti_node.h"
 #include "vi_manager.h"
 #include "pager.h"
 #include "page_base.h"
@@ -47,7 +61,7 @@
 
 #include "sim_controller.h"
 #include "noti.h"
- 
+
 /* services */
 #include "keyboard.h"
 #include "keyboard_x.h"
@@ -58,19 +72,14 @@
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "configuration.h"
 #include "minictrl.h"
 #include "util-time.h"
-
-#include <tapi_common.h>
-#include <ITapiSim.h>
-
 
 #define QP_WINDOW_PRIO 300
 
 static struct appdata *g_app_data = NULL;
 
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 static Ecore_X_Atom E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
 #endif
 
@@ -85,10 +94,10 @@ HAPI void *quickpanel_get_app_data(void)
 }
 
 /******************************************************************************
-  *
-  * UI
-  *
-  ****************************************************************************/
+ *
+ * UI
+ *
+ ****************************************************************************/
 static void _ui_efl_cache_flush(void *evas)
 {
 	int file_cache;
@@ -97,7 +106,6 @@ static void _ui_efl_cache_flush(void *evas)
 	int font_cache;
 
 	retif(evas == NULL, , "Evas is NULL\n");
-
 	file_cache = edje_file_cache_get();
 	collection_cache = edje_collection_cache_get();
 	image_cache = evas_image_cache_get(evas);
@@ -127,7 +135,7 @@ static void _ui_efl_cache_flush(void *evas)
 static void _ui_handler_input_region_set(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 	Ecore_X_Window xwin;
 	Ecore_X_Atom atom_window_input_region = 0;
 #endif
@@ -135,8 +143,8 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 
 	retif(data == NULL,  , "Invialid parameter!");
 	ad = data;
-
-#ifdef HAVE_X
+	
+#if defined(WINSYS_X11)
 	xwin = elm_win_xwindow_get(ad->win);
 #endif
 
@@ -171,10 +179,12 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 			,window_input_region[0]
 			,window_input_region[1]
 			,window_input_region[2]
-		    ,window_input_region[3]
-			);
-#ifdef HAVE_X
+			,window_input_region[3]
+		);
+
+#if 0//defined(WINSYS_X11)
 	atom_window_input_region = ecore_x_atom_get(STR_ATOM_WINDOW_INPUT_REGION);
+
 	ecore_x_window_prop_card32_set(xwin, atom_window_input_region, window_input_region, 4);
 #endif
 }
@@ -182,7 +192,8 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 static void _ui_handler_content_region_set(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
-#ifdef HAVE_X
+
+#if defined(WINSYS_X11)
 	Ecore_X_Window xwin;
 	Ecore_X_Atom atom_window_contents_region = 0;
 #endif
@@ -191,7 +202,7 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 	retif(data == NULL,  , "Invialid parameter!");
 	ad = data;
 
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 	xwin = elm_win_xwindow_get(ad->win);
 #endif
 
@@ -226,11 +237,12 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 			,window_contents_region[0]
 			,window_contents_region[1]
 			,window_contents_region[2]
-		    ,window_contents_region[3]
-			);
-#ifdef HAVE_X
-    atom_window_contents_region = ecore_x_atom_get(STR_ATOM_WINDOW_CONTENTS_REGION);
-    ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
+			,window_contents_region[3]
+	   );
+
+#if 0//defined(WINSYS_X11)
+	atom_window_contents_region = ecore_x_atom_get(STR_ATOM_WINDOW_CONTENTS_REGION);
+	ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
 #endif
 }
 
@@ -271,10 +283,10 @@ static void _ui_geometry_info_set(void *data)
 }
 
 /*****************************************************************************
-  *
-  * ui rotation functions
-  *
-  ****************************************************************************/
+ *
+ * ui rotation functions
+ *
+ ****************************************************************************/
 static void _ui_rotation_wm_cb(void *data, Evas_Object *obj, void *event)
 {
 	int angle = 0;
@@ -349,16 +361,62 @@ static void _ui_rotate(void *data, int new_angle)
 		}
 	}
 }
+#if 1
+static int _tzsh_set(Evas_Object *win)
+{
+	tzsh_h tzsh = NULL;
+	tzsh_quickpanel_service_h quickpanel_service = NULL;
+	tzsh_window tz_win;
+
+	retif(!win, QP_FAIL, "Invialid parameter!");
+
+	tzsh = tzsh_create(TZSH_TOOLKIT_TYPE_EFL);
+	retif(!tzsh, QP_FAIL, "tzsh_create ERROR!");
+
+	struct appdata *ad = quickpanel_get_app_data();
+
+	ad->tzsh = tzsh;
+
+	tz_win = elm_win_window_id_get(win);
+	if (!tz_win) {
+		tzsh_destroy(tzsh);
+		return QP_FAIL;
+	}
+
+	quickpanel_service = tzsh_quickpanel_service_create(tzsh, tz_win);
+	if (!quickpanel_service) {
+		tzsh_destroy(tzsh);
+		return QP_FAIL;
+	}
+	ad->quickpanel_service = quickpanel_service;
+
+	return QP_OK;
+}
+
+static void _tzsh_unset(void)
+{
+	struct appdata *ad = quickpanel_get_app_data();
+
+	if (ad->quickpanel_service) {
+		tzsh_quickpanel_service_destroy(ad->quickpanel_service);
+		ad->quickpanel_service = NULL;
+	}
+
+	if (ad->tzsh) {
+		tzsh_destroy(ad->tzsh);
+		ad->tzsh = NULL;
+	}
+}
+#endif
 
 /*****************************************************************************
-  *
-  * ui creation/deletion functions
-  *
-  ****************************************************************************/
+ *
+ * ui creation/deletion functions
+ *
+ ****************************************************************************/
 static Evas_Object *_ui_window_add(const char *name, int prio)
 {
 	Evas_Object *eo = NULL;
-	Ecore_X_Window xwin;
 
 	eo = elm_win_add(NULL, name, ELM_WIN_BASIC);
 
@@ -379,15 +437,10 @@ static Evas_Object *_ui_window_add(const char *name, int prio)
 			elm_win_wm_rotation_available_rotations_set(eo, rots, 4);
 		}
 
-		/* icccm name class set */
-#ifdef HAVE_X
-		xwin = elm_win_xwindow_get(eo);
-		ecore_x_icccm_name_class_set(xwin, "QUICKPANEL", "QUICKPANEL");
+		if( QP_OK != _tzsh_set(eo)) {
+			ERR("Failed to set tzsh");
+		}
 
-		unsigned int val = 1;
-		ecore_x_window_prop_card32_set
-			(xwin, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL, &val, 1);
-#endif
 		evas_object_show(eo);
 	}
 
@@ -404,18 +457,18 @@ static int _ui_gui_create(void *data)
 	retif(data == NULL, QP_FAIL, "Invialid parameter!");
 
 	ad->win = _ui_window_add("Quickpanel Window",
-					QP_WINDOW_PRIO);
+			QP_WINDOW_PRIO);
 	retif(ad->win == NULL, QP_FAIL, "Failed to create main window");
 	//build error
 	//elm_win_focus_allow_set(ad->win, EINA_TRUE);
 
 	evas_object_smart_callback_add(ad->win, "wm,rotation,changed",
-					_ui_rotation_wm_cb, ad);
+			_ui_rotation_wm_cb, ad);
 
 	ad->background = elm_bg_add(ad->win);
 	if (ad->background  != NULL) {
 		evas_object_size_hint_weight_set(ad->background,
-						 EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+				EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 		elm_win_resize_object_add(ad->win, ad->background);
 		evas_object_show(ad->background);
 	} else {
@@ -423,7 +476,7 @@ static int _ui_gui_create(void *data)
 	}
 
 	ad->view_root = quickpanel_uic_load_edj(ad->background,
-				DEFAULT_EDJ, "quickpanel/root", 0);
+			DEFAULT_EDJ, "quickpanel/root", 0);
 	retif(ad->view_root == NULL, QP_FAIL, "Failed to create main page");
 
 	Evas_Object *pager_scroller = quickpanel_pager_new(ad->view_root, NULL);
@@ -486,6 +539,8 @@ static int _ui_gui_destroy(void *data)
 		ad->win = NULL;
 	}
 
+	_tzsh_unset();
+
 	return QP_OK;
 }
 
@@ -495,15 +550,16 @@ static void _ui_setting_visibility_set(struct appdata *ad, int show)
 	retif(ad->ly == NULL, , "data is NULL");
 
 	elm_object_signal_emit(ad->ly, "quickpanel.setting.show",
-					"quickpanel.prog");
+			"quickpanel.prog");
 }
 
 /*****************************************************************************
-  *
-  * event handler initialization functions
-  *
-  ****************************************************************************/
-static void _vconf_event_powerff_cb(keynode_t *node, void *data)
+ *
+ * event handler initialization functions
+ *
+ ****************************************************************************/
+static void _vconf_event_powerff_cb(keynode_t *node,
+		void *data)
 {
 	int val;
 	if (vconf_get_int(VCONFKEY_SYSMAN_POWER_OFF_STATUS, &val) == 0 &&
@@ -512,7 +568,8 @@ static void _vconf_event_powerff_cb(keynode_t *node, void *data)
 	}
 }
 
-static void _vconf_event_lcdoff_cb(keynode_t *node, void *data)
+static void _vconf_event_lcdoff_cb(keynode_t *node,
+		void *data)
 {
 	int ret = 0;
 	int pm_state = VCONFKEY_PM_STATE_NORMAL;
@@ -524,14 +581,16 @@ static void _vconf_event_lcdoff_cb(keynode_t *node, void *data)
 	}
 }
 
-static Eina_Bool _ecore_event_client_message_cb(void *data, int type, void *event)
+#if defined(WINSYS_X11)
+static Eina_Bool _ecore_event_client_message_cb(void *data, int type,
+		void *event)
 {
 	struct appdata *ad = data;
-#ifdef HAVE_X
+
 	Ecore_X_Event_Client_Message *ev = event;
 
 	retif(data == NULL || event == NULL,
-		ECORE_CALLBACK_RENEW, "Invalid parameter!");
+			ECORE_CALLBACK_RENEW, "Invalid parameter!");
 
 	if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) {
 		if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) {
@@ -568,9 +627,9 @@ static Eina_Bool _ecore_event_client_message_cb(void *data, int type, void *even
 			_ui_handler_enable_set(EINA_FALSE);
 		}
 	}
-#endif
 	return ECORE_CALLBACK_RENEW;
 }
+#endif
 
 static void _vconf_init(struct appdata *ad)
 {
@@ -626,18 +685,19 @@ static void _edbus_fini(struct appdata *ad)
 
 static void _ecore_event_init(struct appdata *ad)
 {
+#if defined(WINSYS_X11)
+
 	Ecore_Event_Handler *hdl = NULL;
 
 	/* Register window rotate event */
-#ifdef HAVE_X
 	hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,
 			_ecore_event_client_message_cb, ad);
-#endif
 	if (hdl == NULL) {
 		ERR("failed to add handler(ECORE_X_EVENT_CLIENT_MESSAGE)");
 	}
 
 	ad->hdl_client_message = hdl;
+#endif
 }
 
 static void _ecore_event_fini(struct appdata *ad)
@@ -650,15 +710,15 @@ static void _ecore_event_fini(struct appdata *ad)
 
 static void _x_atom_init(void)
 {
-#ifdef HAVE_X
+#if defined(WINSYS_X11)
 	E_ILLUME_ATOM_MV_QUICKPANEL_STATE = ecore_x_atom_get("_E_MOVE_QUICKPANEL_STATE");
 #endif
 }
 /*****************************************************************************
-  *
-  * App efl main interface
-  *
-  ****************************************************************************/
+ *
+ * App efl main interface
+ *
+ ****************************************************************************/
 static void _sigaction_terminate_handler(int signum, siginfo_t *info, void *unused)
 {
 	ERR("quickpanel going to be terminated");
@@ -753,12 +813,7 @@ static void _quickpanel_initialize(void *data)
 	INFO("quickpanel run in %s", ad->is_emul ? "Emul" : "Device");
 
 	int w, h;
-#ifdef HAVE_X
-	Ecore_X_Screen *screen = ecore_x_default_screen_get();
-	//ecore_x_screen_size_get(screen, &w, &h);
-	elm_win_screen_size_get(screen, NULL, NULL, &w, &h);
-#endif
-
+	elm_win_screen_size_get(ad->win, NULL, NULL, &w, &h);
 	ad->scale = elm_config_scale_get();
 	if (ad->scale < 0) {
 		ad->scale = 1.0;
@@ -785,9 +840,10 @@ static void _quickpanel_initialize(void *data)
 #ifdef QP_EMERGENCY_MODE_ENABLE
 	quickpanel_emergency_mode_init(ad);
 #endif
-	quickpanel_conf_init(ad);
 	quickpanel_keyboard_init(ad);
+#if defined(WINSYS_X11)
 	quickpanel_keyboard_x_init(ad);
+#endif
 #ifdef QP_REMINDER_ENABLE
 	quickpanel_reminder_init(ad);
 #endif
@@ -806,9 +862,9 @@ static void _quickpanel_initialize(void *data)
 static bool _app_create_cb(void *data)
 {
 	ERR("");
-
+#if defined(WINSYS_X11)
 	elm_config_engine_set("opengl_x11");
-
+#endif
 	elm_app_base_scale_set(1.8);
 
 	pid_t pid;
@@ -873,7 +929,9 @@ static void _app_terminate_cb(void *data)
 	_ecore_event_fini(ad);
 
 	quickpanel_keyboard_fini(ad);
+#if defined(WINSYS_X11)
 	quickpanel_keyboard_x_fini(ad);
+#endif
 	quickpanel_uninstall_fini(ad);
 #ifdef QP_REMINDER_ENABLE
 	quickpanel_reminder_fini(ad);
@@ -881,7 +939,6 @@ static void _app_terminate_cb(void *data)
 #ifdef QP_EMERGENCY_MODE_ENABLE
 	quickpanel_emergency_mode_fini(ad);
 #endif
-	quickpanel_conf_fini(ad);
 
 	/* delete quickpanel window */
 	_ui_gui_destroy(ad);
@@ -946,10 +1003,12 @@ int main(int argc, char *argv[])
 
 	ERR("quickpanel is forked");
 
-	ret = control_privilege();
+#if defined(WINSYS_X11)
+	ret = perm_app_set_privilege("org.tizen.", NULL, NULL);
 	if (ret != 0) {
 		WARN("Failed to control privilege!");
 	}
+#endif
 
 	event_callback.create = _app_create_cb;
 	event_callback.terminate = _app_terminate_cb;
@@ -957,9 +1016,9 @@ int main(int argc, char *argv[])
 	event_callback.resume = _app_resume_cb;
 	event_callback.app_control = _app_service_cb;
 
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+//	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, NULL, NULL);
+//	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, NULL, NULL);
+//	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, _app_language_changed_cb, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, _app_region_format_changed_cb, &ad);
 

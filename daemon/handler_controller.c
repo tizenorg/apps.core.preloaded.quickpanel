@@ -16,7 +16,7 @@
  */
 
 
-#include "handler_controller.h"
+#include <Elementary.h>
 
 #include <dlog.h>
 #include <vconf.h>
@@ -25,8 +25,13 @@
 #include <ITapiSim.h>
 #include <TelCall.h>
 #include <ITapiCall.h>
-#include "setting_utils.h"
 
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "handler_controller.h"
+#include "setting_utils.h"
 #include "list_util.h"
 #include "quickpanel-ui.h"
 #include "common.h"

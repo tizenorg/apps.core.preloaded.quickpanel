@@ -15,26 +15,36 @@
  *
  */
 
+#include <Elementary.h>
+#include <glib.h>
 
 #include <string.h>
+#include <vconf.h>
 #include <notification.h>
+#include <system_settings.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"
 #include "list_util.h"
 #include "quickpanel_def.h"
-#include "noti_list_item.h"
+#include "vi_manager.h"
 #include "noti_node.h"
+#include "noti_list_item.h"
 #include "noti.h"
 #include "noti_util.h"
+#include "animated_icon.h"
+#include "noti_list_item.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
+
 #ifdef QP_ANIMATED_IMAGE_ENABLE
 #include "animated_image.h"
 #endif
-#include "animated_icon.h"
-#include "noti_list_item.h"
 
 #define NOTI_LAYOUT_LISTTYPE 0
 #define NOTI_LAYOUT_BOXTYPE 1
@@ -194,7 +204,6 @@ HAPI int quickpanel_noti_view_is_view_handler_changed(Evas_Object *item, notific
 
 Noti_View_H noti_view_h = {
 	.name 			= "noti_view",
-
 	.create			= _create,
 	.update			= _update,
 	.remove			= _remove,

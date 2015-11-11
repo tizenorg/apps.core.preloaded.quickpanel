@@ -15,9 +15,17 @@
  *
  */
 
+#include <Elementary.h>
 
-#include "vi_manager.h"
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
+#include "common_uic.h"
+#include "common.h"
 #include "list_util.h"
+#include "vi_manager.h"
 #include "pager.h"
 
 static int _init(void *data);
@@ -173,18 +181,7 @@ HAPI QP_VI *quickpanel_vi_new(void)
 	return vi;
 }
 
-HAPI QP_VI *quickpanel_vi_new_with_data(qp_vi_op_type op_type,
-										qp_item_type_e item_type,
-										void *container,
-										void *target,
-										vi_cb init_cb,
-										vi_cb job_cb,
-										vi_cb done_cb,
-										vi_cb interrupt_cb,
-										void *extra_data_1,
-										void *extra_data_2,
-										int extra_flag_1,
-										int extra_flag_2)
+HAPI QP_VI *quickpanel_vi_new_with_data(qp_vi_op_type op_type, qp_item_type_e item_type, void *container, void *target, vi_cb init_cb, vi_cb job_cb, vi_cb done_cb, vi_cb interrupt_cb, void *extra_data_1, void *extra_data_2, int extra_flag_1, int extra_flag_2)
 {
 	QP_VI *vi = (QP_VI *)calloc(1, sizeof(QP_VI));
 
@@ -376,21 +373,21 @@ HAPI Elm_Transit_Tween_Mode quickpanel_vim_get_tweenmode(qp_vi_op_type op_type)
 	Elm_Transit_Tween_Mode mode = ELM_TRANSIT_TWEEN_MODE_LINEAR;
 
 	switch (op_type) {
-	case VI_OP_INSERT:
-		mode =  ELM_TRANSIT_TWEEN_MODE_DECELERATE;
-		break;
-	case VI_OP_UPDATE:
-		mode =  ELM_TRANSIT_TWEEN_MODE_DECELERATE;
-		break;
-	case VI_OP_DELETE:
-		mode =  ELM_TRANSIT_TWEEN_MODE_ACCELERATE;
-		break;
-	case VI_OP_REORDER:
-		mode =  ELM_TRANSIT_TWEEN_MODE_SINUSOIDAL;
-		break;
-	default :
-		mode = ELM_TRANSIT_TWEEN_MODE_LINEAR;
-		break;
+		case VI_OP_INSERT:
+			mode =  ELM_TRANSIT_TWEEN_MODE_DECELERATE;
+			break;
+		case VI_OP_UPDATE:
+			mode =  ELM_TRANSIT_TWEEN_MODE_DECELERATE;
+			break;
+		case VI_OP_DELETE:
+			mode =  ELM_TRANSIT_TWEEN_MODE_ACCELERATE;
+			break;
+		case VI_OP_REORDER:
+			mode =  ELM_TRANSIT_TWEEN_MODE_SINUSOIDAL;
+			break;
+		default :
+			mode = ELM_TRANSIT_TWEEN_MODE_LINEAR;
+			break;
 	}
 
 	return mode;

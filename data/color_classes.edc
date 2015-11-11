@@ -376,4 +376,32 @@ color_classes {
 		name: "AO008_STATUS";
 		color: 18 75 107 255;
 	}
+	color_class {
+		name: "A03O003L1";
+		color:  61 185 204 255;
+	}
+	color_class {
+		name: "ATO012";
+		color: 128 128 128 255;
+	}
+	color_class {
+		name: "F043P";
+		color: 31 92 102 255;
+	}
+	color_class {
+		name: "T023";
+		color: 72 72 72 255;
+	}
+	color_class {
+		name: "B011";
+		color: 20 107 147 127;
+	}
+	color_class {
+		name: "B0517";
+		color: 147 147 147 255;
+	}
+	color_class {
+		name: "W0661";
+		color: 155 216 226 255;
+	}
 }

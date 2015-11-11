@@ -15,29 +15,34 @@
  *
  */
 
+#include <Elementary.h>
+
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "common.h"
 #include "quickpanel_def.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
+#include "setting_module_api.h"
+#include "settings_icon_common.h"
+
 #ifdef QP_SCREENREADER_ENABLE
 #include "accessibility.h"
 #endif
-#include "setting_module_api.h"
 
 #define E_DATA_CONTAINER_TYPE "container_type"
 
-static qp_setting_icon_container_type
-_icon_container_type_get(Evas_Object *view)
+static qp_setting_icon_container_type _icon_container_type_get(Evas_Object *view)
 {
 	retif(view == NULL, QP_SETTING_ICON_CONTAINER_NONE, "invalid parameter");
 
 	return (qp_setting_icon_container_type)evas_object_data_get(view, E_DATA_CONTAINER_TYPE);
 }
 
-static void _icon_view_add(QP_Module_Setting *module, Evas_Object *view
-		,qp_setting_icon_container_type container_type)
+static void _icon_view_add(QP_Module_Setting *module, Evas_Object *view ,qp_setting_icon_container_type container_type)
 {
 	retif(module == NULL, , "invalid parameter");
 	retif(view == NULL, , "invalid parameter");
@@ -86,14 +91,12 @@ HAPI QP_Module_Setting *quickpanel_setting_module_get_from_icon(Evas_Object *ico
 	return evas_object_data_get(icon, E_DATA_MODULE_INFO);
 }
 
-HAPI void quickpanel_setting_module_icon_add(QP_Module_Setting *module, Evas_Object *icon,
-		qp_setting_icon_container_type container_type)
+HAPI void quickpanel_setting_module_icon_add(QP_Module_Setting *module, Evas_Object *icon, qp_setting_icon_container_type container_type)
 {
 	_icon_view_add(module, icon, container_type);
 }
 
-HAPI Evas_Object *quickpanel_setting_module_icon_get(QP_Module_Setting *module,
-		qp_setting_icon_container_type container_type)
+HAPI Evas_Object *quickpanel_setting_module_icon_get(QP_Module_Setting *module, qp_setting_icon_container_type container_type)
 {
 	Eina_List *l;
 	Eina_List *l_next;
@@ -222,6 +225,7 @@ static Evas_Object *_progressbar_get(Evas_Object *parent)
 	Evas_Object *content = NULL;
 
 	content = elm_progressbar_add(parent);
+	elm_progressbar_unit_format_set(content, "%0.0f%%");
 	retif(!content, NULL, "fail to elm_progressbar_add");
 
 	elm_object_style_set(content, "quickpanel_style");

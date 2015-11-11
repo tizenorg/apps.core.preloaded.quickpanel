@@ -19,6 +19,6 @@
 #ifndef __QUICKPANEL_DEBUG_UTIL_H_
 #define __QUICKPANEL_DEBUG_UTIL_H_
 
-void debug_printf(char *fmt, ...);
+extern void debug_printf(char *fmt, ...);
 
 #endif				/* __QUICKPANEL_DEBUG_UTIL_H_ */

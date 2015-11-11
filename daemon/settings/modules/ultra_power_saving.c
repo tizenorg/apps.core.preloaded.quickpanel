@@ -16,16 +16,22 @@
  */
 
 
+#include <Elementary.h>
+
 #include <app.h>
 #include <vconf.h>
 #include <syspopup_caller.h>
 #include <bundle_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_QP_BUTTON2_U_POWER_NSAVING_ABB")
 #define BUTTON_ICON_NORMAL "quick_icon_ultra_power_saving.png"
@@ -98,20 +104,20 @@ static void _turn_on(int is_on)
 		}
 	}
 	/*else
-	{
-		b = bundle_create();
-		if (b != NULL) {
-			if (is_on) {
-				bundle_add(b, "_MODE_SYSTEM_POPUP_TYPE_", "POPUP_EMERGENCY_PSMODE_SETTING");
-			} else {
-				bundle_add(b, "_MODE_SYSTEM_POPUP_TYPE_", "POPUP_NORMAL_PSMODE");
-			}
-			syspopup_launch(SYSPOPUP_NAME, b);
-			bundle_free(b);
-		} else {
-			ERR("failed to create a bundle");
-		}
-	}*/
+	  {
+	  b = bundle_create();
+	  if (b != NULL) {
+	  if (is_on) {
+	  bundle_add(b, "_MODE_SYSTEM_POPUP_TYPE_", "POPUP_EMERGENCY_PSMODE_SETTING");
+	  } else {
+	  bundle_add(b, "_MODE_SYSTEM_POPUP_TYPE_", "POPUP_NORMAL_PSMODE");
+	  }
+	  syspopup_launch(SYSPOPUP_NAME, b);
+	  bundle_free(b);
+	  } else {
+	  ERR("failed to create a bundle");
+	  }
+	  }*/
 }
 
 static void _view_update(Evas_Object *view, int state, int flag_extra_1, int flag_extra_2)
@@ -161,8 +167,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 			FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	QP_Module_Setting *module = (QP_Module_Setting *)data;
 	retif(module == NULL, , "Invalid parameter!");

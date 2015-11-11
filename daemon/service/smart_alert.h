@@ -19,8 +19,6 @@
 #ifndef _QP_SMART_ALERT_DEF_
 #define _QP_SMART_ALERT_DEF_
 
-#include <notification.h>
-#include "quickpanel-ui.h"
 
 #if !defined(VENDOR)
 #define SMART_ALARM_CALL_PKGNAME "org.tizen.call-notification"
@@ -32,6 +30,6 @@
 #define SMART_ALARM_MSG_PKGNAME VENDOR".message"
 #endif
 
-void quickpanel_smart_alert_update_info(notification_h noti);
+extern void quickpanel_smart_alert_update_info(notification_h noti);
 
 #endif

@@ -15,7 +15,10 @@
  *
  */
 
-
+#include <Elementary.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
 
 #include "quickpanel-ui.h"
 #include "common.h"

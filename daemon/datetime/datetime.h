@@ -19,8 +19,8 @@
 #ifndef __DATETIME_H__
 #define __DATETIME_H__
 
-void quickpanel_datetime_datentime_event_set(int is_clickable);
-void quickpanel_datetime_editing_icon_visibility_set(int is_visible);
-void quickpanel_datetime_view_update(char *date, char *time, char *meridiem, int meridiem_type);
+extern void quickpanel_datetime_datentime_event_set(int is_clickable);
+extern void quickpanel_datetime_editing_icon_visibility_set(int is_visible);
+extern void quickpanel_datetime_view_update(char *date, char *time, char *meridiem, int meridiem_type);
 
 #endif	/* __DATETIME_H__ */

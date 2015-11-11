@@ -25,6 +25,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <Elementary.h>
 #include <common.h>
 #include <glib.h>
 

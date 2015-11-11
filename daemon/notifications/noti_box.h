@@ -19,9 +19,6 @@
 #ifndef __QUICKPANEL_NOTI_BOX_H__
 #define __QUICKPANEL_NOTI_BOX_H__
 
-#include <notification.h>
-#include "vi_manager.h"
-
 #define E_DATA_NOTI_BOX_H "noti_box"
 #define E_DATA_CB_SELECTED_ITEM "noti_box_cb_selected"
 #define E_DATA_CB_BUTTON_1 "noti_box_cb_button_1"
@@ -53,16 +50,13 @@ typedef struct _noti_box_h {
 	qp_notibox_state_type state;
 } noti_box_h;
 
-Evas_Object *quickpanel_noti_box_create(Evas_Object *parent, notification_ly_type_e layout);
-void quickpanel_noti_box_node_set(Evas_Object *noti_box, void *noti_node);
-void *quickpanel_noti_box_node_get(Evas_Object *noti_box);
-void quickpanel_noti_box_remove(Evas_Object *noti_box);
-void quickpanel_noti_box_set_item_selected_cb(Evas_Object *noti_box,
-		void(*selected_cb)(void *data, Evas_Object *obj));
-void quickpanel_noti_box_set_item_button_1_cb(Evas_Object *noti_box,
-		void(*button_1_cb)(void *data, Evas_Object *obj));
-void quickpanel_noti_box_set_item_deleted_cb(Evas_Object *noti_box,
-		void(*deleted_cb)(void *data, Evas_Object *obj));
-void quickpanel_noti_box_item_dragging_cancel(Evas_Object *noti_box);
-void quickpanel_noti_box_item_update(Evas_Object *noti_box);
+extern Evas_Object *quickpanel_noti_box_create(Evas_Object *parent, notification_ly_type_e layout);
+extern void quickpanel_noti_box_node_set(Evas_Object *noti_box, void *noti_node);
+extern void *quickpanel_noti_box_node_get(Evas_Object *noti_box);
+extern void quickpanel_noti_box_remove(Evas_Object *noti_box);
+extern void quickpanel_noti_box_set_item_selected_cb(Evas_Object *noti_box, void(*selected_cb)(void *data, Evas_Object *obj));
+extern void quickpanel_noti_box_set_item_button_1_cb(Evas_Object *noti_box, void(*button_1_cb)(void *data, Evas_Object *obj));
+extern void quickpanel_noti_box_set_item_deleted_cb(Evas_Object *noti_box, void(*deleted_cb)(void *data, Evas_Object *obj));
+extern void quickpanel_noti_box_item_dragging_cancel(Evas_Object *noti_box);
+extern void quickpanel_noti_box_item_update(Evas_Object *noti_box);
 #endif

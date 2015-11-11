@@ -19,13 +19,7 @@
 #ifndef HANDLER_CONTROLLER_H_
 #define HANDLER_CONTROLLER_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <Evas.h>
-#include <Elementary.h>
-#include <Eina.h>
-
-void quickpanel_handler_text_set(char *text);
-void quickpanel_handler_set_visibility(Eina_Bool visible);
+extern void quickpanel_handler_text_set(char *text);
+extern void quickpanel_handler_set_visibility(Eina_Bool visible);
 
 #endif /* HANDLER_CONTROLLER_H_ */

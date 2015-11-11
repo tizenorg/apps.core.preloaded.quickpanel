@@ -19,11 +19,9 @@
 #ifndef __SIM_CONTROL_H__
 #define __SIM_CONTROL_H__
 
-#include <Elementary.h>
-#include <Evas.h>
 
-void sim_controller_init(Evas_Object *master_layout);
-void sim_controller_resume();
-void sim_controller_on_language_change();
+extern void sim_controller_init(Evas_Object *master_layout);
+extern void sim_controller_resume();
+extern void sim_controller_on_language_change();
 
 #endif //  __SIM_CONTROL_H__

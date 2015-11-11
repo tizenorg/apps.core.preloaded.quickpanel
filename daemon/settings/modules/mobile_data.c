@@ -15,17 +15,23 @@
  *
  */
 
+#include <Elementary.h>
 
 #include <vconf.h>
 #include <syspopup_caller.h>
 #include <system_settings.h>
 #include <bundle_internal.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
+#include "common_uic.h"
 #include "common.h"
 #include "quickpanel-ui.h"
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
-
+#include "settings_icon_common.h"
 
 #define BUTTON_LABEL _("IDS_ST_BUTTON2_MOBILE_NDATA")
 #define BUTTON_ICON_NORMAL "quick_icon_mobile_data.png"
@@ -41,12 +47,9 @@
 #define VCONFKEY_SETAPPL_MOBILE_DATA_OFF_REMINDER "db/setting/network/mobile_data_off_reminder"
 #endif
 
-
-
 static int _is_simcard_inserted(void);
 static int _is_in_flightmode(void);
 static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source);
-
 
 static const char *_label_get(void)
 {
@@ -90,18 +93,17 @@ static void _long_press_cb(void *data)
 
 static int _need_display_popup(int is_on)
 {
-	int ret = -1, status = 0;
+	int ret = -1;
+	int status = 0;
 
 	if (is_on == 1) {
-		ret = vconf_get_bool(VCONFKEY_SETAPPL_MOBILE_DATA_ON_REMINDER,
-				&status);
+		ret = vconf_get_bool(VCONFKEY_SETAPPL_MOBILE_DATA_ON_REMINDER, &status);
 		msgif(ret != 0, "failed to get VCONFKEY_SETAPPL_MOBILE_DATA_ON_REMINDER %d %d", ret, is_on);
-		if (ret == 0 && status == 1) {
+		if (ret == 0 && status == true) {
 			return 1;
 		}
 	} else {
-		ret = vconf_get_bool(VCONFKEY_SETAPPL_MOBILE_DATA_OFF_REMINDER,
-				&status);
+		ret = vconf_get_bool(VCONFKEY_SETAPPL_MOBILE_DATA_OFF_REMINDER, &status);
 		msgif(ret != 0, "failed to get VCONFKEY_SETAPPL_MOBILE_DATA_OFF_REMINDER %d %d", ret, is_on);
 		if (ret == 0 && status == 1) {
 			return 1;
@@ -168,7 +170,6 @@ static void _view_update(Evas_Object *view, int state, int flag_extra_1, int fla
 	quickpanel_setting_icon_text_set(view, BUTTON_LABEL, state);
 }
 
-
 static int _is_simcard_inserted(void)
 {
 	int ret_1 = QP_FAIL;
@@ -185,7 +186,7 @@ static int _is_simcard_inserted(void)
 	INFO("MOBILE DATA SIM CARD: %d %d", sim_status_1, sim_status_2);
 
 	if ((ret_1 == QP_OK && sim_status_1 == VCONFKEY_TELEPHONY_SIM_INSERTED) ||
-		(ret_2 == QP_OK && sim_status_2 == VCONFKEY_TELEPHONY_SIM_INSERTED)) {
+			(ret_2 == QP_OK && sim_status_2 == VCONFKEY_TELEPHONY_SIM_INSERTED)) {
 		return 1;
 	}
 
@@ -194,13 +195,12 @@ static int _is_simcard_inserted(void)
 
 static int _is_in_flightmode(void)
 {
-	int ret = QP_FAIL, flight_mode = 0;
+	int ret = QP_FAIL;
+	bool flight_mode = false;
 
-#ifdef HAVE_X
 	ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, &flight_mode);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to get the SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE : %d", ret);
-#endif
-	if (ret == QP_OK && flight_mode == 1) {
+	if (ret == QP_OK && flight_mode == true) {
 		return 1;
 	}
 
@@ -210,23 +210,23 @@ static int _is_in_flightmode(void)
 static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag_extra_2)
 {
 	int ret = 0;
-	int status = 0;
+	bool status = false;
 	retif(module == NULL, , "Invalid parameter!");
 
 	quickpanel_setting_module_icon_timer_del(module);
 
 	if (quickpanel_uic_is_emul() == 1) {
-		status = 1;
+		status = true;
 	} else if (_is_in_flightmode() == 1) {
-		status = 0;
+		status = false;
 	} else if (_is_simcard_inserted() == 0) {
-		status = 0;
+		status = false;
 	} else {
 		ret = system_settings_get_value_bool(SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED, &status);
 		msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "fail to get SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED:%d", ret);
 	}
 
-	if (status == 1) {
+	if (status == true) {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_ON);
 	} else {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_OFF);
@@ -237,8 +237,7 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 			FLAG_VALUE_VOID);
 }
 
-static void _mouse_clicked_cb(void *data,
-		Evas_Object *obj, const char *emission, const char *source)
+static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	QP_Module_Setting *module = (QP_Module_Setting *)data;
 	retif(module == NULL, , "Invalid parameter!");
@@ -282,8 +281,12 @@ static void _mouse_clicked_cb(void *data,
 	}
 }
 
-static void _mobiledata_vconf_cb(keynode_t *node,
-		void *data)
+static void _mobiledata_vconf_cb(keynode_t *key, void *data)
+{
+	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
+}
+
+static void _mobiledata_setting_cb(system_settings_key_e key, void *data)
 {
 	_status_update(data, FLAG_VALUE_VOID, FLAG_VALUE_VOID);
 }
@@ -292,15 +295,15 @@ static int _register_module_event_handler(void *data)
 {
 	int ret = 0;
 
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED, _mobiledata_vconf_cb, data);
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED, _mobiledata_setting_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key(%s) : %d", SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED, ret);
 
-	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT,_mobiledata_vconf_cb, data);
+	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT, _mobiledata_vconf_cb, data);
 	msgif(ret != 0, "failed to notify key(%s) : %d", VCONFKEY_TELEPHONY_SIM_SLOT, ret);
-#ifdef HAVE_X
-	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, _mobiledata_vconf_cb, data);
+
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, _mobiledata_setting_cb, data);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to notify key(%s) : %d", SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, ret);
-#endif
+
 	return QP_OK;
 }
 
@@ -311,13 +314,12 @@ static int _unregister_module_event_handler(void *data)
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(%s) : %d", SYSTEM_SETTINGS_KEY_3G_DATA_NETWORK_ENABLED, ret);
 
-	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT,_mobiledata_vconf_cb);
+	ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_SIM_SLOT, _mobiledata_vconf_cb);
 	msgif(ret != 0, "failed to ignore key(%s) : %d", VCONFKEY_TELEPHONY_SIM_SLOT, ret);
 
-#ifdef HAVE_X
 	ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE);
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(%s) : %d", SYSTEM_SETTINGS_KEY_NETWORK_FLIGHT_MODE, ret);
-#endif
+
 	return QP_OK;
 }
 

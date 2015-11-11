@@ -19,10 +19,6 @@
 #ifndef __QUICKPANEL_NOTI_LIST_ITEM_H__
 #define __QUICKPANEL_NOTI_LIST_ITEM_H__
 
-#include <notification.h>
-#include "noti_node.h"
-#include "vi_manager.h"
-
 #define STATE_NORMAL 1
 #define STATE_DELETING 0
 
@@ -70,18 +66,18 @@ typedef struct _noti_list_item_h {
 	qp_notilistitem_state_type state;
 } noti_list_item_h;
 
-Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notification_h noti);
-void quickpanel_noti_list_item_update(Evas_Object *item);
-void quickpanel_noti_list_item_remove(Evas_Object *item);
+extern Evas_Object *quickpanel_noti_list_item_create(Evas_Object *parent, notification_h noti);
+extern void quickpanel_noti_list_item_update(Evas_Object *item);
+extern void quickpanel_noti_list_item_remove(Evas_Object *item);
 
-void quickpanel_noti_list_item_node_set(Evas_Object *item, noti_node_item *noti_node);
-void *quickpanel_noti_list_item_node_get(Evas_Object *item);
-int quickpanel_noti_list_item_get_status(Evas_Object *item);
-void quickpanel_noti_list_item_set_status(Evas_Object *item, int status);
+extern void quickpanel_noti_list_item_node_set(Evas_Object *item, noti_node_item *noti_node);
+extern void *quickpanel_noti_list_item_node_get(Evas_Object *item);
+extern int quickpanel_noti_list_item_get_status(Evas_Object *item);
+extern void quickpanel_noti_list_item_set_status(Evas_Object *item, int status);
 
-void quickpanel_noti_list_item_set_item_selected_cb(Evas_Object *item, response_cb selected_cb);
-void quickpanel_noti_list_item_set_item_button_1_cb(Evas_Object *item, response_cb callback);
-void quickpanel_noti_list_item_set_item_deleted_cb(Evas_Object *item, response_cb callback);
+extern void quickpanel_noti_list_item_set_item_selected_cb(Evas_Object *item, response_cb selected_cb);
+extern void quickpanel_noti_list_item_set_item_button_1_cb(Evas_Object *item, response_cb callback);
+extern void quickpanel_noti_list_item_set_item_deleted_cb(Evas_Object *item, response_cb callback);
 
-noti_list_item_h *quickpanel_noti_list_item_handler_get(Evas_Object *item);
+extern noti_list_item_h *quickpanel_noti_list_item_handler_get(Evas_Object *item);
 #endif

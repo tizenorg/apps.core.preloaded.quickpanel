@@ -15,17 +15,33 @@
  *
  */
 
+#include <Elementary.h>
+#include <stdbool.h>
+#include <glib.h>
+
+#include <vconf.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <notification.h>
+#include <system_settings.h>
+#include <E_DBus.h>
+
+#include "quickpanel-ui.h"
+#include "common.h"
+#include "common_uic.h"
 #include "pager.h"
 #include "pager_common.h"
+#include "list_util.h"
+#include "noti_node.h"
 #include "vi_manager.h"
 #include "setting_utils.h"
-#include "list_util.h"
 #include "settings.h"
 #include "settings_view_featured.h"
+#include "noti.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
-#include "noti.h"
 
 #define FICKUP_TIME_LIMIT 150
 #define FICKUP_DISTANCE_LIMIT 160
@@ -266,8 +282,8 @@ HAPI Evas_Object *quickpanel_page_base_create(Evas_Object *parent, void *data)
 
 	Evas_Object *bg_touch = elm_bg_add(view);
 	if (bg_touch != NULL) {
-		//evas_object_color_set(bg_touch, 255, 255, 255, 250);
-		evas_object_color_set(bg_touch, 0, 0, 0, 0);
+		evas_object_color_set(bg_touch, 255, 255, 255, 250);
+		//evas_object_color_set(bg_touch, 0, 0, 0, 0);
 		evas_object_event_callback_add(bg_touch,
 				EVAS_CALLBACK_MOUSE_DOWN, _flick_mouse_down_cb, NULL);
 		evas_object_event_callback_add(bg_touch,

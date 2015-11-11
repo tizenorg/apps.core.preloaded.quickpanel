@@ -15,63 +15,73 @@
  *
  */
 
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <Elementary.h>
 
 #include <pkgmgr-info.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
 #include "quickpanel-ui.h"
 
-static inline int _is_space( char in )
+static inline int _is_space(char in)
 {
-    if ( ( in == _SPACE )) {
+	if ((in == _SPACE)) {
 		return 1;
-    } else {
+	} else {
 		return 0;
-    }
+	}
 }
 
-static inline int _l_trim( char *in )
+static inline int _l_trim(char *in)
 {
-    int			i, j;
-    short int	done;
+	int i, j;
+	short int done;
 
-    i = 0;
-    done = 0;
+	i = 0;
+	done = 0;
 
-    while ( !done && in[i] != '\0') {
-		if ( _is_space( in[i] ) ) {
+	while (!done && in[i] != '\0') {
+		if (_is_space(in[i])) {
 			i++;
 		} else {
 			done = 1;
 		}
-    }
+	}
 
-    j = 0;
-    while ( in[i] != '\0' ) {
+	j = 0;
+	while (in[i] != '\0') {
 		in[j++] = in[i++];
-    }
+	}
 
-    in[j] = '\0';
+	in[j] = '\0';
 
-    return 0;
+	return 0;
 }
 
-static inline int _r_trim( char *in )
+static inline int _r_trim(char *in)
 {
-    int			i;
-    short int	done;
+	int i;
+	short int done;
 
-    i = strlen(in) - 1;
-    done = 0;
+	i = strlen(in) - 1;
+	done = 0;
 
-    while ( !done && !( i < 0 ) ) {
-		if ( _is_space( in[i] ) ) {
+	while (!done && !(i < 0)) {
+		if (_is_space(in[i])) {
 			in[i--] = '\0';
 		} else {
 			done = 1;
 		}
-    }
+	}
 
-    return(0);
+	return(0);
 }
 
 HAPI void quickpanel_common_util_char_trim(char *text)
@@ -187,9 +197,9 @@ HAPI int quickpanel_common_util_is_phone_number(const char *address)
 
 		while (*pszOneChar) {
 			if (!isdigit(*pszOneChar)
-				&& (*pszOneChar != '*') && (*pszOneChar != '#')
-				&& (*pszOneChar != ' ')
-				&& !((*pszOneChar == '-') && digit_count >= 7)) {
+					&& (*pszOneChar != '*') && (*pszOneChar != '#')
+					&& (*pszOneChar != ' ')
+					&& !((*pszOneChar == '-') && digit_count >= 7)) {
 				return 0;
 			}
 

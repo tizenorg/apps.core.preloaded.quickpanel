@@ -15,11 +15,16 @@
  *
  */
 
-
+#include <Elementary.h>
 #include <glib.h>
+
 #include <notification.h>
-#include <efl_assist.h>
+#include <tzsh.h>
+#include <tzsh_quickpanel_service.h>
+#include <E_DBus.h>
+
 #include "common.h"
+#include "common_uic.h"
 #include "quickpanel-ui.h"
 #include "quickpanel_def.h"
 #include "modules.h"
@@ -29,9 +34,10 @@
 #include "settings_gridbox.h"
 #include "setting_module_api.h"
 #include "settings_view_featured.h"
+#include "pager.h"
 #include "pager_common.h"
 #include "accessibility.h"
-#include "configuration.h"
+
 #ifdef QP_EMERGENCY_MODE_ENABLE
 #include "emergency_mode.h"
 #endif
@@ -56,54 +62,6 @@ QP_Module settings_view_featured = {
 	.refresh = _refresh,
 	.lang_changed = _lang_changed,
 };
-
-static void _view_layout_create_with_scroller(void *data)
-{
-	Evas_Object *scroller = NULL;
-	Evas_Object *box = NULL;
-	Evas_Object *container = NULL;
-	struct appdata *ad = data;
-	retif(!ad->ly, , "layout is NULL!");
-
-	container = quickpanel_uic_load_edj(ad->ly, DEFAULT_EDJ, "quickpanel/setting_container_wvga", 0);
-
-	retif(container == NULL, , "failed to load container");
-
-	scroller = elm_scroller_add(container);
-	retif(!scroller, , "fail to add scroller");
-	elm_object_style_set(scroller, "effect");
-	elm_scroller_bounce_set(scroller, EINA_TRUE, EINA_FALSE);
-	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
-	elm_scroller_movement_block_set(scroller, ELM_SCROLLER_MOVEMENT_BLOCK_HORIZONTAL);
-
-	box = elm_box_add(scroller);
-	if (!box) {
-		ERR("fail to add box");
-		if (scroller != NULL) {
-			evas_object_del(scroller);
-			scroller = NULL;
-		}
-		if (container != NULL) {
-			evas_object_del(container);
-			container = NULL;
-		}
-		return;
-	}
-
-	elm_object_style_set(box, "effect");
-
-	evas_object_size_hint_weight_set(box, 0.0 , EVAS_HINT_EXPAND);
-	evas_object_size_hint_fill_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	elm_box_horizontal_set(box, EINA_TRUE);
-	evas_object_show(box);
-
-	elm_object_content_set(scroller, box);
-
-	elm_object_part_content_set(container, QP_SETTING_SCROLLER_PART_WVGA, scroller);
-
-	quickpanel_setting_layout_set(ad->ly, container);
-}
-
 
 static void _view_layout_create(void *data)
 {
@@ -207,8 +165,8 @@ static int _init(void *data)
 	}
 #endif
 
-	 _view_layout_create(data);
-	 _view_icons_add(data);
+	_view_layout_create(data);
+	_view_icons_add(data);
 
 	elm_object_signal_emit(ad->ly, "quickpanel.setting.show", "quickpanel.prog");
 
@@ -322,7 +280,7 @@ HAPI void quickpanel_setting_view_featured_reload(Eina_List *list_all_module, in
 	EINA_LIST_FOREACH_SAFE(list_all_module, l, l_next, module) {
 		if (index < num_featured) {
 			if ((icon = quickpanel_setting_module_icon_get(module,
-					QP_SETTING_ICON_CONTAINER_FEATURED)) == NULL) {
+							QP_SETTING_ICON_CONTAINER_FEATURED)) == NULL) {
 				icon = quickpanel_setting_module_icon_create(module, box);
 			}
 			if (icon != NULL) {
@@ -333,7 +291,7 @@ HAPI void quickpanel_setting_view_featured_reload(Eina_List *list_all_module, in
 			DBG("all list:%s", module->name);
 		} else {
 			if ((icon = quickpanel_setting_module_icon_get(module,
-					QP_SETTING_ICON_CONTAINER_FEATURED)) != NULL) {
+							QP_SETTING_ICON_CONTAINER_FEATURED)) != NULL) {
 				quickpanel_setting_module_icon_remove(module, icon);
 				evas_object_del(icon);
 				icon = NULL;

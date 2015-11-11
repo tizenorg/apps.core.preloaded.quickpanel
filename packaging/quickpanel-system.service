@@ -1,6 +1,6 @@
 [Unit]
 Description=Start the Quickpanel
-After=check-mount.service connman.service
+After=connman.service
 
 [Service]
 Type=simple
@@ -14,3 +14,4 @@ OOMScoreAdjust=200
 
 [Install]
 WantedBy=multi-user.target
+#WantedBy=default.target
