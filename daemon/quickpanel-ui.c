@@ -138,6 +138,8 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 #if defined(WINSYS_X11)
 	Ecore_X_Window xwin;
 	Ecore_X_Atom atom_window_input_region = 0;
+#else
+	tzsh_region_h region;
 #endif
 	unsigned int window_input_region[4] = {0,};
 
@@ -146,6 +148,8 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 	
 #if defined(WINSYS_X11)
 	xwin = elm_win_xwindow_get(ad->win);
+#else
+	region = tzsh_region_create(ad->tzsh);
 #endif
 
 	switch (ad->angle) {
@@ -182,10 +186,13 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 			,window_input_region[3]
 		);
 
-#if 0//defined(WINSYS_X11)
+#if defined(WINSYS_X11)
 	atom_window_input_region = ecore_x_atom_get(STR_ATOM_WINDOW_INPUT_REGION);
-
 	ecore_x_window_prop_card32_set(xwin, atom_window_input_region, window_input_region, 4);
+#else
+	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
+	tzsh_quickpanel_service_handler_region_set(ad->quickpanel_service, ad->angle, region);
+	tzsh_region_destroy(region);
 #endif
 }
 
@@ -196,6 +203,8 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 #if defined(WINSYS_X11)
 	Ecore_X_Window xwin;
 	Ecore_X_Atom atom_window_contents_region = 0;
+#else
+	tzsh_region_h region;
 #endif
 	unsigned int window_contents_region[4] = {0,};
 
@@ -204,6 +213,8 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 
 #if defined(WINSYS_X11)
 	xwin = elm_win_xwindow_get(ad->win);
+#else
+	region = tzsh_region_create(ad->tzsh);
 #endif
 
 	switch (ad->angle) {
@@ -240,9 +251,13 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 			,window_contents_region[3]
 	   );
 
-#if 0//defined(WINSYS_X11)
+#if defined(WINSYS_X11)
 	atom_window_contents_region = ecore_x_atom_get(STR_ATOM_WINDOW_CONTENTS_REGION);
 	ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
+#else
+	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
+	tzsh_quickpanel_service_handler_region_set(ad->quickpanel_service, ad->angle, region);
+	tzsh_region_destroy(region);
 #endif
 }
 
@@ -437,11 +452,11 @@ static Evas_Object *_ui_window_add(const char *name, int prio)
 			elm_win_wm_rotation_available_rotations_set(eo, rots, 4);
 		}
 
+		evas_object_show(eo);
+
 		if( QP_OK != _tzsh_set(eo)) {
 			ERR("Failed to set tzsh");
 		}
-
-		evas_object_show(eo);
 	}
 
 	return eo;
