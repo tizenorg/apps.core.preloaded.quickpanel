@@ -1,17 +1,16 @@
 [Unit]
 Description=Start the Quickpanel
-After=connman.service
 
 [Service]
 Type=simple
-EnvironmentFile=/run/xdg-root-env
 EnvironmentFile=/run/tizen-system-env
-ExecStart=/usr/apps/org.tizen.quickpanel/bin/quickpanel
+#ExecStart=/usr/apps/org.tizen.quickpanel/bin/quickpanel
+ExecStart=/usr/bin/app_launcher -s org.tizen.quickpanel
 Restart=always
 RestartSec=0
 KillSignal=SIGKILL
 OOMScoreAdjust=200
 
 [Install]
-WantedBy=multi-user.target
-#WantedBy=default.target
+#WantedBy=multi-user.target
+WantedBy=default.target

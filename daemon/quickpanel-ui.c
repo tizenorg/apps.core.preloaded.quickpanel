@@ -256,7 +256,7 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 	ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
 #else
 	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
-	tzsh_quickpanel_service_handler_region_set(ad->quickpanel_service, ad->angle, region);
+	tzsh_quickpanel_service_content_region_set(ad->quickpanel_service, ad->angle, region);
 	tzsh_region_destroy(region);
 #endif
 }

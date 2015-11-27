@@ -119,12 +119,9 @@ rm -rf %{buildroot}
 %make_install
 
 mkdir -p %{buildroot}%{__usrdir}/default.target.wants
-mkdir -p %{buildroot}%{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
 install -m 0644 %SOURCE102 %{buildroot}%{__usrdir}/quickpanel.service
-ln -s ../quickpanel.service %{buildroot}%{__usrdir}/default.target.wants/quickpanel.service
-
 install -m 0644 %SOURCE104 %{buildroot}%{__usrdir}/quickpanel.path
-ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/quickpanel.path
+ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/
 %post
 
 
@@ -137,11 +134,9 @@ ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/quickpanel
 /opt/%{_prefix}/apps/%{name}/data
 %{_prefix}/apps/%{name}
 %{_prefix}/share/packages/%{name}.xml
-%{_sysconfdir}/init.d/quickpanel
+%{__usrdir}/default.target.wants/quickpanel.path
 %{__usrdir}/quickpanel.service
 %{__usrdir}/quickpanel.path
-%{__usrdir}/default.target.wants/quickpanel.service
-%{__usrdir}/default.target.wants/quickpanel.path
 %{_prefix}/share/license/%{name}
 %if %{with wayland}
 # Do not install the SMACK Rule file for Tizen 3.x
