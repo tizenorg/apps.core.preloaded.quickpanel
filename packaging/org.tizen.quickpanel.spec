@@ -17,11 +17,11 @@ Source103: org.tizen.quickpanel.manifest.3.0
 Source103: org.tizen.quickpanel.manifest.2.4
 %endif
 
-%if "%{?tizen_profile_name}" == "wearable" 
+%if "%{?profile}" == "wearable"
 ExcludeArch: %{arm} %ix86 x86_64
 %endif
 
-%if "%{?tizen_profile_name}"=="tv"
+%if "%{?profile}"=="tv"
 ExcludeArch: %{arm} %ix86 x86_64
 %endif
 
