@@ -134,7 +134,6 @@ pkg_check_modules(pkgs REQUIRED
 	notification
 	badge
 	vconf
-	libprivilege-control
 	edbus
 	evas
 	ecore
@@ -160,6 +159,7 @@ pkg_check_modules(x11_pkgs REQUIRED
 	utilX
 	inputproto
 	xi
+	libprivilege-control
 )
 ENDIF(${WINSYS} STREQUAL "x11")
 

@@ -39,8 +39,8 @@
 #include <X11/Xlib.h>
 #include <utilX.h>
 #include <Ecore_X.h>
-#endif
 #include <privilege-control.h>
+#endif
 
 /* quickpanel basics */
 #include "common.h"
