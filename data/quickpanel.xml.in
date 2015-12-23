@@ -9,5 +9,8 @@
 	</ui-application>
 	<privileges>
 		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/location.enable</privilege>
+		<privilege>http://tizen.org/privilege/bluetooth.admin</privilege>
 	</privileges>
 </manifest>
