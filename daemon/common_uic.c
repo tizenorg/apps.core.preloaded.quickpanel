@@ -316,7 +316,11 @@ static void _quickpanel_close(void)
 		ERR("failed to get xwin");
 	}
 #else
-	ERR("Not yet implemented");
+	int ret = 0;
+	ret = tzsh_quickpanel_service_hide(ad->quickpanel_service);
+	if(ret != 0) {
+		ERR("failed tzsh_quickpanel_service_hide");
+	}
 #endif
 }
 
