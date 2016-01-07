@@ -4,8 +4,8 @@ Description=Start the Quickpanel
 [Service]
 Type=simple
 EnvironmentFile=/run/tizen-system-env
-#ExecStart=/usr/apps/org.tizen.quickpanel/bin/quickpanel
-ExecStart=/usr/bin/app_launcher -s org.tizen.quickpanel
+ExecStart=/usr/apps/org.tizen.quickpanel/bin/quickpanel
+#ExecStart=/usr/bin/app_launcher -s org.tizen.quickpanel
 Restart=always
 RestartSec=0
 KillSignal=SIGKILL
