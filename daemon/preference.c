@@ -123,8 +123,7 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 		goto END;
 	}
 
-#if defined(WINSYS_X11)
-	value_r = iniparser_getstr(ini, key);
+	value_r = iniparser_getstring(ini, key, NULL);
 	if (value_r == NULL) {
 		value_r = _default_preference_get(key);
 		if (_key_validation_check(key) == 1) {
@@ -134,7 +133,7 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 	} else {
 		DBG("get:[%s]", value_r);
 	}
-#endif
+
 
 END:
 	if (value_r != NULL) {
@@ -171,13 +170,11 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 	ini = iniparser_load(FILE_PREFERENCE);
 	retif(ini == NULL, QP_FAIL, "failed to load ini file");
 	
-#if defined(WINSYS_X11)
-	if (iniparser_setstr(ini, (char *)key, value) == 0) {
+	if (iniparser_set(ini, (char *)key, value) == 0) {
 		ret = QP_OK;
 	} else {
 		ERR("failed to write %s=%s", key, value);
 	}
-#endif
 
 	fp = fopen(FILE_PREFERENCE, "w");
 	if (fp != NULL) {
