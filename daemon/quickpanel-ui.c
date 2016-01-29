@@ -644,6 +644,29 @@ static Eina_Bool _ecore_event_client_message_cb(void *data, int type,
 	}
 	return ECORE_CALLBACK_RENEW;
 }
+#else
+void _event_message_cb(void *data, Evas_Object *obj, void *event_info)
+ {
+	bool visiblity = (bool)event_info;
+	struct appdata *ad = data;
+
+	if(visiblity == 1) { // show
+		DBG("quickpanel is opened");
+
+		ad->is_opened = 1;
+		quickpanel_modules_opened(data);
+		quickpanel_media_player_stop();
+		quickpanel_uic_opened_reason_set(OPENED_NO_REASON);
+	} else {
+		DBG("quickpanel is closed");
+
+		ad->is_opened = 0;
+		quickpanel_util_time_timer_enable_set(0);
+		quickpanel_keyboard_closing_fini(ad);
+		quickpanel_modules_closed(data);
+		quickpanel_media_player_stop();
+	}
+ }
 #endif
 
 static void _vconf_init(struct appdata *ad)
@@ -701,7 +724,6 @@ static void _edbus_fini(struct appdata *ad)
 static void _ecore_event_init(struct appdata *ad)
 {
 #if defined(WINSYS_X11)
-
 	Ecore_Event_Handler *hdl = NULL;
 
 	/* Register window rotate event */
@@ -712,6 +734,9 @@ static void _ecore_event_init(struct appdata *ad)
 	}
 
 	ad->hdl_client_message = hdl;
+#else
+	DBG("");
+	evas_object_smart_callback_add(ad->win, "visibility,changed", _event_message_cb, ad);
 #endif
 }
 
