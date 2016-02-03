@@ -40,10 +40,12 @@ static struct info {
 	int id;
 	int is_feedback_initialized;
 	player_h player;
+	sound_stream_info_h stream_info;
 	Ecore_Timer *playing_timer;
 } s_info = {
 	.player = NULL,
 	.playing_timer = NULL,
+	.stream_info = NULL,
 	.id = 0,
 	.is_feedback_initialized = 0,
 };
@@ -75,7 +77,9 @@ static void _quickpanel_player_free_job_cb(void *data)
 {
 	player_h sound_player = data;
 	player_state_e state = PLAYER_STATE_NONE;
+	sound_stream_focus_state_e state_for_playback;
 
+	int ret = PLAYER_ERROR_NONE;
 	retif(sound_player == NULL, , "invalid parameter");
 
 #ifdef NEED_TO_DEBUG_LOCKUP_ISSUE
@@ -97,6 +101,24 @@ static void _quickpanel_player_free_job_cb(void *data)
 #ifdef NEED_TO_DEBUG_LOCKUP_ISSUE
 	SERR("after stopping media");
 #endif
+
+	ret = sound_manager_get_focus_state(s_info.stream_info, &state_for_playback, NULL);
+
+	if (state_for_playback == SOUND_STREAM_FOCUS_STATE_ACQUIRED) {
+		ret = sound_manager_release_focus(s_info.stream_info, SOUND_STREAM_FOCUS_FOR_PLAYBACK, NULL);
+		if (ret != SOUND_MANAGER_ERROR_NONE) {
+			ERR("sound_manager_release_focus() get failed : %d", ret);
+		}
+	}
+
+	ret = sound_manager_destroy_stream_information(s_info.stream_info);
+	if (ret != SOUND_MANAGER_ERROR_NONE) {
+		ERR("sound_manager_destroy_stream_information() get failed : %d", ret);
+	}
+
+	s_info.stream_info = NULL;
+
+	DBG("");
 }
 
 static void _quickpanel_player_free(player_h *sound_player)
@@ -140,17 +162,6 @@ static void _quickpanel_player_completed_cb(void *user_data)
 	_quickpanel_player_free(sound_player);
 }
 
-static void _quickpanel_player_interrupted_cb(player_interrupted_code_e code, void *user_data)
-{
-	retif(user_data == NULL, , "invalid parameter");
-	player_h *sound_player = user_data;
-
-	ERR("interrupt code [%d]", (int)code);
-
-	_quickpanel_player_del_timeout_timer();
-	_quickpanel_player_free(sound_player);
-}
-
 static void _quickpanel_player_error_cb(int error_code, void *user_data)
 {
 	retif(user_data == NULL, , "invalid parameter");
@@ -174,10 +185,22 @@ HAPI int quickpanel_media_player_is_drm_error(int error_code)
 	return 0;
 }
 
+
+static void _quickpanel_sound_stream_focus_state_changed_cb(sound_stream_info_h stream_info, sound_stream_focus_change_reason_e reason_for_change, const char *additional_info, void *user_data)
+{
+	DBG("_quickpanel_sound_stream_focus_state_changed_cb called, reason_for_change [%d], additional_info [%s]", reason_for_change, additional_info);
+
+	retif(user_data == NULL, , "invalid parameter");
+	player_h *sound_player = user_data;
+
+	_quickpanel_player_del_timeout_timer();
+	_quickpanel_player_free(sound_player);
+}
+
 HAPI int quickpanel_media_player_play(sound_type_e sound_type, const char *sound_file)
 {
 	player_h *sound_player = &s_info.player;
-	sound_session_type_e type = 1;
+	sound_stream_info_h *stream_info = &s_info.stream_info;
 
 	int ret = PLAYER_ERROR_NONE;
 	int sndRet = SOUND_MANAGER_ERROR_NONE;
@@ -195,16 +218,34 @@ HAPI int quickpanel_media_player_play(sound_type_e sound_type, const char *sound
 #ifdef NEED_TO_DEBUG_LOCKUP_ISSUE
 	SERR("setting sound session start");
 #endif
-	if (sound_type == SOUND_TYPE_NOTIFICATION) {
-		sound_manager_get_session_type(&type);
-		if (type != SOUND_SESSION_TYPE_NOTIFICATION) {
-			sndRet = sound_manager_set_session_type(SOUND_SESSION_TYPE_NOTIFICATION);
-			if (sndRet != SOUND_MANAGER_ERROR_NONE) {
-				ERR("sound_manager_set_session_type fail sndRet :%x",sndRet);
-				return PLAYER_ERROR_INVALID_PARAMETER;
-			}
+
+	if (*stream_info != NULL) {
+		sndRet = sound_manager_destroy_stream_information(*stream_info);
+		if (sndRet != SOUND_MANAGER_ERROR_NONE) {
+			ERR("sound_manager_destroy_stream_information() get failed : %x", ret);
 		}
 	}
+
+	if (sound_type == SOUND_TYPE_NOTIFICATION) {
+		sndRet = sound_manager_create_stream_information(SOUND_STREAM_TYPE_NOTIFICATION, _quickpanel_sound_stream_focus_state_changed_cb, (void*)sound_player, stream_info);
+		if (sndRet != SOUND_MANAGER_ERROR_NONE) {
+			ERR("sound_manager_create_stream_information() get failed :%x", sndRet);
+			return PLAYER_ERROR_INVALID_PARAMETER;
+		}
+
+		sndRet = sound_manager_set_focus_reacquisition(*stream_info, false);
+		if (sndRet != SOUND_MANAGER_ERROR_NONE) {
+			ERR("sound_manager_set_focus_reacquisition() set failed : %d", ret);
+			return sndRet;
+		}
+
+		sndRet = sound_manager_acquire_focus(*stream_info, SOUND_STREAM_FOCUS_FOR_PLAYBACK, NULL);
+		if (sndRet != SOUND_MANAGER_ERROR_NONE) {
+			ERR("sound_manager_acquire_focus() get failed : %d", ret);
+			return sndRet;
+		}
+	}
+
 #ifdef NEED_TO_DEBUG_LOCKUP_ISSUE
 	SERR("setting sound session finished");
 #endif
@@ -222,13 +263,6 @@ HAPI int quickpanel_media_player_play(sound_type_e sound_type, const char *sound
 	SERR("player_create finished");
 #endif
 
-	ret = player_set_sound_type(*sound_player, sound_type);
-	if (ret != PLAYER_ERROR_NONE) {
-		ERR("player_set_sound_type() ERR: %x!!!!", ret);
-		_quickpanel_player_free(sound_player);
-		return ret;
-	}
-
 	player_get_state(*sound_player, &state);
 	if (state > PLAYER_STATE_READY) {
 		_quickpanel_player_free(sound_player);
@@ -240,6 +274,15 @@ HAPI int quickpanel_media_player_play(sound_type_e sound_type, const char *sound
 		ERR("set attribute---profile_uri[%d]", ret);
 		_quickpanel_player_free(sound_player);
 		return ret;
+	}
+
+	if (*stream_info != NULL) {
+		ret = player_set_audio_policy_info(*sound_player, *stream_info);
+		if (ret != PLAYER_ERROR_NONE) {
+			ERR("player_set_audio_policy_info failed : %d", ret);
+			_quickpanel_player_free(sound_player);
+			return ret;
+		}
 	}
 
 	ret = player_prepare(*sound_player);
@@ -260,12 +303,6 @@ HAPI int quickpanel_media_player_play(sound_type_e sound_type, const char *sound
 	ret = player_set_completed_cb(*sound_player, _quickpanel_player_completed_cb, sound_player);
 	if (ret != PLAYER_ERROR_NONE) {
 		ERR("player_set_completed_cb() ERR: %x!!!!", ret);
-		_quickpanel_player_free(sound_player);
-		return ret;
-	}
-
-	ret = player_set_interrupted_cb(*sound_player, _quickpanel_player_interrupted_cb, sound_player);
-	if (ret != PLAYER_ERROR_NONE) {
 		_quickpanel_player_free(sound_player);
 		return ret;
 	}
