@@ -19,8 +19,7 @@
 #include <Eina.h>
 
 #include <vconf.h>
-#include <pkgmgr-info.h>
-#include <package-manager.h>
+#include <package_manager.h>
 #include <notification.h>
 #include <notification_internal.h>
 #include <badge.h>
@@ -28,18 +27,13 @@
 #include "common.h"
 #include "uninstall.h"
 
-#define QP_PKGMGR_STR_START "start"
-#define QP_PKGMGR_STR_END "end"
-#define QP_PKGMGR_STR_OK "ok"
-#define QP_PKGMGR_STR_UNINSTALL		"uninstall"
-
 typedef struct _pkg_event {
 	char *pkgname;
 	int is_done;
 } Pkg_Event;
 
 static struct _s_info {
-	pkgmgr_client *client;
+	package_manager_h client;
 	Eina_List *event_list;
 } s_info = {
 	.client = NULL,
@@ -79,68 +73,68 @@ static int _is_item_exist(const char *pkgid, int remove_if_exist)
 	return ret;
 }
 
-static int _pkgmgr_event_cb(int req_id, const char *pkg_type, const char *pkgid, const char *key, const char *val, const void *pmsg, void *priv_data)
+static void _pkgmgr_event_cb(const char *type, const char *package,
+	package_manager_event_type_e event_type,
+	package_manager_event_state_e event_state, int progress,
+	package_manager_error_e error, void *user_data)
 {
-	if (pkgid == NULL) {
-		return 0;
+	if (error != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("_pkgmgr_event_cb error in cb");
+		return;
 	}
 
-	SDBG("pkg:%s key:%s val:%s", pkgid, key, val);
+	SDBG("package:%s event_type:%s event_state:%s", package, event_type, event_state);
 
-	if (key != NULL && val != NULL) {
-		if (strcasecmp(key, QP_PKGMGR_STR_START) == 0 &&
-				strcasecmp(val, QP_PKGMGR_STR_UNINSTALL) == 0) {
+	if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL &&
+		event_state == PACKAGE_MANAGER_EVENT_STATE_STARTED) {
 
-			ERR("Pkg:%s is being uninstalled", pkgid);
+		DBG("Pkg:%s is being uninstalled", package);
 
-			Pkg_Event *event = calloc(1, sizeof(Pkg_Event));
-			if (event != NULL) {
-				event->pkgname = strdup(pkgid);
-				s_info.event_list = eina_list_append(s_info.event_list, event);
-			} else {
-				ERR("failed to create event item");
-			}
+		Pkg_Event *event = calloc(1, sizeof(Pkg_Event));
+		if (event != NULL) {
+			event->pkgname = strdup(package);
+			s_info.event_list = eina_list_append(s_info.event_list, event);
+		} else {
+			ERR("failed to create event item");
+		}
+	} else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL &&
+		event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
 
-			return 0;
-		} else if (strcasecmp(key, QP_PKGMGR_STR_END) == 0 &&
-				strcasecmp(val, QP_PKGMGR_STR_OK) == 0) {
-			if (_is_item_exist(pkgid, 1) == 1) {
-				ERR("Pkg:%s is uninstalled, delete related resource", pkgid);
-				notification_delete_all_by_type(pkgid, NOTIFICATION_TYPE_NOTI);
-				notification_delete_all_by_type(pkgid, NOTIFICATION_TYPE_ONGOING);
-				badge_remove(pkgid);
-			}
+		if (_is_item_exist(package, 1) == 1) {
+			DBG("Pkg:%s is uninstalled, delete related resource", package);
+
+			notification_delete_all_by_type(package, NOTIFICATION_TYPE_NOTI);
+			notification_delete_all_by_type(package, NOTIFICATION_TYPE_ONGOING);
+			badge_remove(package);
 		}
 	}
-
-	return 0;
 }
+
 
 HAPI void quickpanel_uninstall_init(void *data)
 {
 	int ret = -1;
 
-	pkgmgr_client *client = pkgmgr_client_new(PC_LISTENING);
-	if (client != NULL) {
-		if ((ret = pkgmgr_client_listen_status(client, (void*)_pkgmgr_event_cb, data)) != PKGMGR_R_OK) {
-			ERR("Failed to listen pkgmgr event:%d", ret);
+	ret = package_manager_create(&s_info.client);
+	if (ret == PACKAGE_MANAGER_ERROR_NONE) {
+		if (package_manager_set_event_cb(s_info.client, (void*)_pkgmgr_event_cb, data) != PACKAGE_MANAGER_ERROR_NONE) {
+			ERR("Failed to set package manager event:%d", ret);
 		}
-		s_info.client = client;
 	} else {
-		ERR("Failed to create package manager client");
+		ERR("Failed to create package manager : %d ", ret);
 	}
+
 }
 
 HAPI void quickpanel_uninstall_fini(void *data)
 {
 	int ret = -1;
+
 	Pkg_Event *event_item = NULL;
 
-	if (s_info.client != NULL) {
-		if ((ret = pkgmgr_client_free(s_info.client)) != PKGMGR_R_OK) {
-			ERR("Failed to free pkgmgr client:%d", ret);
-		}
-		s_info.client = NULL;
+	ret = package_manager_destroy(s_info.client);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("Failed to destory package manager:%d", ret);
 	}
 
 	EINA_LIST_FREE(s_info.event_list, event_item) {

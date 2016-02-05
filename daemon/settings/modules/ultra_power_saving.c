@@ -20,7 +20,7 @@
 
 #include <app.h>
 #include <vconf.h>
-#include <syspopup_caller.h>
+//#include <syspopup_caller.h>
 #include <bundle_internal.h>
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>

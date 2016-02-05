@@ -18,8 +18,11 @@
 #include <Elementary.h>
 
 #include <vconf.h>
+
+
 #include <syspopup_caller.h>
-#include <pkgmgr-info.h>
+
+#include <package_manager.h>
 #include <bundle_internal.h>
 #include <notification.h>
 #include <notification_internal.h>
@@ -151,11 +154,13 @@ static void _vconf_cb(keynode_t *node, void *data)
 	}
 }
 
-static int _app_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
+static bool _app_list_cb(package_info_h handle, void *user_data)
 {
 	char *appid = NULL;
 	char *permitted_appid = NULL;
-	pkgmgrinfo_appinfo_get_appid(handle, &appid);
+
+	/* NEED TO CHANGE */
+	package_info_get_package(handle, &appid);
 
 	permitted_appid = strdup(appid);
 
@@ -168,34 +173,36 @@ static int _app_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
 
 static int _register_permitted_apps(void)
 {
+	DBG("");
 	int ret = 0;
-	pkgmgrinfo_appinfo_filter_h handle;
+	package_manager_filter_h handle;
 
 	s_info.permitted_apps = eina_list_append(s_info.permitted_apps, BT_SHARE_DAEMON);
 	s_info.permitted_apps = eina_list_append(s_info.permitted_apps, SCREEN_SHOT);
 	s_info.permitted_apps = eina_list_append(s_info.permitted_apps, BT_SHARE_SERVER);
 	s_info.permitted_apps = eina_list_append(s_info.permitted_apps, BT_SHARE_CLIENT);
 
-	ret = pkgmgrinfo_appinfo_filter_create(&handle);
-	if (ret != PMINFO_R_OK) {
+	ret = package_manager_filter_create(&handle);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
 		return -1;
 	}
 	
 #if defined(WINSYS_X11)
-	ret = pkgmgrinfo_appinfo_filter_add_int(handle, PMINFO_APPINFO_PROP_APP_SUPPORT_MODE, 1);
-	if (ret != PMINFO_R_OK) {
-		pkgmgrinfo_appinfo_filter_destroy(handle);
+	/* NEED TO CHANGE */
+	ret = package_manager_filter_add_bool(handle, PMINFO_APPINFO_PROP_APP_SUPPORT_MODE, 1);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		package_manager_filter_destroy(handle);
 		return -1;
 	}
 #endif
 
-	ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _app_list_cb, NULL);
-	if (ret != PMINFO_R_OK) {
-		pkgmgrinfo_appinfo_filter_destroy(handle);
+	ret = package_manager_filter_foreach_package_info(handle, _app_list_cb, NULL);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		package_manager_filter_destroy(handle);
 		return -1;
 	}
 
-	pkgmgrinfo_appinfo_filter_destroy(handle);
+	package_manager_filter_destroy(handle);
 	return 0;
 
 }

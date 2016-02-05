@@ -164,13 +164,17 @@ static Evas_Object *_datetime_view_create(Evas_Object *parent)
 
 		_flag_set(view, E_DATA_EDITING_VISIBILITT, 0);
 
+#ifdef QP_EMERGENCY_MODE_ENABLE
 		if (quickpanel_emergency_mode_is_on()) {
 			_flag_set(view, E_DATA_TIME_N_DATE_EVENT, 0);
 			elm_object_signal_emit(view, "timendate.click.disable", "prog");
 		} else {
+#endif
 			_flag_set(view, E_DATA_TIME_N_DATE_EVENT, 1);
 			elm_object_signal_emit(view, "timendate.click.enable", "prog");
+#ifdef QP_EMERGENCY_MODE_ENABLE
 		}
+#endif
 
 		evas_object_show(view);
 	}

@@ -22,7 +22,7 @@
 
 #include <Elementary.h>
 
-#include <pkgmgr-info.h>
+#include <package_manager.h>
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
 #include <E_DBus.h>
@@ -325,27 +325,25 @@ HAPI char *quickpanel_common_ui_get_pkginfo_icon(const char *pkgid)
 	int ret = 0;
 	char *icon_path = NULL;
 	char *icon_ret = NULL;
-	retif(pkgid == NULL, NULL, "invalid parameter");
+	package_info_h package_info = NULL;
 
-	pkgmgrinfo_appinfo_h appinfo_h = NULL;
-
-	ret = pkgmgrinfo_appinfo_get_appinfo(pkgid, &appinfo_h);
-	if (ret < 0) {
-		ERR("pkgmgrinfo_appinfo_get_appinfo is failed %d", ret);
+	ret = package_manager_get_package_info(pkgid, &package_info);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("package_manager_get_package_info is failed id : %s %d", pkgid, ret);
 		return NULL;
 	}
 
-	//icon path
-	ret = pkgmgrinfo_appinfo_get_icon(appinfo_h, &icon_path);
-	if (ret < 0) {
-		ERR("pkgmgrinfo_appinfo_get_icon is failed %d", ret);
+	ret = package_info_get_icon(package_info, &icon_path);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("package_info_get_icon is failed %d", ret);
+		return NULL;
 	}
+
 	if (icon_path) {
 		icon_ret = (char*)strdup(icon_path);
 	}
-	if (appinfo_h) {
-		pkgmgrinfo_appinfo_destroy_appinfo(appinfo_h);
-	}
+
+	package_info_destroy(package_info);
 
 	return icon_ret;
 }
@@ -354,30 +352,29 @@ HAPI char *quickpanel_common_ui_get_pkginfo_label(const char *pkgid)
 {
 	int ret = 0;
 	char *label = NULL;
-	char *value_ret = NULL;
-	retif(pkgid == NULL, NULL, "invalid parameter");
+	char *label_ret = NULL;
+	package_info_h package_info = NULL;
 
-	pkgmgrinfo_appinfo_h appinfo_h = NULL;
-
-	ret = pkgmgrinfo_appinfo_get_appinfo(pkgid, &appinfo_h);
-	if (ret < 0) {
-		ERR("pkgmgrinfo_appinfo_get_appinfo is failed %d", ret);
+	ret = package_manager_get_package_info(pkgid, &package_info);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("package_manager_get_package_info is failed %d", ret);
 		return NULL;
 	}
 
-	//icon path
-	ret = pkgmgrinfo_appinfo_get_label(appinfo_h, &label);
-	if (ret < 0) {
-		ERR("pkgmgrinfo_appinfo_get_icon is failed %d", ret);
-	}
-	if (label) {
-		value_ret = (char*)strdup(label);
-	}
-	if (appinfo_h) {
-		pkgmgrinfo_appinfo_destroy_appinfo(appinfo_h);
+	ret = package_info_get_label(package_info, &label);
+	if (ret != PACKAGE_MANAGER_ERROR_NONE) {
+		ERR("package_info_get_label is failed %d", ret);
+		return NULL;
 	}
 
-	return value_ret;
+	if (label) {
+		label_ret = (char*)strdup(label);
+	}
+
+	package_info_destroy(package_info);
+
+	return label_ret;
+
 }
 
 HAPI int quickpanel_common_ui_is_package_exist(const char *pkgid)
@@ -385,16 +382,16 @@ HAPI int quickpanel_common_ui_is_package_exist(const char *pkgid)
 	int ret = 0;
 	retif(pkgid == NULL, 0, "invalid parameter");
 
-	pkgmgrinfo_appinfo_h appinfo_h = NULL;
+	package_info_h package_info = NULL;
 
-	ret = pkgmgrinfo_appinfo_get_appinfo(pkgid, &appinfo_h);
-	if (ret < 0) {
+	ret = package_manager_get_package_info(pkgid, &package_info);
+	if (ret == PACKAGE_MANAGER_ERROR_NO_SUCH_PACKAGE) {
 		DBG("package %s isn't exist", pkgid);
 		return 0;
 	}
 
-	if (appinfo_h) {
-		pkgmgrinfo_appinfo_destroy_appinfo(appinfo_h);
+	if (package_info) {
+		package_info_destroy(package_info);
 	}
 
 	return 1;

@@ -145,8 +145,7 @@ pkg_check_modules(pkgs REQUIRED
 	syspopup-caller
 	minicontrol-viewer
 	minicontrol-monitor
-	pkgmgr
-	pkgmgr-info
+	capi-appfw-package-manager
 	iniparser
 	alarm-service
 	voice-control-setting
@@ -191,7 +190,7 @@ ADD_DEFINITIONS("-DQP_SMART_ALERT_ENABLE")
 ADD_DEFINITIONS("-DQP_SERVICE_NOTI_LED_ENABLE")
 ADD_DEFINITIONS("-DQP_ANIMATED_IMAGE_ENABLE")
 ADD_DEFINITIONS("-DQP_REMINDER_ENABLE")
-ADD_DEFINITIONS("-DQP_EMERGENCY_MODE_ENABLE")
+#ADD_DEFINITIONS("-DQP_EMERGENCY_MODE_ENABLE")
 ADD_DEFINITIONS("-DQP_VOICE_CONTROL_ENABLE")
 
 ADD_DEFINITIONS("-DPACKAGE=\"${PACKAGE}\"")
