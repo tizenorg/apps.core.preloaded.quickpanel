@@ -17,6 +17,7 @@
 		<privilege>http://tizen.org/privilege/bluetooth.admin</privilege>
 		<privilege>http://tizen.org/privilege/notification</privilege>
 		<privilege>http://tizen.org/privilege/telephony</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
 		<privilege>http://tizen.org/privilege/tethering.admin</privilege>
 		<privilege>http://tizen.org/privilege/wifidirect</privilege>
 		<privilege>http://tizen.org/privilege/network.set</privilege>
