@@ -26,6 +26,7 @@
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
 #include <E_DBus.h>
+#include <app_common.h>
 
 #include "preference.h"
 #include "common.h"
@@ -33,7 +34,22 @@
 
 #include "quickpanel-ui.h"
 
-#define FILE_PREFERENCE DATADIR_RW"/preference.ini"
+#define PREFERENCE_FILE_NAME "preference.ini"
+
+static char *_get_preference_file_path()
+{
+	char *data_path = NULL;
+	char file_path[MAX_FILE_PATH_LEN] = {0, };
+
+
+	data_path = app_get_data_path();
+	retif(data_path == NULL, NULL, "failed to app_get_data_path()");
+
+	snprintf(file_path, sizeof(file_path), "%s%s", data_path, PREFERENCE_FILE_NAME);
+	free(data_path);
+
+	return strdup(file_path);
+}
 
 static const char *_default_preference_get(const char *key)
 {
@@ -73,9 +89,15 @@ static inline int _key_validation_check(const char *key)
 
 static inline int _is_file_exist(void)
 {
+	char *file_path = _get_preference_file_path();
+	retif(file_path == NULL, 0, "failed to _get_preference_file_path()");
 
-	if (access(FILE_PREFERENCE, O_RDWR) == 0) {
+	if (access(file_path, O_RDWR) == 0) {
 		return 1;
+	}
+
+	if (file_path != NULL) {
+		free(file_path);
 	}
 
 	return 0;
@@ -84,9 +106,11 @@ static inline int _is_file_exist(void)
 static void _default_file_create(void)
 {
 	FILE	*fp = NULL ;
+	char *file_path = _get_preference_file_path();
+	retif(file_path == NULL, , "failed to _get_preference_file_path()");
 
-	fp = fopen(FILE_PREFERENCE, "w");
-	retif(fp == NULL, , "fatal:failed to create preference file");
+	fp = fopen(file_path, "w");
+	retif(fp == NULL, , "fatal:failed to create preference file %s", file_path);
 
 	fprintf(fp, "\n\
 			[%s]\n\
@@ -105,6 +129,10 @@ static void _default_file_create(void)
 		   );
 
 	fclose(fp);
+
+	if (file_path != NULL) {
+		free(file_path);
+	}
 }
 
 HAPI int quickpanel_preference_get(const char *key, char *value)
@@ -112,10 +140,14 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 	int ret = QP_OK;
 	dictionary	*ini = NULL;
 	const char *value_r = NULL;
+	char *file_path = NULL;
 	retif(key == NULL, QP_FAIL, "Invalid parameter!");
 	retif(value == NULL, QP_FAIL, "Invalid parameter!");
 
-	ini = iniparser_load(FILE_PREFERENCE);
+	file_path = _get_preference_file_path();
+	retif(file_path == NULL, QP_FAIL, "failed to _get_preference_file_path()");
+
+	ini = iniparser_load(file_path);
 	if (ini == NULL) {
 		DBG("failed to load ini file");
 		_default_file_create();
@@ -145,6 +177,10 @@ END:
 		iniparser_freedict(ini);
 	}
 
+	if (file_path != NULL) {
+		free(file_path);
+	}
+
 	return ret;
 }
 
@@ -167,7 +203,10 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 		_default_file_create();
 	}
 
-	ini = iniparser_load(FILE_PREFERENCE);
+	char *file_path = _get_preference_file_path();
+	retif(file_path == NULL, QP_FAIL, "failed to _get_preference_file_path()");
+
+	ini = iniparser_load(file_path);
 	retif(ini == NULL, QP_FAIL, "failed to load ini file");
 	
 	if (iniparser_set(ini, (char *)key, value) == 0) {
@@ -176,7 +215,7 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 		ERR("failed to write %s=%s", key, value);
 	}
 
-	fp = fopen(FILE_PREFERENCE, "w");
+	fp = fopen(file_path, "w");
 	if (fp != NULL) {
 		iniparser_dump_ini(ini, fp);
 		fclose(fp);
@@ -184,5 +223,12 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 
 	iniparser_freedict(ini);
 
+	if (file_path != NULL) {
+		free(file_path);
+	}
+
 	return ret;
 }
+
+
+

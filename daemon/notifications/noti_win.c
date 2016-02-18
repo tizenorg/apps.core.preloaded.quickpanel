@@ -187,7 +187,7 @@ HAPI Evas_Object *quickpanel_noti_win_add(Evas_Object *parent)
 
 	ecore_evas_name_class_set(ee, "APP_POPUP", "APP_POPUP");
 
-	elm_win_alpha_set(win, EINA_TRUE);
+	elm_win_alpha_set(win, EINA_FALSE);
 	elm_win_indicator_mode_set(win, ELM_WIN_INDICATOR_HIDE);
 	elm_win_title_set(win, "noti_win");
 	elm_win_borderless_set(win, EINA_TRUE);
