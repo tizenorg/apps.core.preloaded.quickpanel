@@ -94,11 +94,9 @@ HAPI void quickpanel_keyboard_init(void *data)
 	Ecore_Event_Handler *hdl_key_up = NULL;
 	retif(ad == NULL, , "Invalid parameter!");
 
-#if defined(WINSYS_X11)
-	if (utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_QUICKPANEL, SHARED_GRAB) != 0) {
+	if (elm_win_keygrab_set(ad->win, KEY_QUICKPANEL, 0, 0, 0, ELM_WIN_KEYGRAB_SHARED) == EINA_FALSE) {
 		ERR("failed to grab KEY_QUICKPANEL");
 	}
-#endif
 
 	hdl_key_down = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _service_hardkey_down_cb, ad);
 	if (hdl_key_down == NULL) {
@@ -129,11 +127,9 @@ HAPI void quickpanel_keyboard_fini(void *data)
 		ad->hdl_hardkey_down = NULL;
 	}
 
-#if defined(WINSYS_X11)
-	if (utilx_ungrab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_QUICKPANEL) != 0) {
+	if (elm_win_keygrab_unset(ad->win, KEY_QUICKPANEL, 0, 0) == EINA_FALSE) {
 		ERR("failed to ungrab KEY_QUICKPANEL");
 	}
-#endif
 }
 
 HAPI void quickpanel_keyboard_openning_init(void *data)
@@ -141,19 +137,18 @@ HAPI void quickpanel_keyboard_openning_init(void *data)
 	struct appdata *ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
-#if defined(WINSYS_X11)
-	if (utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_BACK, EXCLUSIVE_GRAB) != 0) {
+	if (elm_win_keygrab_set(ad->win, KEY_BACK, 0, 0, 0, ELM_WIN_KEYGRAB_EXCLUSIVE)  == EINA_FALSE) {
 		ERR("failed to grab KEY_BACK");
 	}
 
-	if (utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_MENU, EXCLUSIVE_GRAB) != 0) {
+	if (elm_win_keygrab_set(ad->win, KEY_MENU, 0, 0, 0, ELM_WIN_KEYGRAB_EXCLUSIVE) == EINA_FALSE) {
 		ERR("failed to grab KEY_MENU");
 	}
 
-	if (utilx_grab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_HOME, SHARED_GRAB) != 0) {
+	if (elm_win_keygrab_set(ad->win, KEY_HOME, 0, 0, 0, ELM_WIN_KEYGRAB_SHARED)  == EINA_FALSE) {
 		ERR("failed to grab KEY_HOME");
 	}
-#endif
+
 }
 
 HAPI void quickpanel_keyboard_closing_fini(void *data)
@@ -161,17 +156,17 @@ HAPI void quickpanel_keyboard_closing_fini(void *data)
 	struct appdata *ad = data;
 	retif(ad == NULL, , "Invalid parameter!");
 
-#if defined(WINSYS_X11)
-	if (utilx_ungrab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_BACK) != 0) {
+	if (elm_win_keygrab_unset(ad->win, KEY_BACK, 0, 0) == EINA_FALSE) {
 		ERR("failed to ungrab KEY_BACK");
 	}
 
-	if (utilx_ungrab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_MENU) != 0) {
+	if (elm_win_keygrab_unset(ad->win, KEY_MENU, 0, 0) == EINA_FALSE) {
 		ERR("failed to ungrab KEY_MENU");
 	}
 
-	if (utilx_ungrab_key(ecore_x_display_get(), elm_win_xwindow_get(ad->win), KEY_HOME) != 0) {
+	if (elm_win_keygrab_unset(ad->win, KEY_HOME, 0, 0) == EINA_FALSE) {
 		ERR("failed to ungrab KEY_HOME");
 	}
-#endif
 }
+
+

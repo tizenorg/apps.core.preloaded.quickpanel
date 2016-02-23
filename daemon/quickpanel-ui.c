@@ -654,8 +654,9 @@ void _event_message_cb(void *data, Evas_Object *obj, void *event_info)
 		DBG("quickpanel is opened");
 
 		ad->is_opened = 1;
+		quickpanel_util_time_timer_enable_set(1);
+		quickpanel_keyboard_openning_init(ad);
 		quickpanel_modules_opened(data);
-		quickpanel_media_player_stop();
 		quickpanel_uic_opened_reason_set(OPENED_NO_REASON);
 	} else {
 		DBG("quickpanel is closed");
@@ -664,8 +665,8 @@ void _event_message_cb(void *data, Evas_Object *obj, void *event_info)
 		quickpanel_util_time_timer_enable_set(0);
 		quickpanel_keyboard_closing_fini(ad);
 		quickpanel_modules_closed(data);
-		quickpanel_media_player_stop();
 	}
+	quickpanel_media_player_stop();
  }
 #endif
 
