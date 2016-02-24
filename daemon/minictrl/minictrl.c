@@ -887,7 +887,6 @@ static void _minictrl_update(const char *name, unsigned int width, unsigned int 
 	}
 }
 
-#if defined(WINSYS_X11)
 static void _minictrl_lock(const char *name)
 {
 	struct _viewer_item *found;
@@ -916,7 +915,6 @@ static void _minictrl_lock(const char *name)
 		}
 	}
 }
-#endif
 
 static void _mctrl_viewer_event_cb(minicontrol_event_e event, const char *name, bundle *event_arg, void *data)
 {
@@ -940,15 +938,12 @@ static void _mctrl_viewer_event_cb(minicontrol_event_e event, const char *name, 
 		return;
 	}
 
-#if defined(WINSYS_X11)
-
 	if ((int)event == MINICONTROL_EVENT_REQUEST_LOCK) {
 		/**
 		 * This event type is extra one. not in the enumeration list.
 		 */
 		_minictrl_lock(name);
 	} else {
-#endif	
 		switch (event) {
 		case MINICONTROL_EVENT_START:
 			ret = bundle_get_byte(event_arg, MINICONTROL_BUNDLE_KEY_WIDTH, (void **)&width, &bundle_size);
@@ -1001,9 +996,7 @@ static void _mctrl_viewer_event_cb(minicontrol_event_e event, const char *name, 
 		default:
 			break;
 		}
-#if defined(WINSYS_X11)
 	}
-#endif	
 }
 
 static int _init(void *data)
@@ -1139,7 +1132,6 @@ void _minictrl_sendview_rotation_event(const char* name, int angle)
 	}
 }
 
-#if defined(WINSYS_X11)
 static void _minictrl_send_view_event_cb(gpointer key, gpointer value, gpointer user_data)
 {
 	if (!key) {
@@ -1158,22 +1150,18 @@ static void _minictrl_send_view_event_cb(gpointer key, gpointer value, gpointer 
 		bundle_free(event_arg_bundle);
 	}
 }
-#endif
 
 static void _minictrl_opened(void *data)
 {
 	DBG("");
-#if defined(WINSYS_X11)
+
 	g_hash_table_foreach(s_info.prov_table, _minictrl_send_view_event_cb, (gpointer)MINICONTROL_VIEWER_EVENT_SHOW);
-#endif
 }
 
 static void _minictrl_closed(void *data)
 {
 	DBG("");
-#if defined(WINSYS_X11)
 	g_hash_table_foreach(s_info.prov_table, _minictrl_send_view_event_cb, (gpointer)MINICONTROL_VIEWER_EVENT_HIDE);
-#endif
 }
 
 QP_Module minictrl = {

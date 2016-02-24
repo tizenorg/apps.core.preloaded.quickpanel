@@ -49,9 +49,9 @@ static void _on_vconf_assetive_light_changed(keynode_t *node, void *user_data)
 		ERR("node == NULL");
 		return;
 	}
-#if defined(WINSYS_X11)
+
 	mode = node->value.b;
-#endif
+
 	quickpanel_setting_module_icon_state_set(user_data, mode);
 	_status_update(user_data, mode, FLAG_VALUE_VOID);
 }
