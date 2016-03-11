@@ -17,10 +17,6 @@
 
 #include <Elementary.h>
 
-#if defined(WINSYS_X11)
-#include <Ecore_X.h>
-#endif
-
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
 #include <E_DBus.h>

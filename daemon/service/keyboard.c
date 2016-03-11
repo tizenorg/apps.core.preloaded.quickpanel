@@ -23,11 +23,6 @@
 #include <tzsh_quickpanel_service.h>
 #include <notification.h>
 
-#if defined(WINSYS_X11)
-#include <Ecore_X.h>
-#include <X11/Xlib.h>
-#include <utilX.h>
-#endif
 #include <E_DBus.h>
 
 #include "quickpanel-ui.h" // appdata

@@ -28,12 +28,6 @@
 #include <system_info.h>
 #include <common_uic.h>
 
-#if defined(WINSYS_X11)
-#include <Ecore_X.h>
-#include <X11/Xlib.h>
-#include <utilX.h>
-#endif
-
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
 #include <E_DBus.h>
@@ -252,25 +246,8 @@ HAPI void quickpanel_uic_open_quickpanel(int reason)
 	retif(ad == NULL, , "Invalid parameter!");
 	retif(ad->win == NULL, , "Invalid parameter!");
 
-#if defined(WINSYS_X11)
-	Ecore_X_Window xwin;
-	Ecore_X_Window zone;
-	xwin = elm_win_xwindow_get(ad->win);
-	if (xwin != 0) {
-		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
-			if (ecore_x_e_illume_quickpanel_state_get(zone) == ECORE_X_ILLUME_QUICKPANEL_STATE_OFF) {
-				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
-				quickpanel_uic_opened_reason_set(reason);
-			}
-		} else {
-			ERR("failed to get zone");
-		}
-	} else {
-		ERR("failed to get xwin");
-	}
-#else
 	ERR("Not yet implemented");
-#endif
+
 }
 
 HAPI void quickpanel_uic_opened_reason_set(int reason)
@@ -300,28 +277,12 @@ static void _quickpanel_close(void)
 		return;
 	}
 
-#if defined(WINSYS_X11)
-	Ecore_X_Window xwin;
-	Ecore_X_Window zone;
-	xwin = elm_win_xwindow_get(ad->win);
-	if (xwin != 0) {
-		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
-			if (ecore_x_e_illume_quickpanel_state_get(zone) == ECORE_X_ILLUME_QUICKPANEL_STATE_ON) {
-				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-			}
-		} else {
-			ERR("failed to get zone");
-		}
-	} else {
-		ERR("failed to get xwin");
-	}
-#else
 	int ret = 0;
 	ret = tzsh_quickpanel_service_hide(ad->quickpanel_service);
 	if(ret != 0) {
 		ERR("failed tzsh_quickpanel_service_hide");
 	}
-#endif
+
 }
 
 static Eina_Bool _quickpanel_close_timer_cb(void *data)
@@ -362,34 +323,5 @@ HAPI void quickpanel_uic_close_quickpanel(bool is_check_lock, int is_delay_neede
 
 HAPI void quickpanel_uic_toggle_openning_quickpanel(void)
 {
-#if defined(WINSYS_X11)
-
-	Ecore_X_Window xwin;
-	Ecore_X_Window zone;
-	struct appdata *ad = quickpanel_get_app_data();
-
-	DBG("");
-
-	if (!ad || !ad->win) {
-		ERR("Invalid parameters");
-		return;
-	}
-
-	xwin = elm_win_xwindow_get(ad->win);
-	if (xwin != 0) {
-
-		if ((zone = ecore_x_e_illume_zone_get(xwin)) != 0) {
-			if (ecore_x_e_illume_quickpanel_state_get(zone) == ECORE_X_ILLUME_QUICKPANEL_STATE_ON) {
-				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-			} else {
-				ecore_x_e_illume_quickpanel_state_send(zone, ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
-			}
-		} else {
-			ERR("failed to get zone");
-		}
-	} else {
-		ERR("failed to get xwin");
-	}
-
-#endif
+	/* TO DO */
 }

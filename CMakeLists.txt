@@ -3,15 +3,6 @@ PROJECT(quickpanel C)
 
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/test TEST_SRCS)
 
-IF(${WINSYS} STREQUAL "x11")
-SET(EXTRA_SRCS
-	daemon/service/keyboard_x.c
-)
-ELSE (${WINSYS} STREQUAL "x11")
-SET(EXTRA_SRCS
-)
-ENDIF (${WINSYS} STREQUAL "x11")
-
 SET(SRCS
 	daemon/modules.c
 	daemon/dbus_utility.c
@@ -152,17 +143,6 @@ pkg_check_modules(pkgs REQUIRED
 	tzsh-quickpanel-service
 )
 
-IF(${WINSYS} STREQUAL "x11")
-pkg_check_modules(x11_pkgs REQUIRED
-	ecore-x
-	utilX
-	inputproto
-	xi
-	libprivilege-control
-)
-ENDIF(${WINSYS} STREQUAL "x11")
-
-
 FOREACH(flag ${pkgs_CFLAGS} ${x11_pkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
 ENDFOREACH(flag)
@@ -177,10 +157,6 @@ IF("${ARCH}" STREQUAL "arm")
 	ADD_DEFINITIONS("-DTARGET")
 	MESSAGE("add -DTARGET")
 ENDIF("${ARCH}" STREQUAL "arm")
-
-IF(${WINSYS} STREQUAL "x11")
-ADD_DEFINITIONS("-DWINSYS_X11=1")
-ENDIF(${WINSYS} STREQUAL "x11")
 
 ADD_DEFINITIONS("-DQP_SETTING_ENABLE")
 ADD_DEFINITIONS("-DQP_BRIGHTNESS_ENABLE")
@@ -217,9 +193,6 @@ INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
 INSTALL(DIRECTORY DESTINATION ${DATADIR})
 INSTALL(DIRECTORY DESTINATION ${DATADIR_RW})
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/icons/quickpanel_icon_default.png DESTINATION ${RESDIR})
-IF(${WINSYS} STREQUAL "x11")
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PKGNAME}.efl DESTINATION /etc/smack/accesses.d)
-ENDIF(${WINSYS} STREQUAL "x11")
 
 # icon for setting
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/icons/settings_noti_panel.png DESTINATION ${SHARED_DIR}/icons)

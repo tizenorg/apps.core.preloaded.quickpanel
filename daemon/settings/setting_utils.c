@@ -18,10 +18,6 @@
 #include <Elementary.h>
 #include <glib.h>
 
-#if defined(WINSYS_X11)
-#include <Ecore_X.h>
-#endif
-
 #include <notification.h>
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
@@ -460,13 +456,7 @@ HAPI int quickpanel_setting_set_scroll_page_width(void *data)
 	Evas_Object *scroller = quickpanel_setting_scroller_get(ad->ly);
 
 	int w, h;
-#if defined(WINSYS_X11)
-	Ecore_X_Screen *screen = ecore_x_default_screen_get();
-	ecore_x_screen_size_get(screen, &w, &h);
-#else
 	elm_win_screen_size_get(ad->win, NULL, NULL, &w, &h);
-#endif
-
 	elm_scroller_page_size_set(scroller, w / QP_SETTING_NUM_PORTRAIT_ICONS, 0);
 
 	return 0;

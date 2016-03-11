@@ -10,12 +10,7 @@ License: Apache-2.0
 Source0: %{name}-%{version}.tar.gz
 Source102: quickpanel-system.service
 Source104: quickpanel-system.path
-
-%if %{with wayland}
-Source103: org.tizen.quickpanel.manifest.3.0
-%else
-Source103: org.tizen.quickpanel.manifest.2.4
-%endif
+Source103: org.tizen.quickpanel.manifest
 
 %if "%{?profile}" == "wearable"
 ExcludeArch: %{arm} %ix86 x86_64
@@ -61,15 +56,7 @@ BuildRequires: pkgconfig(minicontrol-monitor)
 BuildRequires: pkgconfig(iniparser)
 BuildRequires: pkgconfig(capi-appfw-package-manager)
 BuildRequires: pkgconfig(alarm-service)
-%if %{with wayland}
 BuildRequires: pkgconfig(ecore-wayland)
-%else
-BuildRequires: pkgconfig(inputproto)
-BuildRequires: pkgconfig(xi)
-BuildRequires: pkgconfig(utilX)
-BuildRequires: pkgconfig(ecore-x)
-BuildRequires: pkgconfig(libprivilege-control)
-%endif
 BuildRequires: pkgconfig(voice-control-setting)
 BuildRequires: pkgconfig(tzsh-quickpanel-service)
 BuildRequires: gettext-tools
@@ -99,16 +86,10 @@ export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 
 LDFLAGS+="-Wl,--rpath=%{name}/lib -Wl,--as-needed";
 export LDFLAGS
-
-%if %{with wayland}
 export WINSYS="wayland"
 export WAYLAND_SUPPORT=On
 export X11_SUPPORT=Off
-%else
-export WAYLAND_SUPPORT=Off
-export X11_SUPPORT=On
-export WINSYS="x11"
-%endif
+
 %cmake . -DPKGNAME=%{name} -DWINSYS=${WINSYS}
 
 make %{?jobs:-j%jobs}
@@ -137,8 +118,3 @@ ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/
 %{__usrdir}/quickpanel.service
 %{__usrdir}/quickpanel.path
 %{_prefix}/share/license/%{name}
-%if %{with wayland}
-# Do not install the SMACK Rule file for Tizen 3.x
-%else
-%{_sysconfdir}/smack/accesses.d/%{name}.efl
-%endif

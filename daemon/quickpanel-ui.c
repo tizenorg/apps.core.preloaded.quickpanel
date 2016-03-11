@@ -35,13 +35,6 @@
 #include <media.h>
 #include <system_settings.h>
 
-#if defined(WINSYS_X11)
-#include <X11/Xlib.h>
-#include <utilX.h>
-#include <Ecore_X.h>
-#include <privilege-control.h>
-#endif
-
 /* quickpanel basics */
 #include "common.h"
 #include "common_uic.h"
@@ -64,7 +57,6 @@
 
 /* services */
 #include "keyboard.h"
-#include "keyboard_x.h"
 #include "uninstall.h"
 #ifdef QP_REMINDER_ENABLE
 #include "reminder.h"
@@ -78,10 +70,6 @@
 #define QP_WINDOW_PRIO 300
 
 static struct appdata *g_app_data = NULL;
-
-#if defined(WINSYS_X11)
-static Ecore_X_Atom E_ILLUME_ATOM_MV_QUICKPANEL_STATE;
-#endif
 
 static void _ui_rotate(void *data, int new_angle);
 static void _ui_geometry_info_set(void *data);
@@ -135,22 +123,13 @@ static void _ui_efl_cache_flush(void *evas)
 static void _ui_handler_input_region_set(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
-#if defined(WINSYS_X11)
-	Ecore_X_Window xwin;
-	Ecore_X_Atom atom_window_input_region = 0;
-#else
 	tzsh_region_h region;
-#endif
 	unsigned int window_input_region[4] = {0,};
 
 	retif(data == NULL,  , "Invialid parameter!");
 	ad = data;
 	
-#if defined(WINSYS_X11)
-	xwin = elm_win_xwindow_get(ad->win);
-#else
 	region = tzsh_region_create(ad->tzsh);
-#endif
 
 	switch (ad->angle) {
 	case 0:
@@ -186,36 +165,23 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 			,window_input_region[3]
 		);
 
-#if defined(WINSYS_X11)
-	atom_window_input_region = ecore_x_atom_get(STR_ATOM_WINDOW_INPUT_REGION);
-	ecore_x_window_prop_card32_set(xwin, atom_window_input_region, window_input_region, 4);
-#else
 	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
 	tzsh_quickpanel_service_handler_region_set(ad->quickpanel_service, ad->angle, region);
 	tzsh_region_destroy(region);
-#endif
 }
 
 static void _ui_handler_content_region_set(void *data, int contents_height)
 {
 	struct appdata *ad = NULL;
 
-#if defined(WINSYS_X11)
-	Ecore_X_Window xwin;
-	Ecore_X_Atom atom_window_contents_region = 0;
-#else
 	tzsh_region_h region;
-#endif
+
 	unsigned int window_contents_region[4] = {0,};
 
 	retif(data == NULL,  , "Invialid parameter!");
 	ad = data;
 
-#if defined(WINSYS_X11)
-	xwin = elm_win_xwindow_get(ad->win);
-#else
 	region = tzsh_region_create(ad->tzsh);
-#endif
 
 	switch (ad->angle) {
 	case 0:
@@ -251,14 +217,10 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 			,window_contents_region[3]
 	   );
 
-#if defined(WINSYS_X11)
-	atom_window_contents_region = ecore_x_atom_get(STR_ATOM_WINDOW_CONTENTS_REGION);
-	ecore_x_window_prop_card32_set(xwin, atom_window_contents_region, window_contents_region, 4);
-#else
 	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
 	tzsh_quickpanel_service_content_region_set(ad->quickpanel_service, ad->angle, region);
 	tzsh_region_destroy(region);
-#endif
+
 }
 
 static void _ui_handler_info_set(void *data)
@@ -596,55 +558,7 @@ static void _vconf_event_lcdoff_cb(keynode_t *node,
 	}
 }
 
-#if defined(WINSYS_X11)
-static Eina_Bool _ecore_event_client_message_cb(void *data, int type,
-		void *event)
-{
-	struct appdata *ad = data;
 
-	Ecore_X_Event_Client_Message *ev = event;
-
-	retif(data == NULL || event == NULL,
-			ECORE_CALLBACK_RENEW, "Invalid parameter!");
-
-	if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) {
-		if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) {
-			SERR("quickpanel is closed");
-			ad->is_opened = 0;
-			quickpanel_util_time_timer_enable_set(0);
-			quickpanel_keyboard_closing_fini(ad);
-			quickpanel_keyboard_x_closing_fini(ad);
-			quickpanel_modules_closed(data);
-			quickpanel_media_player_stop();
-		}
-	} else if (ev->message_type == E_ILLUME_ATOM_MV_QUICKPANEL_STATE) {
-		if (ev->data.l[0] == 1) {
-			// pressed
-			if (ad->is_opened == 0) {
-				quickpanel_util_time_timer_enable_set(1);
-				quickpanel_keyboard_openning_init(ad);
-				quickpanel_keyboard_x_openning_init(ad);
-				if (quickpanel_uic_opened_reason_get() != OPENED_BY_CMD_SHOW_SETTINGS) {
-					quickpanel_pager_page_set(PAGE_IDX_MAIN, 0);
-				}
-			}
-			_ui_handler_enable_set(EINA_TRUE);
-		}
-		if (ev->data.l[0] == 0) {
-			// released
-			if (ad->is_opened == 0) {
-				SERR("quickpanel is opened");
-				ad->is_opened = 1;
-				quickpanel_modules_opened(data);
-				quickpanel_media_player_stop();
-				quickpanel_uic_opened_reason_set(OPENED_NO_REASON);
-			}
-			_ui_handler_enable_set(EINA_FALSE);
-		}
-	}
-	return ECORE_CALLBACK_RENEW;
-}
-#else
 void _event_message_cb(void *data, Evas_Object *obj, void *event_info)
  {
 	bool visiblity = (bool)event_info;
@@ -668,7 +582,6 @@ void _event_message_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 	quickpanel_media_player_stop();
  }
-#endif
 
 static void _vconf_init(struct appdata *ad)
 {
@@ -724,21 +637,8 @@ static void _edbus_fini(struct appdata *ad)
 
 static void _ecore_event_init(struct appdata *ad)
 {
-#if defined(WINSYS_X11)
-	Ecore_Event_Handler *hdl = NULL;
-
-	/* Register window rotate event */
-	hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,
-			_ecore_event_client_message_cb, ad);
-	if (hdl == NULL) {
-		ERR("failed to add handler(ECORE_X_EVENT_CLIENT_MESSAGE)");
-	}
-
-	ad->hdl_client_message = hdl;
-#else
 	DBG("");
 	evas_object_smart_callback_add(ad->win, "visibility,changed", _event_message_cb, ad);
-#endif
 }
 
 static void _ecore_event_fini(struct appdata *ad)
@@ -749,12 +649,6 @@ static void _ecore_event_fini(struct appdata *ad)
 	}
 }
 
-static void _x_atom_init(void)
-{
-#if defined(WINSYS_X11)
-	E_ILLUME_ATOM_MV_QUICKPANEL_STATE = ecore_x_atom_get("_E_MOVE_QUICKPANEL_STATE");
-#endif
-}
 /*****************************************************************************
  *
  * App efl main interface
@@ -872,7 +766,6 @@ static void _quickpanel_initialize(void *data)
 
 	quickpanel_media_init();
 
-	_x_atom_init();
 	_ecore_event_init(ad);
 	_vconf_init(ad);
 	_edbus_init(ad);
@@ -882,9 +775,6 @@ static void _quickpanel_initialize(void *data)
 	quickpanel_emergency_mode_init(ad);
 #endif
 	quickpanel_keyboard_init(ad);
-#if defined(WINSYS_X11)
-	quickpanel_keyboard_x_init(ad);
-#endif
 #ifdef QP_REMINDER_ENABLE
 	quickpanel_reminder_init(ad);
 #endif
@@ -903,9 +793,7 @@ static void _quickpanel_initialize(void *data)
 static bool _app_create_cb(void *data)
 {
 	ERR("");
-#if defined(WINSYS_X11)
-	elm_config_engine_set("opengl_x11");
-#endif
+
 	elm_app_base_scale_set(1.8);
 
 	pid_t pid;
@@ -970,9 +858,6 @@ static void _app_terminate_cb(void *data)
 	_ecore_event_fini(ad);
 
 	quickpanel_keyboard_fini(ad);
-#if defined(WINSYS_X11)
-	quickpanel_keyboard_x_fini(ad);
-#endif
 	quickpanel_uninstall_fini(ad);
 #ifdef QP_REMINDER_ENABLE
 	quickpanel_reminder_fini(ad);
@@ -1043,13 +928,6 @@ int main(int argc, char *argv[])
 	app_event_handler_h handlers[5] = {NULL, };
 
 	ERR("quickpanel is forked");
-
-#if defined(WINSYS_X11)
-	ret = perm_app_set_privilege("org.tizen.", NULL, NULL);
-	if (ret != 0) {
-		WARN("Failed to control privilege!");
-	}
-#endif
 
 	event_callback.create = _app_create_cb;
 	event_callback.terminate = _app_terminate_cb;

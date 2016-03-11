@@ -16,10 +16,6 @@
  */
 
 #include <Elementary.h>
-#if defined(WINSYS_X11)
-#include <utilX.h>
-#include <Ecore_X.h>
-#endif
 #include <efl_util.h>
 
 #define NOTI_HEIGHT ELM_SCALE_SIZE(260)

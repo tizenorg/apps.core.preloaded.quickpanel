@@ -81,21 +81,6 @@ static Eina_Bool _icon_handler_longpress(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void _icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	int down_x = 0;
-	retif(obj == NULL, , "invalid argument");
-
-	quickpanel_page_get_touched_pos(&down_x, NULL);
-
-	if (s_info.down_x - down_x > 15 || s_info.down_x - down_x < -15) {
-		if (s_info.timer_longpress != NULL) {
-			ecore_timer_del(s_info.timer_longpress);
-			s_info.timer_longpress = NULL;
-		}
-	}
-}
-
 static void _icon_mouse_up_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	retif(obj == NULL, , "invalid argument");
@@ -105,9 +90,6 @@ static void _icon_mouse_up_cb(void *data, Evas_Object *obj, const char *emission
 		s_info.timer_longpress = NULL;
 		s_info.is_longpressed = EINA_FALSE;
 	}
-
-	evas_object_event_callback_del(obj, EVAS_CALLBACK_MOUSE_MOVE,
-			_icon_mouse_move_cb);
 }
 
 static void _icon_mouse_down_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
@@ -123,9 +105,6 @@ static void _icon_mouse_down_cb(void *data, Evas_Object *obj, const char *emissi
 
 	s_info.is_longpressed = EINA_FALSE;
 	s_info.timer_longpress = ecore_timer_add(TAP_AND_DELAY_LONG,_icon_handler_longpress, obj);
-
-	evas_object_event_callback_add(obj, EVAS_CALLBACK_MOUSE_MOVE,
-			_icon_mouse_move_cb, NULL);
 }
 
 #ifdef QP_SCREENREADER_ENABLE
