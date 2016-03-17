@@ -8,8 +8,6 @@ Release: 1
 Group: Applications/Core Applications
 License: Apache-2.0
 Source0: %{name}-%{version}.tar.gz
-Source102: quickpanel-system.service
-Source104: quickpanel-system.path
 Source103: org.tizen.quickpanel.manifest
 
 %if "%{?profile}" == "wearable"
@@ -98,12 +96,7 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
-mkdir -p %{buildroot}%{__usrdir}/default.target.wants
-install -m 0644 %SOURCE102 %{buildroot}%{__usrdir}/quickpanel.service
-install -m 0644 %SOURCE104 %{buildroot}%{__usrdir}/quickpanel.path
-ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/
 %post
-
 
 %files
 %manifest %{name}.manifest
@@ -114,7 +107,4 @@ ln -s ../quickpanel.path %{buildroot}%{__usrdir}/default.target.wants/
 /opt/%{_prefix}/apps/%{name}/data
 %{_prefix}/apps/%{name}
 %{_prefix}/share/packages/%{name}.xml
-%{__usrdir}/default.target.wants/quickpanel.path
-%{__usrdir}/quickpanel.service
-%{__usrdir}/quickpanel.path
 %{_prefix}/share/license/%{name}
