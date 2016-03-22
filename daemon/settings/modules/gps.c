@@ -30,6 +30,7 @@
 #include "settings.h"
 #include "setting_utils.h"
 #include "setting_module_api.h"
+#include "settings_icon_common.h"
 
 
 #define BUTTON_LABEL _("IDS_QP_BUTTON2_LOCATION_ABB")
@@ -65,28 +66,7 @@ static const char *_icon_get(qp_setting_icon_image_type type)
 static void _long_press_cb(void *data)
 {
 #ifdef PACKAGE_SETTING_MENU
-	// Because operation is not DEFAULT, this function can not be called. Too many changes to add operation param.
-	// quickpanel_setting_icon_handler_longpress(PACKAGE_SETTING_MENU, NULL);
-
-	app_control_h service;
-	int ret = 0;
-
-	ret = app_control_create(&service);
-	if (ret != 0) {
-		ERR("Failed to create app control");
-		return;
-	}
-
-	app_control_set_app_id(service, PACKAGE_SETTING_MENU);
-	app_control_set_operation(service, OPERATION_SETTING_MENU);
-
-	ret = app_control_send_launch_request(service, NULL, NULL);
-	if (ret != 0) {
-		ERR("Failed to launch[%d]", ret);
-	}
-
-	app_control_destroy(service);
-
+	quickpanel_setting_icon_handler_longpress(PACKAGE_SETTING_MENU, NULL);
 #endif
 }
 

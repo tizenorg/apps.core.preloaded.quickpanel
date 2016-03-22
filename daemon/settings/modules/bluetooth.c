@@ -35,7 +35,7 @@
 #define BUTTON_ICON_NORMAL "quick_icon_bluetooth.png"
 #define BUTTON_ICON_HIGHLIGHT NULL
 #define BUTTON_ICON_DIM NULL
-#define PACKAGE_SETTING_MENU "ug-bluetooth-efl-single"
+#define PACKAGE_SETTING_MENU "ug-bluetooth-efl"
 
 static void _mouse_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source);
 
