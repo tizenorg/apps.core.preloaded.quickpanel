@@ -798,6 +798,7 @@ static bool _app_create_cb(void *data)
 
 	pid_t pid;
 	int r;
+	char err_buf[128] = {0,};
 
 	// signal handler
 	struct sigaction act;
@@ -806,15 +807,18 @@ static bool _app_create_cb(void *data)
 
 	int ret = sigemptyset(&act.sa_mask);
 	if (ret < 0) {
-		ERR("Failed to sigemptyset[%s]", strerror(errno));
+		strerror_r(errno, err_buf, sizeof(err_buf));
+		ERR("Failed to sigemptyset[%d / %s]", errno, err_buf);
 	}
 	ret = sigaddset(&act.sa_mask, SIGTERM);
 	if (ret < 0) {
-		ERR("Failed to sigaddset[%s]", strerror(errno));
+		strerror_r(errno, err_buf, sizeof(err_buf));
+		ERR("Failed to sigaddset[%d / %s]", errno, err_buf);
 	}
 	ret = sigaction(SIGTERM, &act, NULL);
 	if (ret < 0) {
-		ERR("Failed to sigaction[%s]", strerror(errno));
+		strerror_r(errno, err_buf, sizeof(err_buf));
+		ERR("Failed to sigaction[%d / %s]", errno, err_buf);
 	}
 
 	pid = setsid();

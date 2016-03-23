@@ -161,7 +161,6 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 		if (_key_validation_check(key) == 1) {
 			_default_file_create();
 		}
-		goto END;
 	} else {
 		DBG("get:[%s]", value_r);
 	}
@@ -169,7 +168,7 @@ HAPI int quickpanel_preference_get(const char *key, char *value)
 
 END:
 	if (value_r != NULL) {
-		strcpy(value, value_r);
+		strncpy(value, value_r, strlen(value_r));
 		ret = QP_OK;
 	}
 
@@ -208,7 +207,7 @@ HAPI int quickpanel_preference_set(const char *key, char *value)
 
 	ini = iniparser_load(file_path);
 	retif(ini == NULL, QP_FAIL, "failed to load ini file");
-	
+
 	if (iniparser_set(ini, (char *)key, value) == 0) {
 		ret = QP_OK;
 	} else {

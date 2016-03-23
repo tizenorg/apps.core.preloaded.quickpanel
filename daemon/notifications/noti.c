@@ -575,11 +575,11 @@ static void _noti_clear_list_all(void)
 {
 	struct appdata *ad = quickpanel_get_app_data();
 
-	if (s_info.noti_node->table != NULL) {
-		g_hash_table_foreach(s_info.noti_node->table, _noti_node_clear_list_cb, ad->list);
-	}
+	retif(ad == NULL, , "Invalid parameter!");
 
-	if (s_info.noti_node != NULL) {
+	if (s_info.noti_node != NULL && s_info.noti_node->table != NULL) {
+		g_hash_table_foreach(s_info.noti_node->table, _noti_node_clear_list_cb, ad->list);
+
 		quickpanel_noti_node_remove_all(s_info.noti_node);
 	}
 }
@@ -1401,6 +1401,9 @@ HAPI noti_node_item *quickpanel_noti_node_get_first_noti(void)
 HAPI void quickpanel_noti_closing_trigger_set(void)
 {
 	struct appdata *ad = quickpanel_get_app_data();
+
+	retif(ad == NULL, , "invalid parameter");
+
 	quickpanel_noti_listbox_closing_trigger_set(ad->list);
 }
 
