@@ -102,9 +102,6 @@ rm -rf %{buildroot}
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 %attr(755,-,-) %{_sysconfdir}/init.d/quickpanel
-%attr(775,app,app) /opt/%{_prefix}/apps/%{name}/
-%attr(775,app,app) /opt/%{_prefix}/apps/%{name}/data
-/opt/%{_prefix}/apps/%{name}/data
 %{_prefix}/apps/%{name}
 %{_prefix}/share/packages/%{name}.xml
 %{_prefix}/share/license/%{name}
