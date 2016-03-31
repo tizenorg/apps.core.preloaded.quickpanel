@@ -83,10 +83,13 @@ static void _pkgmgr_event_cb(const char *type, const char *package,
 		return;
 	}
 
-	SDBG("package:%s event_type:%s event_state:%s", package, event_type, event_state);
+	if (event_type != PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL) {
+		return;
+	}
 
-	if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL &&
-		event_state == PACKAGE_MANAGER_EVENT_STATE_STARTED) {
+	SDBG("type : %s event_type:%d event_state:%d [%s]", type, event_type, event_state, package);
+
+	if (event_state == PACKAGE_MANAGER_EVENT_STATE_STARTED) {
 
 		DBG("Pkg:%s is being uninstalled", package);
 
@@ -97,8 +100,7 @@ static void _pkgmgr_event_cb(const char *type, const char *package,
 		} else {
 			ERR("failed to create event item");
 		}
-	} else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL &&
-		event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
+	} else if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
 
 		if (_is_item_exist(package, 1) == 1) {
 			DBG("Pkg:%s is uninstalled, delete related resource", package);
