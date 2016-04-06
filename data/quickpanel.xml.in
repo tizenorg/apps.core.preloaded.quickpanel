@@ -23,5 +23,7 @@
 		<privilege>http://tizen.org/privilege/network.set</privilege>
 		<privilege>http://tizen.org/privilege/network.get</privilege>
 		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+		<privilege>http://tizen.org/privilege/haptic</privilege>
 	</privileges>
 </manifest>
