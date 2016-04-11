@@ -144,11 +144,12 @@ static void _view_update(Evas_Object *view, int state, int flag_extra_1, int fla
 	quickpanel_setting_icon_content_set(view, image);
 
 	if (quickpanel_uic_is_opened() && g_check_press) {
-		g_check_press = 0;
 		if (sound_status == 1 && vibration_status == 0) {
 			ecore_job_add(_play_snd_job_cb, NULL);
+			g_check_press = 0;
 		} else if (sound_status == 0 && vibration_status == 1) {
 			ecore_job_add(_play_vib_job_cb, NULL);
+			g_check_press = 0;
 		}
 	}
 }
