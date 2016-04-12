@@ -25,5 +25,7 @@
 		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
 		<privilege>http://tizen.org/privilege/display</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
+		<privilege>http://tizen.org/privilege/led</privilege>
+		<privilege>http://tizen.org/privilege/keygrab</privilege>
 	</privileges>
 </manifest>
