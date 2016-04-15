@@ -58,11 +58,6 @@ extern QP_Module_Setting gps;
 extern QP_Module_Setting bluetooth;
 extern QP_Module_Setting sound;
 extern QP_Module_Setting rotate;
-extern QP_Module_Setting mobile_data;
-extern QP_Module_Setting flightmode;
-extern QP_Module_Setting u_power_saving;
-extern QP_Module_Setting tethering;
-extern QP_Module_Setting assistive_light;
 
 QP_Module settings = {
 	.name = "settings",

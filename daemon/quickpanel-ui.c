@@ -46,11 +46,7 @@
 #include "vi_manager.h"
 #include "pager.h"
 #include "page_base.h"
-#ifdef QP_ENABLE_PAGE_EDIT
-#include "page_edit.h"
-#else
 #include "page_setting_all.h"
-#endif
 
 #include "sim_controller.h"
 #include "noti.h"

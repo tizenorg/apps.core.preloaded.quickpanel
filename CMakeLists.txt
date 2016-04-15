@@ -5,7 +5,6 @@ AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/test TEST_SRCS)
 
 SET(SRCS
 	daemon/modules.c
-	daemon/dbus_utility.c
 	daemon/accessibility.c
 	daemon/voice_control.c
 	daemon/media.c
@@ -18,28 +17,20 @@ SET(SRCS
 	daemon/notifications/animated_image.c
 	daemon/notifications/activenoti.c
 	daemon/notifications/noti_view_listype.c
-	daemon/notifications/noti_box.c
+	daemon/notifications/noti_view_ongoing.c
 	daemon/notifications/noti_node.c
 	daemon/notifications/noti_section.c
-	daemon/notifications/noti_view_ongoing.c
-	daemon/notifications/noti_gridbox.c
 	daemon/notifications/noti_win.c
-	daemon/notifications/noti_view_boxtype.c
 	daemon/notifications/noti_listbox.c
 	daemon/notifications/noti_util.c
 	daemon/notifications/noti_view.c
 	daemon/notifications/noti.c
 	daemon/device/brightness.c
 	daemon/settings/modules/rotate-lock.c
-	daemon/settings/modules/ultra_power_saving.c
-	daemon/settings/modules/assistive_light.c
 	daemon/settings/modules/bluetooth.c
 	daemon/settings/modules/gps.c
 	daemon/settings/modules/wifi.c
-	daemon/settings/modules/tethering.c
-	daemon/settings/modules/mobile_data.c
 	daemon/settings/modules/sound-profile.c
-	daemon/settings/modules/flightmode.c
 	daemon/settings/settings_view_all.c
 	daemon/settings/settings_icon_common.c
 	daemon/settings/settings_gridbox.c
@@ -57,12 +48,10 @@ SET(SRCS
 	daemon/service/reminder.c
 	daemon/service/keyboard.c
 	daemon/service/noti_led.c
-	daemon/service/smart_alert.c
 	daemon/page/pager.c
 	daemon/page/page_base.c
 	daemon/page/pager_common.c
 	daemon/page/page_setting_all.c
-	daemon/page/page_edit.c
 	daemon/quickpanel-ui.c
 	daemon/common.c
 	daemon/list_util.c
@@ -139,7 +128,7 @@ pkg_check_modules(pkgs REQUIRED
 	iniparser
 	alarm-service
 	voice-control-setting
-	tzsh-quickpanel-service
+	tzsh-quickpanel-service	
 )
 
 FOREACH(flag ${pkgs_CFLAGS} ${x11_pkgs_CFLAGS})
@@ -161,7 +150,6 @@ ADD_DEFINITIONS("-DQP_SETTING_ENABLE")
 ADD_DEFINITIONS("-DQP_BRIGHTNESS_ENABLE")
 ADD_DEFINITIONS("-DQP_MINICTRL_ENABLE")
 ADD_DEFINITIONS("-DQP_SCREENREADER_ENABLE")
-ADD_DEFINITIONS("-DQP_SMART_ALERT_ENABLE")
 ADD_DEFINITIONS("-DQP_SERVICE_NOTI_LED_ENABLE")
 ADD_DEFINITIONS("-DQP_ANIMATED_IMAGE_ENABLE")
 ADD_DEFINITIONS("-DQP_REMINDER_ENABLE")
@@ -189,13 +177,11 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${pkgs_LDFLAGS} ${x11_pkgs_LDFLAGS} "-pie"
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
 INSTALL(DIRECTORY DESTINATION ${DATADIR})
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/icons/quickpanel_icon_default.png DESTINATION ${RESDIR})
-
-# icon for setting
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/icons/settings_noti_panel.png DESTINATION ${SHARED_DIR}/icons)
+#INSTALL(FILES ${CMAKE_SOURCE_DIR}/icons/quickpanel_icon_default.png DESTINATION ${RESDIR})
 
 # icons for notification
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/images_noti_icons/ DESTINATION ${SHARED_DIR}/noti_icons FILES_MATCHING PATTERN "*.png")
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/data/images/quickpanel_icon_default.png DESTINATION ${RESDIR})
 
 # License
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION /usr/share/license RENAME ${PKGNAME})
@@ -203,4 +189,3 @@ INSTALL(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION /usr/share/license RENAME 
 # i18n
 ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(po)
-

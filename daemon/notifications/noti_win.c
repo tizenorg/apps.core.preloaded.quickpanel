@@ -31,7 +31,7 @@
 
 #include "common.h"
 #include "noti_win.h"
-#include "dbus_utility.h"
+
 
 struct Internal_Data {
 	Evas_Object *content;

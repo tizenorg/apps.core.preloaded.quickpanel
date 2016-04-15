@@ -40,19 +40,13 @@
 #include "common.h"
 #include "list_util.h"
 #include "noti_node.h"
-#include "noti_gridbox.h"
 #include "vi_manager.h"
-#include "noti_box.h"
 #include "noti_listbox.h"
 #include "noti_list_item.h"
 #include "noti_section.h"
 #include "noti_view.h"
 #include "noti.h"
 #include "list_util.h"
-
-#ifdef QP_SMART_ALERT_ENABLE
-#include "smart_alert.h"
-#endif
 
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 #include "noti_led.h"
@@ -468,9 +462,7 @@ static void _notibox_delete_cb(noti_node_item *item, Evas_Object *obj)
 	notification_h noti = item->noti;
 	retif(noti == NULL, , "Invalid parameter!");
 
-	if (_do_noti_delete(noti) != NOTIFICATION_ERROR_NONE) {
-		quickpanel_noti_box_item_dragging_cancel(obj);
-	}
+	_do_noti_delete(noti);
 }
 
 static void _notibox_button_1_cb(noti_node_item *item, Evas_Object *obj)
@@ -716,6 +708,7 @@ static void _noti_add(Evas_Object *list, void *data, int insert_pos)
 
 static void _update_notilist(struct appdata *ad)
 {
+	DBG("");
 	Evas_Object *list = NULL;
 	notification_h noti = NULL;
 	notification_h noti_save = NULL;
@@ -837,9 +830,6 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 				}
 			}
 #endif
-#ifdef QP_SMART_ALERT_ENABLE
-			quickpanel_smart_alert_update_info(noti_new);
-#endif
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 			quickpanel_noti_led_proc(noti_new, op_type);
 #endif
@@ -881,9 +871,6 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 					notification_h noti = node->noti;
 					notification_get_type(noti, &noti_type);
 
-#ifdef QP_SMART_ALERT_ENABLE
-					quickpanel_smart_alert_update_info(noti);
-#endif
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 					quickpanel_noti_led_proc(noti, op_type);
 #endif
@@ -937,9 +924,6 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 					}
 				}
 #endif
-#ifdef QP_SMART_ALERT_ENABLE
-				quickpanel_smart_alert_update_info(noti_new);
-#endif
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 				quickpanel_noti_led_proc(noti_new, op_type);
 #endif
@@ -954,7 +938,6 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 						if (quickpanel_noti_view_is_view_handler_changed(node->view, noti_new) == 1) {
 							quickpanel_noti_listbox_remove_item(ad->list, node->view, 1);
 							quickpanel_noti_node_remove(s_info.noti_node, priv_id);
-							_noti_add(ad->list, noti_new, GRIDBOX_PREPEND);
 						} else {
 							old_noti = node->noti;
 							node->noti = noti_new;
@@ -993,9 +976,6 @@ static void _detailed_changed_cb(void *data, notification_type_e type, notificat
 		case NOTIFICATION_OP_SERVICE_READY:
 			_update_notilist(ad);
 
-#ifdef	QP_SMART_ALERT_ENABLE
-			quickpanel_smart_alert_update_info(NULL);
-#endif
 #ifdef QP_SERVICE_NOTI_LED_ENABLE
 			quickpanel_noti_led_init(ad, s_info.noti_node);
 #endif

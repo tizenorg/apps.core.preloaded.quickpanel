@@ -528,14 +528,11 @@ collections {
 	}
 
 #include "quickpanel_setting.edc"
-#include "quickpanel_page_edit.edc"
 #include "quickpanel_datetime.edc"
 #include "quickpanel_brightness.edc"
 #include "quickpanel_minictrl.edc"
 #include "quickpanel_noti_section.edc"
-#include "quickpanel_notibox.edc"
 #include "quickpanel_listitem_noti.edc"
-#include "quickpanel_listitem_noti_legacy.edc"
 #include "quickpanel_listitem_ongoing.edc"
 #include "quickpanel_animated_icon.edc"
 #include "quickpanel_images.edc"
