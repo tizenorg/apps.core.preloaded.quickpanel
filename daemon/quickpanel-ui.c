@@ -161,7 +161,7 @@ static void _ui_handler_input_region_set(void *data, int contents_height)
 			,window_input_region[3]
 		);
 
-	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
+	tzsh_region_add(region, window_input_region[0], window_input_region[1], window_input_region[2], window_input_region[3]);
 	tzsh_quickpanel_service_handler_region_set(ad->quickpanel_service, ad->angle, region);
 	tzsh_region_destroy(region);
 }
@@ -213,7 +213,7 @@ static void _ui_handler_content_region_set(void *data, int contents_height)
 			,window_contents_region[3]
 	   );
 
-	tzsh_region_add(region, 0, contents_height, ad->win_width, ELM_SCALE_SIZE(QP_HANDLE_H));
+	tzsh_region_add(region, window_contents_region[0], window_contents_region[1], window_contents_region[2], window_contents_region[3]);
 	tzsh_quickpanel_service_content_region_set(ad->quickpanel_service, ad->angle, region);
 	tzsh_region_destroy(region);
 
