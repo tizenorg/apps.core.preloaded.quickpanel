@@ -21,7 +21,6 @@
 #include <time.h>
 
 #include <vconf.h>
-#include <appcore-common.h>
 #include <app_control.h>
 #include <notification.h>
 #include <notification_internal.h>

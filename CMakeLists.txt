@@ -109,7 +109,6 @@ pkg_check_modules(pkgs REQUIRED
 	capi-ui-efl-util
 	tapi
 	feedback
-	appcore-common
 	notification
 	badge
 	vconf

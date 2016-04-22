@@ -27,7 +27,6 @@
 #include <unicode/udatpg.h>
 #include <unicode/ustring.h>
 
-#include <appcore-common.h>
 #include <app_control.h>
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -57,6 +56,8 @@ static int _init(void *data);
 static int _fini(void *data);
 static void _lang_changed(void *data);
 static void _util_time_heartbeat_do(void);
+
+
 
 QP_Module qp_datetime_controller = {
 	.name = "qp_datetime_controller",
@@ -91,7 +92,7 @@ static struct info {
 	.formatter_ampm = NULL,
 	.generator = NULL,
 	.date_generator = NULL,
-	.timeformat = APPCORE_TIME_FORMAT_24,
+	.timeformat = QP_TIME_FORMAT_24,
 	.timeregion_format = NULL,
 	.dateregion_format = NULL,
 	.timezone_id = NULL,
@@ -437,7 +438,7 @@ static UDateFormat *__util_time_time_formatter_get(void *data, int time_format, 
 	retif_nomsg(ad == NULL, NULL);
 	retif_nomsg(s_info.generator == NULL, NULL);
 
-	if (time_format == APPCORE_TIME_FORMAT_24) {
+	if (time_format == QP_TIME_FORMAT_24) {
 		snprintf(buf, sizeof(buf)-1, "%s", "HH:mm");
 	} else {
 		/* set time format 12 */
@@ -504,7 +505,7 @@ static void _util_time_formatters_create(void *data)
 		s_info.formatter_date = __util_time_date_formatter_get(ad, NULL, "MMMMEd");
 	}
 
-	if (s_info.timeformat == APPCORE_TIME_FORMAT_12) {
+	if (s_info.timeformat == QP_TIME_FORMAT_12) {
 		if (s_info.formatter_ampm == NULL) {
 			s_info.formatter_ampm = __util_time_ampm_formatter_get(ad, NULL);
 		}
@@ -622,9 +623,9 @@ static void _formatter_create(void *data)
 	msgif(ret != SYSTEM_SETTINGS_ERROR_NONE, "failed to ignore key(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR) : %d", ret);
 
 	if (status == true){
-		s_info.timeformat = APPCORE_TIME_FORMAT_24;
+		s_info.timeformat = QP_TIME_FORMAT_24;
 	}else{
-		s_info.timeformat = APPCORE_TIME_FORMAT_12;
+		s_info.timeformat = QP_TIME_FORMAT_12;
 	}
 
 	if (s_info.timeregion_format == NULL) {
@@ -762,7 +763,7 @@ static void _util_time_get(int is_current_time, time_t tt_a, char **str_date, ch
 	_util_time_formatted_time_get(s_info.formatter_date, tt, buf_date, sizeof(buf_date));
 
 	/* time */
-	if (s_info.timeformat == APPCORE_TIME_FORMAT_24) {
+	if (s_info.timeformat == QP_TIME_FORMAT_24) {
 		_util_time_formatted_time_get(s_info.formatter_time, tt, buf_time, sizeof(buf_time)-1);
 	} else {
 		_util_time_formatted_time_get(s_info.formatter_time, tt, buf_time, sizeof(buf_time)-1);

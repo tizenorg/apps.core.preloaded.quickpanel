@@ -19,7 +19,6 @@
 #include <Elementary.h>
 #include <glib.h>
 
-#include <appcore-common.h>
 #include <vconf.h>
 #include <app_control.h>
 #include <notification.h>
