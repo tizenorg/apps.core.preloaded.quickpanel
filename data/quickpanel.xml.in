@@ -4,7 +4,7 @@
 	<author email="yjoo93.park@samsung.com" href="www.samsung.com">Youngjoo Park</author>
 	<author email="jin0.kim@samsung.com" href="www.samsung.com">Jinyoung Kim</author>
 	<description>@PROJECT_NAME@</description>
-	<ui-application appid="@PKGNAME@" exec="@BINDIR@/@PROJECT_NAME@" nodisplay="true" multiple="false" type="capp" taskmanage="false">
+	<ui-application appid="@PKGNAME@" exec="@BINDIR@/@PROJECT_NAME@" nodisplay="true" multiple="false" type="capp" taskmanage="false" hw-acceleration="use-GL">
 		<label>@PROJECT_NAME@</label>
 	</ui-application>
 	<privileges>
