@@ -337,8 +337,6 @@ static void _tethering_wifi_reply_cb(app_control_h request, app_control_h reply,
 			DBG("Response[%s]", resp_type);
 			if (!strcmp("RESP_TETHERING_TYPE_WIFI_OFF", resp_type)) {
 				_tethering_disable(TETHERING_TYPE_WIFI, user_data);
-			} else if (!strcmp("RESP_TETHERING_TYPE_WIFI_AP_OFF", resp_type)) {
-				_tethering_disable(TETHERING_TYPE_RESERVED, user_data);
 			}
 
 			free(resp_type);
@@ -389,9 +387,6 @@ static int _wifi_on(void *data, const char *popup_txt)
 	/* Check wifi tethering status */
 	if (tethering_is_enabled(NULL, TETHERING_TYPE_WIFI)) {
 		_tethering_off_popup(ad->win, data, TETHERING_TYPE_WIFI, popup_txt);
-		return -1;
-	} else if (tethering_is_enabled(NULL, TETHERING_TYPE_RESERVED)) {
-		_tethering_off_popup(ad->win, data, TETHERING_TYPE_RESERVED, popup_txt);
 		return -1;
 	}
 
