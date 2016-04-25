@@ -17,12 +17,8 @@
 
 
 #include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-#include <iniparser.h>
+#include <app_preference.h>
 #include <Elementary.h>
-
 #include <tzsh.h>
 #include <tzsh_quickpanel_service.h>
 #include <E_DBus.h>
@@ -30,26 +26,8 @@
 
 #include "preference.h"
 #include "common.h"
-
-
 #include "quickpanel-ui.h"
 
-#define PREFERENCE_FILE_NAME "preference.ini"
-
-static char *_get_preference_file_path()
-{
-	char *data_path = NULL;
-	char file_path[MAX_FILE_PATH_LEN] = {0, };
-
-
-	data_path = app_get_data_path();
-	retif(data_path == NULL, NULL, "failed to app_get_data_path()");
-
-	snprintf(file_path, sizeof(file_path), "%s%s", data_path, PREFERENCE_FILE_NAME);
-	free(data_path);
-
-	return strdup(file_path);
-}
 
 static const char *_default_preference_get(const char *key)
 {
@@ -57,13 +35,13 @@ static const char *_default_preference_get(const char *key)
 
 	if (strcmp(key, PREF_BRIGHTNESS) == 0) {
 		return "OFF";
-	} else if (strcmp(key, PREF_QUICKSETTING_ORDER) == 0){
+	} else if (strcmp(key, PREF_QUICKSETTING_ORDER) == 0) {
 		return "wifi,gps,sound,rotate,bluetooth,mobile_data,assisitvelight,u_power_saving,wifi_hotspot,flightmode";
-	} else if (strcmp(key, PREF_QUICKSETTING_FEATURED_NUM) == 0){
+	} else if (strcmp(key, PREF_QUICKSETTING_FEATURED_NUM) == 0) {
 		return "11";
-	} else if (strcmp(key, PREF_SHORTCUT_ENABLE) == 0){
+	} else if (strcmp(key, PREF_SHORTCUT_ENABLE) == 0) {
 		return "ON";
-	} else if (strcmp(key, PREF_SHORTCUT_EARPHONE_ORDER) == 0){
+	} else if (strcmp(key, PREF_SHORTCUT_EARPHONE_ORDER) == 0) {
 		return "org.tizen.music-player,org.tizen.videos,org.tizen.phone,srfxzv8GKR.YouTube,org.tizen.voicerecorder";
 	}
 
@@ -87,100 +65,49 @@ static inline int _key_validation_check(const char *key)
 	return 0;
 }
 
-static inline int _is_file_exist(void)
+HAPI int quickpanel_preference_get(const char *key, char **value)
 {
-	char *file_path = _get_preference_file_path();
-	retif(file_path == NULL, 0, "failed to _get_preference_file_path()");
+	bool existing = false;
 
-	if (access(file_path, O_RDWR) == 0) {
-		return 1;
-	}
-
-	if (file_path != NULL) {
-		free(file_path);
-	}
-
-	return 0;
-}
-
-static void _default_file_create(void)
-{
-	FILE	*fp = NULL ;
-	char *file_path = _get_preference_file_path();
-	retif(file_path == NULL, , "failed to _get_preference_file_path()");
-
-	fp = fopen(file_path, "w");
-	retif(fp == NULL, , "fatal:failed to create preference file %s", file_path);
-
-	fprintf(fp, "\n\
-			[%s]\n\
-			%s = %s ;\n\
-			%s = %s ;\n\
-			%s = %s ;\n\
-			%s = %s ;\n\
-			%s = %s ;\n\
-			\n"
-			, PREF_SECTION
-			, PREF_BRIGHTNESS_KEY, _default_preference_get(PREF_BRIGHTNESS)
-			, PREF_QUICKSETTING_ORDER_KEY, _default_preference_get(PREF_QUICKSETTING_ORDER)
-			, PREF_QUICKSETTING_FEATURED_NUM_KEY, _default_preference_get(PREF_QUICKSETTING_FEATURED_NUM)
-			, PREF_SHORTCUT_ENABLE_KEY, _default_preference_get(PREF_SHORTCUT_ENABLE)
-			, PREF_SHORTCUT_EARPHONE_ORDER_KEY, _default_preference_get(PREF_SHORTCUT_EARPHONE_ORDER)
-		   );
-
-	fclose(fp);
-
-	if (file_path != NULL) {
-		free(file_path);
-	}
-}
-
-HAPI int quickpanel_preference_get(const char *key, char *value)
-{
-	int ret = QP_OK;
-	dictionary	*ini = NULL;
-	const char *value_r = NULL;
-	char *file_path = NULL;
 	retif(key == NULL, QP_FAIL, "Invalid parameter!");
 	retif(value == NULL, QP_FAIL, "Invalid parameter!");
 
-	file_path = _get_preference_file_path();
-	retif(file_path == NULL, QP_FAIL, "failed to _get_preference_file_path()");
-
-	ini = iniparser_load(file_path);
-	if (ini == NULL) {
-		DBG("failed to load ini file");
-		_default_file_create();
-		value_r = _default_preference_get(key);
-		goto END;
-	}
-
-	value_r = iniparser_getstring(ini, key, NULL);
-	if (value_r == NULL) {
-		value_r = _default_preference_get(key);
-		if (_key_validation_check(key) == 1) {
-			_default_file_create();
+	if (preference_is_existing(key, &existing) == PREFERENCE_ERROR_NONE && !existing
+		&& _key_validation_check(key)) {
+		DBG("preference does not exist");
+		/* Create preference */
+		if (preference_set_string(PREF_BRIGHTNESS, _default_preference_get(PREF_BRIGHTNESS)) != PREFERENCE_ERROR_NONE) {
+			DBG("preference set error %s", PREF_BRIGHTNESS);
+			return QP_FAIL;
 		}
-	} else {
-		DBG("get:[%s]", value_r);
+
+		if (preference_set_string(PREF_QUICKSETTING_ORDER, _default_preference_get(PREF_QUICKSETTING_ORDER)) != PREFERENCE_ERROR_NONE) {
+			DBG("preference set error %s", PREF_QUICKSETTING_ORDER);
+			return QP_FAIL;
+		}
+
+		if (preference_set_string(PREF_QUICKSETTING_FEATURED_NUM, _default_preference_get(PREF_QUICKSETTING_FEATURED_NUM)) != PREFERENCE_ERROR_NONE) {
+			DBG("preference set error %s", PREF_QUICKSETTING_FEATURED_NUM);
+			return QP_FAIL;
+		}
+
+		if (preference_set_string(PREF_SHORTCUT_ENABLE, _default_preference_get(PREF_SHORTCUT_ENABLE)) != PREFERENCE_ERROR_NONE) {
+			DBG("preference set error %s", PREF_SHORTCUT_ENABLE);
+			return QP_FAIL;
+		}
+
+		if (preference_set_string(PREF_SHORTCUT_EARPHONE_ORDER, _default_preference_get(PREF_SHORTCUT_EARPHONE_ORDER)) != PREFERENCE_ERROR_NONE) {
+			DBG("preference set error %s", PREF_SHORTCUT_EARPHONE_ORDER);
+			return QP_FAIL;
+		}
 	}
 
-
-END:
-	if (value_r != NULL) {
-		strncpy(value, value_r, strlen(value_r));
-		ret = QP_OK;
+	if ( preference_get_string(key, value) != PREFERENCE_ERROR_NONE)  {
+		DBG("preference_get_string error : key(%s)", key);
+		return QP_FAIL;
 	}
 
-	if (ini != NULL) {
-		iniparser_freedict(ini);
-	}
-
-	if (file_path != NULL) {
-		free(file_path);
-	}
-
-	return ret;
+	return QP_OK;
 }
 
 HAPI const char *quickpanel_preference_default_get(const char *key)
@@ -192,42 +119,15 @@ HAPI const char *quickpanel_preference_default_get(const char *key)
 
 HAPI int quickpanel_preference_set(const char *key, char *value)
 {
-	int ret = QP_FAIL;
-	FILE *fp = NULL;
-	dictionary	*ini = NULL;
 	retif(key == NULL, QP_FAIL, "Invalid parameter!");
 	retif(value == NULL, QP_FAIL, "Invalid parameter!");
 
-	if (_is_file_exist() == 0) {
-		_default_file_create();
-	}
-
-	char *file_path = _get_preference_file_path();
-	retif(file_path == NULL, QP_FAIL, "failed to _get_preference_file_path()");
-
-	ini = iniparser_load(file_path);
-	retif(ini == NULL, QP_FAIL, "failed to load ini file");
-
-	if (iniparser_set(ini, (char *)key, value) == 0) {
-		ret = QP_OK;
+	if (preference_set_string(key, value) == PREFERENCE_ERROR_NONE) {
+		DBG("quickpanel_preference_set  key[%s] value [%s]", key, value);
 	} else {
-		ERR("failed to write %s=%s", key, value);
+		DBG("quickpanel_preference_set  failed key[%s]", key, value);
+		return QP_FAIL;
 	}
 
-	fp = fopen(file_path, "w");
-	if (fp != NULL) {
-		iniparser_dump_ini(ini, fp);
-		fclose(fp);
-	}
-
-	iniparser_freedict(ini);
-
-	if (file_path != NULL) {
-		free(file_path);
-	}
-
-	return ret;
+	return QP_OK;
 }
-
-
-

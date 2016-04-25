@@ -34,7 +34,7 @@
 #define PREF_SHORTCUT_ENABLE PREF_SECTION":"PREF_SHORTCUT_ENABLE_KEY
 #define PREF_SHORTCUT_EARPHONE_ORDER PREF_SECTION":"PREF_SHORTCUT_EARPHONE_ORDER_KEY
 
-extern int quickpanel_preference_get(const char *key, char *value);
+extern int quickpanel_preference_get(const char *key, char **value);
 extern const char *quickpanel_preference_default_get(const char *key);
 extern int quickpanel_preference_set(const char *key, char *value);
 

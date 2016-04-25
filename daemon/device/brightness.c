@@ -667,7 +667,6 @@ static void _ipc_fini(void *data)
 
 static int _init(void *data)
 {
-	char buf[PREF_LEN_VALUE_MAX] = {0,};
 	retif(data == NULL, QP_FAIL, "Invalid parameter!");
 
 #ifdef QP_EMERGENCY_MODE_ENABLE
@@ -676,7 +675,6 @@ static int _init(void *data)
 	}
 #endif
 
-	quickpanel_preference_get(PREF_BRIGHTNESS, buf);
 	_brightness_create(data);
 
 	_ipc_init(data);

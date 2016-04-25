@@ -124,7 +124,8 @@ static QP_Module_Setting *_module_get_by_name(const char *name)
 	return g_hash_table_lookup(s_info.module_table, name);
 }
 
-static Eina_Bool _module_is_enabled(QP_Module_Setting *module) {
+static Eina_Bool _module_is_enabled(QP_Module_Setting *module)
+{
 	retif(module == NULL, EINA_FALSE, "invalid parameter");
 	retif(module->name == NULL, EINA_FALSE, "invalid parameter");
 
@@ -136,18 +137,6 @@ static Eina_Bool _module_is_enabled(QP_Module_Setting *module) {
 			return EINA_FALSE;
 	}
 	return EINA_TRUE;
-}
-
-static char *_preference_get(const char *key)
-{
-	char line[PREF_LEN_VALUE_MAX + 1] = {0,};
-
-	if (quickpanel_preference_get(key, line) == QP_OK) {
-		DBG("quicksetting order from file:%s", line);
-		return strdup(line);
-	}
-
-	return NULL;
 }
 
 static int quickpanel_settings_init(void *data)
@@ -325,30 +314,30 @@ HAPI void quickpanel_settings_featured_list_get(Eina_List **list)
 	int seq_added_count = 0;
 	gchar **params = NULL;
 	QP_Module_Setting *module = NULL;
-	retif(list == NULL, , "invalid data.");
-	char *sequence = _preference_get(PREF_QUICKSETTING_ORDER);
+	char *sequence = NULL;
+	char *num_featured_str = NULL;
 	const char *default_sequence = quickpanel_preference_default_get(PREF_QUICKSETTING_ORDER);
-
-	char *num_featured_str =  _preference_get(PREF_QUICKSETTING_FEATURED_NUM);
 	const char *default_num_featured_str = quickpanel_preference_default_get(PREF_QUICKSETTING_FEATURED_NUM);
 
-	if (sequence != NULL) {
+	retif(list == NULL, , "invalid data.");
+
+	if (quickpanel_preference_get(PREF_QUICKSETTING_ORDER, &sequence) == QP_OK && sequence != NULL) {
+		DBG("preference_get key(%s) value(%s)", PREF_QUICKSETTING_ORDER, sequence);
 		params = g_strsplit(sequence, ",", 0);
 		free(sequence);
 	} else {
 		params = g_strsplit(default_sequence, ",", 0);
 	}
 
-	if (num_featured_str != NULL) {
+	if (quickpanel_preference_get(PREF_QUICKSETTING_FEATURED_NUM, &num_featured_str) == QP_OK && num_featured_str != NULL) {
+		DBG("preference_get key(%s) value(%s)", PREF_QUICKSETTING_FEATURED_NUM, num_featured_str);
 		num_featured = atoi(num_featured_str);
 		free(num_featured_str);
 	} else {
-		if (default_num_featured_str != NULL) {
-			num_featured = atoi(default_num_featured_str);
-		} else {
-			num_featured = QP_SETTING_NUM_TOTAL_ICON;
-		}
+		num_featured = atoi(default_num_featured_str);
 	}
+
+	*list = NULL;
 
 	if (params != NULL) {
 		seq_count = g_strv_length(params);
@@ -377,15 +366,18 @@ HAPI void quickpanel_settings_all_list_get(Eina_List **list)
 	gchar **params = NULL;
 	QP_Module_Setting *module = NULL;
 	retif(list == NULL, , "invalid data.");
-	char *sequence = _preference_get(PREF_QUICKSETTING_ORDER);
+	char *sequence = NULL;
 	const char *default_sequence = quickpanel_preference_default_get(PREF_QUICKSETTING_ORDER);
 
-	if (sequence != NULL) {
+	if (quickpanel_preference_get(PREF_QUICKSETTING_ORDER, &sequence) == QP_OK && sequence != NULL) {
+		DBG("preference_get key(%s) value(%s)", PREF_QUICKSETTING_ORDER, sequence);
 		params = g_strsplit(sequence, ",", 0);
 		free(sequence);
-	} else if (default_sequence != NULL){
+	} else {
 		params = g_strsplit(default_sequence, ",", 0);
 	}
+
+	*list = NULL;
 
 	if (params != NULL) {
 		seq_count = g_strv_length(params);
