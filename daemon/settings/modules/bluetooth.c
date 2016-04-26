@@ -100,7 +100,9 @@ static void _status_update(QP_Module_Setting *module, int flag_extra_1, int flag
 	retif(module == NULL, , "Invalid parameter!");
 
 	ret = bt_adapter_get_state(&adapter_state);
-	retif(ret != BT_ERROR_NONE, , "bt_adapter_get_state failed");
+	if (ret != BT_ERROR_NONE) {
+		DBG("bt_adapter_get_state failed [%d]", ret);
+	}
 
 	if (adapter_state == BT_ADAPTER_ENABLED) {
 		quickpanel_setting_module_icon_state_set(module, ICON_VIEW_STATE_ON);
